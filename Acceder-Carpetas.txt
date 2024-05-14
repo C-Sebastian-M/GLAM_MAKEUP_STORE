@@ -1,0 +1,23 @@
+Los archivos y carpetas estan en cada rama para acceder a ellos tienen que ejecutar los siguientes comandos:
+
+1. Cambiar a la rama deseada:
+	- git checkout <nombre_de_la_rama>
+Reemplaza <nombre_de_la_rama> con el nombre de la rama específica a la que deseas cambiar. 
+Por ejemplo, si deseas cambiar a la rama main, usarías:
+	- git checkout main
+
+2. Acceder a los archivos y carpetas:
+Una vez que hayas cambiado a la rama deseada, puedes usar comandos de Bash para acceder a los archivos y carpetas en esa rama. 
+Por ejemplo, para listar los archivos y carpetas en el directorio actual, puedes usar:
+
+	- git ls-tree --name-only "Nombre de la rama"
+
+
+3.Para cambiar a un directorio específico, puedes usar cd seguido del nombre del directorio. Por ejemplo:
+	- cd carpeta_deseada
+
+Esto cambiará el directorio actual al carpeta_deseada. Luego puedes usar ls para listar los archivos y carpetas dentro de ese directorio.
+
+Recuerda que estos comandos se ejecutan desde la línea de comandos (Bash) en tu sistema operativo. 
+Asegúrate de tener Git instalado y haber clonado el repositorio en tu sistema antes de intentar acceder a los archivos y carpetas en 
+diferentes ramas.
