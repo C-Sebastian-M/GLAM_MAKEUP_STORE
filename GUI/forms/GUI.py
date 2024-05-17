@@ -8,7 +8,7 @@ class GUI(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.logo = util_img.leer_imagen(
-            "C:/Users/Sebastian/OneDrive - INSTITUTO TECNOLOGICO METROPOLITANO - ITM/Estructura de datos/GLAM_MAKEUP_STORE/GUI/images/logo.png",
+            "C:/Users/ASUS/OneDrive/Escritorio/EDD_Project/GLAM_MAKEUP_STORE/GUI/images/logo.ico",
             (400, 400),
         )
         self.configuracion_ventana()
@@ -17,7 +17,7 @@ class GUI(ctk.CTk):
     def configuracion_ventana(self):
         self.title("Makeup Store")
         self.iconbitmap(
-            "C:/Users/Sebastian/OneDrive - INSTITUTO TECNOLOGICO METROPOLITANO - ITM/Estructura de datos/GLAM_MAKEUP_STORE/GUI/images/logo.ico"
+            "C:/Users/ASUS/OneDrive/Escritorio/EDD_Project/GLAM_MAKEUP_STORE/GUI/images/logo.ico"
         )
         w, h = 800, 600
         util_win.centrar_ventana(self, w, h)
