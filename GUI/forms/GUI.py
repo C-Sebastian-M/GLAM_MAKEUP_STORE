@@ -22,8 +22,8 @@ class GUI(ctk.CTk):
     def login(self):
         self.frame_medio = ctk.CTkFrame(self)
         self.frame_medio.place(relx=0.5, rely=0.5, anchor="center")
-        label_logo = ctk.CTkLabel(self.frame_medio, image=self.logo)
-        label_logo.pack()
+        #label_logo = ctk.CTkLabel(self.frame_medio, image=self.logo)
+        #label_logo.pack()
         self.usuario_entry = ctk.CTkEntry(self.frame_medio, placeholder_text="Usuario")
         self.usuario_entry.pack(pady=5)
         self.password_entry = ctk.CTkEntry(
