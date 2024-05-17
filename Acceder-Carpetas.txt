@@ -1,4 +1,6 @@
 Los archivos y carpetas estan en cada rama para acceder a ellos tienen que ejecutar los siguientes comandos:
+Para saber que ramas hay en el repositorio desde el bash se usa:
+	- git branch
 
 1. Cambiar a la rama deseada:
 	- git checkout <nombre_de_la_rama>

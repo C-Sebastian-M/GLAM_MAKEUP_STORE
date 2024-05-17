@@ -7,13 +7,18 @@ class GUI(ctk.CTk):
     # Constructor que contiene la configuración de las ventanas
     def __init__(self):
         super().__init__()
-        #self.logo = util_img.leer_imagen("./images/logo.png",(400, 400))
+        self.logo = util_img.leer_imagen(
+            "C:/Users/Sebastian/OneDrive - INSTITUTO TECNOLOGICO METROPOLITANO - ITM/Estructura de datos/GLAM_MAKEUP_STORE/GUI/images/logo.png",
+            (400, 400),
+        )
         self.configuracion_ventana()
 
     # En esta función se cargan las demás funciones
     def configuracion_ventana(self):
         self.title("Makeup Store")
-        #self.iconbitmap("./images/logo.ico")
+        self.iconbitmap(
+            "C:/Users/Sebastian/OneDrive - INSTITUTO TECNOLOGICO METROPOLITANO - ITM/Estructura de datos/GLAM_MAKEUP_STORE/GUI/images/logo.ico"
+        )
         w, h = 1000, 720
         util_win.centrar_ventana(self, w, h)
         self.login()
