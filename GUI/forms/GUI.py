@@ -29,7 +29,45 @@ class GUI(ctk.CTk):
         self.frame_medio.place(relx=0.5, rely=0.5, anchor="center")
         label_logo = ctk.CTkLabel(self.frame_medio, image=self.logo)
         label_logo.pack()
-        self.frame_inferior = ctk.CTkFrame(self, bg_color="red", height=100)
-        self.frame_inferior.pack(side=ctk.BOTTOM, fill="both")
-        boton_menu_principal = ctk.CTkButton(self.frame_inferior, text="Menu Principal", height=100)
-        boton_menu_principal.pack()
+        self.usuario_entry = ctk.CTkEntry(self.frame_medio, placeholder_text="Usuario")
+        self.usuario_entry.pack(pady=5)
+        self.password_entry = ctk.CTkEntry(
+            self.frame_medio, placeholder_text="Contraseña", show="*"
+        )
+        self.password_entry.pack(pady=5)
+
+        login_button = ctk.CTkButton(
+            self.frame_medio, text="Login", command=self.verificar_credenciales
+        )
+        login_button.pack(pady=20)
+
+    def verificar_credenciales(self):
+        usuario = self.usuario_entry.get()
+        password = self.password_entry.get()
+
+        # Aquí se implementaría la verificación de credenciales
+        if usuario == "admin" and password == "admin123":
+            self.menu_principal("admin")
+        elif usuario == "usuario" and password == "usuario123":
+            self.menu_principal("usuario")
+        else:
+            self.error_label.configure(text="Credenciales incorrectas")
+
+    def menu_principal(self, rol):
+        # Ocultar la ventana de login en lugar de destruirla
+        self.withdraw()
+        ventana_menu = ctk.CTkToplevel(self)
+        ventana_menu.title("Menu Principal")
+        ventana_menu.geometry("800x600")
+        util_win.centrar_ventana(ventana_menu, 800, 600)
+
+        if rol == "admin":
+            ctk.CTkButton(ventana_menu, text="Gestionar Productos").pack(pady=10)
+            ctk.CTkButton(ventana_menu, text="Gestionar Clientes").pack(pady=10)
+            ctk.CTkButton(ventana_menu, text="Gestionar Ventas").pack(pady=10)
+            ctk.CTkButton(ventana_menu, text="Gestionar Servicios").pack(pady=10)
+            ctk.CTkButton(ventana_menu, text="Generar Reportes").pack(pady=10)
+        elif rol == "usuario":
+            ctk.CTkButton(ventana_menu, text="Ver Productos").pack(pady=10)
+            ctk.CTkButton(ventana_menu, text="Registrar Venta").pack(pady=10)
+        ventana_menu.mainloop()
