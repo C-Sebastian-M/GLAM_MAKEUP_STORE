@@ -13,21 +13,20 @@ class GUI(ctk.CTk):
         )
         self.configuracion_ventana()
 
-    # En esta función se cargan las demas funciones
+    # En esta función se cargan las demás funciones
     def configuracion_ventana(self):
         self.title("Makeup Store")
         self.iconbitmap(
             "C:/Users/ASUS/OneDrive/Escritorio/EDD_Project/GLAM_MAKEUP_STORE/GUI/images/logo.ico"
         )
-        w, h = 800, 600
+        w, h = 1000, 720
         util_win.centrar_ventana(self, w, h)
         self.login()
 
+    # Ventana de login con control de acceso
     def login(self):
-        self.frame_superior = ctk.CTkFrame(self, bg_color="blue", height=100)
-        self.frame_superior.pack(side=ctk.TOP, fill="both")
-        self.frame_medio = ctk.CTkFrame(self, bg_color="pink", height=400)
-        self.frame_medio.pack(anchor=ctk.CENTER, fill="both")
+        self.frame_medio = ctk.CTkFrame(self)
+        self.frame_medio.place(relx=0.5, rely=0.5, anchor="center")
         label_logo = ctk.CTkLabel(self.frame_medio, image=self.logo)
         label_logo.pack()
         self.frame_inferior = ctk.CTkFrame(self, bg_color="red", height=100)
