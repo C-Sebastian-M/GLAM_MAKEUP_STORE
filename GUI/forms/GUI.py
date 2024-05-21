@@ -8,7 +8,7 @@ class GUI(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.logo = util_img.leer_imagen(
-            "C:/Users/Sebastian/OneDrive - INSTITUTO TECNOLOGICO METROPOLITANO - ITM/Estructura de datos/GLAM_MAKEUP_STORE/GUI/images/logo.png",
+            "GUI/images/logo.png",
             (400, 400),
         )
         self.configuracion_ventana()
@@ -17,7 +17,7 @@ class GUI(ctk.CTk):
     def configuracion_ventana(self):
         self.title("Makeup Store")
         self.iconbitmap(
-            "C:/Users/Sebastian/OneDrive - INSTITUTO TECNOLOGICO METROPOLITANO - ITM/Estructura de datos/GLAM_MAKEUP_STORE/GUI/images/logo.ico"
+            "GUI/images/logo.ico"
         )
         w, h = 1000, 720
         util_win.centrar_ventana(self, w, h)
@@ -25,10 +25,12 @@ class GUI(ctk.CTk):
 
     # Ventana de login con control de acceso
     def login(self):
-        self.frame_medio = ctk.CTkFrame(self)
+        self.frame_fondo = ctk.CTkFrame(self, fg_color="pink")
+        self.frame_fondo.pack(fill="both", expand=True)
+        self.frame_medio = ctk.CTkFrame(self, fg_color="#ff50b5")
         self.frame_medio.place(relx=0.5, rely=0.5, anchor="center")
-        #label_logo = ctk.CTkLabel(self.frame_medio, image=self.logo)
-        #label_logo.pack()
+        label_logo = ctk.CTkLabel(self.frame_medio, image=self.logo)
+        label_logo.pack()
         self.usuario_entry = ctk.CTkEntry(self.frame_medio, placeholder_text="Usuario")
         self.usuario_entry.pack(pady=5)
         self.password_entry = ctk.CTkEntry(
