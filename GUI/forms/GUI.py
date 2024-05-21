@@ -31,29 +31,18 @@ class GUI(ctk.CTk):
         self.frame_medio.place(relx=0.5, rely=0.5, anchor="center")
         label_logo = ctk.CTkLabel(self.frame_medio, image=self.logo)
         label_logo.pack()
-        self.usuario_entry = ctk.CTkEntry(self.frame_medio, placeholder_text="Usuario")
-        self.usuario_entry.pack(pady=5)
-        self.password_entry = ctk.CTkEntry(
-            self.frame_medio, placeholder_text="Contraseña", show="*"
-        )
-        self.password_entry.pack(pady=5)
-
         login_button = ctk.CTkButton(
-            self.frame_medio, text="Login", command=self.verificar_credenciales
+            self.frame_medio, text="Ingresar con una cuenta", command=self.ingresar_con_cuenta
         )
         login_button.pack(pady=20)
 
-    def verificar_credenciales(self):
-        usuario = self.usuario_entry.get()
-        password = self.password_entry.get()
-
-        # Aquí se implementaría la verificación de credenciales
-        if usuario == "admin" and password == "admin123":
-            self.menu_principal("admin")
-        elif usuario == "usuario" and password == "usuario123":
-            self.menu_principal("usuario")
-        else:
-            self.error_label.configure(text="Credenciales incorrectas")
+    def ingresar_con_cuenta(self):
+        self.withdraw()
+        ventana_ingreso = ctk.CTkToplevel(self)
+        ventana_ingreso.title("Ingresar con cuenta")
+        ventana_ingreso.geometry("800x600")
+        util_win.centrar_ventana(ventana_ingreso, 800, 600)
+        ventana_ingreso.mainloop()
 
     def menu_principal(self, rol):
         # Ocultar la ventana de login en lugar de destruirla
