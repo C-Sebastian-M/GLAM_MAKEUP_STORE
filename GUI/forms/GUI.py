@@ -2,6 +2,7 @@ import customtkinter as ctk
 import util.util_images as util_img
 import util.util_window as util_win
 
+
 class GUI(ctk.CTk):
     # Constructor que contiene la configuración de las ventanas
     def __init__(self):
@@ -23,12 +24,13 @@ class GUI(ctk.CTk):
     def cerrar_ventana(self, ventana):
         ventana.destroy()
 
-
     # Función para crear y configurar la ventana de login
     def crear_ventana_login(self):
         self.ventana_login = ctk.CTkToplevel(self)
         self.ventana_login.title("Login")
-        self.ventana_login.iconbitmap(self.icono)  # Heredamos el icono de la ventana padre
+        self.ventana_login.iconbitmap(
+            self.icono
+        )  # Heredamos el icono de la ventana padre
         frame_fondo = ctk.CTkFrame(self.ventana_login, fg_color="pink")
         frame_fondo.pack(fill="both", expand=True)
         frame_medio = ctk.CTkFrame(frame_fondo, fg_color="#ff50b5")
@@ -50,18 +52,36 @@ class GUI(ctk.CTk):
         # Centrar la ventana de login
         util_win.centrar_ventana(self.ventana_login, 800, 600)
         self.ventana_login.mainloop()
-        
+
     def ingresar_con_cuenta(self):
         self.ventana_login.withdraw()
-        ventana_ingreso = ctk.CTkToplevel(self)
-        ventana_ingreso.title("Ingresar con cuenta")
-        ventana_ingreso.geometry("800x600")
-        ventana_ingreso.iconbitmap(self.icono)  # Heredamos el icono de la ventana padre
-        util_win.centrar_ventana(ventana_ingreso, 800, 600)
-        frame_fondo = ctk.CTkFrame(ventana_ingreso, fg_color="pink")
+        self.ventana_ingreso = ctk.CTkToplevel(self)
+        self.ventana_ingreso.title("Ingresar con cuenta")
+        self.ventana_ingreso.geometry("800x600")
+        self.ventana_ingreso.iconbitmap(
+            self.icono
+        )  # Heredamos el icono de la ventana padre
+        util_win.centrar_ventana(self.ventana_ingreso, 800, 600)
+        frame_fondo = ctk.CTkFrame(self.ventana_ingreso, fg_color="pink")
         frame_fondo.pack(fill="both", expand=True)
-        frame_medio = ctk.CTkFrame(frame_fondo, fg_color="#ff50b5")
-        frame_medio.place(relx=0.5, rely=0.5, anchor="center")
-        entrada_usuario = ctk.CTkEntry(master=frame_medio, width=400)
+        frame_entrada_usuario = ctk.CTkFrame(frame_fondo, fg_color="#ff50b5")
+        frame_entrada_usuario.place(relx=0.5, rely=0.4, anchor="center")
+        frame_entrada_contrasena = ctk.CTkFrame(frame_fondo, fg_color="#ff50b5")
+        frame_entrada_contrasena.place(relx=0.5, rely=0.7, anchor="center")
+        entrada_usuario = ctk.CTkEntry(
+            master=frame_entrada_usuario, width=400, placeholder_text="Ingrese Usuario"
+        )
         entrada_usuario.pack()
-        ventana_ingreso.mainloop()
+        entrada_contrasena = ctk.CTkEntry(
+            master=frame_entrada_contrasena,
+            width=400,
+            placeholder_text="Ingrese Contraseña",
+        )
+        entrada_contrasena.pack()
+        boton_cancelar = ctk.CTkButton(
+            frame_fondo,
+            text="Cancelar",
+            command=print("Acá debe ir el regreso a la ventana anterior"),
+        )
+        boton_cancelar.place(relx=0.10, rely=0.70)
+        self.ventana_ingreso.mainloop()
