@@ -1,3 +1,5 @@
 customtkinter==5.2.2
 pillow==10.2.0
 DateTime==5.0.1
+pandas==2.2.0
+openpyxl==3.1.2
