@@ -7,10 +7,6 @@ class GUI(ctk.CTk):
     # Constructor que contiene la configuración de las ventanas
     def __init__(self):
         super().__init__()
-        self.logo = util_img.leer_imagen(
-            "GUI/images/logo.png",
-            (460, 382),
-        )
         self.imgFondo = util_img.leer_imagen("GUI/Images/logo2.png", (800, 600))
         self.configuracion_ventana()
 
@@ -20,28 +16,19 @@ class GUI(ctk.CTk):
 
     # Función para crear y configurar la ventana de login
     def crear_ventana_login(self):
-        self.ventana_login = ctk.CTkToplevel(self)
-        # self.ventana_login.overrideredirect(True)
-        frame_fondo = util_win.frame_fondo(self.ventana_login)
-        frame_fondo.pack(fill="both", expand=True)
-        label_logo2 = ctk.CTkLabel(frame_fondo, image=self.imgFondo, text=None)
-        label_logo2.pack()
-        frame_medio = util_win.frame_medio(frame_fondo)
-        frame_medio.place(relx=0.5, rely=0.5, anchor="center")
-        label_logo = ctk.CTkLabel(
-            frame_medio, image=self.logo, text=None, fg_color="transparent"
+        self.ventana_login = util_win.sub_ventana(self, "GLAM MAKEUP STORE" ,self.imgFondo)
+        frame_cerrar = ctk.CTkFrame(self.ventana_login)
+        frame_cerrar.place(relx=0.01, rely=0.01)
+        frame_ingreso = ctk.CTkFrame(self.ventana_login)
+        frame_ingreso.place(relx=0.5, rely=0.8, anchor="center")
+        boton_ingreso = util_win.diseno_boton(
+            frame_ingreso, "Ingrese con una cuenta", self.ingresar_con_cuenta
         )
-        label_logo.pack()
-        login_boton = util_win.diseno_boton(
-            frame_medio, "Ingresar con una cuenta", self.ingresar_con_cuenta
+        boton_ingreso.pack()
+        boton_cerrar = util_win.diseno_boton(
+            frame_cerrar, "Cerrar Programa", self.destroy
         )
-        login_boton.pack(pady=20)
-        cerrar_boton = util_win.diseno_boton(
-            frame_fondo, "Cerrar Programa", self.destroy
-        )
-        cerrar_boton.place(relx=0.01, rely=0.01)
-        # Centrar la ventana de login
-        util_win.centrar_ventana(self.ventana_login, 800, 600)
+        boton_cerrar.pack()
 
     def navegar_login_ingreso(self):
         self.ventana_ingreso.destroy()
@@ -49,15 +36,12 @@ class GUI(ctk.CTk):
 
     def ingresar_con_cuenta(self):
         self.ventana_login.withdraw()
-        self.ventana_ingreso = ctk.CTkToplevel(self)
-        self.ventana_ingreso.title("Ingresar con cuenta")
-        self.ventana_ingreso.geometry("800x600")
-        util_win.centrar_ventana(self.ventana_ingreso, 800, 600)
-        frame_fondo = util_win.frame_fondo(self.ventana_ingreso)
-        frame_fondo.pack(fill="both", expand=True)
-        frame_entrada_usuario = ctk.CTkFrame(frame_fondo, fg_color="#ff50b5")
+        self.ventana_ingreso = util_win.sub_ventana(self, "Login", self.imgFondo)
+        frame_entrada_usuario = ctk.CTkFrame(self.ventana_ingreso, fg_color="#ff50b5")
         frame_entrada_usuario.place(relx=0.5, rely=0.4, anchor="center")
-        frame_entrada_contrasena = ctk.CTkFrame(frame_fondo, fg_color="#ff50b5")
+        frame_entrada_contrasena = ctk.CTkFrame(
+            self.ventana_ingreso, fg_color="#ff50b5"
+        )
         frame_entrada_contrasena.place(relx=0.5, rely=0.7, anchor="center")
         self.entrada_usuario = ctk.CTkEntry(
             master=frame_entrada_usuario, width=400, placeholder_text="Ingrese Usuario"
@@ -71,17 +55,17 @@ class GUI(ctk.CTk):
         )
         self.entrada_contrasena.pack()
         boton_cancelar = util_win.diseno_boton(
-            frame_fondo, "Cancelar", self.navegar_login_ingreso
+            self.ventana_ingreso, "Cancelar", self.navegar_login_ingreso
         )
         boton_cancelar.place(relx=0.20, rely=0.90)
         boton_confirmar = util_win.diseno_boton(
-            frame_fondo, "Confirmar", self.verificar_credenciales_ingreso
+            self.ventana_ingreso, "Confirmar", self.verificar_credenciales_ingreso
         )
         boton_confirmar.place(relx=0.60, rely=0.90)
         self.error_label = ctk.CTkLabel(
-            frame_fondo, fg_color="eb4996", text_color="black"
+            self.ventana_ingreso, fg_color="#eb4996", text_color="black"
         )
-        self.error_label.pack(pady=5)
+        self.error_label.place(relx=0.5, rely=0.03, anchor="center")
 
     def verificar_credenciales_ingreso(self):
         usuario = self.entrada_usuario.get()
@@ -101,19 +85,14 @@ class GUI(ctk.CTk):
 
     def admin(self):
         self.ventana_ingreso.destroy()
-        self.ventana_admin = ctk.CTkToplevel(self)
-        self.ventana_admin.title("Admin")
-        self.ventana_admin.geometry("800x600")
-        util_win.centrar_ventana(self.ventana_admin, 800, 600)
-        frame_fondo = ctk.CTkFrame(self.ventana_admin, fg_color="black")
-        frame_fondo.pack(fill="both", expand=True)
-        clientes_boton = util_win.diseno_boton(frame_fondo, "Gestión Clientes", None)
+        self.ventana_admin = util_win.sub_ventana(self, "Admin", self.imgFondo)
+        clientes_boton = util_win.diseno_boton(self.ventana_admin, "Gestión Clientes", None)
         clientes_boton.place(relx=0.2, rely=0.2)
-        ventas_boton = util_win.diseno_boton(frame_fondo, "Ventasa", None)
+        ventas_boton = util_win.diseno_boton(self.ventana_admin, "Ventas", None)
         ventas_boton.place(relx=0.6, rely=0.2)
-        admin_usuario = util_win.diseno_boton(frame_fondo, "Administrar Usuarios", None)
+        admin_usuario = util_win.diseno_boton(self.ventana_admin, "Administrar Usuarios", None)
         admin_usuario.place(relx=0.2, rely=0.6)
         cerrar_boton = util_win.diseno_boton(
-            frame_fondo, "Cerrar Programa", self.destroy
+            self.ventana_admin, "Cerrar Programa", self.destroy
         )
         cerrar_boton.place(relx=0.01, rely=0.01)
