@@ -91,6 +91,8 @@ class Admin(Global):
     def run(self):
         self.principal()
 
-admin = Admin()
+if __name__ == "__main__":
+    admin = Admin()
 
-admin.run()
+
+    admin.run()
