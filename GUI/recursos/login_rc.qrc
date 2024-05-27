@@ -8,7 +8,4 @@
   <qresource prefix="Logo">
     <file>images/logo.png</file>
   </qresource>
-  <qresource prefix="Avatar">
-    <file>images/avatar.png</file>
-  </qresource>
 </RCC>

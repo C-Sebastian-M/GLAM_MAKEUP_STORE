@@ -7,7 +7,7 @@ class GUI(ctk.CTk):
     # Constructor que contiene la configuración de las ventanas
     def __init__(self):
         super().__init__()
-        self.imgFondo = util_img.leer_imagen("GUI/Images/logo2.png", (800, 600))
+        self.imgFondo = util_img.leer_imagen("GUI/Images/logo.png", (800, 600))
         self.configuracion_ventana()
 
     # En esta función se cargan las demás funciones y es la ejecutura
