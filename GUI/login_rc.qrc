@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="Fondo">
+    <file>images/fondo.jpg</file>
+  </qresource>
+  <qresource prefix="Salir">
+    <file>images/cil-x.png</file>
+  </qresource>
+  <qresource prefix="Logo">
+    <file>images/logo.png</file>
+  </qresource>
+  <qresource prefix="Avatar">
+    <file>images/avatar.png</file>
+  </qresource>
+</RCC>
