@@ -67,7 +67,7 @@ class Ui_MainWindow(object):
 
         # CHECK USER
         if not self.lineEdit_user.text():
-            textUser = " User Empyt. "
+            textUser = " Usuario Vacio. "
             self.lineEdit_user.setStyleSheet(self.styleLineEditError)
         else:
             textUser = ""
@@ -75,7 +75,7 @@ class Ui_MainWindow(object):
 
         # CHECK PASSWORD
         if not self.lineEdit_password.text():
-            textPassword = " Password Empyt. "
+            textPassword = " Contraseña Vacia. "
             self.lineEdit_password.setStyleSheet(self.styleLineEditError)
         else:
             textPassword = ""
@@ -239,11 +239,11 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Login"))
         self.label_error.setText(_translate("MainWindow", "Error"))
-        self.lineEdit_user.setPlaceholderText(_translate("MainWindow", "USER"))
-        self.lineEdit_password.setPlaceholderText(_translate("MainWindow", "PASSWORD"))
-        self.pushButton_login.setText(_translate("MainWindow", "CONNECT TO CYBERPUNK"))
+        self.lineEdit_user.setPlaceholderText(_translate("MainWindow", "USUARIO"))
+        self.lineEdit_password.setPlaceholderText(_translate("MainWindow", "CONTRASEÑA"))
+        self.pushButton_login.setText(_translate("MainWindow", "INGRESAR"))
 
 
 import login_rc
