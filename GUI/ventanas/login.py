@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from recursos import login_rc
 
 class Ui_MainWindow(object):
 
@@ -189,7 +189,7 @@ class Ui_MainWindow(object):
         self.lineEdit_password.setGeometry(QtCore.QRect(85, 390, 280, 50))
         font = QtGui.QFont()
         font.setFamily("Arial,sans-serif")
-        font.setPointSize(-1)
+        font.setPointSize(10)
         self.lineEdit_password.setFont(font)
         self.lineEdit_password.setStyleSheet(self.styleLineEditOk)
         self.lineEdit_password.setMaxLength(16)
@@ -245,16 +245,3 @@ class Ui_MainWindow(object):
         self.lineEdit_password.setPlaceholderText(_translate("MainWindow", "CONTRASEÑA"))
         self.pushButton_login.setText(_translate("MainWindow", "INGRESAR"))
 
-
-import login_rc
-
-
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
