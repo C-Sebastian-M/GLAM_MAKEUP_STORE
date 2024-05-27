@@ -11,28 +11,29 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from recursos import login_rc
 
+
 class Ui_MainWindow(object):
 
     #
     # STYLES
     #
     styleLineEditOk = (
-            "QLineEdit {\n"
-            "    border: 2px solid #e4acd0; /* Borde */\n"
-            "    border-radius: 5px;\n"
-            "    padding: 5px;\n"
-            "    background-color: #f5eef2; /* Fondo */\n"
-            "    color: #dc84bc; /* Color del texto */\n"
-            "    font-family: Arial, sans-serif;\n"
-            "    font-size: 14px;\n"
-            "}\n"
-            "QLineEdit:hover {\n"
-            "    border: 2px solid rgb(255, 255, 255);\n"
-            "}\n"
-            "QLineEdit:focus {\n"
-            "    border: 2px solid #dc84bc; /* Borde al enfocar */\n"
-            "}"
-        )
+        "QLineEdit {\n"
+        "    border: 2px solid #e4acd0; /* Borde */\n"
+        "    border-radius: 5px;\n"
+        "    padding: 5px;\n"
+        "    background-color: #f5eef2; /* Fondo */\n"
+        "    color: #dc84bc; /* Color del texto */\n"
+        "    font-family: Arial, sans-serif;\n"
+        "    font-size: 14px;\n"
+        "}\n"
+        "QLineEdit:hover {\n"
+        "    border: 2px solid rgb(255, 255, 255);\n"
+        "}\n"
+        "QLineEdit:focus {\n"
+        "    border: 2px solid #dc84bc; /* Borde al enfocar */\n"
+        "}"
+    )
 
     styleLineEditError = (
         "QLineEdit {\n"
@@ -58,8 +59,8 @@ class Ui_MainWindow(object):
     # FUNCTIONS
     #
     def checkFields(self):
-        textUser = ""
-        textPassword = ""
+        textUser = self.lineEdit_user.text()
+        textPassword = self.lineEdit_password.text()
 
         def showMessage(message):
             self.frame_error.show()
@@ -219,7 +220,7 @@ class Ui_MainWindow(object):
         self.pushButton_login.setObjectName("pushButton_login")
         self.verticalLayout.addWidget(self.content)
         MainWindow.setCentralWidget(self.centralwidget)
-          #
+        #
         # FUNCTIONS
         #
 
@@ -242,6 +243,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Login"))
         self.label_error.setText(_translate("MainWindow", "Error"))
         self.lineEdit_user.setPlaceholderText(_translate("MainWindow", "USUARIO"))
-        self.lineEdit_password.setPlaceholderText(_translate("MainWindow", "CONTRASEÑA"))
+        self.lineEdit_password.setPlaceholderText(
+            _translate("MainWindow", "CONTRASEÑA")
+        )
         self.pushButton_login.setText(_translate("MainWindow", "INGRESAR"))
-
