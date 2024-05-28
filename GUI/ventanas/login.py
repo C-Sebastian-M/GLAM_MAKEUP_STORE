@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon 
 from recursos import login_rc
 
 
@@ -53,7 +54,7 @@ class Ui_MainWindow(object):
     )
 
     stylePopupError = "background-color: rgb(255, 85, 127); border-radius: 5px;"
-    stylePopupOk = "background-color: rgb(0, 255, 123); border-radius: 5px;"
+    stylePopupOk = "background-color: rgb(255, 0, 0); border-radius: 5px;"
 
     #
     # FUNCTIONS
@@ -88,7 +89,7 @@ class Ui_MainWindow(object):
             showMessage(text)
             self.frame_error.setStyleSheet(self.stylePopupError)
         else:
-            text = " Login OK. "
+            text = " Usuario o contraseña incorrecta. "
             showMessage(text)
             self.frame_error.setStyleSheet(self.stylePopupOk)
 
