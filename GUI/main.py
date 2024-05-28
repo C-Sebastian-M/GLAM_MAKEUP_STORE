@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from ventanas.login import Ui_MainWindow  # Asegúrate de que esta importación es correcta
 from ventanas.Caja import Ui_Caja, Sele_Compra # Importa tu ventana de caja
+from ventanas.soporte_admin import Ui_soporte_admin
 
 # Importa otras ventanas según sea necesario
 # from ventanas.admin_window import Ui_Admin
@@ -33,7 +34,7 @@ class LoginWindow(QMainWindow):
 
     def authenticate_user(self, username, password):
         # Aquí deberías tener la lógica de autenticación, por ejemplo, verificar las credenciales en una base de datos
-        if username == "admin" and password == "admin_password":
+        if username == "admin" and password == "admin":
             return "admin"
         elif username == "caja" and password == "caja":
             return "caja"
@@ -43,8 +44,11 @@ class LoginWindow(QMainWindow):
             return None
 
     def openAdminWindow(self):
-        # Abre la ventana de administrador
-        pass  # Implementa esto según tu ventana de administrador
+        self.soporte_admin_window = QMainWindow()
+        self.ui_soporte_admin = Ui_soporte_admin()
+        self.ui_soporte_admin.setupUi(self.soporte_admin_window)
+        self.soporte_admin_window.show()
+        self.close()
 
     def openCajaWindow(self):
         self.caja_window = QMainWindow()
