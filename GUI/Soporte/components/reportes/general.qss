@@ -1,0 +1,16 @@
+#groupBox {
+    border-style: none;
+}
+
+QPushButton {
+    font-size: 14px;
+    height: 30px;
+
+    color: white;
+    background-color: #D484B4;
+    border-radius: 30px;
+}
+
+QPushButton:hover {
+    background-color: #ebbcdc;
+}
