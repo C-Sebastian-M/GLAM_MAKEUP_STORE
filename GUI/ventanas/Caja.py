@@ -98,9 +98,14 @@ class Ui_Caja(object): #terminada (falta reporte diario)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+<<<<<<< HEAD
+        
+        self.pushButton_2.clicked.connect(MainWindow.close)
+=======
         self.pushButtonC_2.clicked.connect(MainWindow.close)
         self.pushButtonC_3.clicked.connect(MainWindow.close)
         self.pushButtonC_3.clicked.connect(self.nextWindow)
+>>>>>>> edb1ddc0b93f5cdac15e338d0bfac60a4ca2519d
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
