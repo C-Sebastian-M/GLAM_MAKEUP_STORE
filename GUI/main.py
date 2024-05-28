@@ -14,6 +14,7 @@ class LoginWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.pushButton_login.clicked.connect(self.checkFields)
+        self.setMaximumSize(self.size())
 
     def checkFields(self):
         username = self.ui.lineEdit_user.text()
