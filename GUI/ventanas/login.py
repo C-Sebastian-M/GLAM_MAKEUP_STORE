@@ -97,7 +97,6 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        MainWindow.setWindowIcon(QIcon("recursos/images/logo.ico"))
         self.centralwidget.setStyleSheet("background-color: rgb(255, 255, 255)")
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)

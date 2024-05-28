@@ -3,7 +3,7 @@
     <file>images/fondo.jpg</file>
   </qresource>
   <qresource prefix="Icono">
-    <file>images/logo.ico</file>
+    <file>images/icono.ico</file>
   </qresource>
   <qresource prefix="Salir">
     <file>images/cil-x.png</file>
