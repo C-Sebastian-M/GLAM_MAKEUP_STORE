@@ -1,7 +1,9 @@
 import sys
+from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from ventanas.login import Ui_MainWindow  # Asegúrate de que esta importación es correcta
-from ventanas.Caja import Ui_Caja  # Importa tu ventana de caja
+from ventanas.Caja import Ui_Caja, Sele_Compra # Importa tu ventana de caja
+
 # Importa otras ventanas según sea necesario
 # from ventanas.admin_window import Ui_Admin
 # from ventanas.soporte_window import Ui_Soporte
@@ -61,6 +63,44 @@ class LoginWindow(QMainWindow):
         msg_box.setWindowTitle("Error de autenticación")
         msg_box.exec_()
 
+class Caja(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.cajaC = Ui_Caja()
+        self.cajaC.setupUi(self)
+        self.cajaC.PushButton.clicked.connect(self.report) #metodo para añadir reporte, por ahora vacio
+        self.cajaC.pushButton_2.clicked.connect(self.exit) #metodo para salir del programa
+        self.cajaC.PushButton_3.clicked.connect(self.OpenWindowSele) #metodo par avanzar a la siguient pagina
+
+    def report(self):
+        pass
+
+    def exit(self):
+        self.close()
+
+    def OpenWindowSele(self):
+        self.SeleW = QMainWindow()
+        self.ui_sele = Sele_Compra()
+        self.ui_sele.setupUi(self.SeleW)
+        self.seleW.show()
+        self.close()
+
+class SeleCompra(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.Sele=Sele_Compra()
+        self.Sele.setupUi(self)
+        self.Sele.pushButtonC.clicked.connect(self.Buy)
+        self.Sele.pushButtonC_2.clicked.connect(self.cancel)
+    def Buy(self):
+        pass
+
+    def cancel(self):
+        self.backC = QMainWindow()
+        self.ui_backC = Ui_Caja()
+        self.ui_backC.setupUi(self.backC)
+        self.backC.show()
+        
 def main():
     app = QApplication(sys.argv)
     login_window = LoginWindow()
