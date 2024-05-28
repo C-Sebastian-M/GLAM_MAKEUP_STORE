@@ -99,6 +99,8 @@ class Ui_Caja(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
+        self.pushButton_2.clicked.connect(MainWindow.close)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
