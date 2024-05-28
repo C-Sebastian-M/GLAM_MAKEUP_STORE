@@ -1,5 +1,7 @@
 import pandas as pd
 from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
+from datetime import datetime
 
 
 class GestionDatos:
@@ -7,7 +9,6 @@ class GestionDatos:
         self.nombre_archivo = nombre_archivo
         self.crear_dataframes()
         self.guardar_dataframes()
-        self.ajustar_columnas_excel()
 
     def crear_dataframes(self):
         self.columnas_clientes = ["Cedula", "Nombre", "Telefono"]
@@ -18,6 +19,7 @@ class GestionDatos:
         self.columnas_servicios = ["ID servicio", "Nombre Servicio", "Costo"]
         self.columnas_contraseñas = ["Usuario", "Contraseña", "Rol"]
         self.columnas_inventario = ["Producto", "Stock"]
+        self.columnas_reservas_servicios = ["ID Reserva", "Cliente", "Servicio", "Fecha Reserva", "Fecha Servicio"]
 
         self.clientes = pd.DataFrame(columns=self.columnas_clientes)
         self.productos = pd.DataFrame(columns=self.columnas_productos)
@@ -26,6 +28,7 @@ class GestionDatos:
         self.servicios = pd.DataFrame(columns=self.columnas_servicios)
         self.contraseñas = pd.DataFrame(columns=self.columnas_contraseñas)
         self.inventario = pd.DataFrame(columns=self.columnas_inventario)
+        self.reservas_servicios = pd.DataFrame(columns=self.columnas_reservas_servicios)
 
     def guardar_dataframes(self):
         try:
@@ -37,6 +40,8 @@ class GestionDatos:
                 self.servicios.to_excel(writer, sheet_name='Servicios', index=False)
                 self.contraseñas.to_excel(writer, sheet_name='Contraseñas', index=False)
                 self.inventario.to_excel(writer, sheet_name='Inventario', index=False)
+                self.reservas_servicios.to_excel(writer, sheet_name='ReservasServicios', index=False)
+            self.ajustar_columnas_excel()
         except Exception as e:
             print(f"Error al guardar los dataframes en el archivo Excel: {e}")
 
@@ -50,12 +55,12 @@ class GestionDatos:
                     columna = [celda for celda in columnas]
                     for celda in columna:
                         try:
-                            if len(str(celda.value)) > max_length:
-                                max_length = len(str(celda.value))
+                            if celda.value is not None:
+                                max_length = max(max_length, len(str(celda.value)))
                         except Exception as e:
                             print(f"Error al procesar la celda {celda.coordinate}: {e}")
                     ajusta_ancho = max_length + 2
-                    columna_letra = columna[0].column_letter
+                    columna_letra = get_column_letter(columna[0].column)
                     hoja_actual.column_dimensions[columna_letra].width = ajusta_ancho
             archivo.save(self.nombre_archivo)
         except Exception as e:
@@ -105,7 +110,7 @@ class GestionDatos:
             self.guardar_dataframes()
             print(f"Cliente con cedula {cedula} ha sido actualizado.")
         else:
-            print(f"Cliente con cedua {cedula} no encontrado.")
+            print(f"Cliente con cedula {cedula} no encontrado.")
 
     # Productos
     def agregar_producto(self, referencia, codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales):
@@ -224,6 +229,29 @@ class GestionDatos:
         else:
             print(f"Servicio con ID {id_servicio} no encontrado.")
 
+    # Reserva de Servicios
+    def reservar_servicio(self, id_reserva, cliente, servicio, fecha_servicio):
+        fecha_reserva = datetime.now().strftime("%d/%m/%Y %H:%M")
+        nueva_reserva = pd.DataFrame([[id_reserva, cliente, servicio, fecha_reserva, fecha_servicio]],
+                                     columns=self.columnas_reservas_servicios)
+        self.reservas_servicios = pd.concat([self.reservas_servicios, nueva_reserva], ignore_index=True)
+        self.guardar_dataframes()
+
+    def cancelar_reserva_servicio(self, id_reserva):
+        reserva = self.reservas_servicios[self.reservas_servicios['ID Reserva'] == id_reserva]
+        if not reserva.empty:
+            self.reservas_servicios = self.reservas_servicios[self.reservas_servicios['ID Reserva'] != id_reserva]
+            self.guardar_dataframes()
+        else:
+            return None
+
+    def buscar_reserva_por_servicio(self, id_servicio):
+        reservas = self.reservas_servicios[self.reservas_servicios['Servicio'] == id_servicio]
+        if not reservas.empty:
+            return reservas
+        else:
+            return None
+
     # Contraseñas
     def agregar_contraseña(self, usuario, contraseña, rol):
         nueva_contraseña = pd.DataFrame([[usuario, contraseña, rol]], columns=self.columnas_contraseñas)
@@ -239,28 +267,15 @@ class GestionDatos:
             return None
 
     def eliminar_usuario(self, usuario):
-        usuario_df = self.contraseñas[self.contraseñas['Usuario'] == usuario]
-        if not usuario_df.empty:
-            self.contraseñas = self.contraseñas[self.contraseñas['Usuario'] != usuario]
+        usuarios = self.contraseñas[self.contraseñas["Usuario"] == usuario]
+        if not usuarios.empty:
+            self.contraseñas = self.contraseñas[self.contraseñas["Usuario"] != usuario]
             self.guardar_dataframes()
-            print(f"Usuario {usuario} eliminado.")
         else:
-            print(f"Usuario {usuario} no encontrado.")
-
-    # Inventario
-    def agregar_inventario(self, producto, stock):
-        nuevo_inventario = pd.DataFrame([[producto, stock]], columns=self.columnas_inventario)
-        self.inventario = pd.concat([self.inventario, nuevo_inventario], ignore_index=True)
-        self.guardar_dataframes()
-
-    def actualizar_stock(self, nombre_producto, nuevo_stock):
-        producto = self.inventario[self.inventario["Producto"] == nombre_producto]
-        if not producto.empty:
-            self.inventario.loc[self.inventario["Producto"] == nombre_producto, "Stock"] = nuevo_stock
-            self.guardar_dataframes()
-            print(f"Stock del producto {nombre_producto} actualizado a {nuevo_stock}.")
-        else:
-            print(f"Producto {nombre_producto} no encontrado en el inventario.")
+            print(f"El usuario {usuario} no ha sido encontrado")
 
 
-
+x = GestionDatos('datos.xlsx')
+x.crear_dataframes()
+x.reservar_servicio(12, "mgiue", 345, "28/05/2024 14:30")
+x.guardar_dataframes()
