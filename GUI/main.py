@@ -2,7 +2,7 @@ import sys
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from ventanas.login import Ui_MainWindow  # Asegúrate de que esta importación es correcta
-from ventanas.Caja import Ui_Caja, Sele_Compra # Importa tu ventana de caja
+from ventanas.Caja import Ui_Caja, Sele_Compra, Sele_Cliente # Importa tu ventana de caja
 
 # Importa otras ventanas según sea necesario
 # from ventanas.admin_window import Ui_Admin
@@ -101,6 +101,10 @@ class SeleCompra(QMainWindow):
         self.ui_backC.setupUi(self.backC)
         self.backC.show()
         
+class SeleCliente(QMainWindow):
+    def __init__(self):
+        pass
+    
 def main():
     app = QApplication(sys.argv)
     login_window = LoginWindow()
