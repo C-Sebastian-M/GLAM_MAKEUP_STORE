@@ -1,13 +1,14 @@
-#AdminWindow {
-	padding: 10px;
-}
-
-#groupBox {
+#header {
     border-style: none;
 }
 
+#cerrarBtn, #volverBtn {
+    border-radius: 10px;
+}
+
 QPushButton {
-    font-size: 12px;
+    font-size: 14px;
+    height: 30px;
 
     color: white;
     background-color: #D484B4;
