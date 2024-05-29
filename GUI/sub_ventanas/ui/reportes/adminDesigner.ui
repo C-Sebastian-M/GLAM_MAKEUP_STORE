@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SuppWindow</class>
- <widget class="QMainWindow" name="SuppWindow">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,13 +15,13 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../images/store_logo.png</normaloff>../../images/store_logo.png</iconset>
+    <normaloff>../../../recursos/images/store_logo.png</normaloff>../../../recursos/images/store_logo.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="container">
+   <widget class="QFrame" name="mainContainer">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -71,7 +71,7 @@
        <number>40</number>
       </property>
       <item row="0" column="0">
-       <widget class="QPushButton" name="inventarioBtn">
+       <widget class="QPushButton" name="gestionBtn">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -91,12 +91,13 @@
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>Inventario producto</string>
+         <string>Gestion de
+Clientes</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QPushButton" name="usuarioBtn">
+       <widget class="QPushButton" name="catalogoBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -104,12 +105,12 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Reportes</string>
+         <string>Catalogo</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QPushButton" name="generalBtn">
+       <widget class="QPushButton" name="inventarioBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -117,7 +118,8 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>general</string>
+         <string>Inventario de
+inventario</string>
         </property>
        </widget>
       </item>
@@ -138,7 +140,7 @@
        </widget>
       </item>
       <item row="2" column="3">
-       <widget class="QPushButton" name="usuarioBtn_2">
+       <widget class="QPushButton" name="roleBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -146,12 +148,12 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>usuario</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QPushButton" name="usuarioBtn_3">
+       <widget class="QPushButton" name="reportesBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -159,14 +161,14 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Catalogo</string>
+         <string>Reportes</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="header">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -194,7 +196,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../../images/store_logo.png</pixmap>
+      <pixmap>../../../recursos/images/store_logo.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -216,9 +218,22 @@
       </font>
      </property>
      <property name="text">
-      <string>Soporte</string>
+      <string>Title</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="cerrarBtn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cerrar</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
