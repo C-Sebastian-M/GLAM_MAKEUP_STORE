@@ -47,7 +47,6 @@ class LoginWindow(QMainWindow):
         ])
 
         self.admin_soporte.run()
-        self.close()
 
     def openCajaWindow(self):
         self.caja_window = QMainWindow()

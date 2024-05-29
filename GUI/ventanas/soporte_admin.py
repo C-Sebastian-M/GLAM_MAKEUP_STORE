@@ -49,6 +49,7 @@ class AdminSoporteManager(QMainWindow):
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
         self.reportePanel.inventarioBtn.clicked.connect(self.ventana_inventario)
 
+
         # Panel de inventario
         self.inventarioPanel.volverBtn.clicked.connect(self.anterior)
 
