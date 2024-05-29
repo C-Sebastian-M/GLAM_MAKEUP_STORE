@@ -46,7 +46,6 @@ class LoginWindow(QMainWindow):
             return None
 
     def openAdminWindow(self):
-        self.user = "admin"
         self.soporte_admin_window = QMainWindow()
         self.ui_soporte_admin = Ui_soporte_admin()
         self.ui_soporte_admin.setupUi(self.soporte_admin_window)
