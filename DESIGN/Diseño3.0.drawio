@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-05-29T02:25:03.919Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0" etag="iVyCQSFe3Dj4hiB1mt2c" version="24.4.9" type="github">
+<mxfile host="app.diagrams.net" modified="2024-05-29T04:07:08.928Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0" etag="0qdKEHv-FNpZSO1-MS6c" version="24.4.9" type="github">
   <diagram name="Página-1" id="FN1W2snCmmNbTDyE0-3d">
-    <mxGraphModel dx="2923" dy="546" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3452" dy="773" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2360,11 +2360,14 @@
         <mxCell id="3c7HaSw2Zu1qOWb-Tpbc-4" value="Edicion de perfil" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2803.55" y="850" width="291.5" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="3c7HaSw2Zu1qOWb-Tpbc-5" value="atras" style="html=1;whiteSpace=wrap;" parent="3c7HaSw2Zu1qOWb-Tpbc-4" vertex="1">
-          <mxGeometry x="14.5" y="31" width="55.5" height="29" as="geometry" />
+        <mxCell id="3c7HaSw2Zu1qOWb-Tpbc-6" value="Nueva contraseña" style="html=1;whiteSpace=wrap;" parent="3c7HaSw2Zu1qOWb-Tpbc-4" vertex="1">
+          <mxGeometry x="106.45" y="60" width="85" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="3c7HaSw2Zu1qOWb-Tpbc-6" value="Ver servicios&lt;br&gt;(muestra el dataframe)" style="html=1;whiteSpace=wrap;" parent="3c7HaSw2Zu1qOWb-Tpbc-4" vertex="1">
-          <mxGeometry x="103.25" y="84" width="85" height="50" as="geometry" />
+        <mxCell id="3r3O-5YN85M7pwkBiNok-2" value="cancelar&amp;nbsp;" style="html=1;whiteSpace=wrap;strokeColor=#F70202;" vertex="1" parent="3c7HaSw2Zu1qOWb-Tpbc-4">
+          <mxGeometry x="29.449999999999818" y="155" width="77" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3r3O-5YN85M7pwkBiNok-3" value="confirmar" style="html=1;whiteSpace=wrap;strokeColor=#33FF33;" vertex="1" parent="3c7HaSw2Zu1qOWb-Tpbc-4">
+          <mxGeometry x="166.44999999999982" y="155" width="74" height="30" as="geometry" />
         </mxCell>
         <mxCell id="3c7HaSw2Zu1qOWb-Tpbc-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3c7HaSw2Zu1qOWb-Tpbc-2" target="3c7HaSw2Zu1qOWb-Tpbc-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
