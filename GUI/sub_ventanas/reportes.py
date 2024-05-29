@@ -58,7 +58,7 @@ class Ventas(QWidget, CBackground):
 class Inventario(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi(r"C:\GLAM_MAKEUP_STORE\GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
 
     def inicializar(self):
         pass
@@ -66,12 +66,12 @@ class Inventario(QWidget, CBackground):
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"C:\GLAM_MAKEUP_STORE\GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
 
 class Admin(QMainWindow, CBackground):
     def __init__(self) -> None:
         super(QMainWindow, self).__init__()
-        uic.loadUi(r"C:\GLAM_MAKEUP_STORE\GUI\sub_ventanas\ui\reportes\adminDesigner.ui", self)
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui", self)
 
         self.cerrarBtn.clicked.connect(QApplication.instance().quit)
 
@@ -159,7 +159,7 @@ if __name__ == "__main__":
     # styles
     admin = AdminManager()
     admin.leer_estilos(app, [
-        "C:\GLAM_MAKEUP_STORE\GUI\sub_ventanas\qss\\reportes\\admin.qss",
+        "GUI\sub_ventanas\qss\\reportes\\admin.qss",
     ])
 
     admin.run()
