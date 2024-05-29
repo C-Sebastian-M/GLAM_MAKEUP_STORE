@@ -1,12 +1,15 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from ventanas.login import Ui_MainWindow # Asegúrate de que esta importación es correcta
+from ventanas.login import (
+    Ui_MainWindow,
+)  # Asegúrate de que esta importación es correcta
 from ventanas.Caja import Ui_Caja
 from ventanas.soporte_admin import Ui_soporte_admin
 
 # Importa otras ventanas según sea necesario
 # from ventanas.admin_window import Ui_Admin
 # from ventanas.soporte_window import Ui_Soporte
+
 
 class LoginWindow(QMainWindow):
     def __init__(self):
@@ -68,12 +71,12 @@ class LoginWindow(QMainWindow):
         msg_box.exec_()
 
 
-    
 def main():
     app = QApplication(sys.argv)
     login_window = LoginWindow()
     login_window.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

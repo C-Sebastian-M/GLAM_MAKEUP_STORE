@@ -15,37 +15,46 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../../images/store_logo.png</normaloff>../../../../images/store_logo.png</iconset>
+    <normaloff>../../../recursos/images/store_logo.png</normaloff>../../../recursos/images/store_logo.png</iconset>
   </property>
-  <widget class="QGroupBox" name="HeadContainer">
+  <widget class="QGroupBox" name="header">
    <property name="enabled">
     <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>10</y>
-     <width>191</width>
-     <height>71</height>
+     <width>201</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="title">
     <string/>
    </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <widget class="QLabel" name="logo">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>0</x>
+      <y>0</y>
       <width>50</width>
       <height>50</height>
      </rect>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../../../images/store_logo.png</pixmap>
+     <pixmap>../../../recursos/images/store_logo.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -54,15 +63,16 @@
    <widget class="QLabel" name="Reportes">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>60</x>
       <y>10</y>
-      <width>121</width>
-      <height>51</height>
+      <width>131</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>20</pointsize>
+      <family>Dubai Medium</family>
+      <pointsize>22</pointsize>
       <italic>false</italic>
      </font>
     </property>
@@ -71,7 +81,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QFrame" name="container">
+  <widget class="QFrame" name="mainContainer">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -86,7 +96,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QPushButton" name="inventario">
+   <widget class="QPushButton" name="inventarioBtn">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -99,7 +109,7 @@
      <string>Inventario</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="ventas">
+   <widget class="QPushButton" name="ventasBtn">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -112,6 +122,19 @@
      <string>Ventas</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="volverBtn">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Volver</string>
+   </property>
   </widget>
  </widget>
  <resources/>

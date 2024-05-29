@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QIcon 
+from PyQt5.QtGui import QIcon
 from recursos import login_rc
 
 
