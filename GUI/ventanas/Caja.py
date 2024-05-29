@@ -497,7 +497,10 @@ class Cli_Curr(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def curnextwin(self):
-        pass
+        self.next = QMainWindow()
+        self.nexte = Carrito()
+        self.nexte.setupUi(self.next)
+        self.next.show()
 
     def backSeleCli(self):
         self.back = QMainWindow()
@@ -562,7 +565,7 @@ class Cli_New(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(0, 0, 111, 41))
+        self.pushButton_2.setGeometry(QtCore.QRect(250, 480, 111, 41))
         self.pushButton_2.setStyleSheet(
             "QPushButton {\n"
             "    border: 2px solid #e4acd0;\n"
@@ -583,6 +586,28 @@ class Cli_New(object):
             "}"
         )
         self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(450, 480, 111, 41))
+        self.pushButton.setStyleSheet(
+            "QPushButton {\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4; \n"
+            "    color: #ffffff; \n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            "}\n"
+            "\n"
+            "QPushButton:hover {\n"
+            "    background-color: #dc84bc; \n"
+            "}\n"
+            "\n"
+            "QPushButton:pressed {\n"
+            "    background-color: #d484b4; \n"
+            "}"
+        )
+        self.pushButton.setObjectName("pushButton")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(40, 250, 321, 51))
         self.label_3.setStyleSheet(
@@ -678,9 +703,17 @@ class Cli_New(object):
         MainWindow.setStatusBar(self.statusbar)
         self.pushButton_2.clicked.connect(MainWindow.close)
         self.pushButton_2.clicked.connect(self.backSeleCli)
+        self.pushButton.clicked.connect(MainWindow.close)
+        self.pushButton.clicked.connect(self.nextwindow)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def nextwindow(self):
+        self.next = QMainWindow()
+        self.nextCli = Carrito()
+        self.nextCli.setupUi(self.next)
+        self.next.show()
 
     def backSeleCli(self):
         self.back = QMainWindow()
@@ -693,11 +726,327 @@ class Cli_New(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "CLIENTE NUEVO"))
         self.pushButton_2.setText(_translate("MainWindow", "Atras"))
+        self.pushButton.setText(_translate("MainWindow", "Aceptar"))
         self.label_3.setText(_translate("MainWindow", "Cédula"))
         self.label_4.setText(_translate("MainWindow", "Nombre"))
         self.label_5.setText(_translate("MainWindow", "Número"))
         self.label_6.setText(_translate("MainWindow", "Cedula valida"))
         self.label_7.setText(_translate("MainWindow", "Cedula valida"))
+
+
+class Carrito(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
+        self.label.setStyleSheet(
+            "\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4;\n"
+            "    color: #ffffff;\n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            ""
+        )
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.cancelButton = QtWidgets.QPushButton(self.centralwidget)
+        self.cancelButton.setGeometry(QtCore.QRect(120, 350, 161, 111))
+        self.cancelButton.setStyleSheet(
+            "QPushButton {\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4; \n"
+            "    color: #ffffff; \n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            "}\n"
+            "\n"
+            "QPushButton:hover {\n"
+            "    background-color: #dc84bc; \n"
+            "}\n"
+            "\n"
+            "QPushButton:pressed {\n"
+            "    background-color: #d484b4; \n"
+            "}"
+        )
+        self.cancelButton.setObjectName("pushButton")
+        self.serviciosButton = QtWidgets.QPushButton(self.centralwidget)
+        self.serviciosButton.setGeometry(QtCore.QRect(630, 210, 161, 41))
+        self.serviciosButton.setStyleSheet(
+            "QPushButton {\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4; \n"
+            "    color: #ffffff; \n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            "}\n"
+            "\n"
+            "QPushButton:hover {\n"
+            "    background-color: #dc84bc; \n"
+            "}\n"
+            "\n"
+            "QPushButton:pressed {\n"
+            "    background-color: #d484b4; \n"
+            "}"
+        )
+        self.serviciosButton.setObjectName("serviciosButton")
+        self.productosButton = QtWidgets.QPushButton(self.centralwidget)
+        self.productosButton.setGeometry(QtCore.QRect(10, 210, 161, 41))
+        self.productosButton.setStyleSheet(
+            "QPushButton {\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4; \n"
+            "    color: #ffffff; \n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            "}\n"
+            "\n"
+            "QPushButton:hover {\n"
+            "    background-color: #dc84bc; \n"
+            "}\n"
+            "\n"
+            "QPushButton:pressed {\n"
+            "    background-color: #d484b4; \n"
+            "}"
+        )
+        self.productosButton.setObjectName("productosButoton")
+        self.ContinueButton = QtWidgets.QPushButton(self.centralwidget)
+        self.ContinueButton.setGeometry(QtCore.QRect(510, 350, 161, 111))
+        self.ContinueButton.setStyleSheet(
+            "QPushButton {\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4; \n"
+            "    color: #ffffff; \n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            "}\n"
+            "\n"
+            "QPushButton:hover {\n"
+            "    background-color: #dc84bc; \n"
+            "}\n"
+            "\n"
+            "QPushButton:pressed {\n"
+            "    background-color: #d484b4; \n"
+            "}"
+        )
+        self.ContinueButton.setObjectName("ContinueButton")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+        self.cancelButton.clicked.connect(MainWindow.close)
+        self.cancelButton.clicked.connect(self.cancel)
+
+        self.serviciosButton.clicked.connect(self.open_servicios_window)
+
+        self.productosButton.clicked.connect(self.open_productos_window)
+
+        self.ContinueButton.clicked.connect(MainWindow.close)
+        self.ContinueButton.clicked.connect(self.Continue)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "CARRITO DE COMPRAS"))
+        self.cancelButton.setText(_translate("MainWindow", "Cancelar"))
+        self.serviciosButton.setText(_translate("MainWindow", "Servicios"))
+        self.productosButton.setText(_translate("MainWindow", "Productos"))
+        self.ContinueButton.setText(_translate("MainWindow", "Continuar"))
+
+    def open_servicios_window(self):
+        self.selserv = QMainWindow()
+        self.Serv = Servicios()
+        self.Serv.setupUi(self.selserv)
+        self.selserv.show()
+
+    def open_productos_window(self):
+        self.selrpro = QMainWindow()
+        self.PROD = Productos()
+        self.PROD.setupUi(self.selrpro)
+        self.selrpro.show()
+
+    def cancel(self):
+        self.backCli = QMainWindow()
+        self.Bcli = Sele_Cliente()
+        self.Bcli.setupUi(self.backCli)
+        self.backCli.show()
+
+    def Continue(self):
+        pass
+
+
+class Productos(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
+        self.label.setStyleSheet(
+            "\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4;\n"
+            "    color: #ffffff;\n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            ""
+        )
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(10, 260, 441, 41))
+        self.label_2.setStyleSheet(
+            "\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4;\n"
+            "    color: #ffffff;\n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            ""
+        )
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(10, 330, 441, 41))
+        self.label_3.setStyleSheet(
+            "\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4;\n"
+            "    color: #ffffff;\n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            ""
+        )
+        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_3.setObjectName("label_3")
+        self.comboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox.setGeometry(QtCore.QRect(470, 260, 271, 41))
+        self.comboBox.setObjectName("comboBox")
+        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(470, 330, 271, 41))
+        self.lineEdit.setObjectName("lineEdit")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "Productos"))
+        self.label_2.setText(_translate("MainWindow", "Seleccionar Producto"))
+        self.label_3.setText(_translate("MainWindow", "Seleccionar Cantidad"))
+
+
+class Servicios(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
+        self.label.setStyleSheet(
+            "\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4;\n"
+            "    color: #ffffff;\n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            ""
+        )
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(10, 260, 441, 41))
+        self.label_2.setStyleSheet(
+            "\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4;\n"
+            "    color: #ffffff;\n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            ""
+        )
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(10, 330, 441, 41))
+        self.label_3.setStyleSheet(
+            "\n"
+            "    border: 2px solid #e4acd0;\n"
+            "    border-radius: 5px;\n"
+            "    padding: 8px 16px;\n"
+            "    background-color: #dc95c4;\n"
+            "    color: #ffffff;\n"
+            "    font-family: Arial, sans-serif;\n"
+            "    font-size: 16px;\n"
+            ""
+        )
+        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_3.setObjectName("label_3")
+        self.comboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox.setGeometry(QtCore.QRect(470, 260, 271, 41))
+        self.comboBox.setObjectName("comboBox")
+        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(470, 330, 271, 41))
+        self.lineEdit.setObjectName("lineEdit")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "Servicios"))
+        self.label_2.setText(_translate("MainWindow", "Seleccionar Servicio"))
+        self.label_3.setText(_translate("MainWindow", "Seleccionar Cantidad"))
 
 
 if __name__ == "__main__":
