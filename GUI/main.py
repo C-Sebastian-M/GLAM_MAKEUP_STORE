@@ -4,16 +4,13 @@ from ventanas.login import (
     Ui_MainWindow,
 )  # Asegúrate de que esta importación es correcta
 from ventanas.Caja import Ui_Caja
-from ventanas.soporte_admin import Ui_soporte_admin
-
-# Importa otras ventanas según sea necesario
-# from ventanas.admin_window import Ui_Admin
-# from ventanas.soporte_window import Ui_Soporte
+from ventanas.soporte_admin import AdminSoporteManager
 
 
 class LoginWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, app):
         super().__init__()
+        self.app = app
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.pushButton_login.clicked.connect(self.checkFields)
@@ -25,12 +22,10 @@ class LoginWindow(QMainWindow):
 
         user_role = self.authenticate_user(username, password)
 
-        if user_role == "admin":
-            self.openAdminWindow()
+        if user_role == "admin" or user_role == "soporte":
+            self.openAdminSupportWindow(user_role)
         elif user_role == "caja":
             self.openCajaWindow()
-        elif user_role == "soporte":
-            self.openSoporteWindow()
         else:
             self.showErrorMessage("Credenciales incorrectas")
 
@@ -40,17 +35,18 @@ class LoginWindow(QMainWindow):
             return "admin"
         elif username == "caja" and password == "caja":
             return "caja"
-        elif username == "soporte" and password == "soporte_password":
+        elif username == "soporte" and password == "soporte":
             return "soporte"
         else:
             return None
 
-    def openAdminWindow(self):
-        self.user = "admin"
-        self.soporte_admin_window = QMainWindow()
-        self.ui_soporte_admin = Ui_soporte_admin()
-        self.ui_soporte_admin.setupUi(self.soporte_admin_window)
-        self.soporte_admin_window.show()
+    def openAdminSupportWindow(self, user_role: str):
+        self.admin_soporte = AdminSoporteManager(user_role=user_role)
+        self.admin_soporte.leer_estilos(self.app, [
+            "GUI\sub_ventanas\css\\admin.css",
+        ])
+
+        self.admin_soporte.run()
         self.close()
 
     def openCajaWindow(self):
@@ -59,10 +55,6 @@ class LoginWindow(QMainWindow):
         self.ui_caja.setupUi(self.caja_window)
         self.caja_window.show()
         self.close()
-
-    def openSoporteWindow(self):
-        # Abre la ventana de soporte
-        pass  # Implementa esto según tu ventana de soporte
 
     def showErrorMessage(self, message):
         msg_box = QMessageBox()
@@ -74,8 +66,10 @@ class LoginWindow(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    login_window = LoginWindow()
+
+    login_window = LoginWindow(app)
     login_window.show()
+
     sys.exit(app.exec_())
 
 

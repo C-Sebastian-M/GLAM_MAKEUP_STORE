@@ -1,8 +1,8 @@
 import sys
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QStackedWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QStackedWidget, QPushButton
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QBrush, QColor
+from PyQt5.QtGui import QPainter, QBrush, QColor, QCursor
 
 # Tipado
 from typing import List
@@ -68,17 +68,19 @@ class ReportePanel(QWidget, CBackground):
         super().__init__()
         uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
 
-class Admin(QMainWindow, CBackground):
-    def __init__(self) -> None:
+class AdminSoporte(QMainWindow, CBackground):
+    def __init__(self, role: str) -> None:
         super(QMainWindow, self).__init__()
+        self.role = role
+
         uic.loadUi(r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui", self)
 
         self.cerrarBtn.clicked.connect(QApplication.instance().quit)
 
-        self.inicializar(es_admin=False)
+        self.inicializar(is_admin = True if self.role.strip().lower() == "admin" else False)
 
-    def inicializar(self, es_admin: str | bool) -> None:
-        if es_admin or es_admin == "admin":
+    def inicializar(self, is_admin: str | bool) -> None:
+        if is_admin or is_admin == "admin":
             self.setWindowTitle("Administrador")
             self.title.setText("Admin")
             self.roleBtn.setText("Reporte\nDiario")
@@ -87,81 +89,3 @@ class Admin(QMainWindow, CBackground):
         self.setWindowTitle("Soporte")
         self.title.setText("Soporte")
         self.roleBtn.setText("Administrar\nusuario")
-
-class AdminManager(QMainWindow):
-    def __init__(self) -> None:
-        super(QMainWindow, self).__init__()
-        self.stack = []
-
-        # Inicializando ventanas
-        self.admin = Admin()
-        self.reportePanel = ReportePanel()
-        self.inventarioPanel = Inventario()
-
-        # Insertando al stack
-        self.widgets_stack = QStackedWidget(self)
-        self.widgets_stack.addWidget(self.admin)
-        self.widgets_stack.addWidget(self.reportePanel)
-        self.widgets_stack.addWidget(self.inventarioPanel)
-
-        # asignando el widget central
-        self.setCentralWidget(self.widgets_stack)
-        # set actual
-        self.widgets_stack.setCurrentWidget(self.admin)
-
-        # conexiones
-        self.inicializar()
-
-    def inicializar(self):
-        self.resize(800, 600)
-        self.conexiones()
-
-    def conexiones(self):
-        # Main
-        self.admin.reportesBtn.clicked.connect(self.ventana_reportes)
-
-        # Panel de reportes
-        self.reportePanel.volverBtn.clicked.connect(self.anterior)
-        self.reportePanel.inventarioBtn.clicked.connect(self.ventana_inventario)
-
-        # Panel de inventario
-        self.inventarioPanel.volverBtn.clicked.connect(self.anterior)
-
-    def ventana_reportes(self):
-        self.widgets_stack.setCurrentWidget(self.reportePanel)
-        self.stack.append(self.admin)
-
-    def ventana_inventario(self):
-        self.widgets_stack.setCurrentWidget(self.inventarioPanel)
-        self.stack.append(self.reportePanel)
-
-    def anterior(self):
-        anterior = self.admin
-
-        if self.stack:
-            anterior = self.stack.pop()
-        self.widgets_stack.setCurrentWidget(anterior)
-
-    def leer_estilos(self, app: QApplication, paths: List[str]) -> None: # Toca organizar esta funcion
-        for path in paths:
-            with open(path, 'r') as style_file:
-                style_line = style_file.read()
-
-        app.setStyleSheet(style_line)
-        style_file.close()
-
-    def run(self):
-        self.show()
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-
-    # styles
-    admin = AdminManager()
-    admin.leer_estilos(app, [
-        "GUI\sub_ventanas\qss\\reportes\\admin.qss",
-    ])
-
-    admin.run()
-
-    sys.exit(app.exec_())
