@@ -174,14 +174,8 @@ class Ui_soporte_admin(object):
 
         self.retranslateUi(soporte_admin)
         QtCore.QMetaObject.connectSlotsByName(soporte_admin)
-        self.pushButton_6.clicked.connect(self.regresar_login)
         self.pushButton_6.clicked.connect(soporte_admin.close)
     
-    def regresar_login(self):
-        self.sele = QMainWindow()
-        self.ui_backC = Ui_MainWindow()
-        self.ui_backC.setupUi(self.sele)
-        self.sele.show()
 
     def retranslateUi(self, soporte_admin):
         _translate = QtCore.QCoreApplication.translate
@@ -190,7 +184,7 @@ class Ui_soporte_admin(object):
         self.pushButton_2.setText(_translate("soporte_admin", "Gestión clientes"))
         self.pushButton_3.setText(_translate("soporte_admin", "Reportes personalizados"))
         self.pushButton_4.setText(_translate("soporte_admin", "Reporte diario inventario"))
-        self.pushButton_6.setText(_translate("soporte_admin", "Cerrar sesión"))
+        self.pushButton_6.setText(_translate("soporte_admin", "Cerrar Programa"))
         self.pushButton_7.setText(_translate("soporte_admin", "Catálogo de servicios"))
         self.pushButton_8.setText(_translate("soporte_admin", "Inventario de productos"))
         self.label.setText(_translate("soporte_admin", "Administrador"))
