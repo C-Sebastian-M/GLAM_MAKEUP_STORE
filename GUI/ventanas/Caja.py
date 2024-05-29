@@ -73,7 +73,7 @@ class Ui_Caja(object):  # terminada (falta reporte diario)
             "    background-color: #d484b4; \n"
             "}"
         )
-        self.pushButtonC_3.setObjectName("pushButton_3")
+        
         self.pushButtonC_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButtonC_2.setGeometry(QtCore.QRect(0, 0, 111, 41))
         self.pushButtonC_2.setStyleSheet(
@@ -236,6 +236,7 @@ class Sele_Cliente(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -360,6 +361,7 @@ class Cli_Curr(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -376,7 +378,7 @@ class Cli_Curr(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(0, 0, 111, 41))
+        self.pushButton_2.setGeometry(QtCore.QRect(250, 450, 125, 50))
         self.pushButton_2.setStyleSheet("QPushButton {\n"
 "    border: 2px solid #e4acd0;\n"
 "    border-radius: 5px;\n"
@@ -395,6 +397,28 @@ class Cli_Curr(object):
 "    background-color: #d484b4; \n"
 "}")
         self.pushButton_2.setObjectName("pushButton_2")
+
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3.setGeometry(QtCore.QRect(450, 450, 125, 50))
+        self.pushButton_3.setStyleSheet("QPushButton {\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4; \n"
+"    color: #ffffff; \n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #dc84bc; \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #d484b4; \n"
+"}")
+        self.pushButton_3.setObjectName("pushButton_3")
+
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(20, 220, 761, 51))
         self.label_2.setStyleSheet("\n"
@@ -432,7 +456,6 @@ class Cli_Curr(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
-        self.comboBox.addItem("")
         self.comboBox.setItemText(21, "")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -444,9 +467,14 @@ class Cli_Curr(object):
         MainWindow.setStatusBar(self.statusbar)
         self.pushButton_2.clicked.connect(MainWindow.close)
         self.pushButton_2.clicked.connect(self.backSeleCli)
+        self.pushButton_3.clicked.connect(MainWindow.close)
+        self.pushButton_3.clicked.connect(self.curnextwin)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def curnextwin(self):
+        pass
 
     def backSeleCli(self):
             self.back = QMainWindow()
@@ -458,8 +486,9 @@ class Cli_Curr(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "BUSQUEDA CLIENTE"))
-        self.pushButton_2.setText(_translate("MainWindow", "Atras"))
-        self.label_2.setText(_translate("MainWindow", "Seleccionar Cliente (busqueda por cedula)"))
+        self.pushButton_2.setText(_translate("MainWindow", "Cancelar"))
+        self.pushButton_3.setText(_translate("MainWindow", "Aceptar"))
+        self.label_2.setText(_translate("MainWindow", "Seleccionar Cliente (Buscar por su cedula)"))
         self.comboBox.setItemText(0, _translate("MainWindow", "a"))
         self.comboBox.setItemText(1, _translate("MainWindow", "b"))
         self.comboBox.setItemText(2, _translate("MainWindow", "c"))
@@ -486,6 +515,7 @@ class Cli_New(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
