@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from ventanas.login import Ui_MainWindow
+from sub_ventanas.GestionClientes import Ui_GestionClientes
 
 
 class Ui_soporte_admin(object):
@@ -189,6 +190,14 @@ class Ui_soporte_admin(object):
         self.retranslateUi(soporte_admin)
         QtCore.QMetaObject.connectSlotsByName(soporte_admin)
         self.pushButton_6.clicked.connect(soporte_admin.close)
+        self.pushButton_2.clicked.connect(soporte_admin.close)
+        self.pushButton_2.clicked.connect(self.abrirGestionClientes)
+        
+    def abrirGestionClientes(self):
+        self.sele = QMainWindow()
+        self.ui_backC = Ui_GestionClientes()
+        self.ui_backC.setupUi(self.sele)
+        self.sele.show()
 
     def retranslateUi(self, soporte_admin):
         _translate = QtCore.QCoreApplication.translate
