@@ -42,14 +42,12 @@ class AdminSoporte(QMainWindow, CBackground):
             self.title.setText("Admin")
             self.roleBtn.setText("Reporte\nDiario")
 
-            self.admin_conexiones()
             return None
 
         self.setWindowTitle("Soporte")
         self.title.setText("Soporte")
         self.roleBtn.setText("Administrar\nusuario")
 
-        self.soporte_conexiones()
 
 class AdminSoporteManager(QMainWindow):
     def __init__(self, user_role: str) -> None: # pass role as argument (soporte or admin)
