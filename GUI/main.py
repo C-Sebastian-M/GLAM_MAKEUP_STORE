@@ -2,11 +2,9 @@ import sys
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from ventanas.login import Ui_MainWindow # Asegúrate de que esta importación es correcta
-#<<<<<<< HEAD
 from ventanas.Caja import Ui_Caja, Sele_Compra, Sele_Cliente, Cli_Curr # Importa tu ventana de caja
-#=======# Importa tu ventana de caja
+# Importa tu ventana de caja
 from ventanas.soporte_admin import Ui_soporte_admin
-#>>>>>>> 0c7fe27315a2f7ffe6c3cbd7d608c923ff8cf7c0
 
 # Importa otras ventanas según sea necesario
 # from ventanas.admin_window import Ui_Admin
