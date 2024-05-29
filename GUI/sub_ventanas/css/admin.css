@@ -6,16 +6,21 @@
     border-radius: 10px;
 }
 
+#title {
+    color: #D484B4;
+}
+
 QPushButton {
-    font-size: 14px;
-    height: 30px;
+    letter-spacing: 1px;
+    font-size: 15px;
 
     color: white;
     background-color: #D484B4;
-    border-radius: 20px;
+    border-radius: 30px;
 }
 
 QPushButton:hover {
+    color: rgba(255, 255, 255, 0.692);
     background-color: #ebbcdc;
 }
 
