@@ -116,6 +116,7 @@ class AdminSoporteManager(QMainWindow):
         self.modificarCliente.BotonAtrasMC.clicked.connect(self.anterior)
         self.eliminarPanel.atrasBtnE.clicked.connect(self.anterior)
         self.eliminarPanel.cancelarBtnE.clicked.connect(self.anterior)
+        self.eliminarPanel.guardarBtnE.clicked.connect(self.anterior)
 
     ###### Reportes ######
     def ventana_reportes(self):
