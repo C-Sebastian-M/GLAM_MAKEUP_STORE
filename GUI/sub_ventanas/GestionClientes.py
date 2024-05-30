@@ -4,17 +4,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor
 import sys
 
-class Plantilla(QWidget):
-    pass
-
-
-class Servicios(Plantilla):
-    pass
-
-
-class Productos(Plantilla):
-    pass
-
 
 class CBackground:
     def paintEvent(self, event):

@@ -1,8 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from ventanas.login import (
-    Ui_MainWindow,
-)  # Asegúrate de que esta importación es correcta
+from ventanas.login import Ui_MainWindow
 from ventanas.Caja import Ui_Caja
 from ventanas.soporte_admin import AdminSoporteManager
 
