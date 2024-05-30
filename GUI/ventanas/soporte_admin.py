@@ -4,8 +4,39 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QPushButt
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
 
-from sub_ventanas.reportes import ReportePanel, Inventario
+from PyQt5 import uic
+
+from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas,CBackground
 from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente
+
+class AdminSoporte(QMainWindow, CBackground):
+    def __init__(self, role: str) -> None:
+        super(QMainWindow, self).__init__()
+        self.role = role
+
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
+            self,
+        )
+
+        self.cerrarBtn.clicked.connect(QApplication.instance().quit)
+
+        self.inicializar(
+            is_admin=True 
+            if self.role.strip().lower() == "admin" 
+            else False
+        )
+
+    def inicializar(self, is_admin: str | bool) -> None:
+        if is_admin or is_admin == "admin":
+            self.setWindowTitle("Administrador")
+            self.title.setText("Admin")
+            self.roleBtn.setText("Reporte\nDiario")
+            return
+
+        self.setWindowTitle("Soporte")
+        self.title.setText("Soporte")
+        self.roleBtn.setText("Administrar\nusuario")
 
 
 class AdminSoporteManager(QMainWindow):
@@ -15,25 +46,34 @@ class AdminSoporteManager(QMainWindow):
         super(QMainWindow, self).__init__()
         if not user_role:
             raise TypeError("El rol de usuario no puede estar vacio.")
-        self.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
-        self.stack = []
 
-        # Inicializando ventanas
+        self.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
+
+        self.stack = [] # Guarda las ventanas anteriores
+
+        self.widgets_stack = QStackedWidget(self)
+        ########################### Inicializando ventanas de reporte ###########################
         self.admin_soporte = AdminSoporte(user_role)
         self.reportePanel = ReportePanel()
-        self.inventarioPanel = Inventario("Prueba", [])
+        self.inventarioPanel = InventarioPanel()
+        self.ventas = Ventas("Ventas", [])
+
+        self.widgets_stack.addWidget(self.admin_soporte)
+        self.widgets_stack.addWidget(self.reportePanel)
+        self.widgets_stack.addWidget(self.inventarioPanel)
+        self.widgets_stack.addWidget(self.ventas)
+        ########################### fin ###########################
+
+        ########################### Inicializando ventanas de gestion de cliente ###########################
         self.gestionPanel = GestionClientes()
         self.addClientePanel = CrearCliente()
         self.modificarCliente = ModificarCliente()
 
-        # Insertando al stack
-        self.widgets_stack = QStackedWidget(self)
-        self.widgets_stack.addWidget(self.admin_soporte)
-        self.widgets_stack.addWidget(self.reportePanel)
-        self.widgets_stack.addWidget(self.inventarioPanel)
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.addClientePanel)
         self.widgets_stack.addWidget(self.modificarCliente)
+        ########################### fin ###########################
+
 
         # asignando el widget central
         self.setCentralWidget(self.widgets_stack)
@@ -58,7 +98,10 @@ class AdminSoporteManager(QMainWindow):
 
         # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
+        self.reportePanel.ventasBtn.clicked.connect(self.ventana_ventas)
         self.reportePanel.inventarioBtn.clicked.connect(self.ventana_inventario)
+        # inventario
+        self.inventarioPanel.volverBtn.clicked.connect(self.anterior)
 
         # Panel de gestion cliente
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
@@ -67,19 +110,20 @@ class AdminSoporteManager(QMainWindow):
         self.addClientePanel.BotonAtrasCC.clicked.connect(self.anterior)
         self.modificarCliente.BotonAtrasMC.clicked.connect(self.anterior)
 
-        # Panel de inventario
-        self.inventarioPanel.volverBtn.clicked.connect(self.anterior)
-        
-
+    ###### Reportes ######
     def ventana_reportes(self):
         self.widgets_stack.setCurrentWidget(self.reportePanel)
         self.stack.append(self.admin_soporte)
 
+    def ventana_ventas(self):
+        self.widgets_stack.setCurrentWidget(self.ventas)
+        self.stack.append(self.reportePanel)
+
     def ventana_inventario(self):
         self.widgets_stack.setCurrentWidget(self.inventarioPanel)
         self.stack.append(self.reportePanel)
-        
 
+    ###### Gestion clientes ######
     def ventana_gestionClientes(self):
         self.widgets_stack.setCurrentWidget(self.gestionPanel)
         self.stack.append(self.admin_soporte)
@@ -92,6 +136,7 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.modificarCliente)
         self.stack.append(self.gestionPanel)
 
+     ###### Volver ######
     def anterior(self):
         anterior = self.admin_soporte
 

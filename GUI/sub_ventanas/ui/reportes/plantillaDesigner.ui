@@ -20,7 +20,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../recursos/images/store_logo.png</normaloff>../../../recursos/images/store_logo.png</iconset>
+    <normaloff>../../../../../Users/recursos/images/store_logo.png</normaloff>../../../../../Users/recursos/images/store_logo.png</iconset>
   </property>
   <widget class="QWidget" name="header" native="true">
    <property name="geometry">

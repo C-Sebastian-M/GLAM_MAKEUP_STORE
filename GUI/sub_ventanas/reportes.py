@@ -1,6 +1,11 @@
 import sys
+
 from PyQt5 import uic
-from PyQt5.QtWidgets import QWidget, QLabel, QGroupBox
+
+from PyQt5.QtWidgets import ( 
+    QWidget, QGroupBox, 
+    QLabel,
+)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor, QPixmap
 
@@ -15,7 +20,7 @@ class Plantilla(QWidget):
         self.title = title
         self.columns = columns
 
-        self.inicializar()
+        self.inicializar() # problema
 
     def inicializar(self):
         self.titleLabel.setText(self.title)
@@ -40,6 +45,7 @@ class Ventas(Plantilla):
 class Inventario(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
         super().__init__(title, columns)
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
 
 class CBackground:
     def paintEvent(self, event):
