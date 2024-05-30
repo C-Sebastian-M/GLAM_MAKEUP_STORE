@@ -110,6 +110,9 @@ class AdminSoporteManager(QMainWindow):
         self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes) # Conexión a ventanas Reportes
         self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes) # Conexión a ventanas Gestión Clientes
         self.admin_soporte.inventarioBtn.clicked.connect(self.ventana_inventario_productos) # Conexión a ventanas Inventario de productos
+        self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes)
+        self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes)
+        self.admin_soporte.cambiarPassBtn.clicked.connect(self.ventana_cambiarPassword)
 
         # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
@@ -179,6 +182,9 @@ class AdminSoporteManager(QMainWindow):
     def ventana_modificar_producto(self):
         self.widgets_stack.setCurrentWidget(self.modificarProductoPanel)
         self.stack.append(self.inventarioProductosPanel)
+
+    def ventana_cambiarPassword(self):
+        None
 
      ###### Volver ######
     def anterior(self):
