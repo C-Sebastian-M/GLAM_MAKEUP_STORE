@@ -110,9 +110,6 @@ class AdminSoporteManager(QMainWindow):
         self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes) # Conexión a ventanas Reportes
         self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes) # Conexión a ventanas Gestión Clientes
         self.admin_soporte.inventarioBtn.clicked.connect(self.ventana_inventario_productos) # Conexión a ventanas Inventario de productos
-        self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes)
-        self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes)
-        self.admin_soporte.cambiarPassBtn.clicked.connect(self.ventana_cambiarPassword)
 
         # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
@@ -133,11 +130,11 @@ class AdminSoporteManager(QMainWindow):
         self.eliminarPanel.guardarBtnE.clicked.connect(self.anterior)
         
         # Panel de inventario de productos
-        self.inventarioProductosPanel.volver_boton.clicked.connect(self.anterior)
+        self.inventarioProductosPanel.volverBtn.clicked.connect(self.anterior)
         self.inventarioProductosPanel.crear_producto_boton.clicked.connect(self.ventana_crear_producto)
         self.inventarioProductosPanel.modificar_producto_boton.clicked.connect(self.ventana_modificar_producto)
-        self.crearProductoPanel.atras_boton.clicked.connect(self.anterior)
-        self.modificarProductoPanel.atras_boton.clicked.connect(self.anterior)
+        self.crearProductoPanel.volverBtn.clicked.connect(self.anterior)
+        self.modificarProductoPanel.volverBtn.clicked.connect(self.anterior)
         
         
     ###### Reportes ######
@@ -182,9 +179,6 @@ class AdminSoporteManager(QMainWindow):
     def ventana_modificar_producto(self):
         self.widgets_stack.setCurrentWidget(self.modificarProductoPanel)
         self.stack.append(self.inventarioProductosPanel)
-
-    def ventana_cambiarPassword(self):
-        None
 
      ###### Volver ######
     def anterior(self):
