@@ -101,7 +101,7 @@ class EliminarCliente(QMainWindow, CBackground):
     def __init__(self):
         super().__init__()
         uic.loadUi(
-            r"GUI\sub_ventanas\ui\gestion_clientes\EliminarClientes.ui",
+            r"GUI\sub_ventanas\ui\gestion_clientes\EliminarCliente.ui",
             self,
         )
         self.comboBoxClientes = self.findChild(QComboBox, "comboxEliminarCliente")
