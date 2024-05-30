@@ -1,20 +1,30 @@
 import sys
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QStackedWidget, QPushButton
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QApplication,
+    QWidget,
+    QStackedWidget,
+    QPushButton,
+)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor, QCursor
 
 # Tipado
 from typing import List
 
+
 class Plantilla(QWidget):
     pass
+
 
 class Servicios(Plantilla):
     pass
 
+
 class Productos(Plantilla):
     pass
+
 
 class CBackground:
     def paintEvent(self, event):
@@ -53,38 +63,52 @@ class Ventas(QWidget, CBackground):
     def __init__(self):
         super().__init__()
 
-        self.ui = None # plantilla de consultas de servicio y productos
+        self.ui = None  # plantilla de consultas de servicio y productos
+
 
 class Inventario(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
+        uic.loadUi(
+            r"C:\Users\Sebastian\Downloads\GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui",
+            self,
+        )
 
     def inicializar(self):
         pass
 
+
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
+        uic.loadUi(
+            r"C:\Users\Sebastian\Downloads\GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
+            self,
+        )
+
 
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
         super(QMainWindow, self).__init__()
         self.role = role
 
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui", self)
+        uic.loadUi(
+            r"C:\Users\Sebastian\Downloads\GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
+            self,
+        )
 
         self.cerrarBtn.clicked.connect(QApplication.instance().quit)
 
-        self.inicializar(is_admin = True if self.role.strip().lower() == "admin" else False)
+        self.inicializar(
+            is_admin=True if self.role.strip().lower() == "admin" else False
+        )
 
     def inicializar(self, is_admin: str | bool) -> None:
         if is_admin or is_admin == "admin":
             self.setWindowTitle("Administrador")
             self.title.setText("Admin")
             self.roleBtn.setText("Reporte\nDiario")
-            return None
+            return
 
         self.setWindowTitle("Soporte")
         self.title.setText("Soporte")

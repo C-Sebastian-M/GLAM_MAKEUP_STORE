@@ -27,7 +27,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true"/>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -171,6 +171,11 @@ QPushButton:pressed {
        </property>
        <item>
         <property name="text">
+         <string>Seleccionar Cliente</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Pedro Sanchez</string>
         </property>
        </item>
@@ -284,7 +289,7 @@ QPushButton:pressed {
         </rect>
        </property>
        <property name="placeholderText">
-        <string>Nombre</string>
+        <string>Nuevo Nombre</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="telefonoLineEdit">
@@ -297,7 +302,7 @@ QPushButton:pressed {
         </rect>
        </property>
        <property name="placeholderText">
-        <string>Teléfono</string>
+        <string>Nuevo Teléfono</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_2">

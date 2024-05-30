@@ -1,8 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from ventanas.login import (
-    Ui_MainWindow,
-)  # Asegúrate de que esta importación es correcta
+from ventanas.login import Ui_MainWindow
 from ventanas.Caja import Ui_Caja
 from ventanas.soporte_admin import AdminSoporteManager
 
@@ -43,10 +41,10 @@ class LoginWindow(QMainWindow):
     def openAdminSupportWindow(self, user_role: str):
         self.admin_soporte = AdminSoporteManager(user_role=user_role)
         self.admin_soporte.leer_estilos(self.app, [
-            "GUI\sub_ventanas\css\\admin.css",
+            "GUI/sub_ventanas/css/admin.css",
         ])
-
         self.admin_soporte.run()
+        self.close()
 
     def openCajaWindow(self):
         self.caja_window = QMainWindow()
