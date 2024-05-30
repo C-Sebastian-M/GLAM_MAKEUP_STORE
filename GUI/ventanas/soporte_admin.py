@@ -1,5 +1,5 @@
 from typing import List
-
+from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QPushButton
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
@@ -48,6 +48,8 @@ class AdminSoporteManager(QMainWindow):
             raise TypeError("El rol de usuario no puede estar vacio.")
 
         self.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
+        self.setFixedSize(800, 600)
+
 
         self.stack = [] # Guarda las ventanas anteriores
 
@@ -156,3 +158,30 @@ class AdminSoporteManager(QMainWindow):
 
     def run(self):
         self.show()
+
+class AdminSoporte(QMainWindow):
+    def __init__(self, role: str) -> None:
+        super(QMainWindow, self).__init__()
+        self.role = role
+
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
+            self,
+        )
+
+        self.cerrarBtn.clicked.connect(QApplication.instance().quit)
+
+        self.inicializar(
+            is_admin=True if self.role.strip().lower() == "admin" else False
+        )
+
+    def inicializar(self, is_admin: str | bool) -> None:
+        if is_admin or is_admin == "admin":
+            self.setWindowTitle("Administrador")
+            self.title.setText("Admin")
+            self.roleBtn.setText("Reporte\nDiario")
+            return
+
+        self.setWindowTitle("Admin")
+        self.title.setText("Soporte")
+        self.roleBtn.setText("Administrar\nusuario")
