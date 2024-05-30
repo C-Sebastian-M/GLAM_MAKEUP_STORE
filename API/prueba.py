@@ -6,6 +6,12 @@ class Cajero:
 
     def crear_dataframe(self):
         self.gestion_datos.crear_dataframes()
+    
+    def login(self, usuario, contraseña):
+        if usuario in self.gestion_datos.contraseñas["Usuario"].values and contraseña in self.gestion_datos.contraseñas["Contraseña"].values:
+            return True
+        else:
+            return False
 
     def añadir_cliente(self, cedula, nombre, telefono):
         if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
@@ -18,15 +24,47 @@ class Cajero:
             return False
             
         
-    def seleccionar_cliente(self): 
+    def mostrar_clientes(self): 
         return self.gestion_datos.clientes.loc[:,["Nombre","Cedula"]]
+
+    def reporte_diario(self):
+        pass
+
+    def mostrar_servicios(self):
+        return self.gestion_datos.servicios.loc[:,["Nombre","Costo"]]
+
+    def mostrar_productos(self):
+        return self.gestion_datos.productos.loc[:,["Referencia","Precio venta"]]
+    
+    def agregar_usuario(self, usuario, contraseña,rol):
+        self.gestion_datos.agregar_contraseña(usuario, contraseña, rol)
+    
+    def comprar_producto(self, producto, cantidad):
+        #Necesitamos que hagan los cambios en la tabla inventario
+        pass
+    
+    def comprar_servicio(self, producto, cantidad):
+        #Necesitamos que hagan los cambios en la tabla inventario
+        pass
+    
+    def mostra_total(self):
+        #este depende de la compra de productos y servicios
+        pass 
+    
+    def seleccionar_mediopago(self):
+        #Necesitamos que creen la tabla de medios de pago
+        pass
+    
+    
+   
+        
        
 
 x = GestionDatos("Prueba.xlsx")
 y = Cajero(x)
-y.añadir_cliente(12356784, "Daniel", 4566666660)
-y.añadir_cliente(12356684, "Daniel", 4566666660)
-print(y.seleccionar_cliente())
+
+
+
 
 
 

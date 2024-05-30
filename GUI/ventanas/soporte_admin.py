@@ -144,6 +144,10 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.modificarCliente)
         self.stack.append(self.gestionPanel)
 
+    def ventana_eliminarCliente(self):
+        self.widgets_stack.setCurrentWidget(self.eliminarPanel)
+        self.stack.append(self.gestionPanel)
+
      ###### Volver ######
     def anterior(self):
         anterior = self.admin_soporte
