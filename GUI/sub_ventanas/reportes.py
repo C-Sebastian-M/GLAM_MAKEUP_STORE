@@ -82,9 +82,47 @@ class CBackground:
 class InventarioPanel(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui",
+            self,
+        )
+
+    def inicializar(self):
+        pass
+
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
+            self,
+        )
+
+
+class AdminSoporte(QMainWindow, CBackground):
+    def __init__(self, role: str) -> None:
+        super(QMainWindow, self).__init__()
+        self.role = role
+
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
+            self,
+        )
+
+        self.cerrarBtn.clicked.connect(QApplication.instance().quit)
+
+        self.inicializar(
+            is_admin=True if self.role.strip().lower() == "admin" else False
+        )
+
+    def inicializar(self, is_admin: str | bool) -> None:
+        if is_admin or is_admin == "admin":
+            self.setWindowTitle("Administrador")
+            self.title.setText("Admin")
+            self.roleBtn.setText("Reporte\nDiario")
+            return
+
+        self.setWindowTitle("Soporte")
+        self.title.setText("Soporte")
+        self.roleBtn.setText("Administrar\nusuario")
