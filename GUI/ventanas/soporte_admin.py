@@ -7,7 +7,7 @@ from PyQt5.QtGui import QCursor
 from PyQt5 import uic
 
 from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas,CBackground
-from sub_ventanas.GestionClientes import GestionClientes, CrearCliente
+from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente
 
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
@@ -67,10 +67,13 @@ class AdminSoporteManager(QMainWindow):
         ########################### Inicializando ventanas de gestion de cliente ###########################
         self.gestionPanel = GestionClientes()
         self.addClientePanel = CrearCliente()
+        self.modificarCliente = ModificarCliente()
 
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.addClientePanel)
+        self.widgets_stack.addWidget(self.modificarCliente)
         ########################### fin ###########################
+
 
         # asignando el widget central
         self.setCentralWidget(self.widgets_stack)
@@ -103,7 +106,9 @@ class AdminSoporteManager(QMainWindow):
         # Panel de gestion cliente
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
         self.gestionPanel.addClienteBtn.clicked.connect(self.ventana_addCliente)
+        self.gestionPanel.modificarBtn.clicked.connect(self.ventana_modificarCliente)
         self.addClientePanel.BotonAtrasCC.clicked.connect(self.anterior)
+        self.modificarCliente.BotonAtrasMC.clicked.connect(self.anterior)
 
     ###### Reportes ######
     def ventana_reportes(self):
@@ -125,6 +130,10 @@ class AdminSoporteManager(QMainWindow):
     
     def ventana_addCliente(self):
         self.widgets_stack.setCurrentWidget(self.addClientePanel)
+        self.stack.append(self.gestionPanel)
+        
+    def ventana_modificarCliente(self):
+        self.widgets_stack.setCurrentWidget(self.modificarCliente)
         self.stack.append(self.gestionPanel)
 
      ###### Volver ######

@@ -46,6 +46,7 @@ class GestionClientes(QMainWindow, CBackground):
             self,
         )
 
+
 class CrearCliente(QMainWindow, CBackground):
     def __init__(self):
         super().__init__()
@@ -54,7 +55,7 @@ class CrearCliente(QMainWindow, CBackground):
             self,
         )
         self.BotonGuardar.clicked.connect(self.guardar_cliente)
-        
+
     def guardar_cliente(self):
         # Obtener los datos de los campos de entrada
         cedula = self.IngresoCedula.text()
@@ -63,6 +64,20 @@ class CrearCliente(QMainWindow, CBackground):
         print(f"Nombre: {nombre}, Cédula: {cedula}, Teléfono: {telefono}")
 
 
+class ModificarCliente(QMainWindow, CBackground):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\gestion_clientes\ModificarClientes.ui",
+            self,
+        )
+        self.pushButton_2.clicked.connect(self.obtener_info)
+
+    
+    def obtener_info(self):
+        nombre = self.nombreLineEdit.text()
+        telefono = self.telefonoLineEdit.text()    
+        print(f"Nombre: {nombre}, Teléfono: {telefono}")
 
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
@@ -91,9 +106,12 @@ class AdminSoporte(QMainWindow, CBackground):
         self.title.setText("Soporte")
         self.roleBtn.setText("Administrar\nusuario")
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     add = CrearCliente()
+    obt = ModificarCliente()
     add.guardar_cliente()
+    obt.obtener_info()
     add.show()  # Asegúrate de mostrar la ventana
     sys.exit(app.exec_())

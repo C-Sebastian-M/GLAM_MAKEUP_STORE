@@ -354,7 +354,7 @@ inventario</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="ventasBtn_2">
+       <widget class="QPushButton" name="modificarBtn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
