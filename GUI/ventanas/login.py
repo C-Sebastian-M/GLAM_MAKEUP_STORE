@@ -242,6 +242,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Login"))
+        MainWindow.setFixedSize(800, 600)
         self.label_error.setText(_translate("MainWindow", "Error"))
         self.lineEdit_user.setPlaceholderText(_translate("MainWindow", "USUARIO"))
         self.lineEdit_password.setPlaceholderText(

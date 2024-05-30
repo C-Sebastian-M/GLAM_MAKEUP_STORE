@@ -48,6 +48,8 @@ class AdminSoporteManager(QMainWindow):
             raise TypeError("El rol de usuario no puede estar vacio.")
 
         self.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
+        self.setFixedSize(800, 600)
+
 
         self.stack = [] # Guarda las ventanas anteriores
 
