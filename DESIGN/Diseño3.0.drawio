@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-30T02:29:45.903Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0" etag="V_Y7NGHCdpu2aFRGesi9" version="24.4.10" type="github">
+<mxfile host="app.diagrams.net" modified="2024-05-30T02:30:42.636Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0" etag="JpjMF49O7Y-NRmukhof9" version="24.4.10" type="github">
   <diagram name="Página-1" id="FN1W2snCmmNbTDyE0-3d">
     <mxGraphModel dx="2853" dy="516" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -2205,7 +2205,7 @@
         <mxCell id="m5PJab7WttQTE5EujPr7-5" value="Factura" style="swimlane;whiteSpace=wrap;html=1;startSize=23;" parent="1" vertex="1">
           <mxGeometry x="3767.5" y="2501.6" width="291.5" height="310" as="geometry" />
         </mxCell>
-        <mxCell id="m5PJab7WttQTE5EujPr7-7" value="confirmar" style="html=1;whiteSpace=wrap;strokeColor=#33FF33;" parent="m5PJab7WttQTE5EujPr7-5" vertex="1">
+        <mxCell id="m5PJab7WttQTE5EujPr7-7" value="terminar" style="html=1;whiteSpace=wrap;strokeColor=#33FF33;" parent="m5PJab7WttQTE5EujPr7-5" vertex="1">
           <mxGeometry x="180" y="250" width="69" height="30" as="geometry" />
         </mxCell>
         <mxCell id="m5PJab7WttQTE5EujPr7-8" value="cancelar" style="html=1;whiteSpace=wrap;strokeColor=#F70202;" parent="m5PJab7WttQTE5EujPr7-5" vertex="1">
