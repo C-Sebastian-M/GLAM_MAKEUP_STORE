@@ -4,7 +4,6 @@ from ventanas.login import Ui_MainWindow
 from ventanas.Caja import Ui_Caja
 from ventanas.soporte_admin import AdminSoporteManager
 
-
 class LoginWindow(QMainWindow):
     def __init__(self, app):
         super().__init__()
