@@ -1,5 +1,6 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
+
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QComboBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor
 import sys
@@ -72,6 +73,26 @@ class ModificarCliente(QMainWindow, CBackground):
             self,
         )
         self.pushButton_2.clicked.connect(self.obtener_info)
+        self.comboBoxClientes = self.findChild(QComboBox, "comboBoxClientes")
+
+        # Asumiendo que el formulario a esconder/mostrar es un QWidget con el objectName "formulario"
+        self.formulario = self.findChild(QWidget, "FormularioWidget")
+
+        # Conecta el combobox a la función que manejará la visibilidad del formulario
+        self.comboBoxClientes.currentIndexChanged.connect(self.toggleFormulario)
+
+        # Inicialmente oculta el formulario si no hay ningún cliente seleccionado
+        self.formulario.setVisible(False)
+
+    def toggleFormulario(self):
+        # Obtén el índice actual del combobox
+        index = self.comboBoxClientes.currentIndex()
+
+        # Si el índice es válido (es decir, no es -1), muestra el formulario, de lo contrario escóndelo
+        if index != -1:
+            self.formulario.setVisible(True)
+        else:
+            self.formulario.setVisible(False)
 
     
     def obtener_info(self):
@@ -79,32 +100,7 @@ class ModificarCliente(QMainWindow, CBackground):
         telefono = self.telefonoLineEdit.text()    
         print(f"Nombre: {nombre}, Teléfono: {telefono}")
 
-class AdminSoporte(QMainWindow, CBackground):
-    def __init__(self, role: str) -> None:
-        super(QMainWindow, self).__init__()
-        self.role = role
 
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
-            self,
-        )
-
-        self.cerrarBtn.clicked.connect(QApplication.instance().quit)
-
-        self.inicializar(
-            is_admin=True if self.role.strip().lower() == "admin" else False
-        )
-
-    def inicializar(self, is_admin: str | bool) -> None:
-        if is_admin or is_admin == "admin":
-            self.setWindowTitle("Administrador")
-            self.title.setText("Admin")
-            self.roleBtn.setText("Reporte\nDiario")
-            return
-
-        self.setWindowTitle("Admin")
-        self.title.setText("Soporte")
-        self.roleBtn.setText("Administrar\nusuario")
 
 
 if __name__ == "__main__":
@@ -113,5 +109,6 @@ if __name__ == "__main__":
     obt = ModificarCliente()
     add.guardar_cliente()
     obt.obtener_info()
+    obt.show()
     add.show()  # Asegúrate de mostrar la ventana
     sys.exit(app.exec_())
