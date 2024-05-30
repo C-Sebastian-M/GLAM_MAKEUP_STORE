@@ -169,7 +169,7 @@ class AdminSoporteManager(QMainWindow):
     def run(self):
         self.show()
 
-class AdminSoporte(QMainWindow):
+class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
         super(QMainWindow, self).__init__()
         self.role = role
