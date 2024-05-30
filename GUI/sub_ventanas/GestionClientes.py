@@ -75,13 +75,10 @@ class ModificarCliente(QMainWindow, CBackground):
         self.pushButton_2.clicked.connect(self.obtener_info)
         self.comboBoxClientes = self.findChild(QComboBox, "comboBoxClientes")
 
-        # Asumiendo que el formulario a esconder/mostrar es un QWidget con el objectName "formulario"
         self.formulario = self.findChild(QWidget, "FormularioWidget")
 
-        # Conecta el combobox a la función que manejará la visibilidad del formulario
         self.comboBoxClientes.currentIndexChanged.connect(self.toggleFormulario)
 
-        # Inicialmente oculta el formulario si no hay ningún cliente seleccionado
         self.formulario.setVisible(False)
 
     def toggleFormulario(self):
@@ -94,13 +91,33 @@ class ModificarCliente(QMainWindow, CBackground):
         else:
             self.formulario.setVisible(False)
 
-    
     def obtener_info(self):
         nombre = self.nombreLineEdit.text()
-        telefono = self.telefonoLineEdit.text()    
+        telefono = self.telefonoLineEdit.text()
         print(f"Nombre: {nombre}, Teléfono: {telefono}")
 
 
+class EliminarCliente(QMainWindow, CBackground):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\gestion_clientes\EliminarClientes.ui",
+            self,
+        )
+        self.comboBoxClientes = self.findChild(QComboBox, "comboxEliminarCliente")
+        self.formulario = self.findChild(QWidget, "FormularioWidget")
+        self.comboBoxClientes.currentIndexChanged.connect(self.toggleFormulario)
+        self.formulario.setVisible(False)
+
+    def toggleFormulario(self):
+        # Obtén el índice actual del combobox
+        index = self.comboBoxClientes.currentIndex()
+
+        # Si el índice es válido (es decir, no es -1), muestra el formulario, de lo contrario escóndelo
+        if index != -1:
+            self.formulario.setVisible(True)
+        else:
+            self.formulario.setVisible(False)
 
 
 if __name__ == "__main__":
