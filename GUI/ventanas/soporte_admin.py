@@ -99,6 +99,7 @@ class AdminSoporteManager(QMainWindow):
         # Main
         self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes)
         self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes)
+        self.admin_soporte.cambiarPassBtn.clicked.connect(self.ventana_cambiarPassword)
 
         # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
@@ -147,6 +148,9 @@ class AdminSoporteManager(QMainWindow):
     def ventana_eliminarCliente(self):
         self.widgets_stack.setCurrentWidget(self.eliminarPanel)
         self.stack.append(self.gestionPanel)
+
+    def ventana_cambiarPassword(self):
+        None
 
      ###### Volver ######
     def anterior(self):
