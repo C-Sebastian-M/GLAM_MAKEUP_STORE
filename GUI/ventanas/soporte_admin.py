@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
 
 from sub_ventanas.reportes import AdminSoporte, ReportePanel, Inventario
-from sub_ventanas.GestionClientes import GestionClientes, CrearCliente
+from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente
 
 
 class AdminSoporteManager(QMainWindow):
@@ -24,6 +24,7 @@ class AdminSoporteManager(QMainWindow):
         self.inventarioPanel = Inventario()
         self.gestionPanel = GestionClientes()
         self.addClientePanel = CrearCliente()
+        self.modificarCliente = ModificarCliente()
 
         # Insertando al stack
         self.widgets_stack = QStackedWidget(self)
@@ -32,6 +33,7 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.addWidget(self.inventarioPanel)
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.addClientePanel)
+        self.widgets_stack.addWidget(self.modificarCliente)
 
         # asignando el widget central
         self.setCentralWidget(self.widgets_stack)
@@ -61,7 +63,9 @@ class AdminSoporteManager(QMainWindow):
         # Panel de gestion cliente
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
         self.gestionPanel.addClienteBtn.clicked.connect(self.ventana_addCliente)
+        self.gestionPanel.modificarBtn.clicked.connect(self.ventana_modificarCliente)
         self.addClientePanel.BotonAtrasCC.clicked.connect(self.anterior)
+        self.modificarCliente.BotonAtrasMC.clicked.connect(self.anterior)
 
         # Panel de inventario
         self.inventarioPanel.volverBtn.clicked.connect(self.anterior)
@@ -82,6 +86,10 @@ class AdminSoporteManager(QMainWindow):
     
     def ventana_addCliente(self):
         self.widgets_stack.setCurrentWidget(self.addClientePanel)
+        self.stack.append(self.gestionPanel)
+        
+    def ventana_modificarCliente(self):
+        self.widgets_stack.setCurrentWidget(self.modificarCliente)
         self.stack.append(self.gestionPanel)
 
     def anterior(self):
