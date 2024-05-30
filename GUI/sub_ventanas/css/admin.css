@@ -29,26 +29,14 @@ QWidget#queryHeader {
     background-color: #EBBCDC;
 }
 
-QGroupBox#contenedorColumnas {
-    border-style: none;
-}
-
-QGroupBox:hover {
-    background-color: #EBBCDC;
-    font-size: 15px;
-}
-
-QPushButton#contenedorColumnas {
-    background-color: white;
-}
-
-QPushButton#fechaBtn {
+QPushButton#fechaBtn, QPushButton#buscarBtn {
     margin-left: 5px;
-    border-radius: 7px;
+    border-radius: 10px;
 }
 
 QLineEdit#userInput {
     padding: 5px 10px;
+    margin-left: 10px;
 
     font-style: italic;
 

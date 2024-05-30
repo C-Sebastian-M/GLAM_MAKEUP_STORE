@@ -1,10 +1,9 @@
 from PyQt5 import uic
 
 from PyQt5.QtWidgets import ( 
-    QWidget, QGroupBox, 
-    QLabel, QHBoxLayout,
-    QSpacerItem, QSizePolicy,
-    QPushButton
+    QWidget, QLabel, 
+    QHBoxLayout, QSpacerItem, 
+    QSizePolicy
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
@@ -12,6 +11,7 @@ from PyQt5.QtGui import (
     QColor, QPixmap, 
     QCursor
 )
+from sub_ventanas.utils.css import HoverGroupBox
 
 # Tipado
 from typing import List, Union
@@ -26,14 +26,14 @@ class Plantilla(QWidget):
 
     def handle_labels(self, columns: List[Union[str, int]]) -> None:
         for nombre in columns:
-            contenedor = QPushButton()
+            contenedor = HoverGroupBox()
             contenedor.setObjectName("contenedorColumnas")
             contenedor.setCursor(QCursor(Qt.PointingHandCursor))
             contenedor.setContentsMargins(10, 0, 10, 0)
 
             decoracion = QLabel(contenedor)
             decoracion.setPixmap(QPixmap(r"GUI\recursos\images\pink_circle.png"))
-            decoracion.setMaximumSize(13, 13)
+            decoracion.setMaximumSize(15, 13)
             decoracion.setScaledContents(True)
 
             label = QLabel(contenedor)
@@ -48,6 +48,9 @@ class Plantilla(QWidget):
             self.labelsLayout.addWidget(contenedor)
 
         self.labelsLayout.addItem(QSpacerItem(2, 70, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+    def handle_table(self, columns, data):
+        pass
 
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
