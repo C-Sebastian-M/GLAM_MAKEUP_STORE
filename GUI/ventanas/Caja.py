@@ -111,6 +111,7 @@ class Ui_Caja(object):  # terminada (falta reporte diario)
         self.pushButtonC_2.clicked.connect(MainWindow.close)
         self.pushButtonC_3.clicked.connect(MainWindow.close)
         self.pushButtonC_3.clicked.connect(self.nextWindow)
+        self.pushButtonC.clicked.connect(self.report)#metodo crear reporte diari
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -120,7 +121,8 @@ class Ui_Caja(object):  # terminada (falta reporte diario)
         self.pushButtonC_3.setText(_translate("MainWindow", "Productos/Servicios"))
         self.pushButtonC_2.setText(_translate("MainWindow", "Salir"))
         
-
+    def report(self):#crear el metodo reporte diario
+        pass  
     def nextWindow(self):
         self.sele = QMainWindow()
         self.ui_backC = Sele_Compra()
