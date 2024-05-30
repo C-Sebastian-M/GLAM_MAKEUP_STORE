@@ -24,3 +24,28 @@ QPushButton:hover {
     background-color: #ebbcdc;
 }
 
+/* Estilos de la ventana Inventario */
+QWidget#queryHeader {
+    background-color: #EBBCDC;
+}
+
+QGroupBox#filtroLabelContenedor {
+    border-style: none;
+}
+
+QPushButton#fechaBtn, QPushButton#fechaBtn {
+    border-radius: 10px;
+}
+
+QLineEdit#userInput {
+    padding-left: 10px;
+
+    font-style: italic;
+
+    background-color: #E4C4D4;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
