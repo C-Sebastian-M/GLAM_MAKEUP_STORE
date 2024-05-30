@@ -7,7 +7,7 @@ from PyQt5.QtGui import QCursor
 from PyQt5 import uic
 
 from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas,CBackground
-from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente
+from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente, EliminarCliente
 
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
@@ -70,10 +70,12 @@ class AdminSoporteManager(QMainWindow):
         self.gestionPanel = GestionClientes()
         self.addClientePanel = CrearCliente()
         self.modificarCliente = ModificarCliente()
+        self.eliminarPanel = EliminarCliente()
 
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.addClientePanel)
         self.widgets_stack.addWidget(self.modificarCliente)
+        self.widgets_stack.addWidget(self.eliminarPanel)
         ########################### fin ###########################
 
 
@@ -109,8 +111,11 @@ class AdminSoporteManager(QMainWindow):
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
         self.gestionPanel.addClienteBtn.clicked.connect(self.ventana_addCliente)
         self.gestionPanel.modificarBtn.clicked.connect(self.ventana_modificarCliente)
+        self.gestionPanel.eliminarClienteBtn.clicked.connect(self.ventana_eliminarCliente)
         self.addClientePanel.BotonAtrasCC.clicked.connect(self.anterior)
         self.modificarCliente.BotonAtrasMC.clicked.connect(self.anterior)
+        self.eliminarPanel.atrasBtnE.clicked.connect(self.anterior)
+        self.eliminarPanel.cancelarBtnE.clicked.connect(self.anterior)
 
     ###### Reportes ######
     def ventana_reportes(self):

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ModificarCliente</class>
- <widget class="QMainWindow" name="ModificarCliente">
+ <class>EliminarCliente</class>
+ <widget class="QMainWindow" name="EliminarCliente">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,25 +10,10 @@
     <height>600</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>800</width>
-    <height>600</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>800</width>
-    <height>600</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Modificar Cliente</string>
+   <string>Eliminar Cliente</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QFrame" name="frame">
@@ -69,7 +54,7 @@ QPushButton:pressed {
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QPushButton" name="BotonAtrasMC">
+      <widget class="QPushButton" name="atrasBtnE">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -77,6 +62,12 @@ QPushButton:pressed {
          <width>111</width>
          <height>51</height>
         </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>800</width>
+         <height>600</height>
+        </size>
        </property>
        <property name="text">
         <string>Atras</string>
@@ -160,7 +151,7 @@ QPushButton:pressed {
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QComboBox" name="comboBoxClientes">
+      <widget class="QComboBox" name="comboxEliminarCliente">
        <property name="geometry">
         <rect>
          <x>140</x>
@@ -240,62 +231,10 @@ QPushButton:pressed {
     background-color: #d484b4; /* Fondo al presionar */
 }</string>
       </property>
-      <widget class="QLabel" name="label">
+      <widget class="QPushButton" name="guardarBtnE">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>100</y>
-         <width>61</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Nombre</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_2">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>310</y>
-         <width>61</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Teléfono</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="nombreLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>120</y>
-         <width>341</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="placeholderText">
-        <string>Nuevo Nombre</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="telefonoLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>330</y>
-         <width>341</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="placeholderText">
-        <string>Nuevo Teléfono</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="geometry">
-        <rect>
-         <x>540</x>
+         <x>450</x>
          <y>220</y>
          <width>141</width>
          <height>51</height>
@@ -305,10 +244,24 @@ QPushButton:pressed {
         <string>Guardar</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="cancelarBtnE">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>220</y>
+         <width>141</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Cancelar</string>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
