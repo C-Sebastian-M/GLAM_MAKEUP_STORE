@@ -6,7 +6,7 @@ from PyQt5.QtGui import QCursor
 
 from PyQt5 import uic
 
-from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas,CBackground
+from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas, CBackground
 from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente, EliminarCliente
 
 class AdminSoporte(QMainWindow, CBackground):
@@ -50,7 +50,6 @@ class AdminSoporteManager(QMainWindow):
         self.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
         self.setFixedSize(800, 600)
 
-
         self.stack = [] # Guarda las ventanas anteriores
 
         self.widgets_stack = QStackedWidget(self)
@@ -58,7 +57,7 @@ class AdminSoporteManager(QMainWindow):
         self.admin_soporte = AdminSoporte(user_role)
         self.reportePanel = ReportePanel()
         self.inventarioPanel = InventarioPanel()
-        self.ventas = Ventas("Ventas", [])
+        self.ventas = Ventas("Ventas", ["id", "cantidad", "cliente", "productos", "box_id"])
 
         self.widgets_stack.addWidget(self.admin_soporte)
         self.widgets_stack.addWidget(self.reportePanel)
