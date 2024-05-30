@@ -70,7 +70,7 @@ class Inventario(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
         uic.loadUi(
-            r"C:\Users\Sebastian\Downloads\GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui",
+            r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui",
             self,
         )
 
@@ -82,7 +82,7 @@ class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
         uic.loadUi(
-            r"C:\Users\Sebastian\Downloads\GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
+            r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
             self,
         )
 
@@ -93,7 +93,7 @@ class AdminSoporte(QMainWindow, CBackground):
         self.role = role
 
         uic.loadUi(
-            r"C:\Users\Sebastian\Downloads\GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
+            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
             self,
         )
 
