@@ -46,7 +46,6 @@ class GestionClientes(QMainWindow, CBackground):
             self,
         )
 
-
 class CrearCliente(QMainWindow, CBackground):
     def __init__(self):
         super().__init__()
@@ -62,9 +61,6 @@ class CrearCliente(QMainWindow, CBackground):
         nombre = self.IngresoNombre.text()
         telefono = self.IngresoTelefono.text()
         print(f"Nombre: {nombre}, Cédula: {cedula}, Teléfono: {telefono}")
-
-    def inicializar(self):
-        pass
 
 
 
