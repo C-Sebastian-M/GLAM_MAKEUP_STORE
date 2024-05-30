@@ -82,19 +82,16 @@ class CBackground:
 class InventarioPanel(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui",
-            self,
-        )
-
-    def inicializar(self):
-        pass
-
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
+<<<<<<< HEAD
         uic.loadUi(
             r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
             self,
         )
+=======
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
+>>>>>>> 846e4c2218d34c77dda76bfd0e85be6e2fc2242b
