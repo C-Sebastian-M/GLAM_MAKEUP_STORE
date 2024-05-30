@@ -1,5 +1,5 @@
 from typing import List
-
+from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QPushButton
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
@@ -7,7 +7,7 @@ from PyQt5.QtGui import QCursor
 from PyQt5 import uic
 
 from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas, CBackground
-from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente
+from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente, EliminarCliente
 
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
@@ -48,6 +48,7 @@ class AdminSoporteManager(QMainWindow):
             raise TypeError("El rol de usuario no puede estar vacio.")
 
         self.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
+        self.setFixedSize(800, 600)
 
         self.stack = [] # Guarda las ventanas anteriores
 
@@ -68,10 +69,12 @@ class AdminSoporteManager(QMainWindow):
         self.gestionPanel = GestionClientes()
         self.addClientePanel = CrearCliente()
         self.modificarCliente = ModificarCliente()
+        self.eliminarPanel = EliminarCliente()
 
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.addClientePanel)
         self.widgets_stack.addWidget(self.modificarCliente)
+        self.widgets_stack.addWidget(self.eliminarPanel)
         ########################### fin ###########################
 
 
@@ -107,8 +110,12 @@ class AdminSoporteManager(QMainWindow):
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
         self.gestionPanel.addClienteBtn.clicked.connect(self.ventana_addCliente)
         self.gestionPanel.modificarBtn.clicked.connect(self.ventana_modificarCliente)
+        self.gestionPanel.eliminarClienteBtn.clicked.connect(self.ventana_eliminarCliente)
         self.addClientePanel.BotonAtrasCC.clicked.connect(self.anterior)
         self.modificarCliente.BotonAtrasMC.clicked.connect(self.anterior)
+        self.eliminarPanel.atrasBtnE.clicked.connect(self.anterior)
+        self.eliminarPanel.cancelarBtnE.clicked.connect(self.anterior)
+        self.eliminarPanel.guardarBtnE.clicked.connect(self.anterior)
 
     ###### Reportes ######
     def ventana_reportes(self):
@@ -136,6 +143,10 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.modificarCliente)
         self.stack.append(self.gestionPanel)
 
+    def ventana_eliminarCliente(self):
+        self.widgets_stack.setCurrentWidget(self.eliminarPanel)
+        self.stack.append(self.gestionPanel)
+
      ###### Volver ######
     def anterior(self):
         anterior = self.admin_soporte
@@ -156,3 +167,30 @@ class AdminSoporteManager(QMainWindow):
 
     def run(self):
         self.show()
+
+class AdminSoporte(QMainWindow):
+    def __init__(self, role: str) -> None:
+        super(QMainWindow, self).__init__()
+        self.role = role
+
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
+            self,
+        )
+
+        self.cerrarBtn.clicked.connect(QApplication.instance().quit)
+
+        self.inicializar(
+            is_admin=True if self.role.strip().lower() == "admin" else False
+        )
+
+    def inicializar(self, is_admin: str | bool) -> None:
+        if is_admin or is_admin == "admin":
+            self.setWindowTitle("Administrador")
+            self.title.setText("Admin")
+            self.roleBtn.setText("Reporte\nDiario")
+            return
+
+        self.setWindowTitle("Admin")
+        self.title.setText("Soporte")
+        self.roleBtn.setText("Administrar\nusuario")
