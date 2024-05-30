@@ -1,30 +1,51 @@
 import sys
+
 from PyQt5 import uic
-from PyQt5.QtWidgets import (
-    QMainWindow,
-    QApplication,
-    QWidget,
-    QStackedWidget,
-    QPushButton,
+
+from PyQt5.QtWidgets import ( 
+    QWidget, QGroupBox, 
+    QLabel,
 )
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QBrush, QColor, QCursor
+from PyQt5.QtGui import QPainter, QBrush, QColor, QPixmap
 
 # Tipado
 from typing import List
 
-
 class Plantilla(QWidget):
-    pass
+    def __init__(self, title: str, columns: List[str]) -> None:
+        super().__init__()
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\plantillaDesigner.ui", self)
 
+        self.title = title
+        self.columns = columns
 
-class Servicios(Plantilla):
-    pass
+        self.inicializar() # problema
 
+    def inicializar(self):
+        self.titleLabel.setText(self.title)
+        for column in self.columns:
+            contenedor = QGroupBox()
+            decoracion = QLabel(contenedor)
+            decoracion.pixmap(QPixmap(r"GUI\recursos\images\pink_circle.jpg"))
+            label = QLabel(contenedor, column)
 
-class Productos(Plantilla):
-    pass
+            self.labelsLayout.addWidget(contenedor)
 
+class Ventas(Plantilla):
+    def __init__(self, title: str, columns: List[str | int]) -> None:
+        super().__init__(title, columns)
+        self.plantilla = Plantilla(title, columns)
+
+        self.inicializar()
+
+    def inicializar(self):
+        self.navbar.deleteLater()
+
+class Inventario(Plantilla):
+    def __init__(self, title: str, columns: List[str | int]) -> None:
+        super().__init__(title, columns)
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
 
 class CBackground:
     def paintEvent(self, event):
@@ -58,17 +79,10 @@ class CBackground:
 
         painter.end()
 
-
-class Ventas(QWidget, CBackground):
-    def __init__(self):
-        super().__init__()
-
-        self.ui = None  # plantilla de consultas de servicio y productos
-
-
-class Inventario(QWidget, CBackground):
+class InventarioPanel(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
+<<<<<<< HEAD
         uic.loadUi(
             r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui",
             self,
@@ -77,10 +91,14 @@ class Inventario(QWidget, CBackground):
     def inicializar(self):
         pass
 
+=======
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
+>>>>>>> 8fae71ccccc6f8f888c049686b0d5c6481677967
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
+<<<<<<< HEAD
         uic.loadUi(
             r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
             self,
@@ -113,3 +131,6 @@ class AdminSoporte(QMainWindow, CBackground):
         self.setWindowTitle("Soporte")
         self.title.setText("Soporte")
         self.roleBtn.setText("Administrar\nusuario")
+=======
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
+>>>>>>> 8fae71ccccc6f8f888c049686b0d5c6481677967
