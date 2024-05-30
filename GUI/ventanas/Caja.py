@@ -472,7 +472,7 @@ class Cli_Curr(object):
 
     def curnextwin(self):
             self.next = QMainWindow()
-            self.nexte = Carrito()
+            self.nexte = Compra_Pro()
             self.nexte.setupUi(self.next)
             self.next.show()
 
@@ -657,16 +657,16 @@ class Cli_New(object):
         self.pushButton_2.clicked.connect(MainWindow.close)
         self.pushButton_2.clicked.connect(self.backSeleCli)
         self.pushButton.clicked.connect(MainWindow.close)
-        self.pushButton.clicked.connect(self.nextwindow)
+        self.pushButton.clicked.connect(self.curnextwin)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def nextwindow(self):
-        self.next = QMainWindow()
-        self.nextCli = Carrito()
-        self.nextCli.setupUi(self.next)
-        self.next.show()
+    def curnextwin(self):
+            self.next = QMainWindow()
+            self.nexte = Compra_Pro()
+            self.nexte.setupUi(self.next)
+            self.next.show()
 
     def backSeleCli(self):
             self.back = QMainWindow()
@@ -678,7 +678,7 @@ class Cli_New(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "CLIENTE NUEVO"))
-        self.pushButton_2.setText(_translate("MainWindow", "Atras"))
+        self.pushButton_2.setText(_translate("MainWindow", "Cancelar"))
         self.pushButton.setText(_translate("MainWindow", "Aceptar"))
         self.label_3.setText(_translate("MainWindow", "Cédula"))
         self.label_4.setText(_translate("MainWindow", "Nombre"))
@@ -686,11 +686,247 @@ class Cli_New(object):
         self.label_6.setText(_translate("MainWindow", "Cedula valida"))
         self.label_7.setText(_translate("MainWindow", "Cedula valida"))
 
+class Compra_Pro(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
+        self.label.setStyleSheet("\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4;\n"
+"    color: #ffffff;\n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(50, 210, 691, 111))
+        self.pushButton.setStyleSheet("QPushButton {\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4; \n"
+"    color: #ffffff; \n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #dc84bc; \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #d484b4; \n"
+"}")
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3.setGeometry(QtCore.QRect(50, 340, 691, 111))
+        self.pushButton_3.setStyleSheet("QPushButton {\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4; \n"
+"    color: #ffffff; \n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #dc84bc; \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #d484b4; \n"
+"}")
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2.setGeometry(QtCore.QRect(0, 0, 131, 31))
+        self.pushButton_2.setStyleSheet("QPushButton {\n"
+"    border: 1px solid #e4acd0;\n"
+"    border-radius: 2px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4; \n"
+"    color: #ffffff; \n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #dc84bc; \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #d484b4; \n"
+"}")
+        self.pushButton_2.setObjectName("pushButton_2")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+        self.pushButton_2.clicked.connect(MainWindow.close)
+        self.pushButton_2.clicked.connect(self.backSeleCli)
+        self.pushButton_3.clicked.connect(MainWindow.close)
+        self.pushButton_3.clicked.connect(self.Buy)
+        self.pushButton.clicked.connect(MainWindow.close)
+        self.pushButton.clicked.connect(self.dates)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def dates(self):
+        self.d = QMainWindow()
+        self.date = Cita()
+        self.date.setupUi(self.d)
+        self.d.show()
+
+    def backSeleCli(self):
+        self.back = QMainWindow()
+        self.backCli = Sele_Cliente()
+        self.backCli.setupUi(self.back)
+        self.back.show()
+
+    def Buy(self):
+        self.buy = QMainWindow()
+        self.buyPro = Carrito()
+        self.buyPro.setupUi(self.buy)
+        self.buy.show()
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "COMPRA PRODUCTOS"))
+        self.pushButton.setText(_translate("MainWindow", "Reservar Cita"))
+        self.pushButton_3.setText(_translate("MainWindow", "Comprar Productos/Servicios"))
+        self.pushButton_2.setText(_translate("MainWindow", "Atrás"))
+
+class Cita(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        MainWindow.setStyleSheet("color: rgb(0, 0, 0);\n"
+"")
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
+        self.label.setStyleSheet("\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4;\n"
+"    color: #ffffff;\n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2.setGeometry(QtCore.QRect(0, 0, 131, 31))
+        self.pushButton_2.setStyleSheet("QPushButton {\n"
+"    border: 1px solid #e4acd0;\n"
+"    border-radius: 2px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4; \n"
+"    color: #ffffff; \n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #dc84bc; \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #d484b4; \n"
+"}")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.calendarWidget = QtWidgets.QCalendarWidget(self.centralwidget)
+        self.calendarWidget.setGeometry(QtCore.QRect(370, 320, 312, 183))
+        self.calendarWidget.setStyleSheet("")
+        self.calendarWidget.setObjectName("calendarWidget")
+        self.comboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox.setGeometry(QtCore.QRect(370, 220, 301, 31))
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(60, 220, 271, 71))
+        self.label_2.setStyleSheet("\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4;\n"
+"    color: #ffffff;\n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"")
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(60, 320, 271, 71))
+        self.label_3.setStyleSheet("\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4;\n"
+"    color: #ffffff;\n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"")
+        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_3.setObjectName("label_3")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+        self.pushButton_2.clicked.connect(MainWindow.close)
+        self.pushButton_2.clicked.connect(self.backBuy)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def backBuy(self):
+        self.co = QMainWindow()
+        self.com = Compra_Pro()
+        self.com.setupUi(self.co)
+        self.co.show()
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "CITAS"))
+        self.pushButton_2.setText(_translate("MainWindow", "Atrás"))
+        self.comboBox.setItemText(0, _translate("MainWindow", "a"))
+        self.comboBox.setItemText(1, _translate("MainWindow", "b"))
+        self.comboBox.setItemText(2, _translate("MainWindow", "c"))
+        self.comboBox.setItemText(3, _translate("MainWindow", "d"))
+        self.label_2.setText(_translate("MainWindow", "Seleccionar Servicio"))
+        self.label_3.setText(_translate("MainWindow", "Seleccionar Fecha"))
+
 class Carrito(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
@@ -795,10 +1031,7 @@ class Carrito(object):
         MainWindow.setStatusBar(self.statusbar)
         self.cancelButton.clicked.connect(MainWindow.close)
         self.cancelButton.clicked.connect(self.cancel)
-
-
         self.serviciosButton.clicked.connect(self.open_servicios_window)
-
         self.productosButton.clicked.connect(self.open_productos_window)
 
         self.ContinueButton.clicked.connect(MainWindow.close)
@@ -831,18 +1064,22 @@ class Carrito(object):
     
     def cancel(self):
         self.backCli = QMainWindow()
-        self.Bcli = Sele_Cliente()
+        self.Bcli = Compra_Pro()
         self.Bcli.setupUi(self.backCli)
         self.backCli.show()
     
     def Continue(self):
-        pass
-
+        self.fac = QMainWindow()
+        self.fact = Factura()
+        self.fact.setupUi(self.fac)
+        self.fac.show()
+    
 class Productos(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
@@ -913,6 +1150,7 @@ class Servicios(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
@@ -978,7 +1216,157 @@ class Servicios(object):
         self.label_2.setText(_translate("MainWindow", "Seleccionar Servicio"))
         self.label_3.setText(_translate("MainWindow", "Seleccionar Cantidad"))
 
+class Factura(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.setWindowModality(QtCore.Qt.NonModal)
+        MainWindow.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
+        MainWindow.resize(800, 600)
+        MainWindow.setStyleSheet("\n"
+"")
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(19, 50, 761, 111))
+        self.label.setStyleSheet("\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4;\n"
+"    color: #ffffff;\n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.comboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox.setGeometry(QtCore.QRect(360, 370, 301, 31))
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(60, 180, 271, 71))
+        self.label_2.setStyleSheet("\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4;\n"
+"    color: #ffffff;\n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"")
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(60, 350, 271, 71))
+        self.label_3.setStyleSheet("\n"
+"    border: 2px solid #e4acd0;\n"
+"    border-radius: 5px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4;\n"
+"    color: #ffffff;\n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"")
+        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_3.setObjectName("label_3")
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(360, 180, 301, 161))
+        self.label_5.setStyleSheet("\n"
+"    padding: 8px 16px;\n"
+"    background-color: rgb(255, 250, 89);\n"
+"    color: #000000;\n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 10px;    \n"
+"    border-color: rgb(0, 0, 0);\n"
+"    border-size: 2px\n"
+"")
+        self.label_5.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_5.setObjectName("label_5")
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3.setGeometry(QtCore.QRect(240, 500, 131, 41))
+        self.pushButton_3.setStyleSheet("QPushButton {\n"
+"    border: 1px solid #e4acd0;\n"
+"    border-radius: 2px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4; \n"
+"    color: #ffffff; \n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #dc84bc; \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #d484b4; \n"
+"}")
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_4.setGeometry(QtCore.QRect(440, 500, 131, 41))
+        self.pushButton_4.setStyleSheet("QPushButton {\n"
+"    border: 1px solid #e4acd0;\n"
+"    border-radius: 2px;\n"
+"    padding: 8px 16px;\n"
+"    background-color: #dc95c4; \n"
+"    color: #ffffff; \n"
+"    font-family: Arial, sans-serif;\n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #dc84bc; \n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #d484b4; \n"
+"}")
+        self.pushButton_4.setObjectName("pushButton_4")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
 
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.pushButton_3.clicked.connect(MainWindow.close)
+        self.pushButton_3.clicked.connect(self.cancel)
+        self.pushButton_4.clicked.connect(MainWindow.close)
+        self.pushButton_4.clicked.connect(self.ended)
+
+    def cancel(self):
+        self.bp = QMainWindow()
+        self.backpro = Carrito()
+        self.backpro.setupUi(self.bp)
+        self.bp.show()
+
+    def ended(self):
+        self.backC = QMainWindow()
+        self.ui_backC = Ui_Caja()
+        self.ui_backC.setupUi(self.backC)
+        self.backC.show()
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "FACTURA"))
+        self.comboBox.setItemText(0, _translate("MainWindow", "a"))
+        self.comboBox.setItemText(1, _translate("MainWindow", "b"))
+        self.comboBox.setItemText(2, _translate("MainWindow", "c"))
+        self.comboBox.setItemText(3, _translate("MainWindow", "d"))
+        self.label_2.setText(_translate("MainWindow", "Total"))
+        self.label_3.setText(_translate("MainWindow", "Seleccionar Metodo de Pago"))
+        self.label_5.setText(_translate("MainWindow", "Mostrar Total"))
+        self.pushButton_3.setText(_translate("MainWindow", "Cancelar"))
+        self.pushButton_4.setText(_translate("MainWindow", "Terminar"))
+        
 if __name__ == "__main__":
     import sys
 
