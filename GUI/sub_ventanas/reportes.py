@@ -82,7 +82,6 @@ class CBackground:
 class InventarioPanel(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
-<<<<<<< HEAD
         uic.loadUi(
             r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui",
             self,
@@ -91,14 +90,10 @@ class InventarioPanel(QWidget, CBackground):
     def inicializar(self):
         pass
 
-=======
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
->>>>>>> 8fae71ccccc6f8f888c049686b0d5c6481677967
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
-<<<<<<< HEAD
         uic.loadUi(
             r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
             self,
@@ -131,6 +126,3 @@ class AdminSoporte(QMainWindow, CBackground):
         self.setWindowTitle("Soporte")
         self.title.setText("Soporte")
         self.roleBtn.setText("Administrar\nusuario")
-=======
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
->>>>>>> 8fae71ccccc6f8f888c049686b0d5c6481677967
