@@ -2,10 +2,6 @@
     border-style: none;
 }
 
-#cerrarBtn, #volverBtn {
-    border-radius: 10px;
-}
-
 #title {
     color: #D484B4;
 }
@@ -16,7 +12,11 @@ QPushButton {
 
     color: white;
     background-color: #D484B4;
-    border-radius: 30px;
+    border-radius: 20px;
+}
+
+QPushButton#cerrarBtn, QPushButton#volverBtn {
+    border-radius: 10px;
 }
 
 QPushButton:hover {
@@ -29,16 +29,26 @@ QWidget#queryHeader {
     background-color: #EBBCDC;
 }
 
-QGroupBox#filtroLabelContenedor {
+QGroupBox#contenedorColumnas {
     border-style: none;
 }
 
-QPushButton#fechaBtn, QPushButton#fechaBtn {
-    border-radius: 10px;
+QGroupBox:hover {
+    background-color: #EBBCDC;
+    font-size: 15px;
+}
+
+QPushButton#contenedorColumnas {
+    background-color: white;
+}
+
+QPushButton#fechaBtn {
+    margin-left: 5px;
+    border-radius: 7px;
 }
 
 QLineEdit#userInput {
-    padding-left: 10px;
+    padding: 5px 10px;
 
     font-style: italic;
 
@@ -48,4 +58,3 @@ QLineEdit#userInput {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-

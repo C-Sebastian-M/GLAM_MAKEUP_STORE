@@ -3,10 +3,15 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import ( 
     QWidget, QGroupBox, 
     QLabel, QHBoxLayout,
-    QSpacerItem, QSizePolicy
+    QSpacerItem, QSizePolicy,
+    QPushButton
 )
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QBrush, QColor, QPixmap
+from PyQt5.QtGui import (
+    QPainter, QBrush,
+    QColor, QPixmap, 
+    QCursor
+)
 
 # Tipado
 from typing import List, Union
@@ -18,15 +23,17 @@ class Plantilla(QWidget):
 
         self.titleLabel.setText(title)
         self.handle_labels(columns)
-    
+
     def handle_labels(self, columns: List[Union[str, int]]) -> None:
         for nombre in columns:
-            contenedor = QGroupBox()
-            contenedor.setObjectName("filtroLabelContenedor")
+            contenedor = QPushButton()
+            contenedor.setObjectName("contenedorColumnas")
+            contenedor.setCursor(QCursor(Qt.PointingHandCursor))
+            contenedor.setContentsMargins(10, 0, 10, 0)
 
             decoracion = QLabel(contenedor)
             decoracion.setPixmap(QPixmap(r"GUI\recursos\images\pink_circle.png"))
-            decoracion.setMaximumSize(15, 15)
+            decoracion.setMaximumSize(13, 13)
             decoracion.setScaledContents(True)
 
             label = QLabel(contenedor)
@@ -35,7 +42,6 @@ class Plantilla(QWidget):
             vbox_layout = QHBoxLayout(contenedor)
             vbox_layout.addWidget(decoracion)
             vbox_layout.addWidget(label)
-            vbox_layout.addItem(QSpacerItem(5, 2, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
             contenedor.setLayout(vbox_layout)
 

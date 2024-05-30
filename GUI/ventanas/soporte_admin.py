@@ -77,7 +77,7 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.addWidget(self.modificarCliente)
         self.widgets_stack.addWidget(self.eliminarPanel)
         ########################### fin ###########################
-        
+
         ########################### Inicializando ventanas de inventario de productos ###########################
         self.inventarioProductosPanel = InventarioProductos()
         self.crearProductoPanel = CrearProducto()
