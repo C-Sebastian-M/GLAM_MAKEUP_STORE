@@ -33,11 +33,11 @@
      <string>Cancelar</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="boton_atras">
+   <widget class="QPushButton" name="atras_boton">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>80</y>
+      <y>90</y>
       <width>171</width>
       <height>41</height>
      </rect>
@@ -68,8 +68,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
+      <x>10</x>
+      <y>30</y>
       <width>611</width>
       <height>41</height>
      </rect>
