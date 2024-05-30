@@ -1,11 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from PyQt5.QtCore import Qt
-
+#from sub_ventanas.GestionClientes import CBackground
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 
 
-class Ui_Caja(object):  # terminada (falta reporte diario)
+class Ui_Caja(object, ):  # terminada (falta reporte diario)
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -111,6 +111,7 @@ class Ui_Caja(object):  # terminada (falta reporte diario)
         self.pushButtonC_2.clicked.connect(MainWindow.close)
         self.pushButtonC_3.clicked.connect(MainWindow.close)
         self.pushButtonC_3.clicked.connect(self.nextWindow)
+        self.pushButtonC.clicked.connect(self.report)#metodo crear reporte diari
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -120,7 +121,9 @@ class Ui_Caja(object):  # terminada (falta reporte diario)
         self.pushButtonC_3.setText(_translate("MainWindow", "Productos/Servicios"))
         self.pushButtonC_2.setText(_translate("MainWindow", "Salir"))
         
-
+    def report(self):#crear el metodo reporte diario
+        pass
+    
     def nextWindow(self):
         self.sele = QMainWindow()
         self.ui_backC = Sele_Compra()

@@ -64,11 +64,3 @@ class ModificarProducto(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\inventario_productos\modificar_producto.ui",
             self,
         )
-        
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    crear_producto = CrearProducto()
-    modificar_producto = ModificarProducto()
-    crear_producto.show()
-    modificar_producto.show()
-    sys.exit(app.exec_())
