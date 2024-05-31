@@ -6,13 +6,16 @@ from PyQt5.QtGui import QCursor
 from PyQt5.QtGui import QIcon
 from PyQt5 import uic
 from GUI.sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas, CBackground
+
 from GUI.sub_ventanas.GestionClientes import (
     GestionClientes
 )
+
 from GUI.sub_ventanas.inventario_productos import (
     InventarioProductos,
     CrearProducto,
     ModificarProducto,
+    ModificarAtributosProducto
 )
 
 class AdminSoporte(QMainWindow, CBackground):
@@ -77,15 +80,17 @@ class AdminSoporteManager(QMainWindow):
         self.gestionPanel = GestionClientes()
         self.widgets_stack.addWidget(self.gestionPanel)
         ########################### fin ###########################
-
+        
         ########################### Inicializando ventanas de inventario de productos ###########################
         self.inventarioProductosPanel = InventarioProductos()
         self.crearProductoPanel = CrearProducto()
         self.modificarProductoPanel = ModificarProducto()
-
+        self.modificarAtributosProductoPanel = ModificarAtributosProducto()
+        
         self.widgets_stack.addWidget(self.inventarioProductosPanel)
         self.widgets_stack.addWidget(self.crearProductoPanel)
         self.widgets_stack.addWidget(self.modificarProductoPanel)
+        self.widgets_stack.addWidget(self.modificarAtributosProductoPanel)
         ########################### fin ###########################
 
         # asignando el widget central
@@ -133,14 +138,15 @@ class AdminSoporteManager(QMainWindow):
 
         # Panel de inventario de productos
         self.inventarioProductosPanel.volverBtn.clicked.connect(self.anterior)
-        self.inventarioProductosPanel.crear_producto_boton.clicked.connect(
-            self.ventana_crear_producto
-        )
-        self.inventarioProductosPanel.modificar_producto_boton.clicked.connect(
-            self.ventana_modificar_producto
-        )
+        self.inventarioProductosPanel.crear_producto_boton.clicked.connect(self.ventana_crear_producto)
+        self.inventarioProductosPanel.modificar_producto_boton.clicked.connect(self.ventana_modificar_producto)
+        
         self.crearProductoPanel.volverBtn.clicked.connect(self.anterior)
+        
         self.modificarProductoPanel.volverBtn.clicked.connect(self.anterior)
+        self.modificarProductoPanel.seleccionar_producto_combobox.currentIndexChanged.connect(self.ventana_modificar_atributos_producto)
+        self.modificarAtributosProductoPanel.volverBtn.clicked.connect(self.anterior)
+        self.modificarAtributosProductoPanel.cancelar_boton.clicked.connect(self.anterior)
 
     ###### Reportes ######
     def ventana_reportes(self):
@@ -160,6 +166,18 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.gestionPanel)
         self.stack.append(self.admin_soporte)
 
+    def ventana_addCliente(self):
+        self.widgets_stack.setCurrentWidget(self.addClientePanel)
+        self.stack.append(self.gestionPanel)
+
+    def ventana_modificarCliente(self):
+        self.widgets_stack.setCurrentWidget(self.modificarCliente)
+        self.stack.append(self.gestionPanel)
+
+    def ventana_eliminarCliente(self):
+        self.widgets_stack.setCurrentWidget(self.eliminarPanel)
+        self.stack.append(self.gestionPanel)
+        
     ###### Inventario de productos ######
     def ventana_inventario_productos(self):
         self.widgets_stack.setCurrentWidget(self.inventarioProductosPanel)
@@ -172,6 +190,15 @@ class AdminSoporteManager(QMainWindow):
     def ventana_modificar_producto(self):
         self.widgets_stack.setCurrentWidget(self.modificarProductoPanel)
         self.stack.append(self.inventarioProductosPanel)
+        
+    def ventana_modificar_atributos_producto(self):
+        self.update_producto_seleccionado()
+        self.widgets_stack.setCurrentWidget(self.modificarAtributosProductoPanel)
+        self.stack.append(self.modificarProductoPanel)
+    
+    def update_producto_seleccionado(self):
+        self.producto_seleccionado = self.modificarProductoPanel.seleccionar_producto_combobox.currentText()
+        self.modificarAtributosProductoPanel.label_producto_seleccionado.setText(self.producto_seleccionado)
 
     ###### Volver ######
     def anterior(self):
