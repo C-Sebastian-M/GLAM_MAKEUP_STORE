@@ -8,6 +8,7 @@ from PyQt5 import uic
 
 from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas, CBackground
 from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente, EliminarCliente
+from sub_ventanas.inventario_productos import InventarioProductos, CrearProducto, ModificarProducto
 
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
@@ -74,6 +75,16 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.addWidget(self.eliminarPanel)
         ########################### fin ###########################
 
+        ########################### Inicializando ventanas de inventario de productos ###########################
+        self.inventarioProductosPanel = InventarioProductos()
+        self.crearProductoPanel = CrearProducto()
+        self.modificarProductoPanel = ModificarProducto()
+        
+        self.widgets_stack.addWidget(self.inventarioProductosPanel)
+        self.widgets_stack.addWidget(self.crearProductoPanel)
+        self.widgets_stack.addWidget(self.modificarProductoPanel)
+        ########################### fin ###########################
+
 
         # asignando el widget central
         self.setCentralWidget(self.widgets_stack)
@@ -93,8 +104,9 @@ class AdminSoporteManager(QMainWindow):
 
     def conexiones(self):
         # Main
-        self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes)
-        self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes)
+        self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes) # Conexión a ventanas Reportes
+        self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes) # Conexión a ventanas Gestión Clientes
+        self.admin_soporte.inventarioBtn.clicked.connect(self.ventana_inventario_productos) # Conexión a ventanas Inventario de productos
 
         # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
@@ -113,7 +125,15 @@ class AdminSoporteManager(QMainWindow):
         self.eliminarPanel.atrasBtnE.clicked.connect(self.anterior)
         self.eliminarPanel.cancelarBtnE.clicked.connect(self.anterior)
         self.eliminarPanel.guardarBtnE.clicked.connect(self.anterior)
-
+        
+        # Panel de inventario de productos
+        self.inventarioProductosPanel.volverBtn.clicked.connect(self.anterior)
+        self.inventarioProductosPanel.crear_producto_boton.clicked.connect(self.ventana_crear_producto)
+        self.inventarioProductosPanel.modificar_producto_boton.clicked.connect(self.ventana_modificar_producto)
+        self.crearProductoPanel.volverBtn.clicked.connect(self.anterior)
+        self.modificarProductoPanel.volverBtn.clicked.connect(self.anterior)
+        
+        
     ###### Reportes ######
     def ventana_reportes(self):
         self.widgets_stack.setCurrentWidget(self.reportePanel)
@@ -143,6 +163,19 @@ class AdminSoporteManager(QMainWindow):
     def ventana_eliminarCliente(self):
         self.widgets_stack.setCurrentWidget(self.eliminarPanel)
         self.stack.append(self.gestionPanel)
+    
+    ###### Inventario de productos ######
+    def ventana_inventario_productos(self):
+        self.widgets_stack.setCurrentWidget(self.inventarioProductosPanel)
+        self.stack.append(self.admin_soporte)
+    
+    def ventana_crear_producto(self):
+        self.widgets_stack.setCurrentWidget(self.crearProductoPanel)
+        self.stack.append(self.inventarioProductosPanel)
+    
+    def ventana_modificar_producto(self):
+        self.widgets_stack.setCurrentWidget(self.modificarProductoPanel)
+        self.stack.append(self.inventarioProductosPanel)
 
      ###### Volver ######
     def anterior(self):
@@ -164,30 +197,3 @@ class AdminSoporteManager(QMainWindow):
 
     def run(self):
         self.show()
-
-class AdminSoporte(QMainWindow):
-    def __init__(self, role: str) -> None:
-        super(QMainWindow, self).__init__()
-        self.role = role
-
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
-            self,
-        )
-
-        self.cerrarBtn.clicked.connect(QApplication.instance().quit)
-
-        self.inicializar(
-            is_admin=True if self.role.strip().lower() == "admin" else False
-        )
-
-    def inicializar(self, is_admin: str | bool) -> None:
-        if is_admin or is_admin == "admin":
-            self.setWindowTitle("Administrador")
-            self.title.setText("Admin")
-            self.roleBtn.setText("Reporte\nDiario")
-            return
-
-        self.setWindowTitle("Admin")
-        self.title.setText("Soporte")
-        self.roleBtn.setText("Administrar\nusuario")

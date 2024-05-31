@@ -106,18 +106,21 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <property name="leftMargin">
-     <number>4</number>
+     <number>0</number>
     </property>
     <property name="topMargin">
      <number>25</number>
     </property>
     <property name="rightMargin">
-     <number>11</number>
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>10</number>
     </property>
     <item>
      <layout class="QHBoxLayout" name="inputLayout" stretch="0,0">
       <property name="spacing">
-       <number>10</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -139,7 +142,7 @@
         <property name="font">
          <font>
           <family>Arial</family>
-          <pointsize>12</pointsize>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -164,7 +167,7 @@
         <property name="maximumSize">
          <size>
           <width>15</width>
-          <height>15</height>
+          <height>13</height>
          </size>
         </property>
         <property name="baseSize">
@@ -235,11 +238,17 @@
        <property name="spacing">
         <number>0</number>
        </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMaximumSize</enum>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>
        <property name="topMargin">
         <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
        </property>
        <property name="bottomMargin">
         <number>1</number>
@@ -258,11 +267,14 @@
       <property name="font">
        <font>
         <family>Arial</family>
-        <pointsize>11</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="focusPolicy">
        <enum>Qt::StrongFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">padding: 5px;</string>
       </property>
       <property name="text">
        <string>Por fecha</string>
@@ -330,29 +342,58 @@
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="filtroBtn">
-      <property name="enabled">
-       <bool>true</bool>
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+      <property name="sizeType">
+       <enum>QSizePolicy::Minimum</enum>
       </property>
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>13</pointsize>
-       </font>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
       </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Buscar</string>
-      </property>
-     </widget>
+     </spacer>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="buscarBtn">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">padding: 10px;</string>
+        </property>
+        <property name="text">
+         <string>Buscar</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <spacer name="verticalSpacer">

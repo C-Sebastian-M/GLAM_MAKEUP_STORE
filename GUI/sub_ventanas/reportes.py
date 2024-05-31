@@ -1,12 +1,17 @@
 from PyQt5 import uic
 
 from PyQt5.QtWidgets import ( 
-    QWidget, QGroupBox, 
-    QLabel, QHBoxLayout,
-    QSpacerItem, QSizePolicy
+    QWidget, QLabel, 
+    QHBoxLayout, QSpacerItem, 
+    QSizePolicy
 )
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QBrush, QColor, QPixmap
+from PyQt5.QtGui import (
+    QPainter, QBrush,
+    QColor, QPixmap, 
+    QCursor
+)
+from sub_ventanas.utils.css import HoverGroupBox
 
 # Tipado
 from typing import List, Union
@@ -18,15 +23,17 @@ class Plantilla(QWidget):
 
         self.titleLabel.setText(title)
         self.handle_labels(columns)
-    
+
     def handle_labels(self, columns: List[Union[str, int]]) -> None:
         for nombre in columns:
-            contenedor = QGroupBox()
-            contenedor.setObjectName("filtroLabelContenedor")
+            contenedor = HoverGroupBox()
+            contenedor.setObjectName("contenedorColumnas")
+            contenedor.setCursor(QCursor(Qt.PointingHandCursor))
+            contenedor.setContentsMargins(10, 0, 10, 0)
 
             decoracion = QLabel(contenedor)
             decoracion.setPixmap(QPixmap(r"GUI\recursos\images\pink_circle.png"))
-            decoracion.setMaximumSize(15, 15)
+            decoracion.setMaximumSize(15, 13)
             decoracion.setScaledContents(True)
 
             label = QLabel(contenedor)
@@ -35,13 +42,15 @@ class Plantilla(QWidget):
             vbox_layout = QHBoxLayout(contenedor)
             vbox_layout.addWidget(decoracion)
             vbox_layout.addWidget(label)
-            vbox_layout.addItem(QSpacerItem(5, 2, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
             contenedor.setLayout(vbox_layout)
 
             self.labelsLayout.addWidget(contenedor)
 
         self.labelsLayout.addItem(QSpacerItem(2, 70, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+    def handle_table(self, columns, data):
+        pass
 
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
@@ -98,4 +107,7 @@ class InventarioPanel(QWidget, CBackground):
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
+            self,
+        )

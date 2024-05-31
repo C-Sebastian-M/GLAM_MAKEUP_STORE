@@ -48,7 +48,7 @@ class InventarioProductos(QMainWindow, CBackground):
 
 
 # Ventana Crear producto
-class CrearProducto():
+class CrearProducto(QMainWindow, CBackground):
     def __init__(self):
         super().__init__()
         uic.loadUi(
@@ -57,7 +57,7 @@ class CrearProducto():
         )
 
 # Ventana Modificar producto
-class ModificarProducto():
+class ModificarProducto(QMainWindow, CBackground):
     def __init__(self):
         super().__init__()
         uic.loadUi(
