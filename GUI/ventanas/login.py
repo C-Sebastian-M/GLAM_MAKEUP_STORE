@@ -19,7 +19,7 @@ class Login(QMainWindow):
 
         # BT LOGIN
         self.pushButton_login.clicked.connect(self.checkFields)
-    
+        self.pushButton_login.clicked.connect(self.limpiarCampo)
         self.styleLineEditOk = (
             "QLineEdit {\n"
             "    border: 2px solid #e4acd0; /* Borde */\n"
@@ -57,6 +57,12 @@ class Login(QMainWindow):
 
         self.stylePopupError = "background-color: rgb(255, 85, 127); border-radius: 5px;"
         self.stylePopupOk = "background-color: rgb(255, 0, 0); border-radius: 5px;"
+
+    def limpiarCampo(self):
+        self.lineEdit_user.setText("")
+        self.lineEdit_password.setText("")
+        self.lineEdit_user.setPlaceholderText("USUARIO")
+        self.lineEdit_password.setPlaceholderText("CONTRASEÑA")
 
     def checkFields(self):
         username = self.lineEdit_user.text()
