@@ -11,6 +11,7 @@ class GestionDatos:
     def __init__(self, nombre_archivo):
         self.nombre_archivo = nombre_archivo
         self.crear_dataframes()
+        self.cargar_dataframes()
         self.guardar_dataframes()
 
     def crear_dataframes(self):
@@ -18,11 +19,14 @@ class GestionDatos:
         self.columnas_productos = ["Referencia", "Codigo de barras", "Marca", "Precio de adquisicion", "Precio venta",
                                    "Unidades actuales", "Producto disponible", "Fecha"]
         self.columnas_metodo_pago = ["ID", "Metodo de pago"]
-        self.columnas_venta_productos = ["ID venta", "Cedula", "Cliente", "Producto", "Fecha", "Cantidad", "Subtotal"]
-        self.columnas_venta_servicios = ["ID venta", "Cedula", "Cliente", "Servicio", "Fecha", "Cantidad", "Subtotal"]
+        self.columnas_venta_productos = ["ID venta", "Cedula", "Cliente", "Producto", "Fecha", "Cantidad", "Subtotal",
+                                         "ID_MetodoPago"]
+        self.columnas_venta_servicios = ["ID venta", "Cedula", "Cliente", "Servicio", "Fecha", "Cantidad", "Subtotal",
+                                         "ID_MetodoPago"]
         self.columnas_servicios = ["ID servicio", "Nombre Servicio", "Costo"]
         self.columnas_reservas_servicios = ["ID Reserva", "Cliente", "Servicio", "Fecha Reserva", "Fecha Servicio"]
-        self.columnas_facturas = ["Cedula", "Cliente", "Fecha", "SubtotalProductos", "SubtotalServicios", "Total"]
+        self.columnas_facturas = ["Cedula", "Cliente", "Fecha", "SubtotalProductos", "SubtotalServicios", "Total",
+                                  "Metodo de pago"]
         self.columnas_usuarios = ["ID usuario", "usuario", "contraseña", "Rol ID"]
         self.columnas_roles = ["ID", "Rol"]
 
@@ -48,6 +52,24 @@ class GestionDatos:
         # Crear un usuario de soporte predeterminado
         usuario_soporte = pd.DataFrame([[1, "soporte", 123, 1]], columns=self.columnas_usuarios)
         self.usuarios = pd.concat([self.usuario, usuario_soporte], ignore_index=True)
+
+    def cargar_dataframes(self):
+        try:
+            archivo = pd.ExcelFile(self.nombre_archivo)
+            self.clientes = pd.read_excel(archivo, sheet_name='Clientes')
+            self.productos = pd.read_excel(archivo, sheet_name='Productos')
+            self.metodo_pago = pd.read_excel(archivo, sheet_name='Metodo de pago')
+            self.venta_productos = pd.read_excel(archivo, sheet_name='VentaProductos')
+            self.venta_servicios = pd.read_excel(archivo, sheet_name='VentaServicios')
+            self.servicios = pd.read_excel(archivo, sheet_name='Servicios')
+            self.reservas_servicios = pd.read_excel(archivo, sheet_name='ReservasServicios')
+            self.facturas = pd.read_excel(archivo, sheet_name='Facturas')
+            self.usuarios = pd.read_excel(archivo, sheet_name='Usuarios')
+            self.roles = pd.read_excel(archivo, sheet_name='Roles')
+        except FileNotFoundError:
+            print(f"Archivo {self.nombre_archivo} no encontrado. Se crearán nuevos DataFrames.")
+        except Exception as e:
+            print(f"Error al cargar los DataFrames desde el archivo Excel: {e}")
 
     def guardar_dataframes(self):
         try:
@@ -89,7 +111,7 @@ class GestionDatos:
             print(f"Error al ajustar las columnas en el archivo Excel: {e}")
 
     def verificar_admin_existente(self):
-        return 'Admin' in self.contraseñas['Rol'].values
+        return 'Admin' in self.roles['Rol'].values
 
     def verificar_stock_no_negativo(self):
         return all(self.productos['Unidades actuales'] >= 0)
@@ -114,12 +136,12 @@ class GestionDatos:
             print(f"Cliente con cedula {cedula} no encontrado.")
             return None
 
-    def eliminar_clientes(self, cedula):
+    def modificar_clientes(self, cedula):
         cliente = self.clientes[self.clientes["Cedula"] == cedula]
         if not cliente.empty:
             self.clientes = self.clientes[self.clientes["Cedula"] != cedula]
             self.guardar_dataframes()
-            print(f"Cliente con cedula: {cedula} ha sido eliminado")
+            print(f"Cliente con cedula: {cedula} ha sido modificado")
         else:
             print(f"El cliente con cedula {cedula} no ha sido encontrado.")
 
@@ -185,18 +207,19 @@ class GestionDatos:
             print(f"Producto con referencia {referencia} no encontrado.")
 
     # Venta de productos y servicios
-    def agregar_venta_servicio(self, id_servicio, cedula, cliente, nombre_servicio, cantidad, subtotal):
+    def agregar_venta_servicio(self, id_servicio, cedula, cliente, nombre_servicio, cantidad, subtotal, ID_MetodoPago):
         fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
         nueva_venta_servicio = pd.DataFrame(
-            [[id_servicio, cedula, cliente, nombre_servicio, fecha, cantidad, subtotal]],
+            [[id_servicio, cedula, cliente, nombre_servicio, fecha, cantidad, subtotal, ID_MetodoPago]],
             columns=self.columnas_venta_servicios)
         self.venta_servicios = pd.concat([self.venta_servicios, nueva_venta_servicio], ignore_index=True)
         self.guardar_dataframes()
 
-    def agregar_venta_producto(self, id_venta, cedula, cliente, producto, cantidad, subtotal):
+    def agregar_venta_producto(self, id_venta, cedula, cliente, producto, cantidad, subtotal, ID_MetodoPago):
         fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
-        nueva_venta_producto = pd.DataFrame([[id_venta, cedula, cliente, producto, fecha, cantidad, subtotal]],
-                                            columns=self.columnas_venta_productos)
+        nueva_venta_producto = pd.DataFrame(
+            [[id_venta, cedula, cliente, producto, fecha, cantidad, subtotal, ID_MetodoPago]],
+            columns=self.columnas_venta_productos)
         self.venta_productos = pd.concat([self.venta_productos, nueva_venta_producto], ignore_index=True)
         self.guardar_dataframes()
 
@@ -218,23 +241,23 @@ class GestionDatos:
             else:
                 print(f"Venta de servicio con ID {id_venta} no encontrada.")
 
-    def eliminar_venta(self, id_venta, tipo_venta="producto"):
+    def modificar_venta(self, id_venta, tipo_venta="producto"):
         if tipo_venta == "producto":
             venta = self.venta_productos[self.venta_productos["ID venta"] == id_venta]
             if not venta.empty:
                 self.venta_productos = self.venta_productos[self.venta_productos["ID venta"] != id_venta]
                 self.guardar_dataframes()
-                print(f"El producto con el ID: {id_venta} ha sido eliminado")
+                print(f"La venta con el ID: {id_venta} ha sido modificada")
             else:
-                print(f"El producto con el ID: {id_venta} no ha sido encontrado")
+                print(f"La venta con el ID: {id_venta} no ha sido encontrada")
         elif tipo_venta == "servicio":
             venta = self.venta_servicios[self.venta_servicios["ID venta"] == id_venta]
             if not venta.empty:
                 self.venta_servicios = self.venta_servicios[self.venta_servicios["ID venta"] != id_venta]
                 self.guardar_dataframes()
-                print(f"El servicio con el ID: {id_venta} ha sido eliminado")
+                print(f"La venta con el ID: {id_venta} ha sido modificada")
             else:
-                print(f"El servicio con el ID: {id_venta} no ha sido encontrado")
+                print(f"La venta con el ID: {id_venta} no ha sido encontrada")
 
     # Servicios
     def agregar_servicio(self, id_servicio, nombre_servicio, costo):
@@ -259,12 +282,12 @@ class GestionDatos:
             print(f"Servicio con ID {id_servicio} no encontrado.")
             return None
 
-    def eliminar_servicio(self, id_servicio):
+    def modificar_servicio(self, id_servicio):
         servicio = self.servicios[self.servicios["ID servicio"] == id_servicio]
         if not servicio.empty:
             self.servicios = self.servicios[self.servicios["ID servicio"] != id_servicio]
             self.guardar_dataframes()
-            print(f"Servicio con ID {id_servicio} eliminado.")
+            print(f"Servicio con ID {id_servicio} modificado.")
         else:
             print(f"Servicio con ID {id_servicio} no encontrado.")
 
@@ -317,18 +340,18 @@ class GestionDatos:
             return None
 
     def modificar_usuario(self, usuario, nuevos_datos):
-        usuarios = self.contraseñas[self.contraseñas["usuario"] == usuario]
+        usuarios = self.usuarios[self.usuarios["usuario"] == usuario]
         if not usuarios.empty:
             for key, value in nuevos_datos.items():
-                if key in self.contraseñas.columns:
-                    self.contraseñas.loc[self.contraseñas["usuario"] == usuario, key] = value
+                if key in self.usuarios.columns:
+                    self.usuarios.loc[self.usuarios["usuario"] == usuario, key] = value
             self.guardar_dataframes()
             print(f"Usuario {usuario} modificado correctamente.")
         else:
             print(f"El usuario {usuario} no ha sido encontrado.")
 
     # Facturas
-    def conversion_factura(self, cedula):
+    def conversion_factura(self, cedula, ID_MetodoPago):
         fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
         try:
             cliente_servicios = self.venta_servicios[
@@ -353,7 +376,7 @@ class GestionDatos:
             total = total_venta_servicios + total_venta_productos
 
             nueva_factura = pd.DataFrame(
-                [[cedula, nombre_cliente, fecha, total_venta_productos, total_venta_servicios, total]],
+                [[cedula, nombre_cliente, fecha, total_venta_productos, total_venta_servicios, total, ID_MetodoPago]],
                 columns=self.columnas_facturas)
             self.facturas = pd.concat([self.facturas, nueva_factura], ignore_index=True)
             self.guardar_dataframes()
@@ -362,10 +385,10 @@ class GestionDatos:
 
 
 x = GestionDatos('datos.xlsx')
-x.crear_dataframes()
-x.agregar_cliente(14567, "juan", 35546)
+# x.crear_dataframes()
 x.reservar_servicio(12, "mgiue", 345, "28/05/2024 14:30")
 x.agregar_producto("REF123", "1234567890123", "Marca A", 10.0, 20.0, 0)
-x.agregar_venta_producto(123, 1234, "migue", "Shampoo", 12, 3221)
+x.agregar_venta_producto(123, 1234, "migue", "Shampoo", 12, 3221, "efectivo")
 x.agregar_usuario(2, "admin", 12345, 2)
-x.conversion_factura(1234)
+x.conversion_factura(1234, 1)
+x.agregar_cliente(1234, "migue", "123456789")
