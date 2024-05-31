@@ -5,6 +5,7 @@ from PyQt5 import QtCore, QtWidgets
 import sys
 
 
+
 class GestionClientes(QMainWindow):
     def __init__(self):
         super(GestionClientes, self).__init__()
