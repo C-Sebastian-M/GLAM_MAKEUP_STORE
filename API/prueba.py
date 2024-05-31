@@ -1,5 +1,5 @@
-from DATA import GestionDatos
-from Validaciones import *
+from DATA.DATA import GestionDatos
+
 class Cajero:
     def __init__(self, gestion_datos):
         self.gestion_datos = gestion_datos
