@@ -6,7 +6,7 @@ from PyQt5.QtGui import QCursor
 
 from PyQt5 import uic
 
-from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas, CBackground
+from sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas, Inventario, CBackground
 from sub_ventanas.GestionClientes import GestionClientes, CrearCliente, ModificarCliente, EliminarCliente
 from sub_ventanas.inventario_productos import InventarioProductos, CrearProducto, ModificarProducto
 
@@ -15,7 +15,10 @@ class AdminSoporte(QMainWindow, CBackground):
         super(QMainWindow, self).__init__()
         self.role = role
 
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui", 
+            self
+        )
 
         self.cerrarBtn.clicked.connect(QApplication.instance().quit)
 
@@ -36,10 +39,10 @@ class AdminSoporte(QMainWindow, CBackground):
         self.title.setText("Soporte")
         self.roleBtn.setText("Administrar\nusuario")
 
-
 class AdminSoporteManager(QMainWindow):
     def __init__(
-        self, user_role: str
+        self, 
+        user_role: str,
     ) -> None:  # pass role as argument (soporte or admin)
         super(QMainWindow, self).__init__()
         if not user_role:
@@ -56,11 +59,15 @@ class AdminSoporteManager(QMainWindow):
         self.reportePanel = ReportePanel()
         self.inventarioPanel = InventarioPanel()
         self.ventas = Ventas("Ventas", ["id", "cantidad", "cliente", "productos", "box_id"])
+        self.inventarioServicios = Inventario("Inventario", ["referencia", "marca", "codigo", "stock", "precio venta"])
+        self.inventarioProductos = Inventario("Inventario", ["id", "bbm", "cod", "stock", "size"])
 
         self.widgets_stack.addWidget(self.admin_soporte)
         self.widgets_stack.addWidget(self.reportePanel)
         self.widgets_stack.addWidget(self.inventarioPanel)
         self.widgets_stack.addWidget(self.ventas)
+        self.widgets_stack.addWidget(self.inventarioServicios)
+        self.widgets_stack.addWidget(self.inventarioProductos)
         ########################### fin ###########################
 
         ########################### Inicializando ventanas de gestion de cliente ###########################
@@ -79,7 +86,7 @@ class AdminSoporteManager(QMainWindow):
         self.inventarioProductosPanel = InventarioProductos()
         self.crearProductoPanel = CrearProducto()
         self.modificarProductoPanel = ModificarProducto()
-        
+
         self.widgets_stack.addWidget(self.inventarioProductosPanel)
         self.widgets_stack.addWidget(self.crearProductoPanel)
         self.widgets_stack.addWidget(self.modificarProductoPanel)
@@ -110,10 +117,22 @@ class AdminSoporteManager(QMainWindow):
 
         # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
+    
+        self.reportePanel.inventarioBtn.clicked.connect(self.panel_inventario)
         self.reportePanel.ventasBtn.clicked.connect(self.ventana_ventas)
-        self.reportePanel.inventarioBtn.clicked.connect(self.ventana_inventario)
-        # inventario
+        self.ventas.volverBtn.clicked.connect(self.anterior)
+
         self.inventarioPanel.volverBtn.clicked.connect(self.anterior)
+        self.inventarioPanel.serviciosBtn.clicked.connect(self.ventana_inventarioServicios)
+        self.inventarioPanel.serviciosBtn.clicked.connect(self.jump_invServicios)
+        self.inventarioPanel.productosBtn.clicked.connect(self.ventana_inventarioProductos)
+        self.inventarioPanel.productosBtn.clicked.connect(self.jump_invProductos)
+
+        self.inventarioServicios.productosBtn.clicked.connect(self.jump_invProductos)
+        self.inventarioProductos.serviciosBtn.clicked.connect(self.jump_invServicios)
+
+        self.inventarioServicios.volverBtn.clicked.connect(self.anterior)
+        self.inventarioProductos.volverBtn.clicked.connect(self.anterior)
 
         # Panel de gestion cliente
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
@@ -125,16 +144,15 @@ class AdminSoporteManager(QMainWindow):
         self.eliminarPanel.atrasBtnE.clicked.connect(self.anterior)
         self.eliminarPanel.cancelarBtnE.clicked.connect(self.anterior)
         self.eliminarPanel.guardarBtnE.clicked.connect(self.anterior)
-        
+
         # Panel de inventario de productos
         self.inventarioProductosPanel.volverBtn.clicked.connect(self.anterior)
         self.inventarioProductosPanel.crear_producto_boton.clicked.connect(self.ventana_crear_producto)
         self.inventarioProductosPanel.modificar_producto_boton.clicked.connect(self.ventana_modificar_producto)
         self.crearProductoPanel.volverBtn.clicked.connect(self.anterior)
         self.modificarProductoPanel.volverBtn.clicked.connect(self.anterior)
-        
-        
-    ###### Reportes ######
+
+    #################################### Reportes ####################################
     def ventana_reportes(self):
         self.widgets_stack.setCurrentWidget(self.reportePanel)
         self.stack.append(self.admin_soporte)
@@ -143,11 +161,29 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.ventas)
         self.stack.append(self.reportePanel)
 
-    def ventana_inventario(self):
+    def panel_inventario(self):
         self.widgets_stack.setCurrentWidget(self.inventarioPanel)
         self.stack.append(self.reportePanel)
 
-    ###### Gestion clientes ######
+    def ventana_inventarioServicios(self):
+        self.widgets_stack.setCurrentWidget(self.inventarioServicios)
+        self.stack.append(self.inventarioPanel)
+
+    def ventana_inventarioProductos(self):
+        self.widgets_stack.setCurrentWidget(self.inventarioProductos)
+        self.stack.append(self.inventarioPanel)
+
+    def jump_invServicios(self):
+        self.widgets_stack.setCurrentWidget(self.inventarioServicios)
+        self.inventarioServicios.serviciosBtn.setStyleSheet("background-color: #FFFFFF;")
+        self.inventarioServicios.productosBtn.setStyleSheet("background-color: none;")
+
+    def jump_invProductos(self):
+        self.widgets_stack.setCurrentWidget(self.inventarioProductos)
+        self.inventarioProductos.serviciosBtn.setStyleSheet("background-color: none;")
+        self.inventarioProductos.productosBtn.setStyleSheet("background-color: #FFFFFF;")
+
+    #################################### Gestion clientes ####################################
     def ventana_gestionClientes(self):
         self.widgets_stack.setCurrentWidget(self.gestionPanel)
         self.stack.append(self.admin_soporte)
@@ -155,7 +191,7 @@ class AdminSoporteManager(QMainWindow):
     def ventana_addCliente(self):
         self.widgets_stack.setCurrentWidget(self.addClientePanel)
         self.stack.append(self.gestionPanel)
-        
+
     def ventana_modificarCliente(self):
         self.widgets_stack.setCurrentWidget(self.modificarCliente)
         self.stack.append(self.gestionPanel)
@@ -163,8 +199,8 @@ class AdminSoporteManager(QMainWindow):
     def ventana_eliminarCliente(self):
         self.widgets_stack.setCurrentWidget(self.eliminarPanel)
         self.stack.append(self.gestionPanel)
-    
-    ###### Inventario de productos ######
+
+    #################################### Inventario de productos ####################################
     def ventana_inventario_productos(self):
         self.widgets_stack.setCurrentWidget(self.inventarioProductosPanel)
         self.stack.append(self.admin_soporte)
@@ -177,7 +213,7 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.modificarProductoPanel)
         self.stack.append(self.inventarioProductosPanel)
 
-     ###### Volver ######
+    #################################### Volver ####################################
     def anterior(self):
         anterior = self.admin_soporte
 
