@@ -1,51 +1,76 @@
-import sys
-
 from PyQt5 import uic
 
 from PyQt5.QtWidgets import ( 
-    QWidget, QGroupBox, 
-    QLabel,
+    QWidget, QLabel, 
+    QHBoxLayout, QSpacerItem, 
+    QSizePolicy
 )
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QBrush, QColor, QPixmap
+from PyQt5.QtGui import (
+    QPainter, QBrush,
+    QColor, QPixmap, 
+    QCursor
+)
+from GUI.sub_ventanas.utils.css import CustomGroupBox
 
 # Tipado
-from typing import List
+from typing import List, Union, Literal
 
 class Plantilla(QWidget):
     def __init__(self, title: str, columns: List[str]) -> None:
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\plantillaDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\plantillaDesigner.ui", 
+            self
+        )
 
-        self.title = title
-        self.columns = columns
+        self.titleLabel.setText(title)
+        self.handle_labels(columns)
 
-        self.inicializar() # problema
+    def handle_labels(self, columns: List[Union[str, int]]) -> None:
+        for nombre in columns:
+            contenedor = CustomGroupBox()
+            contenedor.setObjectName("contenedorColumnas")
+            contenedor.setCursor(QCursor(Qt.PointingHandCursor))
+            contenedor.setContentsMargins(10, 0, 10, 0)
 
-    def inicializar(self):
-        self.titleLabel.setText(self.title)
-        for column in self.columns:
-            contenedor = QGroupBox()
             decoracion = QLabel(contenedor)
-            decoracion.pixmap(QPixmap(r"GUI\recursos\images\pink_circle.jpg"))
-            label = QLabel(contenedor, column)
+            decoracion.setPixmap(QPixmap(r"GUI\recursos\images\pink_circle.png"))
+            decoracion.setMaximumSize(15, 13)
+            decoracion.setScaledContents(True)
+
+            label = QLabel(contenedor)
+            label.setObjectName("campo")
+            label.setText(nombre)
+            contenedor.label = label
+            contenedor.target = self.consultandoPor
+
+            vbox_layout = QHBoxLayout(contenedor)
+            vbox_layout.addWidget(decoracion)
+            vbox_layout.addWidget(label)
+
+            contenedor.setLayout(vbox_layout)
 
             self.labelsLayout.addWidget(contenedor)
+
+        self.labelsLayout.addItem(QSpacerItem(2, 70, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+    def handle_table(self, columns, data):
+        pass
 
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
         super().__init__(title, columns)
-        self.plantilla = Plantilla(title, columns)
 
         self.inicializar()
 
     def inicializar(self):
-        self.navbar.deleteLater()
+        if hasattr(self, 'navbar'):
+            self.navbar.deleteLater()
 
 class Inventario(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
         super().__init__(title, columns)
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
 
 class CBackground:
     def paintEvent(self, event):
@@ -82,9 +107,15 @@ class CBackground:
 class InventarioPanel(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", 
+            self
+        )
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\reportesDesigner.ui",
+            self,
+        )

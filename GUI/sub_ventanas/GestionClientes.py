@@ -1,114 +1,93 @@
-from PyQt5 import uic
-
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QComboBox
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QBrush, QColor
+from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView
+from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
+from PyQt5 import QtCore, QtWidgets
 import sys
 
 
-class CBackground:
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setPen(Qt.NoPen)
-        painter.setRenderHint(QPainter.Antialiasing)
 
-        brocha1 = QBrush(QColor(212, 132, 180), Qt.SolidPattern)
-        brocha2 = QBrush(QColor(228, 156, 198), Qt.SolidPattern)
-        brocha3 = QBrush(QColor(235, 188, 220), Qt.SolidPattern)
-
-        # Dibujando circulos abajo
-        painter.setBrush(brocha3)
-        painter.drawEllipse(140, 530, 200, 200)
-
-        painter.setBrush(brocha2)
-        painter.drawEllipse(40, 480, 200, 200)
-
-        painter.setBrush(brocha1)
-        painter.drawEllipse(-70, 440, 200, 200)
-
-        # Dibujando circulos arriba
-        painter.setBrush(brocha3)
-        painter.drawEllipse(440, -140, 200, 200)
-
-        painter.setBrush(brocha2)
-        painter.drawEllipse(550, -100, 200, 200)
-
-        painter.setBrush(brocha1)
-        painter.drawEllipse(700, -70, 200, 200)
-
-        painter.end()
-
-
-class GestionClientes(QMainWindow, CBackground):
+class GestionClientes(QMainWindow):
     def __init__(self):
-        super().__init__()
-        uic.loadUi(
+        super(GestionClientes, self).__init__()
+        loadUi(
             r"GUI\sub_ventanas\ui\gestion_clientes\GestionClientes.ui",
             self,
         )
 
+        self.pushButton_menu.clicked.connect(self.mover_menu)
 
-class CrearCliente(QMainWindow, CBackground):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\gestion_clientes\CrearCliente.ui",
-            self,
+        # Botones
+        self.pushButton_actualizar.clicked.connect(self.mostrar_clientes)
+        self.pushButton_add.clicked.connect(self.registrar_cliente)
+        self.pushButton_guardarInfo.clicked.connect(self.modificar_cliente)
+        self.pushButton_eliminar.clicked.connect(self.eliminar_cliente)
+
+        self.gripSize = 10
+        self.grip = QtWidgets.QSizeGrip(self)
+        self.grip.resize(self.gripSize, self.gripSize)
+
+        # Mas botones
+        self.pushButton_verClientes.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.pagina_consulta)
         )
-        self.BotonGuardar.clicked.connect(self.guardar_cliente)
-
-    def guardar_cliente(self):
-        # Obtener los datos de los campos de entrada
-        cedula = self.IngresoCedula.text()
-        nombre = self.IngresoNombre.text()
-        telefono = self.IngresoTelefono.text()
-        print(f"Nombre: {nombre}, Cédula: {cedula}, Teléfono: {telefono}")
-
-
-class ModificarCliente(QMainWindow, CBackground):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\gestion_clientes\ModificarClientes.ui",
-            self,
+        self.pushButton_addCliente.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.pagina_add)
         )
-        self.pushButton_2.clicked.connect(self.obtener_info)
-        self.comboBoxClientes = self.findChild(QComboBox, "comboBoxClientes")
+        self.pushButton_modificarCliente.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.pagina_modificar)
+        )
+        self.pushButton_eliminarCliente.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.pagina_eliminar)
+        )
 
-        # Asumiendo que el formulario a esconder/mostrar es un QWidget con el objectName "formulario"
-        self.formulario = self.findChild(QWidget, "FormularioWidget")
+        # Ancho columna adaptable
+        self.tabla_verClientes.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        self.tabla_eliminarClientes.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
 
-        # Conecta el combobox a la función que manejará la visibilidad del formulario
-        self.comboBoxClientes.currentIndexChanged.connect(self.toggleFormulario)
+    def resizeEvent(self, event):
+        rect = self.rect()
+        self.grip.move(rect.right() - self.gripSize, rect.bottom() - self.gripSize)
 
-        # Inicialmente oculta el formulario si no hay ningún cliente seleccionado
-        self.formulario.setVisible(False)
+    def mousePressEvent(self, event):
+        self.click_position = event.globalPos()
 
-    def toggleFormulario(self):
-        # Obtén el índice actual del combobox
-        index = self.comboBoxClientes.currentIndex()
+    def mover_menu(self):
+        if True:
+            width = self.frame_control.width()
+            normal = 0
+            if width == 0:
+                extender = 270
+            else:
+                extender = normal
+            self.animacion = QPropertyAnimation(self.frame_control, b"minimumWidth")
+            self.animacion.setDuration(300)
+            self.animacion.setStartValue(width)
+            self.animacion.setEndValue(extender)
+            self.animacion.setEasingCurve(
+                QtCore.QEasingCurve.InOutQuart
+            )  # InQuad, InOutQuad, InCubic, InOutExpo
+            self.animacion.start()
 
-        # Si el índice es válido (es decir, no es -1), muestra el formulario, de lo contrario escóndelo
-        if index != -1:
-            self.formulario.setVisible(True)
-        else:
-            self.formulario.setVisible(False)
+    # Acá se configura la base de datos
+    def mostrar_clientes(self):
+        None
 
-    
-    def obtener_info(self):
-        nombre = self.nombreLineEdit.text()
-        telefono = self.telefonoLineEdit.text()    
-        print(f"Nombre: {nombre}, Teléfono: {telefono}")
+    def registrar_cliente(self):
+        None
 
+    def modificar_cliente(self):
+        None
 
+    def eliminar_cliente(self):
+        None
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    add = CrearCliente()
-    obt = ModificarCliente()
-    add.guardar_cliente()
-    obt.obtener_info()
-    obt.show()
+    add = GestionClientes()
     add.show()  # Asegúrate de mostrar la ventana
     sys.exit(app.exec_())
