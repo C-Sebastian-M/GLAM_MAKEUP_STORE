@@ -1,5 +1,6 @@
 from PyQt5 import uic
 
+from PyQt5 import QtGui
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QComboBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor
@@ -55,6 +56,12 @@ class CrearProducto(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\inventario_productos\crear_producto.ui",
             self,
         )
+        self.setupValidators()
+    
+    def setupValidators(self):
+        validacion_numero = QtGui.QIntValidator(0, 999999999)
+        self.precio_adquisicion_text.setValidator(validacion_numero)
+        
 
 # Ventana Modificar producto
 class ModificarProducto(QMainWindow, CBackground):
