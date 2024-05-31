@@ -1,9 +1,9 @@
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView
+from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView, QTableWidgetItem
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5 import QtCore, QtWidgets
+from DATA import GestionDatos
 import sys
-
 
 
 class GestionClientes(QMainWindow):
@@ -15,7 +15,7 @@ class GestionClientes(QMainWindow):
         )
 
         self.pushButton_menu.clicked.connect(self.mover_menu)
-
+        self.gestion_datos = GestionDatos("datos.xlsx")
         # Botones
         self.pushButton_actualizar.clicked.connect(self.mostrar_clientes)
         self.pushButton_add.clicked.connect(self.registrar_cliente)
@@ -74,16 +74,34 @@ class GestionClientes(QMainWindow):
 
     # Acá se configura la base de datos
     def mostrar_clientes(self):
-        None
+        self.tabla_verClientes.setRowCount(
+            0
+        )  # Limpiar la tabla antes de agregar nuevos datos
+        for i, row in self.gestion_datos.clientes.iterrows():
+            self.tabla_verClientes.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_verClientes.setItem(i, j, QTableWidgetItem(str(value)))
 
     def registrar_cliente(self):
-        None
+        cedula = self.lineEdit_addCedula.text()
+        nombre = self.lineEdit_addNombre.text()
+        telefono = self.lineEdit_addTelefono.text()
+        self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+        self.mostrar_clientes()  # Actualizar la tabla de clientes
 
     def modificar_cliente(self):
-        None
+        cedula = self.lineEdit_nuevaCedula.text()
+        nuevos_datos = {
+            "Nombre": self.lineEdit_nuevoNombre.text(),
+            "Telefono": self.lineEdit_nuevoTelefono.text(),
+        }
+        self.gestion_datos.actualizar_cliente(cedula, nuevos_datos)
+        self.mostrar_clientes()  # Actualizar la tabla de clientes
 
     def eliminar_cliente(self):
-        None
+        cedula = self.lineEdit_buscarEliminar.text()
+        self.gestion_datos.modificar_clientes(cedula)
+        self.mostrar_clientes()  # Actualizar la tabla de clientes
 
 
 if __name__ == "__main__":
