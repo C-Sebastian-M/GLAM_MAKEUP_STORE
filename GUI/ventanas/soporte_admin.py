@@ -14,10 +14,7 @@ class AdminSoporte(QMainWindow, CBackground):
         super(QMainWindow, self).__init__()
         self.role = role
 
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
-            self,
-        )
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui", self)
 
         self.cerrarBtn.clicked.connect(QApplication.instance().quit)
 
