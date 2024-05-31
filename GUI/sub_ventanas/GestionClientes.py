@@ -61,7 +61,6 @@ class CrearCliente(QMainWindow, CBackground):
         cedula = self.IngresoCedula.text()
         nombre = self.IngresoNombre.text()
         telefono = self.IngresoTelefono.text()
-        print(f"Nombre: {nombre}, Cédula: {cedula}, Teléfono: {telefono}")
 
 
 class ModificarCliente(QMainWindow, CBackground):
@@ -93,7 +92,6 @@ class ModificarCliente(QMainWindow, CBackground):
     def obtener_info(self):
         nombre = self.nombreLineEdit.text()
         telefono = self.telefonoLineEdit.text()
-        print(f"Nombre: {nombre}, Teléfono: {telefono}")
 
 
 class EliminarCliente(QMainWindow, CBackground):

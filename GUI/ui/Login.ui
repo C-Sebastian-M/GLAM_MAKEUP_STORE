@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>GLAM MAKEUP STORE</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -32,15 +32,18 @@
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
+  <property name="toolTipDuration">
+   <number>1</number>
+  </property>
   <property name="iconSize">
    <size>
-    <width>50</width>
-    <height>50</height>
+    <width>100</width>
+    <height>100</height>
    </size>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="toolTipDuration">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(255, 255, 255)</string>
@@ -67,7 +70,7 @@
      </size>
     </property>
     <property name="toolTipDuration">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="text">
      <string/>
@@ -95,7 +98,7 @@
      </size>
     </property>
     <property name="toolTipDuration">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="styleSheet">
      <string notr="true">background: transparent;
@@ -119,11 +122,11 @@ border-radius: 10px;</string>
      <property name="font">
       <font>
        <family>Arial,sans-serif</family>
-       <pointsize>-1</pointsize>
+       <pointsize>1</pointsize>
       </font>
      </property>
      <property name="toolTipDuration">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="styleSheet">
       <string notr="true">QLineEdit {
@@ -164,8 +167,11 @@ QLineEdit:focus {
      <property name="font">
       <font>
        <family>Arial,sans-serif</family>
-       <pointsize>-1</pointsize>
+       <pointsize>1</pointsize>
       </font>
+     </property>
+     <property name="toolTipDuration">
+      <number>1</number>
      </property>
      <property name="styleSheet">
       <string notr="true">QLineEdit {
@@ -239,7 +245,7 @@ QPushButton:pressed {
       </rect>
      </property>
      <property name="toolTipDuration">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="text">
       <string/>
@@ -292,6 +298,9 @@ border-radius: 5px;</string>
      </property>
      <item>
       <widget class="QLabel" name="label_error">
+       <property name="toolTipDuration">
+        <number>1</number>
+       </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(35, 35, 35);</string>
        </property>
@@ -310,6 +319,9 @@ border-radius: 5px;</string>
          <width>20</width>
          <height>20</height>
         </size>
+       </property>
+       <property name="toolTipDuration">
+        <number>1</number>
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
