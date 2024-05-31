@@ -6,6 +6,10 @@
     color: #D484B4;
 }
 
+QGroupBox {
+    border-style: none;
+}
+
 QPushButton {
     letter-spacing: 1px;
     font-size: 15px;
@@ -25,24 +29,52 @@ QPushButton:hover {
 }
 
 /* Estilos de la ventana Inventario */
+QWidget#ventanaDeConsultas QLabel, 
+QWidget#ventanaDeConsultas QLabel#titleLabel {
+    color: #272727;
+}
+
+QWidget#ventanaDeConsultas 
+QPushButton#volverBtn {
+    border-radius: none;
+
+    background-color: #EBBCDC;
+    border-bottom-right-radius: 5px;
+}
+
 QWidget#queryHeader {
     background-color: #EBBCDC;
 }
 
-QPushButton#fechaBtn, QPushButton#buscarBtn {
-    margin-left: 5px;
-    border-radius: 10px;
+#ventanaDeConsultas QPushButton#serviciosBtn, 
+#ventanaDeConsultas QPushButton#productosBtn {
+    padding: 8px;
+
+    font-size: 20px;
+
+    color: #272727;
+    border-radius: 2px;
+    background-color: none;
+}
+
+#ventanaDeConsultas QPushButton#serviciosBtn:hover, 
+#ventanaDeConsultas QPushButton#productosBtn:hover {
+    background-color: none;
 }
 
 QLineEdit#userInput {
     padding: 5px 10px;
-    margin-left: 10px;
 
     font-style: italic;
 
     background-color: #E4C4D4;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 1px;
+    border-bottom-left-radius: 1px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+QPushButton#fechaBtn, 
+QPushButton#buscarBtn {
+    border-radius: 15px;
 }
