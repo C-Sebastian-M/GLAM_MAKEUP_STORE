@@ -1,6 +1,7 @@
 from PyQt5 import uic
 
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QComboBox
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor
 import sys
@@ -55,6 +56,12 @@ class CrearProducto(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\inventario_productos\crear_producto.ui",
             self,
         )
+        self.setupValidators()
+    
+    def setupValidators(self):
+        validacion_numero = QtGui.QIntValidator(0, 999999999)
+        self.precio_adquisicion_text.setValidator(validacion_numero)
+        
 
 # Ventana Modificar producto
 class ModificarProducto(QMainWindow, CBackground):
@@ -64,3 +71,28 @@ class ModificarProducto(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\inventario_productos\modificar_producto.ui",
             self,
         )
+    
+        self.seleccionar_producto_combobox.addItems(["Producto1", "Producto2", "Producto3", "Producto4"])
+        #self.seleccionar_producto_combobox.currentIndexChanged.connect(self.abrir_modificar_atributos_producto)
+    
+    """def abrir_modificar_atributos_producto(self):
+        producto_seleccionado = self.seleccionar_producto_combobox.currentText()
+        self.modificar_atributos = ModificarAtributosProducto(producto_seleccionado)
+        self.modificar_atributos.show()"""
+
+# Ventana Modificar atributos especificos de atributo
+class ModificarAtributosProducto(QMainWindow, CBackground):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\inventario_productos\modificar_atributos_especificos.ui",
+            self,
+        )
+        
+        #self.label_producto_seleccionado.setText(text)
+
+"""if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_window = ModificarProducto()
+    main_window.show()
+    sys.exit(app.exec_())"""
