@@ -16,7 +16,7 @@ QPushButton {
 
     color: white;
     background-color: #D484B4;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 QPushButton#cerrarBtn, QPushButton#volverBtn {

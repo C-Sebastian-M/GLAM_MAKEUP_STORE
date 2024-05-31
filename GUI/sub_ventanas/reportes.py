@@ -11,7 +11,7 @@ from PyQt5.QtGui import (
     QColor, QPixmap, 
     QCursor
 )
-from sub_ventanas.utils.css import CustomGroupBox
+from GUI.sub_ventanas.utils.css import CustomGroupBox
 
 # Tipado
 from typing import List, Union, Literal
