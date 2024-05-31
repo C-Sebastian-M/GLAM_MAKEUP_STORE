@@ -1,5 +1,4 @@
 from PyQt5 import uic
-
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QComboBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QBrush, QColor
@@ -62,7 +61,6 @@ class CrearCliente(QMainWindow, CBackground):
         cedula = self.IngresoCedula.text()
         nombre = self.IngresoNombre.text()
         telefono = self.IngresoTelefono.text()
-        print(f"Nombre: {nombre}, Cédula: {cedula}, Teléfono: {telefono}")
 
 
 class ModificarCliente(QMainWindow, CBackground):
@@ -94,7 +92,6 @@ class ModificarCliente(QMainWindow, CBackground):
     def obtener_info(self):
         nombre = self.nombreLineEdit.text()
         telefono = self.telefonoLineEdit.text()
-        print(f"Nombre: {nombre}, Teléfono: {telefono}")
 
 
 class EliminarCliente(QMainWindow, CBackground):
