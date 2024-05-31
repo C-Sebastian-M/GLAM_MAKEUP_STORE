@@ -22,6 +22,7 @@ class Cajero:
             return False
         else:
             return False
+<<<<<<< HEAD
                    
     def mostrar_clientes(self): 
         cedulas = []
@@ -32,6 +33,45 @@ class Cajero:
             nombres.append(i)
         x = list(zip(nombres,cedulas))
         return x
+=======
+            
+        
+    def mostrar_clientes(self): 
+        return self.gestion_datos.clientes.loc[:,["Nombre","Cedula"]]
+
+    def reporte_diario(self):
+        pass
+
+    def mostrar_servicios(self):
+        return self.gestion_datos.servicios.loc[:,["Nombre","Costo"]]
+
+    def mostrar_productos(self):
+        return self.gestion_datos.productos.loc[:,["Referencia","Precio venta"]]
+    
+    def agregar_usuario(self, usuario, contraseña,rol):
+        self.gestion_datos.agregar_contraseña(usuario, contraseña, rol)
+    
+    def comprar_producto(self, producto, cantidad):
+        #Necesitamos que hagan los cambios en la tabla inventario
+        pass
+    
+    def comprar_servicio(self, producto, cantidad):
+        #Necesitamos que hagan los cambios en la tabla inventario
+        pass
+    
+    def mostra_total(self):
+        #este depende de la compra de productos y servicios
+        pass 
+    
+    def seleccionar_mediopago(self):
+        #Necesitamos que creen la tabla de medios de pago
+        pass
+    
+    
+   
+        
+       
+>>>>>>> 0f4613dcbb7b14732fdd5e7c2796f7e3d59254a5
 
     def reporte_diario(self):
         pass
@@ -90,11 +130,14 @@ class Inventario:
     
 x = GestionDatos("Prueba.xlsx")
 y = Cajero(x)
+<<<<<<< HEAD
 z = Inventario(x)
 print(z.ver_productos())
 
 
 
+=======
+>>>>>>> 0f4613dcbb7b14732fdd5e7c2796f7e3d59254a5
 
 
 
