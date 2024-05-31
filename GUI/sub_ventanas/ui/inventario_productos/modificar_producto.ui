@@ -17,7 +17,7 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="atras_boton">
+   <widget class="QPushButton" name="volverBtn">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -30,29 +30,7 @@
      <string notr="true">font: 16pt &quot;Arial&quot;;</string>
     </property>
     <property name="text">
-     <string>Atras</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>551</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 20pt &quot;Arial&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Modificar producto</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     <string>Volver</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -126,40 +104,57 @@ QComboBox QAbstractItemView {
     </property>
     <item>
      <property name="text">
-      <string>Seleccionar producto</string>
+      <string>Brocha</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Producto1</string>
+      <string>Labial Rojo</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Producto2</string>
+      <string>Pestañina</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Producto3</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Producto4</string>
+      <string>Brillitos</string>
      </property>
     </item>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>808</width>
-     <height>26</height>
-    </rect>
-   </property>
+   <widget class="QGroupBox" name="header">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>751</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="title">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>591</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Dubai Medium</family>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Modificar producto</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

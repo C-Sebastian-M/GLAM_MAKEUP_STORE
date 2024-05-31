@@ -14,73 +14,12 @@
    <string>Crear producto</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 255, 255);</string>
+   <string notr="true"/>
+  </property>
+  <property name="inputMethodHints">
+   <set>Qt::ImhNone</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="cancelar_boton">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>490</y>
-      <width>191</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 16pt &quot;Arial&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Cancelar</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="atras_boton">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>90</y>
-      <width>171</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 16pt &quot;Arial&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Atras</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="confirmar_boton">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>490</y>
-      <width>191</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 16pt &quot;Arial&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Confirmar</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>611</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 20pt &quot;Arial&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Crear producto</string>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="referencia_text">
     <property name="geometry">
      <rect>
@@ -92,6 +31,12 @@
     </property>
     <property name="toolTip">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Ingrese su nombre&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhNone</set>
+    </property>
+    <property name="maxLength">
+     <number>3883</number>
     </property>
     <property name="placeholderText">
      <string>Referencia</string>
@@ -122,8 +67,26 @@
       <height>30</height>
      </rect>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::WheelFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
+    </property>
     <property name="toolTip">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Ingrese su nombre&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+    </property>
+    <property name="maxLength">
+     <number>10</number>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
     </property>
     <property name="placeholderText">
      <string>$0</string>
@@ -271,6 +234,86 @@
     </property>
     <property name="text">
      <string>Stock</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="header">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>751</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="title">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>591</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Dubai Medium</family>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Crear producto</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="volverBtn">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>90</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 16pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Volver</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cancelar_boton">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>480</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 16pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Cancelar</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="confirmar_boton">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>480</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 16pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Confirmar</string>
     </property>
    </widget>
   </widget>
