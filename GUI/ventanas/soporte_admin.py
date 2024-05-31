@@ -7,10 +7,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5 import uic
 from GUI.sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas, CBackground
 from GUI.sub_ventanas.GestionClientes import (
-    GestionClientes,
-    CrearCliente,
-    ModificarCliente,
-    EliminarCliente,
+    GestionClientes
 )
 from GUI.sub_ventanas.inventario_productos import (
     InventarioProductos,
@@ -78,14 +75,7 @@ class AdminSoporteManager(QMainWindow):
 
         ########################### Inicializando ventanas de gestion de cliente ###########################
         self.gestionPanel = GestionClientes()
-        self.addClientePanel = CrearCliente()
-        self.modificarCliente = ModificarCliente()
-        self.eliminarPanel = EliminarCliente()
-
         self.widgets_stack.addWidget(self.gestionPanel)
-        self.widgets_stack.addWidget(self.addClientePanel)
-        self.widgets_stack.addWidget(self.modificarCliente)
-        self.widgets_stack.addWidget(self.eliminarPanel)
         ########################### fin ###########################
 
         ########################### Inicializando ventanas de inventario de productos ###########################
@@ -140,16 +130,6 @@ class AdminSoporteManager(QMainWindow):
 
         # Panel de gestion cliente
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
-        self.gestionPanel.addClienteBtn.clicked.connect(self.ventana_addCliente)
-        self.gestionPanel.modificarBtn.clicked.connect(self.ventana_modificarCliente)
-        self.gestionPanel.eliminarClienteBtn.clicked.connect(
-            self.ventana_eliminarCliente
-        )
-        self.addClientePanel.BotonAtrasCC.clicked.connect(self.anterior)
-        self.modificarCliente.BotonAtrasMC.clicked.connect(self.anterior)
-        self.eliminarPanel.atrasBtnE.clicked.connect(self.anterior)
-        self.eliminarPanel.cancelarBtnE.clicked.connect(self.anterior)
-        self.eliminarPanel.guardarBtnE.clicked.connect(self.anterior)
 
         # Panel de inventario de productos
         self.inventarioProductosPanel.volverBtn.clicked.connect(self.anterior)
@@ -179,18 +159,6 @@ class AdminSoporteManager(QMainWindow):
     def ventana_gestionClientes(self):
         self.widgets_stack.setCurrentWidget(self.gestionPanel)
         self.stack.append(self.admin_soporte)
-
-    def ventana_addCliente(self):
-        self.widgets_stack.setCurrentWidget(self.addClientePanel)
-        self.stack.append(self.gestionPanel)
-
-    def ventana_modificarCliente(self):
-        self.widgets_stack.setCurrentWidget(self.modificarCliente)
-        self.stack.append(self.gestionPanel)
-
-    def ventana_eliminarCliente(self):
-        self.widgets_stack.setCurrentWidget(self.eliminarPanel)
-        self.stack.append(self.gestionPanel)
 
     ###### Inventario de productos ######
     def ventana_inventario_productos(self):
