@@ -18,7 +18,6 @@ from GUI.sub_ventanas.inventario_productos import (
     ModificarProducto,
 )
 
-
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
         super(QMainWindow, self).__init__()
@@ -28,8 +27,6 @@ class AdminSoporte(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\reportes\adminDesigner.ui",
             self,
         )
-
-        self.cerrarBtn.clicked.connect(QApplication.instance().quit)
 
         self.inicializar(
             is_admin=True if self.role.strip().lower() == "admin" else False
@@ -48,10 +45,9 @@ class AdminSoporte(QMainWindow, CBackground):
 
 
 class AdminSoporteManager(QMainWindow):
-    def __init__(
-        self, user_role: str
-    ) -> None:  # pass role as argument (soporte or admin)
+    def __init__(self, ventana_login ,user_role: str) -> None:  # pass role as argument (soporte or admin)
         super(QMainWindow, self).__init__()
+        self.ventana_login=ventana_login
         if not user_role:
             raise TypeError("El rol de usuario no puede estar vacio.")
 
@@ -78,6 +74,7 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.addWidget(self.inventarioPanel)
         self.widgets_stack.addWidget(self.ventas)
         ########################### fin ###########################
+        self.admin_soporte.cerrarBtn.clicked.connect(self.volver_login)
 
         ########################### Inicializando ventanas de gestion de cliente ###########################
         self.gestionPanel = GestionClientes()
@@ -106,6 +103,11 @@ class AdminSoporteManager(QMainWindow):
 
         # conexiones
         self.inicializar()
+    
+    #Volver al login
+    def volver_login(self):
+        self.ventana_login.show()
+        self.close()
 
     def inicializar(self):
         self.resize(800, 600)
