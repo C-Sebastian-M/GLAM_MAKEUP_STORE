@@ -130,7 +130,7 @@ class Login(QMainWindow):
     def openAdminSupportWindow(self, user_role: str):
         self.admin_soporte = AdminSoporteManager(self,user_role=user_role)
         self.admin_soporte.leer_estilos(self.app, [
-            "GUI/sub_ventanas/css/admin.css",
+            "GUI\sub_ventanas\css\\admin.css",
         ])
         self.admin_soporte.run()
         self.close()
