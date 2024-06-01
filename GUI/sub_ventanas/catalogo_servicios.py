@@ -1,14 +1,46 @@
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
+from PyQt5.QtCore import QPropertyAnimation, Qt
 from PyQt5 import QtCore, QtWidgets, QtGui
 from DATA import GestionDatos
-import sys
+from PyQt5.QtGui import QPainter, QBrush, QColor
 from DATA import GestionDatos
 from API.Validaciones import *
 
+class CBackground:
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setPen(Qt.NoPen)
+        painter.setRenderHint(QPainter.Antialiasing)
 
-class GestionServicios(QMainWindow):
+        brocha1 = QBrush(QColor(212, 132, 180), Qt.SolidPattern)
+        brocha2 = QBrush(QColor(228, 156, 198), Qt.SolidPattern)
+        brocha3 = QBrush(QColor(235, 188, 220), Qt.SolidPattern)
+
+        # Dibujando circulos abajo
+        painter.setBrush(brocha3)
+        painter.drawEllipse(140, 530, 200, 200)
+
+        painter.setBrush(brocha2)
+        painter.drawEllipse(40, 480, 200, 200)
+
+        painter.setBrush(brocha1)
+        painter.drawEllipse(-70, 440, 200, 200)
+
+        # Dibujando circulos arriba
+        painter.setBrush(brocha3)
+        painter.drawEllipse(440, -140, 200, 200)
+
+        painter.setBrush(brocha2)
+        painter.drawEllipse(550, -100, 200, 200)
+
+        painter.setBrush(brocha1)
+        painter.drawEllipse(700, -70, 200, 200)
+
+        painter.end()
+
+
+class GestionServicios(QMainWindow, CBackground):
     def __init__(self):
         super(GestionServicios, self).__init__()
         loadUi(
@@ -63,6 +95,7 @@ class GestionServicios(QMainWindow):
         self.grip.move(rect.right() - self.gripSize, rect.bottom() - self.gripSize)
 
     # Permite ingrear solo numeros a los campos y el paraletro del metodo es la cantidad de caracteres
+    
     """def setupValidatorsId(self):
         validacion_numero = QtGui.QRegularExpressionValidator(
             QtCore.QRegularExpression(r"\d{12}")
@@ -70,9 +103,9 @@ class GestionServicios(QMainWindow):
         self.lineEdit_addId.setValidator(validacion_numero)
         self.lineEdit_nuevoId.setValidator(validacion_numero)
         self.lineEdit_buscarModificar.setValidator(validacion_numero)
-        self.lineEdit_buscarEliminar.setValidator(validacion_numero)
+        self.lineEdit_buscarEliminar.setValidator(validacion_numero)"""
     
-    def setupValidatorsPrecio(self):
+    """def setupValidatorsPrecio(self):
         validacion_numero = QtGui.QRegularExpressionValidator(
             QtCore.QRegularExpression(r"\d{16}")
         )
@@ -84,7 +117,6 @@ class GestionServicios(QMainWindow):
     def limpiar_campos(self):
         self.lineEdit_addPrecio.clear()
         self.lineEdit_addServicio.clear()
-        self.lineEdit_buscarModificar.clear()
         self.lineEdit_buscarEliminar.clear()
         self.lineEdit_nuevoServicio.clear()
         self.lineEdit_nuevoPrecio.clear()

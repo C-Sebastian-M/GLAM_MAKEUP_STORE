@@ -33,7 +33,7 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(235, 188, 220);</string>
+       <string notr="true">/*background-color: rgb(235, 188, 220);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -58,7 +58,9 @@
          </property>
          <property name="styleSheet">
           <string notr="true">QFrame{
-background-color: rgb(235, 188, 220);
+/*background-color: rgb(235, 188, 220);*/
+background-color: transparent;
+
 }
 
 QPushButton {
@@ -151,6 +153,9 @@ QPushButton:pressed {
           </item>
           <item>
            <widget class="QLabel" name="label_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: transparent;</string>
+            </property>
             <property name="text">
              <string>GESTIÓN DE SERVICIOS</string>
             </property>
@@ -197,6 +202,9 @@ QPushButton:pressed {
            <height>0</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -220,7 +228,7 @@ QPushButton:pressed {
             </property>
             <property name="styleSheet">
              <string notr="true">QFrame{
-background-color: rgb(220, 132, 188);
+background-color:transparent;
 }
 
 QPushButton {
@@ -463,8 +471,11 @@ QListView {
              </property>
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;</string>
+               </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="pagina_consulta">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -486,11 +497,14 @@ QListView {
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: transparent;</string>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
                     <bool>false</bool>
@@ -956,24 +970,11 @@ QListView {
                   </widget>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
                     <widget class="QLabel" name="label_18">
                      <property name="text">
-                      <string>ID</string>
+                      <string>ID SERVICIO: </string>
                      </property>
                     </widget>
                    </item>
@@ -984,37 +985,10 @@ QListView {
                      </property>
                     </widget>
                    </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_buscarEliminar">
-                     <property name="text">
-                      <string>BUSCAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../recursos/images/account-search-outline.png</normaloff>../../recursos/images/account-search-outline.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>38</width>
-                       <height>29</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
                   </layout>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
+                  <widget class="QTableWidget" name="tableWidget"/>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_11">
