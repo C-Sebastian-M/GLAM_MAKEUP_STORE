@@ -1,10 +1,10 @@
 from PyQt5.QtWidgets import QGroupBox, QLabel
 
 class CustomGroupBox(QGroupBox):
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self, parent, parentQGroupBox=None):
+        super().__init__(parentQGroupBox)
+        self.parent = parent
         self.label: QLabel = None
-        self.target: QLabel = None
 
         self.setMouseTracking(True)
         self.default_style = """
@@ -30,11 +30,14 @@ class CustomGroupBox(QGroupBox):
         self.setStyleSheet(self.default_style)
 
     def mousePressEvent(self, event):
+        if hasattr(self.parent.cajaFiltro, 'rangoDeFechasLabel'):
+            self.parent.cajaFiltro.rangoDeFechasLabel.deleteLater()
+            delattr(self.parent, 'rangoDeFechasLabel')
         self.setText()
         super().mousePressEvent(event)
 
     def setText(self):
-        self.target.setText(self.label.text())
+        self.parent.consultandoPor.setText(self.label.text())
 
     def enterEvent(self, event):
         self.setStyleSheet(self.hover_style)
