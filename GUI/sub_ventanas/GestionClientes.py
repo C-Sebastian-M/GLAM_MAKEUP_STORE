@@ -58,7 +58,6 @@ class GestionClientes(QMainWindow):
             QHeaderView.Stretch
         )
         
-
     def resizeEvent(self, event):
         rect = self.rect()
         self.grip.move(rect.right() - self.gripSize, rect.bottom() - self.gripSize)
@@ -147,12 +146,15 @@ class GestionClientes(QMainWindow):
 
     def modificar_cliente(self):
         cedula = self.lineEdit_nuevaCedula.text()
-        nuevos_datos = {
-            "Nombre": self.lineEdit_nuevoNombre.text(),
-            "Telefono": self.lineEdit_nuevoTelefono.text(),
-        }
-        self.gestion_datos.actualizar_cliente(cedula, nuevos_datos)
-        self.mostrar_clientes()  # Actualizar la tabla de clientes
+        if validar_NombreCom(self.lineEdit_nuevoNombre.text()) and validacion_Telefono(self.lineEdit_nuevoTelefono.text()):
+            nuevos_datos = {
+                "Nombre": self.lineEdit_nuevoNombre.text(),
+                "Telefono": self.lineEdit_nuevoTelefono.text(),
+            }
+            self.gestion_datos.actualizar_cliente(cedula, nuevos_datos)
+            self.mostrar_clientes()  # Actualizar la tabla de clientes
+        else:
+            return False
 
     def eliminar_cliente(self):
         cedula = self.lineEdit_buscarEliminar.text()
