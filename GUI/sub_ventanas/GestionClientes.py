@@ -2,8 +2,10 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView, QTableWidgetItem
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5 import QtCore, QtWidgets
-from API.DATA import GestionDatos
+from DATA import GestionDatos
 import sys
+from DATA import GestionDatos
+from API.Validaciones import *
 
 
 class GestionClientes(QMainWindow):
@@ -13,9 +15,9 @@ class GestionClientes(QMainWindow):
             r"GUI\sub_ventanas\ui\gestion_clientes\GestionClientes.ui",
             self,
         )
-
+        self.gestion_datos = GestionDatos()
+        
         self.pushButton_menu.clicked.connect(self.mover_menu)
-        self.gestion_datos = GestionDatos("datos.xlsx")
         # Botones
         self.pushButton_actualizar.clicked.connect(self.mostrar_clientes)
         self.pushButton_add.clicked.connect(self.registrar_cliente)
@@ -74,9 +76,7 @@ class GestionClientes(QMainWindow):
 
     # Acá se configura la base de datos
     def mostrar_clientes(self):
-        self.tabla_verClientes.setRowCount(
-            0
-        )  # Limpiar la tabla antes de agregar nuevos datos
+        self.tabla_verClientes.setRowCount(0)
         for i, row in self.gestion_datos.clientes.iterrows():
             self.tabla_verClientes.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
@@ -86,8 +86,14 @@ class GestionClientes(QMainWindow):
         cedula = self.lineEdit_addCedula.text()
         nombre = self.lineEdit_addNombre.text()
         telefono = self.lineEdit_addTelefono.text()
-        self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
-        self.mostrar_clientes()  # Actualizar la tabla de clientes
+        if validar_Cedula(cedula) and validacion_Telefono(telefono) and validar_NombreCom(nombre):
+            self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+            self.mostrar_clientes()
+            return True
+        else:
+            return False
+        
+        
 
     def modificar_cliente(self):
         cedula = self.lineEdit_nuevaCedula.text()

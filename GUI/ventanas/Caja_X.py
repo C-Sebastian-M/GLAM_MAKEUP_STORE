@@ -122,7 +122,7 @@ class Ui_Caja(object, ):  # terminada (falta reporte diario)
         self.pushButtonC.setText(_translate("MainWindow", "Reporte diario"))
         self.pushButtonC_3.setText(_translate("MainWindow", "Productos/Servicios"))
         self.pushButtonC_2.setText(_translate("MainWindow", "Salir"))
-        
+      
     def report(self):#crear el metodo reporte diario
         pass
     
