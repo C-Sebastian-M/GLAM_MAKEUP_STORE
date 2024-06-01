@@ -1,4 +1,4 @@
-from DATA import *
+
 def validar_NombreCom(nombre)->bool:
     nombre=str(nombre)
     nombreS = nombre.replace(" ", "")

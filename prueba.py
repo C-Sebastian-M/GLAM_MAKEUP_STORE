@@ -1,9 +1,18 @@
-from DATA import GestionDatos
-from API.Validaciones import *
+from DATA.DATA import GestionDatos
+from Validaciones import *
 class Cajero:
-    def __init__(self):
-        self.gestion_datos = GestionDatos()
+    def __init__(self, gestion_datos):
+        self.gestion_datos = gestion_datos
+
+    def crear_dataframe(self):
+        self.gestion_datos.crear_dataframes()
     
+    def login(self, usuario, contraseña):
+        if usuario in self.gestion_datos.contraseñas["Usuario"].values and contraseña in self.gestion_datos.contraseñas["Contraseña"].values:
+            return True
+        else:
+            return False
+
     def añadir_cliente(self, cedula, nombre, telefono):
         if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
             if not cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
@@ -23,7 +32,6 @@ class Cajero:
             nombres.append(i)
         x = list(zip(nombres,cedulas))
         return x
-    
 
     def reporte_diario(self):
         pass
@@ -66,8 +74,8 @@ class Cajero:
         pass
     
 class Inventario:
-    def __init__(self):
-        self.gestion_datos = GestionDatos()
+    def __init__(self, gestion_datos):
+        self.gestion_datos = gestion_datos
     
     def ver_productos(self):
         return self.gestion_datos.productos
@@ -136,13 +144,21 @@ class Inventario:
         if not producto.empty:
             self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] ==  codigoB, "Unidades actuales"] += cantidad
             self.gestion_datos.guardar_dataframes()
-    
-    def ver_clientes(self):
-        x = self.gestion_datos.Clientes
-        return x
+            
+            
+            
+x = GestionDatos("datos.xlsx")
+y = Cajero(x)
+z = Inventario(x)
+z.crear_productos("papas",300,500,1234567890986,"motorola",4)
+z.crear_productos("camas",300,500,1234567890988,"iphone",4)
+z.crear_productos("zapato",300,500,1234567890989,"Asus",4)
+#z.modificar_producto(1234567890986,{"Marca":"kadio","Precio de adquisicion":250,"Precio de venta":450})
+print(z.modificar_producto())
+print(z.eliminar_producto())
+z.comprar_stock(1234567890986,6)
+print(z.ver_productos())
 
-x = Cajero()
-x.añadir_cliente(103318341, "Juan", 3052076540)
 
 
 
