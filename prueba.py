@@ -6,22 +6,24 @@ class Cajero:
 
     def crear_dataframe(self):
         self.gestion_datos.crear_dataframes()
-    
+        
     def login(self, usuario, contraseña):
-        if usuario in self.gestion_datos.contraseñas["Usuario"].values and contraseña in self.gestion_datos.contraseñas["Contraseña"].values:
+    usuario_datos = self.usuarios[self.usuarios["usuario"] == usuario]
+    if not usuario_datos.empty:
+        return usuario_datos["contraseña"].values[0] == contraseña
+    return False
+
+    def añadir_cliente(self, cedula, nombre, telefono):
+    if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
+        if not cedula in self.gestion_datos.clientes["Cedula"].values:
+            self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
             return True
         else:
             return False
+    else:
+        return False
 
-    def añadir_cliente(self, cedula, nombre, telefono):
-        if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
-            if not cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
-                self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
-                return True
-            
-            return False
-        else:
-            return False
+
                    
     def mostrar_clientes(self): 
         cedulas = []
