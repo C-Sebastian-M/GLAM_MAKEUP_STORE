@@ -1,8 +1,10 @@
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView
+from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView, QTableWidgetItem
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5 import QtCore, QtWidgets
 import sys
+from API.DATA.DATA import GestionDatos
+from API.Validaciones import *
 
 
 class GestionClientes(QMainWindow):
@@ -12,7 +14,8 @@ class GestionClientes(QMainWindow):
             r"GUI\sub_ventanas\ui\gestion_clientes\GestionClientes.ui",
             self,
         )
-
+        self.gestion_datos = GestionDatos()
+        
         self.pushButton_menu.clicked.connect(self.mover_menu)
 
         # Botones
@@ -73,10 +76,24 @@ class GestionClientes(QMainWindow):
 
     # Acá se configura la base de datos
     def mostrar_clientes(self):
-        None
+        self.tabla_verClientes.setRowCount(0)
+        for i, row in self.gestion_datos.clientes.iterrows():
+            self.tabla_verClientes.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_verClientes.setItem(i, j, QTableWidgetItem(str(value)))
 
     def registrar_cliente(self):
-        None
+        cedula = self.lineEdit_addCedula.text()
+        nombre = self.lineEdit_addNombre.text()
+        telefono = self.lineEdit_addTelefono.text()
+        if validar_Cedula(cedula) and validacion_Telefono(telefono) and validar_NombreCom(nombre):
+            self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+            self.mostrar_clientes()
+            return True
+        else:
+            return False
+        
+        
 
     def modificar_cliente(self):
         None

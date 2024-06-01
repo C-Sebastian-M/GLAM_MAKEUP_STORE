@@ -11,22 +11,25 @@ from PyQt5.QtGui import (
     QColor, QPixmap, 
     QCursor
 )
-from GUI.sub_ventanas.utils.css import HoverGroupBox
+from GUI.sub_ventanas.utils.css import CustomGroupBox
 
 # Tipado
-from typing import List, Union
+from typing import List, Union, Literal
 
 class Plantilla(QWidget):
     def __init__(self, title: str, columns: List[str]) -> None:
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\plantillaDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\plantillaDesigner.ui", 
+            self
+        )
 
         self.titleLabel.setText(title)
         self.handle_labels(columns)
 
     def handle_labels(self, columns: List[Union[str, int]]) -> None:
         for nombre in columns:
-            contenedor = HoverGroupBox()
+            contenedor = CustomGroupBox()
             contenedor.setObjectName("contenedorColumnas")
             contenedor.setCursor(QCursor(Qt.PointingHandCursor))
             contenedor.setContentsMargins(10, 0, 10, 0)
@@ -37,7 +40,10 @@ class Plantilla(QWidget):
             decoracion.setScaledContents(True)
 
             label = QLabel(contenedor)
+            label.setObjectName("campo")
             label.setText(nombre)
+            contenedor.label = label
+            contenedor.target = self.consultandoPor
 
             vbox_layout = QHBoxLayout(contenedor)
             vbox_layout.addWidget(decoracion)
@@ -65,7 +71,6 @@ class Ventas(Plantilla):
 class Inventario(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
         super().__init__(title, columns)
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
 
 class CBackground:
     def paintEvent(self, event):
@@ -102,7 +107,10 @@ class CBackground:
 class InventarioPanel(QWidget, CBackground):
     def __init__(self) -> None:
         super().__init__()
-        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", self)
+        uic.loadUi(
+            r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", 
+            self
+        )
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):

@@ -32,26 +32,26 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QPushButton" name="productos">
+   <widget class="QPushButton" name="productosBtn">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>10</y>
+      <x>200</x>
+      <y>100</y>
       <width>111</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Productos</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="servicios">
+   <widget class="QPushButton" name="serviciosBtn">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>170</y>
+      <x>50</x>
+      <y>100</y>
       <width>111</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">

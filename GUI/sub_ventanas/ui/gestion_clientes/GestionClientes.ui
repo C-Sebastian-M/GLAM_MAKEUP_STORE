@@ -493,13 +493,13 @@ QTableWidget QTableCornerButton::section {
                    </attribute>
                    <column>
                     <property name="text">
-                     <string>CEDULA</string>
+                     <string>CÉDULA</string>
                     </property>
                     <property name="whatsThis">
                      <string/>
                     </property>
                     <property name="textAlignment">
-                     <set>AlignLeading|AlignVCenter</set>
+                     <set>AlignCenter</set>
                     </property>
                    </column>
                    <column>
@@ -507,7 +507,7 @@ QTableWidget QTableCornerButton::section {
                      <string>NOMBRE</string>
                     </property>
                     <property name="textAlignment">
-                     <set>AlignLeading|AlignVCenter</set>
+                     <set>AlignCenter</set>
                     </property>
                    </column>
                    <column>
@@ -526,7 +526,7 @@ QTableWidget QTableCornerButton::section {
                      </font>
                     </property>
                     <property name="textAlignment">
-                     <set>AlignLeading|AlignVCenter</set>
+                     <set>AlignCenter</set>
                     </property>
                    </column>
                   </widget>

@@ -1,18 +1,9 @@
-from DATA import GestionDatos
-from Validaciones import *
+from API.DATA.DATA import GestionDatos
+from API.Validaciones import *
 class Cajero:
-    def __init__(self, gestion_datos):
-        self.gestion_datos = gestion_datos
-
-    def crear_dataframe(self):
-        self.gestion_datos.crear_dataframes()
+    def __init__(self):
+        self.gestion_datos = GestionDatos()
     
-    def login(self, usuario, contraseña):
-        if usuario in self.gestion_datos.contraseñas["Usuario"].values and contraseña in self.gestion_datos.contraseñas["Contraseña"].values:
-            return True
-        else:
-            return False
-
     def añadir_cliente(self, cedula, nombre, telefono):
         if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
             if not cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
@@ -32,6 +23,7 @@ class Cajero:
             nombres.append(i)
         x = list(zip(nombres,cedulas))
         return x
+    
 
     def reporte_diario(self):
         pass
@@ -74,24 +66,86 @@ class Cajero:
         pass
     
 class Inventario:
-    def __init__(self, gestion_datos):
-        self.gestion_datos = gestion_datos
+    def __init__(self):
+        self.gestion_datos = GestionDatos()
     
     def ver_productos(self):
-        x = self.gestion_datos.productos.columns=["Referencia", "Codigo de barras", "Marca", "Precio de adquisicion", "Precio venta", "Unidades actuales", "Producto disponible", "Fecha"]
-        return x
+        return self.gestion_datos.productos
+        
 
     def crear_productos(self, referencia, precioA, precioV, codigoB, marca, stock):
         if validacion_Referencia(referencia) and validacion_Precio(precioA) and validacion_Precio(precioV) and validacion_Codigo_Barras(codigoB) and validacion_Marca(marca) and validacion_Stock(stock):
-            self.gestion_datos.agregar_producto(referencia, codigoB, marca, precioA, precioV, stock)
-            return True
+            if not codigoB in self.gestion_datos.productos["Codigo de barras"].values:
+                self.gestion_datos.agregar_producto(referencia, codigoB, marca, precioA, precioV, stock)
+                return True
+            return False
         return False
-            
     
-x = GestionDatos("Prueba.xlsx")
-y = Cajero(x)
-z = Inventario(x)
-print(z.ver_productos())
+#    def modificar_producto(self,codigoB,nuevos_datos):
+#        x = GestionDatos("datos.xlsx")
+#        producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]==codigoB]
+#        if not producto.empty:
+#            for key, value in nuevos_datos.items():
+#                if key in self.gestion_datos.productos.columns:
+#                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] ==  codigoB, key] = value
+#            self.gestion_datos.guardar_dataframes()
+#            print(f"Producto con código de barra {codigoB} ha sido actualizado.")
+#        else:
+#            print(f"Producto con código  de barra {codigoB} no encontrado.")
+    
+    def modificar_producto(self):
+        marca=[]
+        a = []
+        v = []
+        for i in (self.gestion_datos.productos["Marca"]):
+            marca.append(i)
+        for i in (self.gestion_datos.productos["Precio de adquisicion"]):
+            a.append(i)
+        for i in (self.gestion_datos.productos["Precio venta"]):
+            v.append(i)
+        x = list(zip(marca,a,v))
+        return x
+        
+    def eliminar_producto(self):
+        referecia = []
+        barras = []
+        marca=[]
+        a = []
+        v = []
+        stock = []
+        fecha = []
+        for i in (self.gestion_datos.productos["Marca"]):
+            marca.append(i)
+        for i in (self.gestion_datos.productos["Precio de adquisicion"]):
+            a.append(i)
+        for i in (self.gestion_datos.productos["Precio venta"]):
+            v.append(i)
+        for i in (self.gestion_datos.productos["Referencia"]):
+            referecia.append(i)
+        for i in (self.gestion_datos.productos["Codigo de barras"]):
+            barras.append(i)
+        for i in (self.gestion_datos.productos["Unidades actuales"]):
+            stock.append(i)
+        for i in (self.gestion_datos.productos["Fecha"]):
+            fecha.append(i)
+        x = list(zip(referecia,barras,marca,a,v,stock,fecha))
+        return x
+
+    def comprar_stock(self,codigoB,cantidad):
+        producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]==codigoB]
+        if not producto.empty:
+            self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] ==  codigoB, "Unidades actuales"] += cantidad
+            self.gestion_datos.guardar_dataframes()
+    
+    def ver_clientes(self):
+        x = self.gestion_datos.Clientes
+        return x
+
+x = Cajero()
+x.añadir_cliente(103318341, "Juan", 3052076540)
+
+
+
 
 
 
