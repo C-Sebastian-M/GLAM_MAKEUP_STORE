@@ -13,16 +13,21 @@ class Cajero:
         return usuario_datos["contraseña"].values[0] == contraseña
     return False
 
-
     def añadir_cliente(self, cedula, nombre, telefono):
-        if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
-            if not cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
-                self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
-                return True
-            
-            return False
+    if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
+        # Comprobar si la cédula ya existe en la base de datos de clientes
+        if not cedula in self.gestion_datos.clientes["Cedula"].values:
+            # Agregar el cliente si no existe
+            self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+            return True
         else:
+            # La cédula ya existe en la base de datos
             return False
+    else:
+        # Validación de los datos fallida
+        return False
+
+
                    
     def mostrar_clientes(self): 
         cedulas = []
