@@ -451,7 +451,7 @@ QTableWidget QTableCornerButton::section {
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>3</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="pagina_consulta">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -477,7 +477,7 @@ QTableWidget QTableCornerButton::section {
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
                     <bool>false</bool>

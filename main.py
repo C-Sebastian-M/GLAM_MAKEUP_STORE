@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from GUI.ventanas.login import Login
+from login import Login
 
 class Main:
     def __init__(self):

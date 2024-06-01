@@ -57,6 +57,7 @@ class GestionClientes(QMainWindow):
         self.tabla_verClientes.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
+        
 
     def resizeEvent(self, event):
         rect = self.rect()
