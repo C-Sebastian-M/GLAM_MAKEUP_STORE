@@ -10,20 +10,8 @@
     <height>600</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>800</width>
-    <height>600</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>800</width>
-    <height>600</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Gestión Clientes</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -138,7 +126,7 @@ QPushButton:pressed {
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../recursos/images/barra-de-menus.png</normaloff>../../../recursos/images/barra-de-menus.png</iconset>
+              <normaloff>../../recursos/images/barra-de-menus.png</normaloff>../../recursos/images/barra-de-menus.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -164,7 +152,7 @@ QPushButton:pressed {
           <item>
            <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>GESTIÓN DE CLIENTES</string>
+             <string>GESTIÓN DE SERVICIOS</string>
             </property>
            </widget>
           </item>
@@ -188,7 +176,7 @@ QPushButton:pressed {
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../recursos/images/arrow-left.png</normaloff>../../../recursos/images/arrow-left.png</iconset>
+              <normaloff>../../recursos/images/arrow-left.png</normaloff>../../recursos/images/arrow-left.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -271,11 +259,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>VER CLIENTES</string>
+                <string>VER SERVICIOS</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../recursos/images/database.png</normaloff>../../../recursos/images/database.png</iconset>
+                 <normaloff>../../recursos/images/database.png</normaloff>../../recursos/images/database.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -294,11 +282,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>AÑADIR CLIENTE</string>
+                <string>AÑADIR SERVICIO</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../recursos/images/account-box-plus-outline.png</normaloff>../../../recursos/images/account-box-plus-outline.png</iconset>
+                 <normaloff>../../recursos/images/account-box-plus-outline.png</normaloff>../../recursos/images/account-box-plus-outline.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -317,11 +305,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>MODIFICAR CLIENTE</string>
+                <string>MODIFICAR SERVICIO</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../recursos/images/account-box-edit-outline.png</normaloff>../../../recursos/images/account-box-edit-outline.png</iconset>
+                 <normaloff>../../recursos/images/account-box-edit-outline.png</normaloff>../../recursos/images/account-box-edit-outline.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -340,11 +328,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>ELIMINAR CLIENTE</string>
+                <string>DESCONTINUAR SERVICIO</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../recursos/images/account-box-minus-outline.png</normaloff>../../../recursos/images/account-box-minus-outline.png</iconset>
+                 <normaloff>../../recursos/images/account-box-minus-outline.png</normaloff>../../recursos/images/account-box-minus-outline.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -422,8 +410,8 @@ QHeaderView::section {
 	font-size: 12pt;
 }
 QTableWidget QTableCornerButton::section {
-	background-color: rgb(220, 132, 188) ;
-	border: 1px solid rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+	border: 1px solid rgb(0, 206, 151);
 }</string>
             </property>
             <property name="frameShape">
@@ -458,7 +446,7 @@ QTableWidget QTableCornerButton::section {
                  <item>
                   <widget class="QLabel" name="label">
                    <property name="text">
-                    <string>CLIENTES</string>
+                    <string>SERVICIOS</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -493,7 +481,7 @@ QTableWidget QTableCornerButton::section {
                    </attribute>
                    <column>
                     <property name="text">
-                     <string>CÉDULA</string>
+                     <string>ID</string>
                     </property>
                     <property name="whatsThis">
                      <string/>
@@ -504,7 +492,7 @@ QTableWidget QTableCornerButton::section {
                    </column>
                    <column>
                     <property name="text">
-                     <string>NOMBRE</string>
+                     <string>SERVICIO</string>
                     </property>
                     <property name="textAlignment">
                      <set>AlignCenter</set>
@@ -512,7 +500,7 @@ QTableWidget QTableCornerButton::section {
                    </column>
                    <column>
                     <property name="text">
-                     <string>TELÉFONO</string>
+                     <string>PRECIO</string>
                     </property>
                     <property name="toolTip">
                      <string/>
@@ -553,7 +541,7 @@ QTableWidget QTableCornerButton::section {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
+                       <normaloff>../../recursos/images/reload.png</normaloff>../../recursos/images/reload.png</iconset>
                      </property>
                     </widget>
                    </item>
@@ -566,7 +554,7 @@ QTableWidget QTableCornerButton::section {
                  <item>
                   <widget class="QLabel" name="label_9">
                    <property name="text">
-                    <string>AÑADIR CLIENTE</string>
+                    <string>AÑADIR SERVICIO</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -594,23 +582,16 @@ QTableWidget QTableCornerButton::section {
                       <number>50</number>
                      </property>
                      <item>
-                      <widget class="QLabel" name="label_2">
-                       <property name="text">
-                        <string>CÉDULA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
                       <widget class="QLabel" name="label_3">
                        <property name="text">
-                        <string>NOMBRE</string>
+                        <string>SERVICIO:</string>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <widget class="QLabel" name="label_4">
                        <property name="text">
-                        <string>TELÉFONO</string>
+                        <string>PRECIO</string>
                        </property>
                       </widget>
                      </item>
@@ -622,22 +603,12 @@ QTableWidget QTableCornerButton::section {
                       <number>50</number>
                      </property>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_addCedula">
-                       <property name="text">
-                        <string/>
-                       </property>
-                       <property name="placeholderText">
-                        <string>INGRESE CÉDULA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
                       <widget class="QLineEdit" name="lineEdit_addNombre">
                        <property name="text">
                         <string/>
                        </property>
                        <property name="placeholderText">
-                        <string>INGRESE NOMBRE</string>
+                        <string>INGRESE NUEVO SERVICIO</string>
                        </property>
                       </widget>
                      </item>
@@ -647,7 +618,7 @@ QTableWidget QTableCornerButton::section {
                         <string/>
                        </property>
                        <property name="placeholderText">
-                        <string>INGRESE TELÉFONO</string>
+                        <string>INGRESE PRECIO SERVICIO</string>
                        </property>
                       </widget>
                      </item>
@@ -703,7 +674,7 @@ QTableWidget QTableCornerButton::section {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/account-box-plus-outline.png</normaloff>../../../recursos/images/account-box-plus-outline.png</iconset>
+                       <normaloff>../../recursos/images/account-box-plus-outline.png</normaloff>../../recursos/images/account-box-plus-outline.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -722,7 +693,7 @@ QTableWidget QTableCornerButton::section {
                  <item>
                   <widget class="QLabel" name="label_13">
                    <property name="text">
-                    <string>MODIFICAR CLIENTE</string>
+                    <string>MODIFICAR SERVICIO</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -747,7 +718,7 @@ QTableWidget QTableCornerButton::section {
                    <item>
                     <widget class="QLabel" name="label_11">
                      <property name="text">
-                      <string>CLIENTE:</string>
+                      <string>SERVICIO:</string>
                      </property>
                     </widget>
                    </item>
@@ -765,7 +736,7 @@ QTableWidget QTableCornerButton::section {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/account-search-outline.png</normaloff>../../../recursos/images/account-search-outline.png</iconset>
+                       <normaloff>../../recursos/images/account-search-outline.png</normaloff>../../recursos/images/account-search-outline.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -798,23 +769,16 @@ QTableWidget QTableCornerButton::section {
                       <number>40</number>
                      </property>
                      <item>
-                      <widget class="QLabel" name="label_12">
-                       <property name="text">
-                        <string>CÉDULA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
                       <widget class="QLabel" name="label_14">
                        <property name="text">
-                        <string>NOMBRE</string>
+                        <string>SERVICIO</string>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <widget class="QLabel" name="label_15">
                        <property name="text">
-                        <string>TELÉFONO</string>
+                        <string>PRECIO</string>
                        </property>
                       </widget>
                      </item>
@@ -826,23 +790,16 @@ QTableWidget QTableCornerButton::section {
                       <number>40</number>
                      </property>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_nuevaCedula">
-                       <property name="placeholderText">
-                        <string>NUEVA CÉDULA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
                       <widget class="QLineEdit" name="lineEdit_nuevoNombre">
                        <property name="placeholderText">
-                        <string>NUEVO NOMBRE</string>
+                        <string>NUEVO SERVICIO</string>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <widget class="QLineEdit" name="lineEdit_nuevoTelefono">
                        <property name="placeholderText">
-                        <string>NUEVO TELÉFONO</string>
+                        <string>NUEVO PRECIO</string>
                        </property>
                       </widget>
                      </item>
@@ -898,7 +855,7 @@ QTableWidget QTableCornerButton::section {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/content-save-all.png</normaloff>../../../recursos/images/content-save-all.png</iconset>
+                       <normaloff>../../recursos/images/content-save-all.png</normaloff>../../recursos/images/content-save-all.png</iconset>
                      </property>
                     </widget>
                    </item>
@@ -911,25 +868,12 @@ QTableWidget QTableCornerButton::section {
                  <item>
                   <widget class="QLabel" name="label_17">
                    <property name="text">
-                    <string>ELIMINAR CLIENTE</string>
+                    <string>DESCONTINUAR SERVICIO</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -947,20 +891,46 @@ QTableWidget QTableCornerButton::section {
                      </property>
                     </widget>
                    </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_buscarEliminar">
+                     <property name="text">
+                      <string>BUSCAR</string>
+                     </property>
+                     <property name="icon">
+                      <iconset>
+                       <normaloff>../../recursos/images/account-search-outline.png</normaloff>../../recursos/images/account-search-outline.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>38</width>
+                       <height>29</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
+                  <widget class="QTableWidget" name="tabla_eliminarClientes">
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>207</number>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>ID</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>SERVICIO</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>PRECIO</string>
+                    </property>
+                   </column>
+                  </widget>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -997,7 +967,7 @@ QTableWidget QTableCornerButton::section {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/delete-outline.png</normaloff>../../../recursos/images/delete-outline.png</iconset>
+                       <normaloff>../../recursos/images/delete-outline.png</normaloff>../../recursos/images/delete-outline.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>

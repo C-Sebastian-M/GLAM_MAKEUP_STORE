@@ -1,7 +1,7 @@
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView, QTableWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from DATA import GestionDatos
 import sys
 from DATA import GestionDatos
@@ -16,7 +16,7 @@ class GestionClientes(QMainWindow):
             self,
         )
         self.gestion_datos = GestionDatos()
-        
+
         self.pushButton_menu.clicked.connect(self.mover_menu)
         # Botones
         self.pushButton_actualizar.clicked.connect(self.mostrar_clientes)
@@ -32,21 +32,29 @@ class GestionClientes(QMainWindow):
         self.pushButton_verClientes.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.pagina_consulta)
         )
+        self.pushButton_verClientes.clicked.connect(self.limpiar_campos)
         self.pushButton_addCliente.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.pagina_add)
         )
+        self.pushButton_addCliente.clicked.connect(self.limpiar_campos)
         self.pushButton_modificarCliente.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.pagina_modificar)
         )
+        self.pushButton_modificarCliente.clicked.connect(self.limpiar_campos)
         self.pushButton_eliminarCliente.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.pagina_eliminar)
         )
+        self.pushButton_eliminarCliente.clicked.connect(self.limpiar_campos)
 
         # Ancho columna adaptable
         self.tabla_verClientes.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
-        self.tabla_eliminarClientes.horizontalHeader().setSectionResizeMode(
+        self.setupValidatorsCedula()
+        self.setupValidatorsTelefono()
+
+        # Ancho columna adaptable
+        self.tabla_verClientes.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
 
@@ -54,8 +62,33 @@ class GestionClientes(QMainWindow):
         rect = self.rect()
         self.grip.move(rect.right() - self.gripSize, rect.bottom() - self.gripSize)
 
-    def mousePressEvent(self, event):
-        self.click_position = event.globalPos()
+    def setupValidatorsCedula(self):
+        validacion_numero = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(r"\d{9,12}")
+        )
+        self.lineEdit_addCedula.setValidator(validacion_numero)
+        self.lineEdit_nuevaCedula.setValidator(validacion_numero)
+        self.lineEdit_buscarModificar.setValidator(validacion_numero)
+        self.lineEdit_buscarEliminar.setValidator(validacion_numero)
+    
+    def setupValidatorsTelefono(self):
+        validacion_numero = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(r"\d{0,16}")
+        )
+        self.lineEdit_addCedula.setValidator(validacion_numero)
+        self.lineEdit_nuevaCedula.setValidator(validacion_numero)
+        self.lineEdit_buscarModificar.setValidator(validacion_numero)
+        self.lineEdit_buscarEliminar.setValidator(validacion_numero)
+
+    def limpiar_campos(self):
+        self.lineEdit_addTelefono.clear()
+        self.lineEdit_addCedula.clear()
+        self.lineEdit_addNombre.clear()
+        self.lineEdit_buscarModificar.clear()
+        self.lineEdit_buscarEliminar.clear()
+        self.lineEdit_nuevaCedula.clear()
+        self.lineEdit_nuevoNombre.clear()
+        self.lineEdit_nuevoTelefono.clear()
 
     def mover_menu(self):
         if True:
@@ -86,14 +119,33 @@ class GestionClientes(QMainWindow):
         cedula = self.lineEdit_addCedula.text()
         nombre = self.lineEdit_addNombre.text()
         telefono = self.lineEdit_addTelefono.text()
-        if validar_Cedula(cedula) and validacion_Telefono(telefono) and validar_NombreCom(nombre):
+        if (
+            validar_Cedula(cedula)
+            and validacion_Telefono(telefono)
+            and validar_NombreCom(nombre)
+        ):
             self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
             self.mostrar_clientes()
-            return True
+            self.show_success_dialog("Cliente registrado con éxito.")
+            self.limpiar_campos()
         else:
-            return False
-        
-        
+            self.showErrorMessage(
+                "Error en los datos ingresados. Por favor, verifica la información."
+            )
+
+    def showErrorMessage(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Warning)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Error de autenticación")
+        msg_box.exec_()
+
+    def show_success_dialog(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Éxito")
+        msg_box.exec_()
 
     def modificar_cliente(self):
         cedula = self.lineEdit_nuevaCedula.text()
@@ -106,12 +158,12 @@ class GestionClientes(QMainWindow):
 
     def eliminar_cliente(self):
         cedula = self.lineEdit_buscarEliminar.text()
-        self.gestion_datos.modificar_clientes(cedula)
+        self.gestion_datos.eliminar_clientes(cedula)
         self.mostrar_clientes()  # Actualizar la tabla de clientes
 
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     app = QApplication(sys.argv)
     add = GestionClientes()
     add.show()  # Asegúrate de mostrar la ventana
-    sys.exit(app.exec_())
+    sys.exit(app.exec_())"""
