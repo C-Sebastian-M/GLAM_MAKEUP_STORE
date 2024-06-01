@@ -2,8 +2,9 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView, QTableWidgetItem
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5 import QtCore, QtWidgets
+from DATA import GestionDatos
 import sys
-from API.DATA.DATA import GestionDatos
+from DATA import GestionDatos
 from API.Validaciones import *
 
 
@@ -17,7 +18,6 @@ class GestionClientes(QMainWindow):
         self.gestion_datos = GestionDatos()
         
         self.pushButton_menu.clicked.connect(self.mover_menu)
-
         # Botones
         self.pushButton_actualizar.clicked.connect(self.mostrar_clientes)
         self.pushButton_add.clicked.connect(self.registrar_cliente)
@@ -96,10 +96,18 @@ class GestionClientes(QMainWindow):
         
 
     def modificar_cliente(self):
-        None
+        cedula = self.lineEdit_nuevaCedula.text()
+        nuevos_datos = {
+            "Nombre": self.lineEdit_nuevoNombre.text(),
+            "Telefono": self.lineEdit_nuevoTelefono.text(),
+        }
+        self.gestion_datos.actualizar_cliente(cedula, nuevos_datos)
+        self.mostrar_clientes()  # Actualizar la tabla de clientes
 
     def eliminar_cliente(self):
-        None
+        cedula = self.lineEdit_buscarEliminar.text()
+        self.gestion_datos.modificar_clientes(cedula)
+        self.mostrar_clientes()  # Actualizar la tabla de clientes
 
 
 if __name__ == "__main__":
