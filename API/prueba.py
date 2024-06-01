@@ -1,5 +1,5 @@
-from DATA.DATA import GestionDatos
-
+from DATA import GestionDatos
+from Validaciones import *
 class Cajero:
     def __init__(self, gestion_datos):
         self.gestion_datos = gestion_datos
@@ -22,18 +22,6 @@ class Cajero:
             return False
         else:
             return False
-<<<<<<< HEAD
-                   
-    def mostrar_clientes(self): 
-        cedulas = []
-        nombres = []
-        for i in (self.gestion_datos.clientes["Cedula"]):
-            cedulas.append(i)
-        for i in (self.gestion_datos.clientes["Nombre"]):
-            nombres.append(i)
-        x = list(zip(nombres,cedulas))
-        return x
-=======
             
         
     def mostrar_clientes(self): 
@@ -71,7 +59,6 @@ class Cajero:
    
         
        
->>>>>>> 0f4613dcbb7b14732fdd5e7c2796f7e3d59254a5
 
     def reporte_diario(self):
         pass
@@ -130,14 +117,6 @@ class Inventario:
     
 x = GestionDatos("Prueba.xlsx")
 y = Cajero(x)
-<<<<<<< HEAD
-z = Inventario(x)
-print(z.ver_productos())
-
-
-
-=======
->>>>>>> 0f4613dcbb7b14732fdd5e7c2796f7e3d59254a5
 
 
 

@@ -122,14 +122,10 @@ class Ui_Caja(object, ):  # terminada (falta reporte diario)
         self.pushButtonC.setText(_translate("MainWindow", "Reporte diario"))
         self.pushButtonC_3.setText(_translate("MainWindow", "Productos/Servicios"))
         self.pushButtonC_2.setText(_translate("MainWindow", "Salir"))
-<<<<<<< HEAD
-
-=======
         
     def report(self):#crear el metodo reporte diario
         pass
     
->>>>>>> a48c4acb7fc452b3e3f6d4310179cc9112504465
     def nextWindow(self):
         self.sele = QMainWindow()
         self.ui_backC = Sele_Compra()
