@@ -22,7 +22,40 @@ class Cajero:
                 return False
         else:
             return False
-            
+    def buscar_y_modificar_cliente(self, cedula, nuevos_datos):
+        #Parámetros:
+        #- cedula: La cédula del cliente a buscar.
+        #- nuevos_datos: Un diccionario con los datos a actualizar.
+    
+            if cedula in self.gestion_datos.clientes["Cedula"].values:
+                cliente_index = self.gestion_datos.clientes.index[self.gestion_datos.clientes["Cedula"] == cedula].tolist()[0]
+                for key, value in nuevos_datos.items():
+                    if key in self.gestion_datos.clientes.columns:
+                        self.gestion_datos.clientes.at[cliente_index, key] = value
+                self.gestion_datos.guardar_dataframes()
+                return True
+            else:
+                return False
+    def eliminar_cliente(self, cedula):
+
+        if cedula in self.gestion_datos.clientes["Cedula"].values:
+            self.gestion_datos.clientes = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] != cedula]
+            self.gestion_datos.guardar_dataframes()
+            return True
+        else:
+            return False
+    def mostrar_clientes(self): 
+        cedulas = []
+        nombres = []
+        for i in (self.gestion_datos.clientes["Cedula"]):
+            cedulas.append(i)
+        for i in (self.gestion_datos.clientes["Nombre"]):
+            nombres.append(i)
+        x = list(zip(nombres,cedulas))
+        return x
+
+    #REPORTES  
+class Reportes:
     def filtrar_productos(self, referencia=None, codigo_barras=None, marca=None,
                       precio_adquisicion=None, stock=None, precio_venta=None, comparacion_precio_venta=None,
                       fecha_min=None, fecha_max=None):
@@ -113,38 +146,37 @@ class Cajero:
             filtered_sales = filtered_sales[filtered_sales["ID_Caja"] == id_caja]
 
         return filtered_sales
-    def buscar_y_modificar_cliente(self, cedula, nuevos_datos):
-    #Parámetros:
-    #- cedula: La cédula del cliente a buscar.
-    #- nuevos_datos: Un diccionario con los datos a actualizar.
 
-        if cedula in self.gestion_datos.clientes["Cedula"].values:
-            cliente_index = self.gestion_datos.clientes.index[self.gestion_datos.clientes["Cedula"] == cedula].tolist()[0]
+    #CATALOGO DE SERVICIOS 
+class Catalogo_Servicios:
+    def crear_servicio(self, id_servicio, nombre_servicio, costo):
+        nuevo_servicio = pd.DataFrame([[id_servicio, nombre_servicio, costo]], columns=self.columnas_servicios)
+        self.servicios = pd.concat([self.servicios, nuevo_servicio], ignore_index=True)
+        self.guardar_dataframes()
+        return True
+
+    # Método para modificar un servicio
+    def modificar_servicio(self, id_servicio, nuevos_datos):
+        servicio = self.servicios[self.servicios["ID servicio"] == id_servicio]
+        if not servicio.empty:
             for key, value in nuevos_datos.items():
-                if key in self.gestion_datos.clientes.columns:
-                    self.gestion_datos.clientes.at[cliente_index, key] = value
-            self.gestion_datos.guardar_dataframes()
+                if key in self.servicios.columns:
+                    self.servicios.loc[self.servicios["ID servicio"] == id_servicio, key] = value
+            self.guardar_dataframes()
             return True
         else:
             return False
-    def eliminar_cliente(self, cedula):
 
-        if cedula in self.gestion_datos.clientes["Cedula"].values:
-            self.gestion_datos.clientes = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] != cedula]
-            self.gestion_datos.guardar_dataframes()
+    # Método para descontinuar un servicio
+    def descontinuar_servicio(self, id_servicio):
+        servicio = self.servicios[self.servicios["ID servicio"] == id_servicio]
+        if not servicio.empty:
+            self.servicios = self.servicios[self.servicios["ID servicio"] != id_servicio]
+            self.guardar_dataframes()
             return True
         else:
             return False
-    def mostrar_clientes(self): 
-        cedulas = []
-        nombres = []
-        for i in (self.gestion_datos.clientes["Cedula"]):
-            cedulas.append(i)
-        for i in (self.gestion_datos.clientes["Nombre"]):
-            nombres.append(i)
-        x = list(zip(nombres,cedulas))
-        return x
-
+    
     def reporte_diario(self):
         pass
 
