@@ -20,49 +20,12 @@ class Login(QMainWindow):
         # BT LOGIN
         self.pushButton_login.clicked.connect(self.checkFields)
         self.pushButton_login.clicked.connect(self.limpiarCampo)
-        self.styleLineEditOk = (
-            "QLineEdit {\n"
-            "    border: 2px solid #e4acd0; /* Borde */\n"
-            "    border-radius: 5px;\n"
-            "    padding: 5px;\n"
-            "    background-color: #f5eef2; /* Fondo */\n"
-            "    color: #dc84bc; /* Color del texto */\n"
-            "    font-family: Arial, sans-serif;\n"
-            "    font-size: 14px;\n"
-            "}\n"
-            "QLineEdit:hover {\n"
-            "    border: 2px solid rgb(255, 255, 255);\n"
-            "}\n"
-            "QLineEdit:focus {\n"
-            "    border: 2px solid #dc84bc; /* Borde al enfocar */\n"
-            "}"
-        )
-
-        self.styleLineEditError = (
-            "QLineEdit {\n"
-            "    border: 2px solid rgb(255, 85, 127);\n"
-            "    border-radius: 5px;\n"
-            "    padding: 15px;\n"
-            "    background-color: #f5eef2;    \n"
-            "    color: rgb(100, 100, 100);\n"
-            "}\n"
-            "QLineEdit:hover {\n"
-            "    border: 2px solid rgb(255, 255, 255);\n"
-            "}\n"
-            "QLineEdit:focus {\n"
-            "    border: 2px solid #dc84bc;   \n"
-            "    color: rgb(200, 200, 200);\n"
-            "}"
-        )
-
         self.stylePopupError = "background-color: rgb(255, 85, 127); border-radius: 5px;"
         self.stylePopupOk = "background-color: rgb(255, 0, 0); border-radius: 5px;"
 
     def limpiarCampo(self):
-        self.lineEdit_user.setText("")
-        self.lineEdit_password.setText("")
-        self.lineEdit_user.setPlaceholderText("USUARIO")
-        self.lineEdit_password.setPlaceholderText("CONTRASEÑA")
+        self.lineEdit_user.clear()
+        self.lineEdit_password.clear()
 
     def checkFields(self):
         username = self.lineEdit_user.text()
@@ -79,18 +42,14 @@ class Login(QMainWindow):
         # CHECK USER
         if not username:
             textUser = " Usuario Vacio. "
-            self.lineEdit_user.setStyleSheet(self.styleLineEditError)
         else:
             textUser = ""
-            self.lineEdit_user.setStyleSheet(self.styleLineEditOk)
 
         # CHECK PASSWORD
         if not password:
             textPassword = " Contraseña Vacia. "
-            self.lineEdit_password.setStyleSheet(self.styleLineEditError)
         else:
             textPassword = ""
-            self.lineEdit_password.setStyleSheet(self.styleLineEditOk)
 
         # CHECK FIELDS
         if textUser + textPassword != "":
@@ -130,7 +89,7 @@ class Login(QMainWindow):
     def openAdminSupportWindow(self, user_role: str):
         self.admin_soporte = AdminSoporteManager(self,user_role=user_role)
         self.admin_soporte.leer_estilos(self.app, [
-            "GUI/sub_ventanas/css/admin.css",
+            "GUI\sub_ventanas\css\\admin.css",
         ])
         self.admin_soporte.run()
         self.close()

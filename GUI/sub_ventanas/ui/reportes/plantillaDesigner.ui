@@ -171,11 +171,11 @@
     <rect>
      <x>0</x>
      <y>60</y>
-     <width>201</width>
+     <width>221</width>
      <height>511</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="cajaFiltroVerticalLayout">
     <property name="spacing">
      <number>12</number>
     </property>
@@ -515,9 +515,9 @@
   <widget class="QTableWidget" name="table">
    <property name="geometry">
     <rect>
-     <x>200</x>
+     <x>220</x>
      <y>60</y>
-     <width>601</width>
+     <width>581</width>
      <height>551</height>
     </rect>
    </property>

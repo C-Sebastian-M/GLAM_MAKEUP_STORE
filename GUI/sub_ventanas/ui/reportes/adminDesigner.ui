@@ -235,7 +235,7 @@ productos</string>
      </rect>
     </property>
     <property name="text">
-     <string>Cerrar</string>
+     <string>Log out</string>
     </property>
    </widget>
   </widget>
