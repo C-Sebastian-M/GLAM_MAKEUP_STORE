@@ -1,3 +1,4 @@
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from GUI.ventanas.Caja_X import Ui_Caja
@@ -92,8 +93,8 @@ class Login(QMainWindow):
         usuario_datos = self.gestion_datos.usuarios[self.gestion_datos.usuarios["usuario"] == username]
         if not usuario_datos.empty:
             if password in usuario_datos["contraseña"].values:
-                rol = usuario_datos.loc[0, "Rol ID"]
-                return rol
+                rol = usuario_datos["Rol ID"].values
+                return int(rol)
             return False
         return False
 
