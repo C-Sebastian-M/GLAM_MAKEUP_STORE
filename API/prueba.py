@@ -24,7 +24,6 @@ class Cajero:
         x = list(zip(nombres,cedulas))
         return x
     
-
     def reporte_diario(self):
         pass
 
@@ -64,7 +63,18 @@ class Cajero:
     def seleccionar_mediopago(self):
         #Necesitamos que creen la tabla de medios de pago
         pass
-    
+      
+    def login(self, username, password, user_role=-1):
+            usuario_datos = self.gestion_datos.usuarios[self.gestion_datos.usuarios["usuario"] == username]
+            if not usuario_datos.empty:
+                if password in usuario_datos["contraseña"].values:
+                    user_role = usuario_datos.loc[0,"Rol ID"]     
+                    return user_role
+                else:
+                    return False
+            else:
+                return False
+      
 class Inventario:
     def __init__(self):
         self.gestion_datos = GestionDatos()
@@ -140,9 +150,6 @@ class Inventario:
     def ver_clientes(self):
         x = self.gestion_datos.Clientes
         return x
-
-x = Cajero()
-x.añadir_cliente(103318341, "Juan", 3052076540)
 
 
 

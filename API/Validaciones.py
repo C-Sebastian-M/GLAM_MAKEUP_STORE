@@ -18,7 +18,7 @@ def validar_Cedula(cedula)->bool:
   #Validar telefono
 def validacion_Telefono(telefono)->bool:
     telefono = str(telefono)
-    if len(telefono) == 10 and telefono.isdigit():
+    if len(telefono) >= 7 and len(telefono)<=10 and telefono.isdigit():
         return True
     return False
 

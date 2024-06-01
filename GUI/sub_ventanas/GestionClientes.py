@@ -2,7 +2,6 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView, QTableWidgetItem
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5 import QtCore, QtWidgets
-from DATA import GestionDatos
 import sys
 from DATA import GestionDatos
 from API.Validaciones import *

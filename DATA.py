@@ -46,7 +46,7 @@ class GestionDatos:
         self.roles = pd.DataFrame(datos_roles, columns=self.columnas_roles)
 
         # Crear un usuario de soporte predeterminado
-        usuario_soporte = pd.DataFrame([[1, "soporte", 123, 1]], columns=self.columnas_usuarios)
+        usuario_soporte = pd.DataFrame([[1, "soporte", "hola", 1]], columns=self.columnas_usuarios)
         self.usuarios = pd.concat([self.usuarios, usuario_soporte], ignore_index=True)
 
     def cargar_dataframes(self):
