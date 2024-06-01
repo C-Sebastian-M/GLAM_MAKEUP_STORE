@@ -8,36 +8,43 @@ class Cajero:
         self.gestion_datos.crear_dataframes()
         
     def login(self, usuario, contraseña):
-    usuario_datos = self.usuarios[self.usuarios["usuario"] == usuario]
-    if not usuario_datos.empty:
-        return usuario_datos["contraseña"].values[0] == contraseña
-    return False
+        usuario_datos = self.usuarios[self.usuarios["usuario"] == usuario]
+        if not usuario_datos.empty:
+            return usuario_datos["contraseña"].values[0] == contraseña
+        return False
 
     def añadir_cliente(self, cedula, nombre, telefono):
-    if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
-        if not cedula in self.gestion_datos.clientes["Cedula"].values:
-            self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
-            return True
+        if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
+            if not cedula in self.gestion_datos.clientes["Cedula"].values:
+                self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+                return True
+            else:
+                return False
         else:
             return False
-    else:
-        return False
 
     def buscar_y_modificar_cliente(self, cedula, nuevos_datos):
     #Parámetros:
     #- cedula: La cédula del cliente a buscar.
     #- nuevos_datos: Un diccionario con los datos a actualizar.
 
-    if cedula in self.gestion_datos.clientes["Cedula"].values:
-        cliente_index = self.gestion_datos.clientes.index[self.gestion_datos.clientes["Cedula"] == cedula].tolist()[0]
-        for key, value in nuevos_datos.items():
-            if key in self.gestion_datos.clientes.columns:
-                self.gestion_datos.clientes.at[cliente_index, key] = value
-        self.gestion_datos.guardar_dataframes()
-        return True
-    else:
-        return False
-                   
+        if cedula in self.gestion_datos.clientes["Cedula"].values:
+            cliente_index = self.gestion_datos.clientes.index[self.gestion_datos.clientes["Cedula"] == cedula].tolist()[0]
+            for key, value in nuevos_datos.items():
+                if key in self.gestion_datos.clientes.columns:
+                    self.gestion_datos.clientes.at[cliente_index, key] = value
+            self.gestion_datos.guardar_dataframes()
+            return True
+        else:
+            return False
+    def eliminar_cliente(self, cedula):
+
+        if cedula in self.gestion_datos.clientes["Cedula"].values:
+            self.gestion_datos.clientes = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] != cedula]
+            self.gestion_datos.guardar_dataframes()
+            return True
+        else:
+            return False
     def mostrar_clientes(self): 
         cedulas = []
         nombres = []
