@@ -77,9 +77,10 @@ class InventarioProductos(QMainWindow, CBackground):
     def limpiar_campos(self):
         #Labels añadir_producto
         self.add_referencia_lineEdit.clear()
+        self.add_codigo_barras_lineEdit.clear()
         self.add_marca_lineEdit.clear()
         self.add_precio_adquisicion_lineEdit.clear()
-        self.add_precio_ventas_lineEdit.clear()
+        self.add_precio_venta_lineEdit.clear()
         self.add_unidades_actuales_lineEdit.clear()
     
     # Método para validar la longitud del código de barras
@@ -87,7 +88,7 @@ class InventarioProductos(QMainWindow, CBackground):
         validacion_referencia = QtGui.QRegularExpressionValidator(
             QtCore.QRegularExpression(r"\d{0,13}")
         )
-        self.add_referencia_lineEdit.setValidator(validacion_referencia)
+        self.add_codigo_barras_lineEdit.setValidator(validacion_referencia)
     
     # Método para definir los precios
     def setupValidatorsPrecios(self):
@@ -95,7 +96,7 @@ class InventarioProductos(QMainWindow, CBackground):
             QtCore.QRegularExpression(r"\d{0,12}")
         )
         self.add_precio_adquisicion_lineEdit.setValidator(validacion_precios)
-        self.add_precio_ventas_lineEdit.setValidator(validacion_precios)
+        self.add_precio_venta_lineEdit.setValidator(validacion_precios)
     
     # Método para definir la cantidad de unidades (máximo 99.999)
     def setupValidatorsUnidades(self):
@@ -124,3 +125,36 @@ class InventarioProductos(QMainWindow, CBackground):
     
     # Método para definir base de datos ...
     #self.tabla_ver_productos.setRowCount(0)
+    
+    # VER PRODUCTOS PÁGINA
+    # tabla_ver_productos (DATAFRAME)
+    # ver_actualizar_boton
+    
+    # AÑADIR NUEVO PRODUCTO
+    # add_referencia_lineEdit
+    # add_codigo_barras_lineEdit
+    # add_marca_lineEdit
+    # add_precio_adquisicion_lineEdit
+    # add_precio_venta_lineEdit
+    # add_unidades_actuales_lineEdit
+    
+    # MODIFICAR PRODUCTO
+    # modify_tabla_productos (DATAFRAME)
+    # modify_buscar_producto_lineEdit (BARRA DE BUSQUEDA DEL DATAFRAME)
+    # modify_buscar_boton (SELECCIONAR BOTÓN)
+    # modify_marca_lineEdit
+    # modify_precio_adquisicion_lineEdit
+    # modify_precio_venta_lineEdit
+    # modify_guardar_boton (BOTON PARA GUARDAR)
+    
+    # DESCONTINUAR PRODUCTO
+    # del_tabla_productos (DATAFRAME)
+    # del_buscar_producto_lineEdit (BARRA DE BUSQUEDA DEL DATAFRAME)
+    # del_guardar_boton (BOTON PARA GUARDAR)
+    
+    # COMPRAR STOCK
+    # buy_tabla_productos (DATAFRAME)
+    # buy_buscar_producto_lineEdit (BARRA DE BUSQUEDA DEL DATAFRAME)
+    # buy_buscar_boton (BOTON SELECCIONAR)
+    # buy_cantidad_ingresar_lineEdit (BOTON PARA INGRESAR UNIDADES)
+    # buy_add_boton (BOTON PARA AÑADIR)
