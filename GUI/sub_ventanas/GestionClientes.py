@@ -187,6 +187,7 @@ class GestionClientes(QMainWindow, CBackground):
             validar_Cedula(cedula)
             and validacion_Telefono(telefono)
             and validar_NombreCom(nombre)
+            and cedula not in self.gestion_datos.clientes["Cedula"].values
         ):
             self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
             self.mostrar_clientes()
