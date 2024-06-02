@@ -2,9 +2,9 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5 import QtCore, QtWidgets, QtGui
-from DATA import GestionDatos
+from API.DATA import GestionDatos
 import sys
-from DATA import GestionDatos
+from API.DATA import GestionDatos
 from API.Validaciones import *
 
 
@@ -68,7 +68,6 @@ class GestionClientes(QMainWindow):
         )
         self.lineEdit_addCedula.setValidator(validacion_numero)
         self.lineEdit_nuevaCedula.setValidator(validacion_numero)
-        self.lineEdit_buscarModificar.setValidator(validacion_numero)
         self.lineEdit_buscarEliminar.setValidator(validacion_numero)
     
     def setupValidatorsTelefono(self):
@@ -77,14 +76,12 @@ class GestionClientes(QMainWindow):
         )
         self.lineEdit_addCedula.setValidator(validacion_numero)
         self.lineEdit_nuevaCedula.setValidator(validacion_numero)
-        self.lineEdit_buscarModificar.setValidator(validacion_numero)
         self.lineEdit_buscarEliminar.setValidator(validacion_numero)
 
     def limpiar_campos(self):
         self.lineEdit_addTelefono.clear()
         self.lineEdit_addCedula.clear()
         self.lineEdit_addNombre.clear()
-        self.lineEdit_buscarModificar.clear()
         self.lineEdit_buscarEliminar.clear()
         self.lineEdit_nuevaCedula.clear()
         self.lineEdit_nuevoNombre.clear()

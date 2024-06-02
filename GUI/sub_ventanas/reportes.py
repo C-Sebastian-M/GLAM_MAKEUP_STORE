@@ -56,7 +56,7 @@ class ReportePorFecha(QWidget):
         self.close()
 
     def pintar(self) -> None:
-        with open("GUI\sub_ventanas\css\\byDate.css", "r") as style_file:
+        with open(r"GUI\sub_ventanas\css\\byDate.css", "r") as style_file:
             style_line = style_file.read()
 
         self.setStyleSheet(style_line)
