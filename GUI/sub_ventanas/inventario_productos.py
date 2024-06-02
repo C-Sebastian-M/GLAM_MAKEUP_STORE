@@ -124,4 +124,9 @@ class InventarioProductos(QMainWindow, CBackground):
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
 
-        
+    def nuevo_producto_pagina(self):
+        referencia = self.add_referencia_lineEdit.text()
+        marca = self.add_marca_lineEdit.text()
+        precio_a = self.add_precio_adquisicion_lineEdit.text()
+        precio_v = self.add_precio_ventas_lineEdit.text()
+        stock = self.add_unidades_actuales_lineEdit.text()

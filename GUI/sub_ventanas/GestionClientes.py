@@ -196,6 +196,10 @@ class GestionClientes(QMainWindow, CBackground):
             self.show_success_dialog("Cliente registrado con éxito.")
             self.aviso_add.setText("Cliente registrado con éxito.")
             self.limpiar_campos()
+            self.mostrar_clientes()
+            self.show_success_dialog("Cliente registrado con éxito.")
+            self.aviso_add.setText("Cliente registrado con éxito.")
+            self.limpiar_campos()
         else:
             self.showErrorMessage(
                 "Error en los datos ingresados. Por favor, verifica la información."
