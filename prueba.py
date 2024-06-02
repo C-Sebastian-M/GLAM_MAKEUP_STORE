@@ -1,4 +1,4 @@
-from DATA import GestionDatos
+from API.DATA import GestionDatos
 from API.Validaciones import *
 import pandas as pd
 import datetime
