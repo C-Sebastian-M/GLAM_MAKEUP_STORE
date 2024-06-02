@@ -45,7 +45,7 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(235, 188, 220);</string>
+       <string notr="true"/>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -70,7 +70,7 @@
          </property>
          <property name="styleSheet">
           <string notr="true">QFrame{
-background-color: rgb(235, 188, 220);
+background-color: transparent;
 }
 
 QPushButton {
@@ -163,6 +163,10 @@ QPushButton:pressed {
           </item>
           <item>
            <widget class="QLabel" name="label_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: transparent
+</string>
+            </property>
             <property name="text">
              <string>GESTIÓN DE CLIENTES</string>
             </property>
@@ -208,6 +212,10 @@ QPushButton:pressed {
            <width>200</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border-radius: 10px
+</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -410,21 +418,35 @@ QPushButton:pressed {
 }
 
 QTableWidget {
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 0);
-	gridline-color: #dc84bc;
-	font-size: 12pt;
-	color: #000000;
+    background-color: #f5eef2;
+    gridline-color: #dc84bc;
+    font-size: 14px;
 }
+
 QHeaderView::section {
-	background-color: #dc84bc;
-	border: 1px solid rgb(0, 0, 0);
-	font-size: 12pt;
+    background-color: #dc84bc;
+    color: #ffffff;
+    padding: 5px;
+    border: 1px solid #dc84bc;
 }
-QTableWidget QTableCornerButton::section {
-	background-color: rgb(220, 132, 188) ;
-	border: 1px solid rgb(255, 255, 255);
-}</string>
+
+QTableWidget::item {
+    border: 1px solid #dc84bc;
+}
+
+QTableWidget::item:alternate {
+    background-color: #e4acd0;
+}
+
+QTableWidget::item:!selected {
+    background-color: #ebbcdc;
+}
+
+QTableWidget::item:selected {
+    background-color: #d484b4;
+    color: #ffffff;
+}
+</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -451,7 +473,7 @@ QTableWidget QTableCornerButton::section {
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
                <widget class="QWidget" name="pagina_consulta">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -477,7 +499,7 @@ QTableWidget QTableCornerButton::section {
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
                     <bool>false</bool>
@@ -730,19 +752,6 @@ QTableWidget QTableCornerButton::section {
                   </widget>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_3">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_9">
                    <item>
                     <widget class="QLabel" name="label_11">
@@ -752,50 +761,44 @@ QTableWidget QTableCornerButton::section {
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_buscarModificar">
-                     <property name="placeholderText">
-                      <string>INGRESE PARAMETRO</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_buscarModificar">
-                     <property name="text">
-                      <string>BUSCAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../../recursos/images/account-search-outline.png</normaloff>../../../recursos/images/account-search-outline.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>38</width>
-                       <height>29</height>
-                      </size>
+                    <widget class="QListWidget" name="listWidget_modificar">
+                     <property name="styleSheet">
+                      <string notr="true">QListView {
+            background-color: #f5eef2;
+            color: #000000;
+            border: 2px solid #dc84bc;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        QListView::item {
+            background-color: #e4acd0;
+            border: 1px solid #dc84bc;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 3px;
+        }
+        QListView::item:selected {
+            background-color: #dc84bc;
+            color: #ffffff;
+        }
+        QListView::item:hover {
+            background-color: #ebbcdc;
+            color: #000000;
+        }
+        QListView::item:alternate {
+            background-color: #e4c4d4;
+        }</string>
                      </property>
                     </widget>
                    </item>
                   </layout>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_7">
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_11">
                      <property name="spacing">
-                      <number>40</number>
+                      <number>5</number>
                      </property>
                      <item>
                       <widget class="QLabel" name="label_12">
@@ -823,7 +826,7 @@ QTableWidget QTableCornerButton::section {
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_10">
                      <property name="spacing">
-                      <number>40</number>
+                      <number>5</number>
                      </property>
                      <item>
                       <widget class="QLineEdit" name="lineEdit_nuevaCedula">
@@ -849,19 +852,6 @@ QTableWidget QTableCornerButton::section {
                     </layout>
                    </item>
                   </layout>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -919,24 +909,27 @@ QTableWidget QTableCornerButton::section {
                   </widget>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
                     <widget class="QLabel" name="label_18">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: #f5eef2
+;</string>
+                     </property>
                      <property name="text">
-                      <string>CLIENTE:</string>
+                      <string/>
+                     </property>
+                     <property name="pixmap">
+                      <pixmap>../../../recursos/images/search.png</pixmap>
+                     </property>
+                     <property name="scaledContents">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
@@ -950,17 +943,26 @@ QTableWidget QTableCornerButton::section {
                   </layout>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
+                  <widget class="QTableWidget" name="tableWidget_Eliminar">
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>200</number>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>CÉDULA</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>NOMBRE</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>TELÉFONO</string>
+                    </property>
+                   </column>
+                  </widget>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_11">

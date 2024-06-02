@@ -1,12 +1,11 @@
 from typing import List
-from PyQt5 import uic
+from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QPushButton
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
 from PyQt5.QtGui import QIcon
 from PyQt5 import uic
 
-from GUI.sub_ventanas.reportes import ReportePanel, InventarioPanel, Ventas, CBackground
 
 from GUI.sub_ventanas.reportes import (
     ReportePanel,
@@ -57,10 +56,7 @@ class AdminSoporteManager(QMainWindow):
         if not user_role:
             raise TypeError("El rol de usuario no puede estar vacio.")
 
-        self.setWindowFlags(
-            Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint
-        )
-        self.setFixedSize(800, 600)
+
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
         self.setWindowTitle("GLAM MAKEUP STORE")
 
