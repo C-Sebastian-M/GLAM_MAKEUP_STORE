@@ -29,7 +29,7 @@ class ReportePorFecha(QWidget):
         self.fecha = {}
 
         self.setWindowFlags(
-            Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint
+            Qt.FramelessWindowHint
         )
         self.setFixedSize(400, 335)
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
@@ -56,7 +56,7 @@ class ReportePorFecha(QWidget):
         self.close()
 
     def pintar(self) -> None:
-        with open(r"GUI\sub_ventanas\css\\byDate.css", "r") as style_file:
+        with open(r"GUI\sub_ventanas\css\byDate.css", "r") as style_file:
             style_line = style_file.read()
 
         self.setStyleSheet(style_line)
@@ -163,14 +163,6 @@ class CBackground:
         painter.drawEllipse(700, -70, 200, 200)
 
         painter.end()
-
-class InventarioPanel(QWidget, CBackground):
-    def __init__(self) -> None:
-        super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", 
-            self
-        )
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):

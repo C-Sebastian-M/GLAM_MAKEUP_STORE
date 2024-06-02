@@ -1,9 +1,9 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
-from GUI.ventanas.Caja_X import Ui_Caja
+from GUI.ventanas.Caja import Ui_Caja
 from GUI.ventanas.soporte_admin import AdminSoporteManager
 from API.prueba import Cajero
-from DATA import GestionDatos
+from API.DATA import GestionDatos
 
 
 class Login(QMainWindow):

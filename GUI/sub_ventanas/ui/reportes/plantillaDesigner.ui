@@ -488,7 +488,7 @@
          <string notr="true">padding: 10px;</string>
         </property>
         <property name="text">
-         <string>Buscar</string>
+         <string>Filtrar</string>
         </property>
        </widget>
       </item>
