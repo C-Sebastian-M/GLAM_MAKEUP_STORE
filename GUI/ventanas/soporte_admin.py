@@ -108,7 +108,7 @@ class AdminSoporteManager(QMainWindow):
         self.close()
 
     def inicializar(self):
-        self.resize(800, 600)
+        self.resize(1200, 800)
         self.conexiones()
 
         buttons = self.findChildren(QPushButton)
