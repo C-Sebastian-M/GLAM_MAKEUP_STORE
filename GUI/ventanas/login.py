@@ -1,5 +1,7 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QCursor
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QPushButton
 from GUI.ventanas.Caja import ControlNavegacion, Aplicacion
 from GUI.ventanas.soporte_admin import AdminSoporteManager
 from API.prueba import Cajero
@@ -32,6 +34,10 @@ class Login(QMainWindow):
             "background-color: rgb(255, 85, 127); border-radius: 5px;"
         )
         self.stylePopupOk = "background-color: rgb(255, 0, 0); border-radius: 5px;"
+
+        buttons = self.findChildren(QPushButton)
+        for button in buttons:
+            button.setCursor(QCursor(Qt.PointingHandCursor))
 
     def limpiarCampo(self):
         self.lineEdit_user.setText("")

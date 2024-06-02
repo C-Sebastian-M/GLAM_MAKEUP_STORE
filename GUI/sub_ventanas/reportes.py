@@ -164,14 +164,6 @@ class CBackground:
 
         painter.end()
 
-class InventarioPanel(QWidget, CBackground):
-    def __init__(self) -> None:
-        super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", 
-            self
-        )
-
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()
