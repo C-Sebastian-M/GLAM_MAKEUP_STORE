@@ -6,10 +6,6 @@ from PyQt5.QtGui import QCursor
 from PyQt5.QtGui import QIcon
 from PyQt5 import uic
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 33984d553257465c59ea30b358a050de584ea058
 from GUI.sub_ventanas.reportes import (
     ReportePanel,
     InventarioPanel,
