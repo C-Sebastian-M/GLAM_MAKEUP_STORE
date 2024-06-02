@@ -103,7 +103,6 @@ class InventarioProductos(QMainWindow, CBackground):
             QtCore.QRegularExpression(r"\d{0,5}")
         )
         self.add_unidades_actuales_lineEdit.setValidator(validacion_unidades)
-        
     
     # Método que permite mover la barra de menú
     def mover_menu(self):
@@ -122,3 +121,6 @@ class InventarioProductos(QMainWindow, CBackground):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
+    
+    # Método para definir base de datos ...
+    #self.tabla_ver_productos.setRowCount(0)
