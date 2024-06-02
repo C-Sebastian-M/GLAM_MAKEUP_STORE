@@ -1,6 +1,6 @@
-QWidget#ventanaPorFecha #title, #des_hasComboBox {
+QWidget#ventanaPorFecha, #title {
     color: #f5f5f5;
-    background-color: #ee5db4;
+    background-color: hsl(324, 48%, 60%);
 }
 
 QCalendarWidget#calendarPorFecha {
@@ -8,10 +8,10 @@ QCalendarWidget#calendarPorFecha {
 }
 
 QWidget#datosContenedor {
-    border-left: 2px solid #d484b4;
-    border-right: 2px solid #d484b4;
+    border-left: 2px solid #D484B4;
+    border-right: 2px solid #D484B4;
 }
 
-QCalendarWidget QToolButton {
-    background-color: #d484b4;
+QCalendarWidget QToolButton, #des_hasComboBox {
+    background-color: #D484B4;
 }

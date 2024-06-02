@@ -11,7 +11,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
     QPainter, QBrush,
     QColor, QPixmap, 
-    QCursor, QIcon
+    QCursor, QIcon, 
+    QPainterPath, QRegion
 )
 from GUI.sub_ventanas.utils.css import CustomGroupBox
 
@@ -28,9 +29,6 @@ class ReportePorFecha(QWidget):
         self.ref = ref
         self.fecha = {}
 
-        self.setWindowFlags(
-            Qt.FramelessWindowHint
-        )
         self.setFixedSize(400, 335)
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
 
@@ -52,6 +50,13 @@ class ReportePorFecha(QWidget):
         self.hastaLabel.setText(f'Hasta\n{fecha_seleccionada}')
 
     def confirmar(self) -> None:
+        if not self.fecha:
+            return
+
+        if self.fecha['hasta'] < self.fecha['desde']:
+            # Fecha no valida.
+            return
+
         self.ref.setText(f"{self.fecha['desde']} - {self.fecha['hasta']}")
         self.close()
 
@@ -61,6 +66,18 @@ class ReportePorFecha(QWidget):
 
         self.setStyleSheet(style_line)
         style_file.close()
+
+        # path = QPainterPath()
+        # path.moveTo(0, 0)
+        # path.lineTo(self.width(), 0)
+        # path.lineTo(self.width(), self.height() - 20)
+        # path.quadTo(self.width(), self.height(), self.width() - 20, self.height())
+        # path.lineTo(20, self.height())
+        # path.quadTo(0, self.height(), 0, self.height() - 20)
+        # path.lineTo(0, 0) 
+
+        # region = QRegion(path.toFillPolygon().toPolygon())
+        # self.setMask(region)
 
 class Plantilla(QWidget):
     def __init__(self, title: str, columns: List[str]) -> None:
@@ -114,7 +131,8 @@ class Plantilla(QWidget):
             self.fechas_label = QLabel()
             self.fechas_label.setObjectName("rangoDeFechasLabel")
             self.fechas_label.setText(f"{fecha_actual} - {fecha_actual}")
-            self.cajaFiltroVerticalLayout.insertWidget(6, self.fechas_label)
+            self.cajaFiltroVerticalLayout.insertWidget(5, self.fechas_label)
+
         self.consulta_por_fecha = ReportePorFecha(ref=self.fechas_label)
         self.consulta_por_fecha.show()
 
@@ -142,25 +160,34 @@ class CBackground:
         brocha2 = QBrush(QColor(228, 156, 198), Qt.SolidPattern)
         brocha3 = QBrush(QColor(235, 188, 220), Qt.SolidPattern)
 
-        # Dibujando circulos abajo
+        # Obtén el tamaño actual de la ventana
+        width = self.width()
+        height = self.height()
+
+        # Calcula las posiciones y tamaños en función del tamaño de la ventana
+        diameter = width // 4
+        offset_x = width // 8
+        offset_y = height // 5
+
+        # Dibujando círculos abajo
         painter.setBrush(brocha3)
-        painter.drawEllipse(140, 530, 200, 200)
+        painter.drawEllipse(int(width // 2 - diameter // 2), int(height - offset_y), int(diameter), int(diameter))
 
         painter.setBrush(brocha2)
-        painter.drawEllipse(40, 480, 200, 200)
+        painter.drawEllipse(int(width // 4 - diameter // 2), int(height - offset_y * 1.5), int(diameter), int(diameter))
 
         painter.setBrush(brocha1)
-        painter.drawEllipse(-70, 440, 200, 200)
+        painter.drawEllipse(int(width // 8 - diameter // 2), int(height - offset_y * 2), int(diameter), int(diameter))
 
-        # Dibujando circulos arriba
+        # Dibujando círculos arriba
         painter.setBrush(brocha3)
-        painter.drawEllipse(440, -140, 200, 200)
+        painter.drawEllipse(int(width // 2 - diameter // 2), int(-offset_y), int(diameter), int(diameter))
 
         painter.setBrush(brocha2)
-        painter.drawEllipse(550, -100, 200, 200)
+        painter.drawEllipse(int(width // 2 + offset_x), int(-offset_y // 2), int(diameter), int(diameter))
 
         painter.setBrush(brocha1)
-        painter.drawEllipse(700, -70, 200, 200)
+        painter.drawEllipse(int(width // 2 + offset_x * 2), int(0), int(diameter), int(diameter))
 
         painter.end()
 
