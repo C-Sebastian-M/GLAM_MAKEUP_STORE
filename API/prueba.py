@@ -150,6 +150,11 @@ class Inventario:
         if not producto.empty:
             self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] ==  codigoB, "Unidades actuales"] += cantidad
             self.gestion_datos.guardar_dataframes()
+    
+    class Admin:
+        def __init__(self):
+            self.gestion_datos = GestionDatos()
+
             
             
             
