@@ -73,26 +73,26 @@ class ModificarProducto(QMainWindow, CBackground):
         )
     
         self.seleccionar_producto_combobox.addItems(["Producto1", "Producto2", "Producto3", "Producto4"])
-        #self.seleccionar_producto_combobox.currentIndexChanged.connect(self.abrir_modificar_atributos_producto)
+        self.seleccionar_producto_combobox.currentIndexChanged.connect(self.abrir_modificar_atributos_producto)
     
-    """def abrir_modificar_atributos_producto(self):
+    def abrir_modificar_atributos_producto(self):
         producto_seleccionado = self.seleccionar_producto_combobox.currentText()
         self.modificar_atributos = ModificarAtributosProducto(producto_seleccionado)
-        self.modificar_atributos.show()"""
+        self.modificar_atributos.show()
 
 # Ventana Modificar atributos especificos de atributo
 class ModificarAtributosProducto(QMainWindow, CBackground):
-    def __init__(self):
+    def __init__(self, text):
         super().__init__()
         uic.loadUi(
             r"GUI\sub_ventanas\ui\inventario_productos\modificar_atributos_especificos.ui",
             self,
         )
         
-        #self.label_producto_seleccionado.setText(text)
+        self.label_producto_seleccionado.setText(text)
 
-"""if __name__ == "__main__":
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     main_window = ModificarProducto()
     main_window.show()
-    sys.exit(app.exec_())"""
+    sys.exit(app.exec_())
