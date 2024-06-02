@@ -1,10 +1,11 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
-from GUI.ventanas.Caja import Caja
+from GUI.ventanas.Caja import ControlNavegacion, Aplicacion
 from GUI.ventanas.soporte_admin import AdminSoporteManager
 from API.prueba import Cajero
 from API.DATA import GestionDatos
 from API.Validaciones import *
+import sys
 
 
 class Login(QMainWindow):
@@ -109,6 +110,6 @@ class Login(QMainWindow):
         self.close()
 
     def openCajaWindow(self):
-        self.caja = Caja()
-        self.caja.show()
+        caja = Aplicacion()
+        caja.show()
         self.close()

@@ -145,7 +145,7 @@ class Caja(QMainWindow):
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
         super().__init__()
-        loadUi(r"\GUI\ui\ReporteDiario.ui", self,)
+        loadUi(r"GUI\ui\ReporteDiario.ui", self,)
         self.control_navegacion=control_navegacion
         self.Reporte_2.clicked.connect(self.Backmenu)
         self.Reporte.clicked.connect(self.VistaPre)
@@ -161,9 +161,9 @@ class Reporte(QMainWindow, CBackground):
         pass
 
 #/////CLASE CONEXIONES/////#
-class Aplicacion(QApplication):
-    def __init__(self, argv):
-        super().__init__(argv)
+class Aplicacion(QMainWindow):
+    def __init__(self):
+        super().__init__()
         
         self.control_navegacion = ControlNavegacion()
 
@@ -178,6 +178,6 @@ class Aplicacion(QApplication):
         self.control_navegacion.mostrar_ventana("menu")
 
 #/////MAIN////#
-if __name__ == "__main__":
-    app = Aplicacion(sys.argv)
-    sys.exit(app.exec_())
+#if __name__ == "__main__":
+#    app = Aplicacion(sys.argv)
+#    sys.exit(app.exec_())
