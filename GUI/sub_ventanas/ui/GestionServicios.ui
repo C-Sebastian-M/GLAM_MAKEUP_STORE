@@ -33,7 +33,7 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(235, 188, 220);</string>
+       <string notr="true">/*background-color: rgb(235, 188, 220);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -58,7 +58,9 @@
          </property>
          <property name="styleSheet">
           <string notr="true">QFrame{
-background-color: rgb(235, 188, 220);
+/*background-color: rgb(235, 188, 220);*/
+background-color: transparent;
+
 }
 
 QPushButton {
@@ -81,7 +83,7 @@ QPushButton:pressed {
 QLabel {
 	background-color:  rgb(235, 188, 220);
     font: 87 14pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
+    color: black; /* Color de texto rgb(220, 132, 188) */
 }</string>
          </property>
          <property name="frameShape">
@@ -151,6 +153,9 @@ QPushButton:pressed {
           </item>
           <item>
            <widget class="QLabel" name="label_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: transparent;</string>
+            </property>
             <property name="text">
              <string>GESTIÓN DE SERVICIOS</string>
             </property>
@@ -197,6 +202,10 @@ QPushButton:pressed {
            <height>0</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;
+border-radius:20px;</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -220,7 +229,7 @@ QPushButton:pressed {
             </property>
             <property name="styleSheet">
              <string notr="true">QFrame{
-background-color: rgb(220, 132, 188);
+background-color:transparent;
 }
 
 QPushButton {
@@ -352,12 +361,13 @@ QPushButton:pressed {
 
 /* Estilo para QFrame */
 QFrame {
-    background-color: #ffffff; /* Fondo blanco */
+    background-color: transparent; /* Fondo blanco */
+	border-radius: 10px
 }
 
 /* Estilo para QLabel */
 QLabel {
-	background-color:  rgb(235, 188, 220);
+	background-color:  transparent;
     font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
     color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
 }
@@ -397,47 +407,39 @@ QPushButton:pressed {
     background-color: #d484b4; /* Fondo al presionar */
 }
 
+QFrame{
+border-radius: 10px
+}
+
 QTableWidget {
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 0);
-	gridline-color: #dc84bc;
-	font-size: 12pt;
-	color: #000000;
+    background-color: #f5eef2;
+    gridline-color: #dc84bc;
+    font-size: 14px;
 }
+
 QHeaderView::section {
-	background-color: #dc84bc;
-	border: 1px solid rgb(0, 0, 0);
-	font-size: 12pt;
+    background-color: #dc84bc;
+    color: #ffffff;
+    padding: 5px;
+    border: 1px solid #dc84bc;
 }
-QTableWidget QTableCornerButton::section {
-	background-color: rgb(0, 0, 0);
-	border: 1px solid rgb(0, 206, 151);
+
+QTableWidget::item {
+    border: 1px solid #dc84bc;
 }
-QListView {
-            background-color: #f5eef2;
-            color: #000000;
-            border: 2px solid #dc84bc;
-            border-radius: 5px;
-            padding: 5px;
-        }
-        QListView::item {
-            background-color: #e4acd0;
-            border: 1px solid #dc84bc;
-            border-radius: 5px;
-            padding: 5px;
-            margin: 3px;
-        }
-        QListView::item:selected {
-            background-color: #dc84bc;
-            color: #ffffff;
-        }
-        QListView::item:hover {
-            background-color: #ebbcdc;
-            color: #000000;
-        }
-        QListView::item:alternate {
-            background-color: #e4c4d4;
-        }</string>
+
+QTableWidget::item:alternate {
+    background-color: #e4acd0;
+}
+
+QTableWidget::item:!selected {
+    background-color: transparent;
+}
+
+QTableWidget::item:selected {
+    background-color: #d484b4;
+    color: #ffffff;
+}</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -463,8 +465,11 @@ QListView {
              </property>
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="pagina_consulta">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -486,11 +491,14 @@ QListView {
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
                     <bool>false</bool>
@@ -731,6 +739,9 @@ QListView {
                 <layout class="QVBoxLayout" name="verticalLayout_12">
                  <item>
                   <widget class="QLabel" name="label_13">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: transparent;</string>
+                   </property>
                    <property name="text">
                     <string>MODIFICAR SERVICIO</string>
                    </property>
@@ -740,112 +751,67 @@ QListView {
                   </widget>
                  </item>
                  <item>
+                  <widget class="QPushButton" name="pushButton">
+                   <property name="maximumSize">
+                    <size>
+                     <width>120</width>
+                     <height>200</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>MOSTRAR</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../recursos/images/eye-outline.png</normaloff>../../recursos/images/eye-outline.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_9">
                    <item>
-                    <widget class="QLabel" name="label_11">
-                     <property name="text">
-                      <string>SERVICIO:</string>
+                    <widget class="QTableWidget" name="tableWidget_modificar">
+                     <column>
+                      <property name="text">
+                       <string>ID</string>
+                      </property>
+                     </column>
+                     <column>
+                      <property name="text">
+                       <string>SERVICIO</string>
+                      </property>
+                     </column>
+                     <column>
+                      <property name="text">
+                       <string>PRECIO</string>
+                      </property>
+                     </column>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_modificar">
+                     <property name="placeholderText">
+                      <string>INGRESE ID SERVICIO</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QListWidget" name="listWidget_Servicios"/>
+                    <widget class="QPushButton" name="pushButton_modificar">
+                     <property name="text">
+                      <string>Seleccionar</string>
+                     </property>
+                    </widget>
                    </item>
                   </layout>
                  </item>
                  <item>
                   <widget class="QFrame" name="frame_formulario">
                    <property name="styleSheet">
-                    <string notr="true">/* styles.css */
-
-/* Estilo para QFrame */
-QFrame {
-    background-color: rgb(235, 188, 220);
-}
-
-/* Estilo para QLabel */
-QLabel {
-	background-color:  rgb(235, 188, 220);
-    font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
-}
-
-/* Estilo para QLineEdit */
-QLineEdit {
-    border: 2px solid #e4acd0; /* Borde */
-    border-radius: 5px;
-    padding: 5px;
-    background-color: #f5eef2; /* Fondo */
-    color: rgb(0, 0, 0); /* Color del texto */
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-}
-QLineEdit:hover {
-	border: 2px solid rgb(255, 255, 255);
-}
-QLineEdit:focus {
-    border: 2px solid #dc84bc; /* Borde al enfocar */
-}
-
-QPushButton {
-    border: 2px solid #e4acd0;
-    border-radius: 5px;
-    padding: 8px 8px;
-    background-color: #dc95c4; /* Fondo */
-    color: #ffffff; /* Color del texto */
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-}
-
-QPushButton:hover {
-    background-color: #dc84bc; /* Fondo al pasar el cursor */
-}
-
-QPushButton:pressed {
-    background-color: #d484b4; /* Fondo al presionar */
-}
-
-QTableWidget {
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 0);
-	gridline-color: #dc84bc;
-	font-size: 12pt;
-	color: #000000;
-}
-QHeaderView::section {
-	background-color: #dc84bc;
-	border: 1px solid rgb(0, 0, 0);
-	font-size: 12pt;
-}
-QTableWidget QTableCornerButton::section {
-	background-color: rgb(0, 0, 0);
-	border: 1px solid rgb(0, 206, 151);
-}
-QListView {
-            background-color: #f5eef2;
-            color: #000000;
-            border: 2px solid #dc84bc;
-            border-radius: 5px;
-            padding: 5px;
-        }
-        QListView::item {
-            background-color: #e4acd0;
-            border: 1px solid #dc84bc;
-            border-radius: 5px;
-            padding: 5px;
-            margin: 3px;
-        }
-        QListView::item:selected {
-            background-color: #dc84bc;
-            color: #ffffff;
-        }
-        QListView::item:hover {
-            background-color: #ebbcdc;
-            color: #000000;
-        }
-        QListView::item:alternate {
-            background-color: #e4c4d4;
-        }</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -956,65 +922,109 @@ QListView {
                   </widget>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                  <widget class="QTableWidget" name="tableWidget_eliminarServicio">
+                   <property name="styleSheet">
+                    <string notr="true">QFrame{
+border-radius: 10px
+}
+
+QTableWidget {
+    background-color: #f5eef2;
+    gridline-color: #dc84bc;
+    font-size: 14px;
+}
+
+QHeaderView::section {
+    background-color: #dc84bc;
+    color: #ffffff;
+    padding: 5px;
+    border: 1px solid #dc84bc;
+}
+
+QTableWidget::item {
+    border: 1px solid #dc84bc;
+}
+
+QTableWidget::item:alternate {
+    background-color: #e4acd0;
+}
+
+QTableWidget::item:!selected {
+    background-color: #ebbcdc;
+}
+
+QTableWidget::item:selected {
+    background-color: #d484b4;
+    color: #ffffff;
+}</string>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
+                   <property name="alternatingRowColors">
+                    <bool>false</bool>
                    </property>
-                  </spacer>
+                   <property name="sortingEnabled">
+                    <bool>false</bool>
+                   </property>
+                   <attribute name="horizontalHeaderCascadingSectionResizes">
+                    <bool>false</bool>
+                   </attribute>
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>200</number>
+                   </attribute>
+                   <attribute name="verticalHeaderCascadingSectionResizes">
+                    <bool>false</bool>
+                   </attribute>
+                   <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+                    <bool>false</bool>
+                   </attribute>
+                   <attribute name="verticalHeaderStretchLastSection">
+                    <bool>false</bool>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>ID SERVICIO</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>SERVICIO</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>PRECIO</string>
+                    </property>
+                   </column>
+                  </widget>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
                     <widget class="QLabel" name="label_18">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>30</height>
+                      </size>
+                     </property>
                      <property name="text">
-                      <string>ID</string>
+                      <string/>
+                     </property>
+                     <property name="pixmap">
+                      <pixmap>../../recursos/images/search.png</pixmap>
+                     </property>
+                     <property name="scaledContents">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLineEdit" name="lineEdit_buscarEliminar">
                      <property name="placeholderText">
-                      <string>INGRESE PARAMETRO</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_buscarEliminar">
-                     <property name="text">
-                      <string>BUSCAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../recursos/images/account-search-outline.png</normaloff>../../recursos/images/account-search-outline.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>38</width>
-                       <height>29</height>
-                      </size>
+                      <string>INGRESE ID SERVICIO</string>
                      </property>
                     </widget>
                    </item>
                   </layout>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_11">

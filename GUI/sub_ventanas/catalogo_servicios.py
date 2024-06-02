@@ -1,21 +1,51 @@
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox
-from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
+from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox,QApplication
+from PyQt5.QtCore import QPropertyAnimation, Qt
 from PyQt5 import QtCore, QtWidgets, QtGui
-from DATA import GestionDatos
+from PyQt5.QtGui import QPainter, QBrush, QColor
 import sys
-from DATA import GestionDatos
-from API.Validaciones import *
+
+class CBackground:
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setPen(Qt.NoPen)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        brocha1 = QBrush(QColor(212, 132, 180), Qt.SolidPattern)
+        brocha2 = QBrush(QColor(228, 156, 198), Qt.SolidPattern)
+        brocha3 = QBrush(QColor(235, 188, 220), Qt.SolidPattern)
+
+        # Dibujando circulos abajo
+        painter.setBrush(brocha3)
+        painter.drawEllipse(140, 530, 200, 200)
+
+        painter.setBrush(brocha2)
+        painter.drawEllipse(40, 480, 200, 200)
+
+        painter.setBrush(brocha1)
+        painter.drawEllipse(-70, 440, 200, 200)
+
+        # Dibujando circulos arriba
+        painter.setBrush(brocha3)
+        painter.drawEllipse(440, -140, 200, 200)
+
+        painter.setBrush(brocha2)
+        painter.drawEllipse(550, -100, 200, 200)
+
+        painter.setBrush(brocha1)
+        painter.drawEllipse(700, -70, 200, 200)
+
+        painter.end()
 
 
-class GestionServicios(QMainWindow):
+class GestionServicios(QMainWindow, CBackground):
     def __init__(self):
         super(GestionServicios, self).__init__()
         loadUi(
             r"GUI\sub_ventanas\ui\GestionServicios.ui",
             self,
         )
-        self.gestion_datos = GestionDatos()
+        #self.gestion_datos = GestionDatos()
 
         self.pushButton_menu.clicked.connect(self.mover_menu)
         # Botones
@@ -50,41 +80,41 @@ class GestionServicios(QMainWindow):
         self.tabla_verServicios.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
+        self.tableWidget_eliminarServicio.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
         # self.setupValidatorsId()
         # self.setupValidatorsPrecio()
 
         # Ancho columna adaptable
-        self.tabla_verServicios.horizontalHeader().setSectionResizeMode(
-            QHeaderView.Stretch
-        )
 
     def resizeEvent(self, event):
         rect = self.rect()
         self.grip.move(rect.right() - self.gripSize, rect.bottom() - self.gripSize)
 
     # Permite ingrear solo numeros a los campos y el paraletro del metodo es la cantidad de caracteres
-    """def setupValidatorsId(self):
-        validacion_numero = QtGui.QRegularExpressionValidator(
-            QtCore.QRegularExpression(r"\d{12}")
-        )
-        self.lineEdit_addId.setValidator(validacion_numero)
-        self.lineEdit_nuevoId.setValidator(validacion_numero)
-        self.lineEdit_buscarModificar.setValidator(validacion_numero)
-        self.lineEdit_buscarEliminar.setValidator(validacion_numero)
     
-    def setupValidatorsPrecio(self):
-        validacion_numero = QtGui.QRegularExpressionValidator(
-            QtCore.QRegularExpression(r"\d{16}")
-        )
-        self.lineEdit_addPrecio.setValidator(validacion_numero)
-        self.lineEdit_nuevoPrecio.setValidator(validacion_numero)
-        self.lineEdit_buscarModificar.setValidator(validacion_numero)
-        self.lineEdit_buscarEliminar.setValidator(validacion_numero)"""
+    #def setupValidatorsId(self):
+    #    validacion_numero = QtGui.QRegularExpressionValidator(
+    #        QtCore.QRegularExpression(r"\d{12}")
+    #    )
+    #    self.lineEdit_addId.setValidator(validacion_numero)
+    #    self.lineEdit_nuevoId.setValidator(validacion_numero)
+    #    self.lineEdit_buscarModificar.setValidator(validacion_numero)
+    #    self.lineEdit_buscarEliminar.setValidator(validacion_numero)
+    
+    #def setupValidatorsPrecio(self):
+    #    validacion_numero = QtGui.QRegularExpressionValidator(
+    #        QtCore.QRegularExpression(r"\d{16}")
+    #    )
+    #    self.lineEdit_addPrecio.setValidator(validacion_numero)
+    #    self.lineEdit_nuevoPrecio.setValidator(validacion_numero)
+    #    self.lineEdit_buscarModificar.setValidator(validacion_numero)
+    #    self.lineEdit_buscarEliminar.setValidator(validacion_numero)
 
     def limpiar_campos(self):
         self.lineEdit_addPrecio.clear()
         self.lineEdit_addServicio.clear()
-        self.lineEdit_buscarModificar.clear()
         self.lineEdit_buscarEliminar.clear()
         self.lineEdit_nuevoServicio.clear()
         self.lineEdit_nuevoPrecio.clear()
@@ -114,23 +144,23 @@ class GestionServicios(QMainWindow):
             for j, (colname, value) in enumerate(row.items()):
                 self.tabla_verServicios.setItem(i, j, QTableWidgetItem(str(value)))
 
-    """def registrar_servicio(self):
-        id_servicio = self.lineEdit_addId.text()
-        nombre = self.lineEdit_addNombre.text()
-        precio = self.lineEdit_addPrecio.text()
-        if (
-            validar_Id(id_servicio)
-            and validar_Precio(precio)
-            and validar_NombreCom(nombre)
-        ):
-            self.gestion_datos.agregar_servicio(id_servicio, nombre, precio)
-            self.mostrar_servicios()
-            self.show_success_dialog("Servicio registrado con éxito.")
-            self.limpiar_campos()
-        else:
-            self.showErrorMessage(
-                "Error en los datos ingresados. Por favor, verifica la información."
-            )
+    #def registrar_servicio(self):
+    #    id_servicio = self.lineEdit_addId.text()
+    #    nombre = self.lineEdit_addNombre.text()
+    #    precio = self.lineEdit_addPrecio.text()
+    #    if (
+    #        validar_Id(id_servicio)
+    #        and validar_Precio(precio)
+    #        and validar_NombreCom(nombre)
+    #    ):
+    #        self.gestion_datos.agregar_servicio(id_servicio, nombre, precio)
+    #        self.mostrar_servicios()
+    #        self.show_success_dialog("Servicio registrado con éxito.")
+    #        self.limpiar_campos()
+    #    else:
+    #        self.showErrorMessage(
+    #            "Error en los datos ingresados. Por favor, verifica la información."
+    #        )
 
     def showErrorMessage(self, message):
         msg_box = QMessageBox()
@@ -161,8 +191,8 @@ class GestionServicios(QMainWindow):
         self.mostrar_servicios()  # Actualizar la tabla de clientes"""
 
 
-"""if __name__ == "__main__":
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    add = GestionClientes()
+    add = GestionServicios()
     add.show()  # Asegúrate de mostrar la ventana
-    sys.exit(app.exec_())"""
+    sys.exit(app.exec_())
