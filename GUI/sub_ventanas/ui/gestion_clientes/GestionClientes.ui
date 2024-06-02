@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>822</width>
+    <height>602</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
-    <height>600</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
-    <height>600</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -214,8 +214,7 @@ QPushButton:pressed {
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">border-radius: 10px
-</string>
+          <string notr="true"/>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -240,7 +239,7 @@ QPushButton:pressed {
             </property>
             <property name="styleSheet">
              <string notr="true">QFrame{
-background-color: rgb(220, 132, 188);
+background-color: transparent;
 }
 
 QPushButton {
@@ -372,13 +371,14 @@ QPushButton:pressed {
 
 /* Estilo para QFrame */
 QFrame {
-    background-color: #ffffff; /* Fondo blanco */
+    background-color: transparent; /* Fondo blanco */
+	border-radius: 10px
 }
 
 /* Estilo para QLabel */
 QLabel {
-	background-color:  rgb(235, 188, 220);
-    font: 87 14pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
+	background-color:  transparent;
+    font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
     color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
 }
 
@@ -402,11 +402,11 @@ QLineEdit:focus {
 QPushButton {
     border: 2px solid #e4acd0;
     border-radius: 5px;
-    padding: 8px 16px;
+    padding: 8px 8px;
     background-color: #dc95c4; /* Fondo */
     color: #ffffff; /* Color del texto */
     font-family: Arial, sans-serif;
-    font-size: 16px;
+    font-size: 11px;
 }
 
 QPushButton:hover {
@@ -415,6 +415,10 @@ QPushButton:hover {
 
 QPushButton:pressed {
     background-color: #d484b4; /* Fondo al presionar */
+}
+
+QFrame{
+border-radius: 10px
 }
 
 QTableWidget {
@@ -445,8 +449,7 @@ QTableWidget::item:!selected {
 QTableWidget::item:selected {
     background-color: #d484b4;
     color: #ffffff;
-}
-</string>
+}</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -473,7 +476,7 @@ QTableWidget::item:selected {
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>3</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="pagina_consulta">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -499,7 +502,7 @@ QTableWidget::item:selected {
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
                     <bool>false</bool>
@@ -740,9 +743,13 @@ QTableWidget::item:selected {
                 </layout>
                </widget>
                <widget class="QWidget" name="pagina_modificar">
-                <layout class="QVBoxLayout" name="verticalLayout_12">
+                <layout class="QVBoxLayout" name="verticalLayout_6">
                  <item>
                   <widget class="QLabel" name="label_13">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: transparent
+;</string>
+                   </property>
                    <property name="text">
                     <string>MODIFICAR CLIENTE</string>
                    </property>
@@ -754,40 +761,42 @@ QTableWidget::item:selected {
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_9">
                    <item>
-                    <widget class="QLabel" name="label_11">
-                     <property name="text">
-                      <string>CLIENTE:</string>
+                    <widget class="QTableWidget" name="tableWidget_modificar">
+                     <attribute name="horizontalHeaderDefaultSectionSize">
+                      <number>200</number>
+                     </attribute>
+                     <column>
+                      <property name="text">
+                       <string>CÉDULA</string>
+                      </property>
+                     </column>
+                     <column>
+                      <property name="text">
+                       <string>NOMBRE</string>
+                      </property>
+                     </column>
+                     <column>
+                      <property name="text">
+                       <string>TELÉFONO</string>
+                      </property>
+                     </column>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_modificar">
+                     <property name="placeholderText">
+                      <string>INGRESE CÉDULA</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QListWidget" name="listWidget_modificar">
-                     <property name="styleSheet">
-                      <string notr="true">QListView {
-            background-color: #f5eef2;
-            color: #000000;
-            border: 2px solid #dc84bc;
-            border-radius: 5px;
-            padding: 5px;
-        }
-        QListView::item {
-            background-color: #e4acd0;
-            border: 1px solid #dc84bc;
-            border-radius: 5px;
-            padding: 5px;
-            margin: 3px;
-        }
-        QListView::item:selected {
-            background-color: #dc84bc;
-            color: #ffffff;
-        }
-        QListView::item:hover {
-            background-color: #ebbcdc;
-            color: #000000;
-        }
-        QListView::item:alternate {
-            background-color: #e4c4d4;
-        }</string>
+                    <widget class="QPushButton" name="pushButton_modificar">
+                     <property name="text">
+                      <string>SELECCIONAR</string>
                      </property>
                     </widget>
                    </item>
@@ -909,6 +918,28 @@ QTableWidget::item:selected {
                   </widget>
                  </item>
                  <item>
+                  <widget class="QTableWidget" name="tableWidget_Eliminar">
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>200</number>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>CÉDULA</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>NOMBRE</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>TELÉFONO</string>
+                    </property>
+                   </column>
+                  </widget>
+                 </item>
+                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
                     <widget class="QLabel" name="label_18">
@@ -941,28 +972,6 @@ QTableWidget::item:selected {
                     </widget>
                    </item>
                   </layout>
-                 </item>
-                 <item>
-                  <widget class="QTableWidget" name="tableWidget_Eliminar">
-                   <attribute name="horizontalHeaderDefaultSectionSize">
-                    <number>200</number>
-                   </attribute>
-                   <column>
-                    <property name="text">
-                     <string>CÉDULA</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>NOMBRE</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>TELÉFONO</string>
-                    </property>
-                   </column>
-                  </widget>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_11">
