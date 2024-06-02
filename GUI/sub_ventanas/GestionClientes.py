@@ -1,14 +1,11 @@
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
-<<<<<<< HEAD
 from PyQt5 import QtCore, QtWidgets
-=======
 from PyQt5 import QtCore, QtWidgets, QtGui
-from DATA import GestionDatos
->>>>>>> aeb8c16a1edf8580195333072de8e23dff9e465c
+from API.DATA import GestionDatos
 import sys
-from DATA import GestionDatos
+from API.DATA import GestionDatos
 from API.Validaciones import *
 
 
@@ -62,7 +59,6 @@ class GestionClientes(QMainWindow):
             QHeaderView.Stretch
         )
         
-
     def resizeEvent(self, event):
         rect = self.rect()
         self.grip.move(rect.right() - self.gripSize, rect.bottom() - self.gripSize)
@@ -73,7 +69,6 @@ class GestionClientes(QMainWindow):
         )
         self.lineEdit_addCedula.setValidator(validacion_numero)
         self.lineEdit_nuevaCedula.setValidator(validacion_numero)
-        self.lineEdit_buscarModificar.setValidator(validacion_numero)
         self.lineEdit_buscarEliminar.setValidator(validacion_numero)
     
     def setupValidatorsTelefono(self):
@@ -82,14 +77,12 @@ class GestionClientes(QMainWindow):
         )
         self.lineEdit_addCedula.setValidator(validacion_numero)
         self.lineEdit_nuevaCedula.setValidator(validacion_numero)
-        self.lineEdit_buscarModificar.setValidator(validacion_numero)
         self.lineEdit_buscarEliminar.setValidator(validacion_numero)
 
     def limpiar_campos(self):
         self.lineEdit_addTelefono.clear()
         self.lineEdit_addCedula.clear()
         self.lineEdit_addNombre.clear()
-        self.lineEdit_buscarModificar.clear()
         self.lineEdit_buscarEliminar.clear()
         self.lineEdit_nuevaCedula.clear()
         self.lineEdit_nuevoNombre.clear()
@@ -154,12 +147,15 @@ class GestionClientes(QMainWindow):
 
     def modificar_cliente(self):
         cedula = self.lineEdit_nuevaCedula.text()
-        nuevos_datos = {
-            "Nombre": self.lineEdit_nuevoNombre.text(),
-            "Telefono": self.lineEdit_nuevoTelefono.text(),
-        }
-        self.gestion_datos.actualizar_cliente(cedula, nuevos_datos)
-        self.mostrar_clientes()  # Actualizar la tabla de clientes
+        if validar_NombreCom(self.lineEdit_nuevoNombre.text()) and validacion_Telefono(self.lineEdit_nuevoTelefono.text()):
+            nuevos_datos = {
+                "Nombre": self.lineEdit_nuevoNombre.text(),
+                "Telefono": self.lineEdit_nuevoTelefono.text(),
+            }
+            self.gestion_datos.actualizar_cliente(cedula, nuevos_datos)
+            self.mostrar_clientes()  # Actualizar la tabla de clientes
+        else:
+            return False
 
     def eliminar_cliente(self):
         cedula = self.lineEdit_buscarEliminar.text()

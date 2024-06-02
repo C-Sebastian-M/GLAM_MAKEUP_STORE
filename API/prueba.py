@@ -1,28 +1,36 @@
-from DATA import GestionDatos
+from API.DATA import GestionDatos
 from API.Validaciones import *
+import pandas as pd
+import datetime
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
+
+    def crear_dataframe(self):
+        self.gestion_datos.crear_dataframes()
+        
+    def buscar_y_modificar_cliente(self, cedula, nuevos_datos):
+        #Parámetros:
+        #- cedula: La cédula del cliente a buscar.
+        #- nuevos_datos: Un diccionario con los datos a actualizar.
     
-    def añadir_cliente(self, cedula, nombre, telefono):
-        if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
-            if not cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
-                self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+            if cedula in self.gestion_datos.clientes["Cedula"].values:
+                cliente_index = self.gestion_datos.clientes.index[self.gestion_datos.clientes["Cedula"] == cedula].tolist()[0]
+                for key, value in nuevos_datos.items():
+                    if key in self.gestion_datos.clientes.columns:
+                        self.gestion_datos.clientes.at[cliente_index, key] = value
+                self.gestion_datos.guardar_dataframes()
                 return True
-            
-            return False
+            else:
+                return False
+    
+    def eliminar_cliente(self, cedula):
+        if cedula in self.gestion_datos.clientes["Cedula"].values:
+            self.gestion_datos.clientes = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] != cedula]
+            self.gestion_datos.guardar_dataframes()
+            return True
         else:
             return False
-                   
-    def mostrar_clientes(self): 
-        cedulas = []
-        nombres = []
-        for i in (self.gestion_datos.clientes["Cedula"]):
-            cedulas.append(i)
-        for i in (self.gestion_datos.clientes["Nombre"]):
-            nombres.append(i)
-        x = list(zip(nombres,cedulas))
-        return x
     
     def reporte_diario(self):
         pass
@@ -76,8 +84,8 @@ class Cajero:
                 return False
       
 class Inventario:
-    def __init__(self):
-        self.gestion_datos = GestionDatos()
+    def __init__(self, gestion_datos):
+        self.gestion_datos = gestion_datos
     
     def ver_productos(self):
         return self.gestion_datos.productos
