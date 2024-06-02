@@ -1,27 +1,14 @@
-from DATA.DATA import GestionDatos
-from Validaciones import *
+from DATA import GestionDatos
+from API.Validaciones import *
+import pandas as pd
+import datetime
 class Cajero:
-    def __init__(self, gestion_datos):
-        self.gestion_datos = gestion_datos
+    def __init__(self):
+        self.gestion_datos = GestionDatos()
 
     def crear_dataframe(self):
         self.gestion_datos.crear_dataframes()
         
-    def login(self, usuario, contraseña):
-        usuario_datos = self.usuarios[self.usuarios["usuario"] == usuario]
-        if not usuario_datos.empty:
-            return usuario_datos["contraseña"].values[0] == contraseña
-        return False
-
-    def añadir_cliente(self, cedula, nombre, telefono):
-        if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
-            if not cedula in self.gestion_datos.clientes["Cedula"].values:
-                self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
-                return True
-            else:
-                return False
-        else:
-            return False
     def buscar_y_modificar_cliente(self, cedula, nuevos_datos):
         #Parámetros:
         #- cedula: La cédula del cliente a buscar.
@@ -36,24 +23,23 @@ class Cajero:
                 return True
             else:
                 return False
+    
     def eliminar_cliente(self, cedula):
-
         if cedula in self.gestion_datos.clientes["Cedula"].values:
             self.gestion_datos.clientes = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] != cedula]
             self.gestion_datos.guardar_dataframes()
             return True
         else:
             return False
-    def mostrar_clientes(self): 
-        cedulas = []
-        nombres = []
-        for i in (self.gestion_datos.clientes["Cedula"]):
-            cedulas.append(i)
-        for i in (self.gestion_datos.clientes["Nombre"]):
-            nombres.append(i)
-        x = list(zip(nombres,cedulas))
-        return x
-
+    
+    def login(self,username, password):
+        usuario_datos = self.gestion_datos.usuarios[self.gestion_datos.usuarios["usuario"] == username]
+        if not usuario_datos.empty:
+            if password in usuario_datos["contraseña"].values:
+                rol = usuario_datos["Rol ID"].values
+                return int(rol)
+            return False
+        return False
     #REPORTES  
 class Reportes:
     def filtrar_productos(self, referencia=None, codigo_barras=None, marca=None,
@@ -291,17 +277,9 @@ class Inventario:
             
             
             
-x = GestionDatos("datos.xlsx")
-y = Cajero(x)
-z = Inventario(x)
-z.crear_productos("papas",300,500,1234567890986,"motorola",4)
-z.crear_productos("camas",300,500,1234567890988,"iphone",4)
-z.crear_productos("zapato",300,500,1234567890989,"Asus",4)
-#z.modificar_producto(1234567890986,{"Marca":"kadio","Precio de adquisicion":250,"Precio de venta":450})
-print(z.modificar_producto())
-print(z.eliminar_producto())
-z.comprar_stock(1234567890986,6)
-print(z.ver_productos())
+x = Cajero()
+print(x.login("cajero", "cajero"))
+
 
 
 
