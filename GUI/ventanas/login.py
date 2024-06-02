@@ -109,8 +109,6 @@ class Login(QMainWindow):
         self.close()
 
     def openCajaWindow(self):
-        self.caja_window = QMainWindow()
-        self.ui_caja = Caja()
-        self.ui_caja.setupUi(self.caja_window)
-        self.caja_window.show()
+        self.caja = Caja()
+        self.caja.show()
         self.close()
