@@ -1,5 +1,5 @@
-from DATA import GestionDatos
-from Validaciones import *
+from API.DATA import GestionDatos
+from API.Validaciones import *
 import pandas as pd
 import datetime
 class Cajero:
@@ -178,5 +178,3 @@ class Inventario:
         else:  
             return False
 
-x = Inventario()
-x.crear_productos("pestañina", 1234567890144, "Avon", 2000, 3000, 5)

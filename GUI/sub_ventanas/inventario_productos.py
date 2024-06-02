@@ -46,9 +46,10 @@ class InventarioProductos(QMainWindow, CBackground):
             self,
         )
         self.inventario = Inventario()
+        self.gestion_datos = GestionDatos()
         self.menu_boton.clicked.connect(self.mover_menu)
-
         self.add_boton.clicked.connect(self.add_productos)
+        self.ver_actualizar_boton.clicked.connect(self.ver_productos)
         
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
@@ -137,3 +138,11 @@ class InventarioProductos(QMainWindow, CBackground):
         unidades_actuales = self.add_unidades_actuales_lineEdit.text()
         codigo_barras = self.add_codigoBarras_lineEdit.text()
         self.inventario.crear_productos(referencia,codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales)
+    
+    def ver_productos(self):
+        self.tabla_ver_productos.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            self.tabla_ver_productos.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
+        
