@@ -150,20 +150,8 @@ class Inventario:
         if not producto.empty:
             self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] ==  codigoB, "Unidades actuales"] += cantidad
             self.gestion_datos.guardar_dataframes()
-    
-    def ver_clientes(self):
-        x = self.gestion_datos.Clientes
-        return x
-
-x = Inventario()
-print(x.crear_productos("pestañina", 2000, 3000, 1234567890123, "avon", 5))
-
-
-
-
-
-
-
-
-
-
+            
+            
+            
+    #x = Cajero()
+#print(x.login("cajero", "cajero"))
