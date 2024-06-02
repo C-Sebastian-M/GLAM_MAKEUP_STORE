@@ -80,6 +80,9 @@ class GestionServicios(QMainWindow, CBackground):
         self.tabla_verServicios.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
+        self.tableWidget_eliminarServicio.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
         # self.setupValidatorsId()
         # self.setupValidatorsPrecio()
 
