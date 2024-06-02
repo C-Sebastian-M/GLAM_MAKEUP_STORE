@@ -83,7 +83,7 @@ QPushButton:pressed {
 QLabel {
 	background-color:  rgb(235, 188, 220);
     font: 87 14pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
+    color: black; /* Color de texto rgb(220, 132, 188) */
 }</string>
          </property>
          <property name="frameShape">
@@ -433,7 +433,7 @@ QTableWidget::item:alternate {
 }
 
 QTableWidget::item:!selected {
-    background-color: #ebbcdc;
+    background-color: transparent;
 }
 
 QTableWidget::item:selected {
@@ -760,6 +760,10 @@ QTableWidget::item:selected {
                    </property>
                    <property name="text">
                     <string>MOSTRAR</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../recursos/images/eye-outline.png</normaloff>../../recursos/images/eye-outline.png</iconset>
                    </property>
                   </widget>
                  </item>

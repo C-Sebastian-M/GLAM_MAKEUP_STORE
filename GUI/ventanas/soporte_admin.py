@@ -1,5 +1,5 @@
 from typing import List
-from PyQt5 import uic, QtWidgets
+from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QPushButton
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
@@ -51,19 +51,15 @@ class AdminSoporteManager(QMainWindow):
         self.ventana_login = ventana_login
         if not user_role:
             raise TypeError("El rol de usuario no puede estar vacio.")
-
-
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
         self.setWindowTitle("GLAM MAKEUP STORE")
-
         self.stack = []  # Guarda las ventanas anteriores
-
         self.widgets_stack = QStackedWidget(self)
         ########################### Inicializando ventanas de reporte ###########################
         self.admin_soporte = AdminSoporte(user_role)
         self.reportePanel = ReportePanel()
         self.inventarioPanel = InventarioPanel()
-
         self.ventas = Ventas(
             "Ventas", ["id", "cantidad", "cliente", "productos", "box_id"]
         )
@@ -73,7 +69,6 @@ class AdminSoporteManager(QMainWindow):
         self.inventarioProductos = Inventario(
             "Inventario", ["id", "bbm", "cod", "stock", "size"]
         )
-
         self.widgets_stack.addWidget(self.admin_soporte)
         self.widgets_stack.addWidget(self.reportePanel)
         self.widgets_stack.addWidget(self.inventarioPanel)
@@ -89,7 +84,7 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.gestionServiciosPanel)
         # fin
-        
+
         # Inicializando ventana de Inventario de productos
         self.principalInventarioProductosPanel = InventarioProductos()
         self.widgets_stack.addWidget(self.principalInventarioProductosPanel)
@@ -125,11 +120,11 @@ class AdminSoporteManager(QMainWindow):
         )  # Conexión a ventanas Gestión Clientes
         self.admin_soporte.catalogoBtn.clicked.connect(
             self.ventana_gestionServicios
-        ) # Conexión a ventanas Gestión servicios
+        )  # Conexión a ventanas Gestión servicios
         self.admin_soporte.inventarioBtn.clicked.connect(
             self.ventana_principalInventarioProductos
-        ) # Conexión a ventanas Inventario de productos
-        
+        )  # Conexión a ventanas Inventario de productos
+
         # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
 
@@ -155,10 +150,10 @@ class AdminSoporteManager(QMainWindow):
 
         # Panel de gestion cliente
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
-        
+
         # Panel de gestion servicios
         self.gestionServiciosPanel.atrasBtn.clicked.connect(self.anterior)
-        
+
         # Panel de inventario de productos
         self.principalInventarioProductosPanel.atrasBtn.clicked.connect(self.anterior)
 
@@ -197,11 +192,11 @@ class AdminSoporteManager(QMainWindow):
             "background-color: #FFFFFF;"
         )
 
-    #Gestion clientes 
+    # Gestion clientes
     def ventana_gestionClientes(self):
         self.widgets_stack.setCurrentWidget(self.gestionPanel)
         self.stack.append(self.admin_soporte)
-    
+
     def ventana_gestionServicios(self):
         self.widgets_stack.setCurrentWidget(self.gestionServiciosPanel)
         self.stack.append(self.admin_soporte)

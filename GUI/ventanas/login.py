@@ -36,8 +36,6 @@ class Login(QMainWindow):
     def limpiarCampo(self):
         self.lineEdit_user.setText("")
         self.lineEdit_password.setText("")
-        self.lineEdit_user.setPlaceholderText("USUARIO")
-        self.lineEdit_password.setPlaceholderText("CONTRASEÑA")
 
     def checkFields(self):
         username = self.lineEdit_user.text()

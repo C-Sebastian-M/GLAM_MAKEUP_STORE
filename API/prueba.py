@@ -278,4 +278,3 @@ class Inventario:
             
             
 x = Cajero()
-print(x.login("cajero", "cajero"))
