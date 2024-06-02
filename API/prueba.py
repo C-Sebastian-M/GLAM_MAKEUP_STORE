@@ -154,19 +154,7 @@ class Inventario:
         if not producto.empty:
             self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] ==  codigoB, "Unidades actuales"] += cantidad
             self.gestion_datos.guardar_dataframes()
-    
-    def ver_clientes(self):
-        x = self.gestion_datos.Clientes
-        return x
-
-
-
-
-
-
-
-
-
-
-
-
+            
+            
+            
+x = Cajero()
