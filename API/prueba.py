@@ -84,13 +84,9 @@ class Cajero:
                 return False
       
 class Inventario:
-    def __init__(self, gestion_datos):
-        self.gestion_datos = gestion_datos
+    def __init__(self):
+        self.gestion_datos = GestionDatos()
     
-    def ver_productos(self):
-        return self.gestion_datos.productos
-        
-
     def crear_productos(self, referencia, precioA, precioV, codigoB, marca, stock):
         if validacion_Referencia(referencia) and validacion_Precio(precioA) and validacion_Precio(precioV) and validacion_Codigo_Barras(codigoB) and validacion_Marca(marca) and validacion_Stock(stock):
             if not codigoB in self.gestion_datos.productos["Codigo de barras"].values:
@@ -98,7 +94,7 @@ class Inventario:
                 return True
             return False
         return False
-    
+
 #    def modificar_producto(self,codigoB,nuevos_datos):
 #        x = GestionDatos("datos.xlsx")
 #        producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]==codigoB]
@@ -159,7 +155,8 @@ class Inventario:
         x = self.gestion_datos.Clientes
         return x
 
-
+x = Inventario()
+print(x.crear_productos("pestañina", 2000, 3000, 1234567890123, "avon", 5))
 
 
 

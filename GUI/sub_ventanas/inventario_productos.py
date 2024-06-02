@@ -2,6 +2,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve
 from PyQt5 import QtCore, QtWidgets, QtGui
+from API.DATA import GestionDatos
 
 class InventarioProductos(QMainWindow):
     def __init__(self):
@@ -10,6 +11,7 @@ class InventarioProductos(QMainWindow):
             r"GUI\sub_ventanas\ui\inventario_productos\inventario_productos.ui",
             self,
         )
+        self.gestion_datos = GestionDatos()
         
         self.menu_boton.clicked.connect(self.mover_menu)
         
@@ -47,3 +49,11 @@ class InventarioProductos(QMainWindow):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
+            
+    def ver_productos_pagina(self):
+        self.tabla_verProductos.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            self.tabla_verProductos.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_verProductos.setItem(i, j, QTableWidgetItem(str(value)))
+                

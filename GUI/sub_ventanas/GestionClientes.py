@@ -148,6 +148,7 @@ class GestionClientes(QMainWindow, CBackground):
             validar_Cedula(cedula)
             and validacion_Telefono(telefono)
             and validar_NombreCom(nombre)
+            and cedula not in self.gestion_datos.clientes["Cedula"].values
         ):
             self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
             self.mostrar_clientes()
@@ -183,6 +184,7 @@ class GestionClientes(QMainWindow, CBackground):
             self.mostrar_clientes()  # Actualizar la tabla de clientes
         else:
             return False
+        
 
     def eliminar_cliente(self):
         cedula = self.lineEdit_buscarEliminar.text()
