@@ -49,11 +49,5 @@ class InventarioProductos(QMainWindow):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
-            
-    def ver_productos_pagina(self):
-        self.tabla_verProductos.setRowCount(0)
-        for i, row in self.gestion_datos.productos.iterrows():
-            self.tabla_verProductos.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tabla_verProductos.setItem(i, j, QTableWidgetItem(str(value)))
+
                 
