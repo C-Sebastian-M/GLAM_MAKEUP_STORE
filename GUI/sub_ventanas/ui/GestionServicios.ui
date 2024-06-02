@@ -10,20 +10,8 @@
     <height>600</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>800</width>
-    <height>600</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>800</width>
-    <height>600</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Gestión Clientes</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -45,7 +33,7 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(235, 188, 220);</string>
+       <string notr="true">/*background-color: rgb(235, 188, 220);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -70,7 +58,9 @@
          </property>
          <property name="styleSheet">
           <string notr="true">QFrame{
-background-color: rgb(235, 188, 220);
+/*background-color: rgb(235, 188, 220);*/
+background-color: transparent;
+
 }
 
 QPushButton {
@@ -138,7 +128,7 @@ QPushButton:pressed {
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../recursos/images/barra-de-menus.png</normaloff>../../../recursos/images/barra-de-menus.png</iconset>
+              <normaloff>../../recursos/images/barra-de-menus.png</normaloff>../../recursos/images/barra-de-menus.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -163,8 +153,11 @@ QPushButton:pressed {
           </item>
           <item>
            <widget class="QLabel" name="label_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: transparent;</string>
+            </property>
             <property name="text">
-             <string>GESTIÓN DE CLIENTES</string>
+             <string>GESTIÓN DE SERVICIOS</string>
             </property>
            </widget>
           </item>
@@ -188,7 +181,7 @@ QPushButton:pressed {
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../recursos/images/arrow-left.png</normaloff>../../../recursos/images/arrow-left.png</iconset>
+              <normaloff>../../recursos/images/arrow-left.png</normaloff>../../recursos/images/arrow-left.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -208,6 +201,9 @@ QPushButton:pressed {
            <width>200</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -232,7 +228,7 @@ QPushButton:pressed {
             </property>
             <property name="styleSheet">
              <string notr="true">QFrame{
-background-color: rgb(220, 132, 188);
+background-color:transparent;
 }
 
 QPushButton {
@@ -263,7 +259,7 @@ QPushButton:pressed {
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QPushButton" name="pushButton_verClientes">
+              <widget class="QPushButton" name="pushButton_verServicios">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -271,11 +267,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>VER CLIENTES</string>
+                <string>VER SERVICIOS</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../recursos/images/database.png</normaloff>../../../recursos/images/database.png</iconset>
+                 <normaloff>../../recursos/images/database.png</normaloff>../../recursos/images/database.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -286,7 +282,7 @@ QPushButton:pressed {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_addCliente">
+              <widget class="QPushButton" name="pushButton_addServicio">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -294,11 +290,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>AÑADIR CLIENTE</string>
+                <string>CREAR SERVICIO</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../recursos/images/account-box-plus-outline.png</normaloff>../../../recursos/images/account-box-plus-outline.png</iconset>
+                 <normaloff>../../recursos/images/account-box-plus-outline.png</normaloff>../../recursos/images/account-box-plus-outline.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -309,7 +305,7 @@ QPushButton:pressed {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_modificarCliente">
+              <widget class="QPushButton" name="pushButton_modificarServicio">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -317,11 +313,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>MODIFICAR CLIENTE</string>
+                <string>MODIFICAR SERVICIO</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../recursos/images/account-box-edit-outline.png</normaloff>../../../recursos/images/account-box-edit-outline.png</iconset>
+                 <normaloff>../../recursos/images/account-box-edit-outline.png</normaloff>../../recursos/images/account-box-edit-outline.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -332,7 +328,7 @@ QPushButton:pressed {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_eliminarCliente">
+              <widget class="QPushButton" name="pushButton_eliminarServicio">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -340,11 +336,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>ELIMINAR CLIENTE</string>
+                <string>DESCONTINUAR SERVICIO</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../recursos/images/account-box-minus-outline.png</normaloff>../../../recursos/images/account-box-minus-outline.png</iconset>
+                 <normaloff>../../recursos/images/account-box-minus-outline.png</normaloff>../../recursos/images/account-box-minus-outline.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -370,7 +366,7 @@ QFrame {
 /* Estilo para QLabel */
 QLabel {
 	background-color:  rgb(235, 188, 220);
-    font: 87 14pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
+    font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
     color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
 }
 
@@ -394,11 +390,11 @@ QLineEdit:focus {
 QPushButton {
     border: 2px solid #e4acd0;
     border-radius: 5px;
-    padding: 8px 16px;
+    padding: 8px 8px;
     background-color: #dc95c4; /* Fondo */
     color: #ffffff; /* Color del texto */
     font-family: Arial, sans-serif;
-    font-size: 16px;
+    font-size: 11px;
 }
 
 QPushButton:hover {
@@ -422,9 +418,34 @@ QHeaderView::section {
 	font-size: 12pt;
 }
 QTableWidget QTableCornerButton::section {
-	background-color: rgb(220, 132, 188) ;
-	border: 1px solid rgb(255, 255, 255);
-}</string>
+	background-color: rgb(0, 0, 0);
+	border: 1px solid rgb(0, 206, 151);
+}
+QListView {
+            background-color: #f5eef2;
+            color: #000000;
+            border: 2px solid #dc84bc;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        QListView::item {
+            background-color: #e4acd0;
+            border: 1px solid #dc84bc;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 3px;
+        }
+        QListView::item:selected {
+            background-color: #dc84bc;
+            color: #ffffff;
+        }
+        QListView::item:hover {
+            background-color: #ebbcdc;
+            color: #000000;
+        }
+        QListView::item:alternate {
+            background-color: #e4c4d4;
+        }</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -450,6 +471,9 @@ QTableWidget QTableCornerButton::section {
              </property>
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="currentIndex">
                 <number>0</number>
                </property>
@@ -458,7 +482,7 @@ QTableWidget QTableCornerButton::section {
                  <item>
                   <widget class="QLabel" name="label">
                    <property name="text">
-                    <string>CLIENTES</string>
+                    <string>SERVICIOS</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -466,12 +490,15 @@ QTableWidget QTableCornerButton::section {
                   </widget>
                  </item>
                  <item>
-                  <widget class="QTableWidget" name="tabla_verClientes">
+                  <widget class="QTableWidget" name="tabla_verServicios">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
                      <height>0</height>
                     </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: transparent;</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -493,7 +520,7 @@ QTableWidget QTableCornerButton::section {
                    </attribute>
                    <column>
                     <property name="text">
-                     <string>CÉDULA</string>
+                     <string>ID</string>
                     </property>
                     <property name="whatsThis">
                      <string/>
@@ -504,7 +531,7 @@ QTableWidget QTableCornerButton::section {
                    </column>
                    <column>
                     <property name="text">
-                     <string>NOMBRE</string>
+                     <string>SERVICIO</string>
                     </property>
                     <property name="textAlignment">
                      <set>AlignCenter</set>
@@ -512,7 +539,7 @@ QTableWidget QTableCornerButton::section {
                    </column>
                    <column>
                     <property name="text">
-                     <string>TELÉFONO</string>
+                     <string>PRECIO</string>
                     </property>
                     <property name="toolTip">
                      <string/>
@@ -553,7 +580,7 @@ QTableWidget QTableCornerButton::section {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
+                       <normaloff>../../recursos/images/reload.png</normaloff>../../recursos/images/reload.png</iconset>
                      </property>
                     </widget>
                    </item>
@@ -566,7 +593,7 @@ QTableWidget QTableCornerButton::section {
                  <item>
                   <widget class="QLabel" name="label_9">
                    <property name="text">
-                    <string>AÑADIR CLIENTE</string>
+                    <string>CREAR SERVICIO</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -596,21 +623,21 @@ QTableWidget QTableCornerButton::section {
                      <item>
                       <widget class="QLabel" name="label_2">
                        <property name="text">
-                        <string>CÉDULA</string>
+                        <string>ID</string>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <widget class="QLabel" name="label_3">
                        <property name="text">
-                        <string>NOMBRE</string>
+                        <string>SERVICIO:</string>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <widget class="QLabel" name="label_4">
                        <property name="text">
-                        <string>TELÉFONO</string>
+                        <string>PRECIO</string>
                        </property>
                       </widget>
                      </item>
@@ -622,32 +649,29 @@ QTableWidget QTableCornerButton::section {
                       <number>50</number>
                      </property>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_addCedula">
-                       <property name="text">
-                        <string/>
-                       </property>
+                      <widget class="QLineEdit" name="lineEdit_idServicio">
                        <property name="placeholderText">
-                        <string>INGRESE CÉDULA</string>
+                        <string>ID SERVICIO</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_addNombre">
+                      <widget class="QLineEdit" name="lineEdit_addServicio">
                        <property name="text">
                         <string/>
                        </property>
                        <property name="placeholderText">
-                        <string>INGRESE NOMBRE</string>
+                        <string>INGRESE NUEVO SERVICIO</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_addTelefono">
+                      <widget class="QLineEdit" name="lineEdit_addPrecio">
                        <property name="text">
                         <string/>
                        </property>
                        <property name="placeholderText">
-                        <string>INGRESE TELÉFONO</string>
+                        <string>INGRESE PRECIO SERVICIO</string>
                        </property>
                       </widget>
                      </item>
@@ -703,7 +727,7 @@ QTableWidget QTableCornerButton::section {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/account-box-plus-outline.png</normaloff>../../../recursos/images/account-box-plus-outline.png</iconset>
+                       <normaloff>../../recursos/images/account-box-plus-outline.png</normaloff>../../recursos/images/account-box-plus-outline.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
@@ -722,7 +746,7 @@ QTableWidget QTableCornerButton::section {
                  <item>
                   <widget class="QLabel" name="label_13">
                    <property name="text">
-                    <string>MODIFICAR CLIENTE</string>
+                    <string>MODIFICAR SERVICIO</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -730,179 +754,206 @@ QTableWidget QTableCornerButton::section {
                   </widget>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_3">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_9">
                    <item>
                     <widget class="QLabel" name="label_11">
                      <property name="text">
-                      <string>CLIENTE:</string>
+                      <string>SERVICIO:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_buscarModificar">
-                     <property name="placeholderText">
-                      <string>INGRESE PARAMETRO</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_buscarModificar">
-                     <property name="text">
-                      <string>BUSCAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../../recursos/images/account-search-outline.png</normaloff>../../../recursos/images/account-search-outline.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>38</width>
-                       <height>29</height>
-                      </size>
-                     </property>
-                    </widget>
+                    <widget class="QListWidget" name="listWidget_Servicios"/>
                    </item>
                   </layout>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                  <widget class="QFrame" name="frame_formulario">
+                   <property name="styleSheet">
+                    <string notr="true">/* styles.css */
+
+/* Estilo para QFrame */
+QFrame {
+    background-color: rgb(235, 188, 220);
+}
+
+/* Estilo para QLabel */
+QLabel {
+	background-color:  rgb(235, 188, 220);
+    font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
+    color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
+}
+
+/* Estilo para QLineEdit */
+QLineEdit {
+    border: 2px solid #e4acd0; /* Borde */
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f5eef2; /* Fondo */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(255, 255, 255);
+}
+QLineEdit:focus {
+    border: 2px solid #dc84bc; /* Borde al enfocar */
+}
+
+QPushButton {
+    border: 2px solid #e4acd0;
+    border-radius: 5px;
+    padding: 8px 8px;
+    background-color: #dc95c4; /* Fondo */
+    color: #ffffff; /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+QPushButton:hover {
+    background-color: #dc84bc; /* Fondo al pasar el cursor */
+}
+
+QPushButton:pressed {
+    background-color: #d484b4; /* Fondo al presionar */
+}
+
+QTableWidget {
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+	gridline-color: #dc84bc;
+	font-size: 12pt;
+	color: #000000;
+}
+QHeaderView::section {
+	background-color: #dc84bc;
+	border: 1px solid rgb(0, 0, 0);
+	font-size: 12pt;
+}
+QTableWidget QTableCornerButton::section {
+	background-color: rgb(0, 0, 0);
+	border: 1px solid rgb(0, 206, 151);
+}
+QListView {
+            background-color: #f5eef2;
+            color: #000000;
+            border: 2px solid #dc84bc;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        QListView::item {
+            background-color: #e4acd0;
+            border: 1px solid #dc84bc;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 3px;
+        }
+        QListView::item:selected {
+            background-color: #dc84bc;
+            color: #ffffff;
+        }
+        QListView::item:hover {
+            background-color: #ebbcdc;
+            color: #000000;
+        }
+        QListView::item:alternate {
+            background-color: #e4c4d4;
+        }</string>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_7">
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_11">
-                     <property name="spacing">
-                      <number>40</number>
-                     </property>
-                     <item>
-                      <widget class="QLabel" name="label_12">
-                       <property name="text">
-                        <string>CÉDULA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_14">
-                       <property name="text">
-                        <string>NOMBRE</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_15">
-                       <property name="text">
-                        <string>TELÉFONO</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_10">
-                     <property name="spacing">
-                      <number>40</number>
-                     </property>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_nuevaCedula">
-                       <property name="placeholderText">
-                        <string>NUEVA CÉDULA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_nuevoNombre">
-                       <property name="placeholderText">
-                        <string>NUEVO NOMBRE</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_nuevoTelefono">
-                       <property name="placeholderText">
-                        <string>NUEVO TELÉFONO</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_8">
-                   <item>
-                    <widget class="QLabel" name="aviso_modificar">
-                     <property name="minimumSize">
-                      <size>
-                       <width>200</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_6">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_guardarInfo">
-                     <property name="text">
-                      <string>GUARDAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../../recursos/images/content-save-all.png</normaloff>../../../recursos/images/content-save-all.png</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                   <layout class="QVBoxLayout" name="verticalLayout_10">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_4">
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_11">
+                        <property name="spacing">
+                         <number>20</number>
+                        </property>
+                        <item>
+                         <widget class="QLabel" name="label_14">
+                          <property name="text">
+                           <string>SERVICIO</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_15">
+                          <property name="text">
+                           <string>PRECIO</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_6">
+                        <item>
+                         <widget class="QLineEdit" name="lineEdit_nuevoServicio">
+                          <property name="placeholderText">
+                           <string>NUEVO SERVICIO</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLineEdit" name="lineEdit_nuevoPrecio">
+                          <property name="placeholderText">
+                           <string>NUEVO PRECIO</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_8">
+                      <item>
+                       <widget class="QLabel" name="aviso_modificar">
+                        <property name="minimumSize">
+                         <size>
+                          <width>200</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_6">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="pushButton_guardarInfo">
+                        <property name="text">
+                         <string>GUARDAR</string>
+                        </property>
+                        <property name="icon">
+                         <iconset>
+                          <normaloff>../../recursos/images/content-save-all.png</normaloff>../../recursos/images/content-save-all.png</iconset>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -911,7 +962,7 @@ QTableWidget QTableCornerButton::section {
                  <item>
                   <widget class="QLabel" name="label_17">
                    <property name="text">
-                    <string>ELIMINAR CLIENTE</string>
+                    <string>DESCONTINUAR SERVICIO</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -919,24 +970,11 @@ QTableWidget QTableCornerButton::section {
                   </widget>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
                     <widget class="QLabel" name="label_18">
                      <property name="text">
-                      <string>CLIENTE:</string>
+                      <string>ID SERVICIO: </string>
                      </property>
                     </widget>
                    </item>
@@ -950,17 +988,7 @@ QTableWidget QTableCornerButton::section {
                   </layout>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
+                  <widget class="QTableWidget" name="tableWidget"/>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -997,7 +1025,7 @@ QTableWidget QTableCornerButton::section {
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/delete-outline.png</normaloff>../../../recursos/images/delete-outline.png</iconset>
+                       <normaloff>../../recursos/images/delete-outline.png</normaloff>../../recursos/images/delete-outline.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
