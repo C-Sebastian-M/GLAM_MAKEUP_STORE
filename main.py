@@ -6,7 +6,7 @@ class Main:
     def __init__(self):
         self.app = QApplication(sys.argv)
         self.login_window = Login(self.app)
-    
+
     def run(self):
         self.login_window.show()
         sys.exit(self.app.exec_())
