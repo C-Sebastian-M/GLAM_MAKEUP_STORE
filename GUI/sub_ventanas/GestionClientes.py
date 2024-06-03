@@ -56,9 +56,6 @@ class GestionClientes(QMainWindow, CBackground):
             self,
         )
         self.gestion_datos = GestionDatos()
-        self.mostrar_clientes()
-        self.mostrar_clientesEliminar()
-        self.mostrar_clientesModificar()
         self.pushButton_menu.clicked.connect(self.mover_menu)
         # Botones
         self.pushButton_actualizar.clicked.connect(self.mostrar_clientes)
@@ -105,7 +102,7 @@ class GestionClientes(QMainWindow, CBackground):
         self.setupValidatorsCedula()
         self.setupValidatorsTelefono()
         self.frame_formulario.hide()
-        df = pd.read_excel("registros.xlsx")
+        df = pd.read_excel("registros.xlsx", sheet_name="Clientes")
         cedulas = df["Cedula"].astype(str).tolist()
         self.modelo_datos = QStringListModel(cedulas)
         self.completer = QCompleter(self.modelo_datos, self)
@@ -115,7 +112,9 @@ class GestionClientes(QMainWindow, CBackground):
         )  # Coincidir con cualquier parte del texto
         self.completer.setCompletionMode(QCompleter.PopupCompletion)
         self.completer.setPopup(self.listView_buscar)
+        self.completer.setPopup(self.listView_eliminar)
         self.lineEdit_modificar.setCompleter(self.completer)
+        self.lineEdit_buscarEliminar.setCompleter(self.completer)
 
     def setupValidatorsCedula(self):
         validacion_numero = QtGui.QRegularExpressionValidator(
@@ -195,6 +194,7 @@ class GestionClientes(QMainWindow, CBackground):
             self.show_success_dialog("Cliente registrado con éxito.")
             self.aviso_add.setText("Cliente registrado con éxito.")
             self.limpiar_campos()
+            self.frame_formulario.hide()
         else:
             self.showErrorMessage(
                 "Error en los datos ingresados. Por favor, verifica la información."
@@ -218,41 +218,57 @@ class GestionClientes(QMainWindow, CBackground):
         msg_box.exec_()
 
     def validar_existencia(self):
-        # Los campos para validar son:    
-        cedulaBuscarCliente = self.lineEdit_modificar.text()
-        if cedulaBuscarCliente in self.gestion_datos.clientes["Cedula"].values or int(cedulaBuscarCliente) in self.gestion_datos.clientes["Cedula"]:
-            return True
+        # Los campos para validar son:
+        if self.lineEdit_modificar.text():
+            cedulaBuscarCliente = self.lineEdit_modificar.text()
+            if (
+                cedulaBuscarCliente in self.gestion_datos.clientes["Cedula"].values
+                or int(cedulaBuscarCliente) in self.gestion_datos.clientes["Cedula"]
+            ):
+                return True
+            else:
+                return False
         else:
-            return False
-    
+            self.aviso_modificar.setText("Campo Vacio. Por favor ingrese la información correspondiente.")
+
     def mostar_formulario(self, cedula):
-        cedula= self.validar_existencia()
+        cedula = self.validar_existencia()
         if cedula:
             self.frame_formulario.show()
         else:
             self.showErrorMessage(
                 "Error en los datos ingresados. Por favor, verifica la información."
             )
-    
+            self.aviso_modificar.setText("Error en los datos ingresados. Por favor, verifica la información.")
+
     def modificar_cliente(self):
-        cedulaBuscarCliente = self.lineEdit_modificar.text()
         nuevaCedula = self.lineEdit_nuevaCedula.text()
         nuevoNombre = self.lineEdit_nuevoNombre.text()
         nuevoTelefono = self.lineEdit_nuevoTelefono.text()
-        if validar_NombreCom(nuevoNombre) and validacion_Telefono(nuevoTelefono) and validar_Cedula(nuevaCedula):
+        if (
+            validar_NombreCom(nuevoNombre)
+            and validacion_Telefono(nuevoTelefono)
+            and validar_Cedula(nuevaCedula)
+        ):
             nuevos_datos = {
                 "Nombre": nuevoNombre,
                 "Telefono": nuevoTelefono,
-                "Cedula": nuevaCedula}
+                "Cedula": nuevaCedula,
+            }
             self.gestion_datos.actualizar_cliente(cedulaBuscarCliente, nuevos_datos)
             self.mostrar_clientes()  # Actualizar la tabla de clientes
+            self.show_success_dialog("Cliente modificado correctamente")
+            self.aviso_modificar.setText("Cliente modificado correctamente")
+            self.frame_formulario.hide()
         else:
             return False
 
     def eliminar_cliente(self):
         cedula = self.lineEdit_buscarEliminar.text()
         eliminado = self.gestion_datos.eliminar_clientes(cedula)
-        if eliminado:                                             #No elimina nada, solo añadí el if para usar los valores de retorno del metodo y mostrar las ventanas emergentes
+        if (
+            eliminado
+        ):  # No elimina nada, solo añadí el if para usar los valores de retorno del metodo y mostrar las ventanas emergentes
             self.mostrar_clientes()
             self.show_success_dialog("Cliente eliminado correctamente")
             self.aviso_eliminar.setText("Cliente eliminado correctamente")
@@ -264,10 +280,3 @@ class GestionClientes(QMainWindow, CBackground):
             self.aviso_eliminar.setText(
                 "Error en los datos ingresados. Por favor, verifica la información."
             )
-
-
-"""if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    add = GestionClientes()
-    add.show()  # Asegúrate de mostrar la ventana
-    sys.exit(app.exec_())"""
