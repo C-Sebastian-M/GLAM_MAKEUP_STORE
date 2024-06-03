@@ -1,7 +1,7 @@
 from API.DATA import GestionDatos
 from API.Validaciones import *
 import pandas as pd
-
+import datetime 
 
 class Cajero:
     def __init__(self):
@@ -692,3 +692,94 @@ class Inventario:
     def ver_clientes(self):
         x = self.gestion_datos.clientes
         return x
+class Reportes:
+    def filtrar_productos(self, referencia=None, codigo_barras=None, marca=None,
+                      precio_adquisicion=None, stock=None, precio_venta=None, comparacion_precio_venta=None,
+                      fecha_min=None, fecha_max=None):
+        filtered_products = self.productos.copy()
+    
+        if referencia is not None:
+            filtered_products = filtered_products[filtered_products["Referencia"] == referencia]
+        if codigo_barras is not None:
+            filtered_products = filtered_products[filtered_products["Codigo de barras"] == codigo_barras]
+        if marca is not None:
+            filtered_products = filtered_products[filtered_products["Marca"] == marca]
+        if precio_adquisicion is not None:
+            filtered_products = filtered_products[filtered_products["Precio de adquisicion"] == precio_adquisicion]
+        if stock is not None:
+            filtered_products = filtered_products[filtered_products["Unidades actuales"] == stock]
+        if precio_venta is not None and comparacion_precio_venta is not None:
+            if comparacion_precio_venta == "menor":
+                filtered_products = filtered_products[filtered_products["Precio venta"] < precio_venta]
+            elif comparacion_precio_venta == "mayor":
+                filtered_products = filtered_products[filtered_products["Precio venta"] > precio_venta]
+            elif comparacion_precio_venta == "igual":
+                filtered_products = filtered_products[filtered_products["Precio venta"] == precio_venta]
+            else:
+                print("Error: Comparación de precio de venta no válida.")
+        if fecha_min is not None:
+            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
+            filtered_products = filtered_products[filtered_products["Fecha"] >= fecha_min]
+        if fecha_max is not None:
+            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
+            filtered_products = filtered_products[filtered_products["Fecha"] <= fecha_max]
+    
+        return filtered_products
+    
+    def filtrar_servicios(self, nombre=None, id_servicio=None, precio=None, comparacion_precio=None,
+                     fecha_min=None, fecha_max=None):
+        filtered_services = self.servicios.copy()
+    
+        if nombre is not None:
+            filtered_services = filtered_services[filtered_services["Nombre Servicio"] == nombre]
+        if id_servicio is not None:
+            filtered_services = filtered_services[filtered_services["ID servicio"] == id_servicio]
+        if precio is not None and comparacion_precio is not None:
+            if comparacion_precio == "menor":
+                filtered_services = filtered_services[filtered_services["Costo"] < precio]
+            elif comparacion_precio == "mayor":
+                filtered_services = filtered_services[filtered_services["Costo"] > precio]
+            elif comparacion_precio == "igual":
+                filtered_services = filtered_services[filtered_services["Costo"] == precio]
+            else:
+                print("Error: Comparación de precio no válida.")
+        if fecha_min is not None:
+            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
+            filtered_services = filtered_services[filtered_services["Fecha"] >= fecha_min]
+        if fecha_max is not None:
+            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
+            filtered_services = filtered_services[filtered_services["Fecha"] <= fecha_max]
+    
+        return filtered_services
+                         
+    def filtrar_ventas(self, id_venta=None, cantidad=None, cliente=None, subtotal=None, comparacion_subtotal=None,
+                   producto_o_servicio=None, fecha_min=None, fecha_max=None, id_caja=None):
+        filtered_sales = pd.concat([self.venta_productos, self.venta_servicios], ignore_index=True)
+
+        if id_venta is not None:
+            filtered_sales = filtered_sales[filtered_sales["ID venta"] == id_venta]
+        if cantidad is not None:
+            filtered_sales = filtered_sales[filtered_sales["Cantidad"] == cantidad]
+        if cliente is not None:
+            filtered_sales = filtered_sales[filtered_sales["Cliente"] == cliente]
+        if subtotal is not None and comparacion_subtotal is not None:
+            if comparacion_subtotal == "menor":
+                filtered_sales = filtered_sales[filtered_sales["Subtotal"] < subtotal]
+            elif comparacion_subtotal == "mayor":
+                filtered_sales = filtered_sales[filtered_sales["Subtotal"] > subtotal]
+            elif comparacion_subtotal == "igual":
+                filtered_sales = filtered_sales[filtered_sales["Subtotal"] == subtotal]
+            else:
+                print("Error: Comparación de subtotal no válida.")
+        if producto_o_servicio is not None:
+            filtered_sales = filtered_sales[filtered_sales["Producto" if "producto" in producto_o_servicio.lower() else "Servicio"] == producto_o_servicio]
+        if fecha_min is not None:
+            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
+            filtered_sales = filtered_sales[filtered_sales["Fecha"] >= fecha_min]
+        if fecha_max is not None:
+            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
+            filtered_sales = filtered_sales[filtered_sales["Fecha"] <= fecha_max]
+        if id_caja is not None:
+            filtered_sales = filtered_sales[filtered_sales["ID_Caja"] == id_caja]
+
+        return filtered_sales
