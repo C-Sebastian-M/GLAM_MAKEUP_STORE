@@ -10,6 +10,7 @@ from PyQt5.QtGui import (
 import sys
 from API.prueba import Cajero
 from API.Validaciones import *
+from API.DATA import GestionDatos
 
 
 class CBackground:
@@ -60,7 +61,7 @@ class ControlNavegacion:
 class Menu(CBackground, QMainWindow):
     def __init__(self, control_navegacion):
         super().__init__()
-        loadUi(r"GUI\ui\PruebaMenu.ui", self,)
+        loadUi(r"GUI\ui\PruebaMenu.ui", self)
         self.control_navegacion=control_navegacion
         self.MenuButton.clicked.connect(self.CajaWin)
         self.ReportButton.clicked.connect(self.repWin)
@@ -74,11 +75,12 @@ class Menu(CBackground, QMainWindow):
 class Caja(QMainWindow):
     def __init__(self, control_navegacion):
         super().__init__()
-        loadUi(r"GUI\ui\Caja.ui", self,)
+        loadUi(r"GUI\ui\Caja.ui", self)
         self.control_navegacion = control_navegacion
         self.Atras.clicked.connect(self.backMenu)
         self.cajero = Cajero()
-
+        self.gestion_datos = GestionDatos()
+        self.cedulaCliente = None
         #self.setWindowFlag(QtCore.Qt.FramelessWindowHint) #borrar los botones externos de la pagina original
         self.BotonCliente.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Clientes_2))
         self.BotonProductos.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Productos_3))
@@ -86,7 +88,7 @@ class Caja(QMainWindow):
         self.BotonPago.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Pago_4))
         self.BotonCarrito.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Carrito_4))
 
-        #definir funciones botones pagina Clientes
+##////////FUNCIONES CLIENTES/////////##
         self.ChangeCli.clicked.connect(self.clickchange)
         self.ConfirmarNew.clicked.connect(self.CheckNewClient)
         self.ConfirmarAnt.clicked.connect(self.creado)
@@ -103,7 +105,86 @@ class Caja(QMainWindow):
         self.ConfirmarNew.hide()
         self.ConfirmarAnt.hide()
         self.ChangeCli.hide()
-##////////FUNCIONES CLIENTES/////////##
+
+####//////////////////FUNCION BOTONES PRODUCTOS/////////////###
+        self.ConfirmarPro.clicked.connect(self.confirmPro)
+        self.EditarPro.clicked.connect(self.changePro)
+        self.EditarPro.hide()
+###///////////////FUNCION BOTONES SERVICIOS/////////////////###
+        self.ConfirmarServicios.clicked.connect(self.confirmServ)
+        self.EditarServ.clicked.connect(self.changeServ)
+        self.Reserva.clicked.connect(self.date)
+        self.Fast.clicked.connect(self.nodate)
+        self.Fecha.hide()
+        self.EditarServ.hide()
+###////////////////////FUNCION METODO DE PAGO//////////////###
+        self.ConfirmarPago.clicked.connect(self.confirmPay)
+        self.CambiarPago.clicked.connect(self.changePay)
+        self.CambiarPago.hide()
+    
+    def confirmPay(self):
+        #espacio para almacenar el dato
+        self.MetodosPago.hide()
+        self.ConfirmarPago.hide()
+        self.CambiarPago.show()
+
+    def changePay(self):
+        #espacio para borrar el dato
+        self.MetodosPago.show()
+        self.ConfirmarPago.show()
+        self.CambiarPago.hide()
+    
+    def nodate(self):
+        self.Fecha.hide()
+
+    def date(self):
+        self.Fecha.show()
+
+    def confirmServ(self):
+        #espacio para almacenar los datos
+        self.TablaServicios.hide()
+        self.LabelServ.hide()
+        self.StockServicios.hide()
+        self.TotalServicios.hide()
+        self.viewtotal.hide()
+        self.Fast.hide()
+        self.Reserva.hide()
+        self.Fecha.hide()
+        self.ConfirmarServicios.hide()
+        self.EditarServ.show()
+
+    def changeServ(self):
+        #espacio para borrar los datos
+        self.TablaServicios.show()
+        self.LabelServ.show()
+        self.StockServicios.show()
+        self.TotalServicios.show()
+        self.viewtotal.show()
+        self.Fast.show()
+        self.Reserva.show()
+        self.Fecha.hide()
+        self.ConfirmarServicios.show()
+        self.EditarServ.hide()
+        
+    def confirmPro(self):
+        #espacio para añadir los productos
+        self.TablaProductos.hide()
+        self.LabelProductos.hide()
+        self.StockProductos.hide()
+        self.TotalPro.hide()
+        self.ListaTotal.hide()
+        self.ConfirmarPro.hide()
+        self.EditarPro.show()
+    
+    def changePro(self):
+        #espacio para borarr los productos
+        self.TablaProductos.show()
+        self.LabelProductos.show()
+        self.StockProductos.show()
+        self.TotalPro.show()
+        self.ListaTotal.show()
+        self.ConfirmarPro.show()
+        self.EditarPro.hide()
 
     def clickchange(self):
         self.Seleccionar.show()
@@ -111,6 +192,7 @@ class Caja(QMainWindow):
         self.ChangeCli.hide()
 
     def selCli(self):
+        self.mostrar_clientes()
         self.TablaCedulas.show()
         self.IngCedula.show()
         self.Cedula_2.hide()
@@ -161,17 +243,13 @@ class Caja(QMainWindow):
             self.ConfirmarNew.hide()
             self.ConfirmarAnt.hide()
             self.ChangeCli.show()
+            self.cedulaCliente = cedula
         else:
             msg_box.setText("Cliente Incorrecto")
             msg_box.exec_()
 
     def backMenu(self):
         self.control_navegacion.mostrar_ventana("menu")
-
-        #definir funciones para validar la informacion
-    def ingresar_lista_cedulas(self):
-        for cedula, nombre in self.lista:
-            self.Clientes.addItem(cedula, nombre)
 
         #definir funciones layout pagina sevicios
         self.dateEdit.hide()
@@ -184,16 +262,32 @@ class Caja(QMainWindow):
     def hidedate(self):
         self.dateEdit.hide()
 
-    
-    
     def creado(self):
-        pass
+        cedula = self.IngCedula.text()
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle("Validación")
+        if validar_Cedula(cedula):
+            if cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
+                self.cedulaCliente = cedula
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box.setText("Cliente encontrado en la lista")
+        else:
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.setText("Cliente no encontrado")
+            
+    def mostrar_clientes(self):
+        self.TablaCedulas.setRowCount(0)
+        for i, row in self.gestion_datos.clientes.iterrows():
+            self.TablaCedulas.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaCedulas.setItem(i, j, QTableWidgetItem(str(value)))
 
 
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
         super().__init__()
-        loadUi(r"GUI\ui\ReporteDiario.ui", self,)
+        loadUi(r"GUI\ui\ReporteDiario.ui", self)
         self.control_navegacion=control_navegacion
         self.Reporte_2.clicked.connect(self.Backmenu)
         self.Reporte.clicked.connect(self.VistaPre)
