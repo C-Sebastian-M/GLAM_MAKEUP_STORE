@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>788</width>
-    <height>648</height>
+    <width>1076</width>
+    <height>897</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -368,7 +368,7 @@ QFrame {
 QLabel {
 	background-color:  transparent;
     font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
+    color: rgb(0, 0, 0); /* Color de texto rgb(220, 132, 188) */
 }
 
 /* Estilo para QLineEdit */
@@ -414,11 +414,13 @@ QTableWidget {
     background-color: #f5eef2;
     gridline-color: #dc84bc;
     font-size: 14px;
+	border: 2px solid black;
+     border-radius: 5px;
 }
 
 QHeaderView::section {
     background-color: #dc84bc;
-    color: #ffffff;
+    color: black;
     padding: 5px;
     border: 1px solid #dc84bc;
 }

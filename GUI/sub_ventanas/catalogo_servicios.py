@@ -208,24 +208,24 @@ class GestionServicios(QMainWindow, CBackground):
         msg_box.setWindowTitle("Éxito")
         msg_box.exec_()
 
-    # def registrar_servicio(self):
-    #    id_servicio = self.lineEdit_addId.text()
-    #   nombre = self.lineEdit_addNombre.text()
-    #    precio = self.lineEdit_addPrecio.text()
-    #    if (
-    #        validar_Id(id_servicio)
-    #        and validar_Precio(precio)
-    #        and validar_NombreCom(nombre)
-    #    ):
-    #        self.gestion_datos.agregar_servicio(id_servicio, nombre, precio)
-    #        self.mostrar_servicios()
-    #        self.label_aviso.setText("Servicio registrado con éxito")
-    #        self.show_success_dialog("Servicio registrado con éxito.")
-    #        self.limpiar_campos()
-    #    else:
-    #        self.showErrorMessage(
-    #            "Error en los datos ingresados. Por favor, verifica la información."
-    #        )
+    #def registrar_servicio(self):
+    #  id_servicio = self.lineEdit_addId.text()
+    #  nombre = self.lineEdit_addNombre.text()
+    #   precio = self.lineEdit_addPrecio.text()
+    #   if (
+    #       validar_Id(id_servicio)
+    #       and validar_Precio(precio)
+    #       and validar_NombreCom(nombre)
+    #   ):
+    #       self.gestion_datos.agregar_servicio(id_servicio, nombre, precio)
+    #       self.mostrar_servicios()
+    #       self.label_aviso.setText("Servicio registrado con éxito")
+    #       self.show_success_dialog("Servicio registrado con éxito.")
+    #       self.limpiar_campos()
+    #   else:
+    #       self.showErrorMessage(
+    #           "Error en los datos ingresados. Por favor, verifica la información."
+    #       )
 
     def validar_existencia(self):
         # Los campos para validar son:
@@ -254,7 +254,7 @@ class GestionServicios(QMainWindow, CBackground):
             )
 
     def modificar_servicio(self):
-        id_servicio = self.lineEdit_.text()
+        id_servicio = int(self.lineEdit_.text())
         nuevos_datos = {
             "Nombre Servicio": self.lineEdit_nuevoServicio.text(),
             "Costo": self.lineEdit_nuevoPrecio.text(),
