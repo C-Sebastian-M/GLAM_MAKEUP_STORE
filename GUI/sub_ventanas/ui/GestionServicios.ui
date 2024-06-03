@@ -499,7 +499,7 @@ QComboBox::down-arrow:hover {
                 <string notr="true"/>
                </property>
                <property name="currentIndex">
-                <number>3</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="pagina_consulta">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -528,10 +528,10 @@ QComboBox::down-arrow:hover {
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderDefaultSectionSize">
                     <number>207</number>

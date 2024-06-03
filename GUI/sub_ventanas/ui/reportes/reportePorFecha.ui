@@ -75,20 +75,43 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QCalendarWidget" name="calendarPorFecha">
+      <widget class="QCalendarWidget" name="calendarioPorFecha">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
+       </property>
+       <property name="gridVisible">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QWidget" name="datosContenedor" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <widget class="QLabel" name="desdeLabel">
         <property name="enabled">
          <bool>true</bool>
@@ -100,6 +123,13 @@
           <width>71</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>10</pointsize>
+          <italic>false</italic>
+         </font>
         </property>
         <property name="text">
          <string>Desde
@@ -115,6 +145,11 @@
           <height>31</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Hasta
 </string>
@@ -128,6 +163,12 @@
           <width>91</width>
           <height>22</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>10</pointsize>
+         </font>
         </property>
         <item>
          <property name="text">

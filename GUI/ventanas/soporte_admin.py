@@ -21,6 +21,9 @@ from GUI.sub_ventanas.catalogo_servicios import GestionServicios
 import os
 import json
 
+import API.DATA as GD
+GD = GD.GestionDatos()
+
 
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
@@ -64,13 +67,13 @@ class AdminSoporteManager(QMainWindow):
         self.reportePanel = ReportePanel()
         # self.inventarioPanel = InventarioPanel()
         self.ventas = Ventas(
-            "Ventas", ["id", "cantidad", "cliente", "productos", "box_id"]
+            "Ventas", GD.columnas_venta_productos
         )
         self.inventarioProductos = Inventario(
-            "Inventario", ["id", "bbm", "cod", "stock", "size"]
+            "Inventario", GD.columnas_productos
         )
         self.inventarioServicios = Inventario(
-            "Inventario", ["referencia", "marca", "codigo", "stock", "precio venta"]
+            "Inventario", GD.columnas_servicios
         )
         self.widgets_stack.addWidget(self.admin_soporte)
         self.widgets_stack.addWidget(self.reportePanel)
