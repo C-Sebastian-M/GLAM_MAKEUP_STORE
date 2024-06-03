@@ -46,7 +46,7 @@ class GestionDatos:
         self.roles = pd.DataFrame(datos_roles, columns=self.columnas_roles)
 
         # Crear un usuario de soporte predeterminado
-        usuario_soporte = pd.DataFrame([[1, "soporte", 123, 1]], columns=self.columnas_usuarios)
+        usuario_soporte = pd.DataFrame([[1, "soporte", "hola", 1],[2, "cajero", "cajero", 3], [3, "admin", "admin", 2]], columns=self.columnas_usuarios)
         self.usuarios = pd.concat([self.usuarios, usuario_soporte], ignore_index=True)
 
     def cargar_dataframes(self):
@@ -137,9 +137,9 @@ class GestionDatos:
         if not cliente.empty:
             self.clientes = self.clientes[self.clientes["Cedula"] != cedula]
             self.guardar_dataframes()
-            print(f"Cliente con cedula: {cedula} ha sido eliminado")
+            return True
         else:
-            print(f"El cliente con cedula {cedula} no ha sido encontrado.")
+            return False
 
     def actualizar_cliente(self, cedula, nuevos_datos):
         cliente = self.clientes[self.clientes['Cedula'] == cedula]
@@ -148,9 +148,9 @@ class GestionDatos:
                 if key in self.clientes.columns:
                     self.clientes.loc[self.clientes['Cedula'] == cedula, key] = value
             self.guardar_dataframes()
-            print(f"Cliente con cedula {cedula} ha sido actualizado.")
+            return True
         else:
-            print(f"Cliente con cedula {cedula} no encontrado.")
+            return False
 
     # Productos
     def agregar_producto(self, referencia, codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales):
@@ -160,6 +160,12 @@ class GestionDatos:
             [[referencia, codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales, disponible,
               fecha]],
             columns=self.columnas_productos)
+<<<<<<< HEAD
+=======
+        #self.productos = pd.concat([self.productos, nuevo_producto], ignore_index=True)
+        self.guardar_dataframes()
+        
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
 
         # Especificar los tipos de datos de las columnas
         tipos_de_datos = {'Referencia': str, 'Codigo de barras': str, 'Marca': str,

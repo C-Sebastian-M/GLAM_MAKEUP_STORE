@@ -1,10 +1,10 @@
-from PyQt5 import uic
-
-from PyQt5 import QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QComboBox
-from PyQt5.QtCore import Qt
+from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox,QApplication
+from PyQt5.QtCore import QPropertyAnimation, Qt
+from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtGui import QPainter, QBrush, QColor
-import sys
+from API.DATA import GestionDatos
+from API.prueba import Inventario
 
 class CBackground:
     def paintEvent(self, event):
@@ -37,62 +37,112 @@ class CBackground:
         painter.drawEllipse(700, -70, 200, 200)
 
         painter.end()
-        
-# Ventana Inventario de productos
+
 class InventarioProductos(QMainWindow, CBackground):
     def __init__(self):
-        super().__init__()
-        uic.loadUi(
+        super(InventarioProductos, self).__init__()
+        loadUi(
             r"GUI\sub_ventanas\ui\inventario_productos\inventario_productos.ui",
             self,
         )
-
-
-# Ventana Crear producto
-class CrearProducto(QMainWindow, CBackground):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\inventario_productos\crear_producto.ui",
-            self,
-        )
-        self.setupValidators()
-    
-    def setupValidators(self):
-        validacion_numero = QtGui.QIntValidator(0, 999999999)
-        self.precio_adquisicion_text.setValidator(validacion_numero)
+        self.inventario = Inventario()
+        self.gestion_datos = GestionDatos()
+        self.menu_boton.clicked.connect(self.mover_menu)
+        self.add_boton.clicked.connect(self.add_productos)
+        self.ver_actualizar_boton.clicked.connect(self.ver_productos)
         
-
-# Ventana Modificar producto
-class ModificarProducto(QMainWindow, CBackground):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\inventario_productos\modificar_producto.ui",
-            self,
+        # Conexión botones barra lateral con páginas
+        self.ver_productos_boton.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.ver_productos_pagina)
         )
-    
-        self.seleccionar_producto_combobox.addItems(["Producto1", "Producto2", "Producto3", "Producto4"])
-        #self.seleccionar_producto_combobox.currentIndexChanged.connect(self.abrir_modificar_atributos_producto)
-    
-    """def abrir_modificar_atributos_producto(self):
-        producto_seleccionado = self.seleccionar_producto_combobox.currentText()
-        self.modificar_atributos = ModificarAtributosProducto(producto_seleccionado)
-        self.modificar_atributos.show()"""
-
-# Ventana Modificar atributos especificos de atributo
-class ModificarAtributosProducto(QMainWindow, CBackground):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\inventario_productos\modificar_atributos_especificos.ui",
-            self,
+        self.ver_productos_boton.clicked.connect(self.limpiar_campos)
+        self.nuevo_producto_boton.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.nuevo_producto_pagina)
         )
+        self.nuevo_producto_boton.clicked.connect(self.limpiar_campos)
+        self.modificar_producto_boton.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.modificar_producto_pagina)
+        )
+        self.modificar_producto_boton.clicked.connect(self.limpiar_campos)
+        self.descontinuar_producto_boton.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.descontinuar_producto_pagina)
+        )
+        self.descontinuar_producto_boton.clicked.connect(self.limpiar_campos)
+        self.comprar_stock_boton.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.comprar_stock_pagina)
+        )
+        self.comprar_stock_boton.clicked.connect(self.limpiar_campos)
+
+        # Llamado métodos de validación en constructor
+        self.setupValidatorsCodigoBarras()
+        self.setupValidatorsPrecios()
+        self.setupValidatorsUnidades()
         
-        #self.label_producto_seleccionado.setText(text)
+    # Método para limpiar los campos cada que se cambiar de página
+    def limpiar_campos(self):
+        #Labels añadir_producto
+        self.add_referencia_lineEdit.clear()
+        self.add_marca_lineEdit.clear()
+        self.add_precio_adquisicion_lineEdit.clear()
+        self.add_precio_ventas_lineEdit.clear()
+        self.add_unidades_actuales_lineEdit.clear()
+    
+    # Método para validar la longitud del código de barras
+    def setupValidatorsCodigoBarras(self):
+        validacion_referencia = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(r"\d{0,13}")
+        )
+        self.add_codigoBarras_lineEdit.setValidator(validacion_referencia)
+    
+    # Método para definir los precios
+    def setupValidatorsPrecios(self):
+        validacion_precios = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(r"\d{0,12}")
+        )
+        self.add_precio_adquisicion_lineEdit.setValidator(validacion_precios)
+        self.add_precio_ventas_lineEdit.setValidator(validacion_precios)
+    
+    # Método para definir la cantidad de unidades (máximo 99.999)
+    def setupValidatorsUnidades(self):
+        validacion_unidades = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(r"\d{0,5}")
+        )
+        self.add_unidades_actuales_lineEdit.setValidator(validacion_unidades)
+    
+    # Método que permite mover la barra de menú
+    def mover_menu(self):
+        if True:
+            width = self.frame_control.width()
+            normal = 0
+            if width == 0:
+                extender = 270
+            else:
+                extender = normal
+            self.animacion = QPropertyAnimation(self.frame_control, b"minimumWidth")
+            self.animacion.setDuration(300)
+            self.animacion.setStartValue(width)
+            self.animacion.setEndValue(extender)
+            self.animacion.setEasingCurve(
+                QtCore.QEasingCurve.InOutQuart
+            )  # InQuad, InOutQuad, InCubic, InOutExpo
+            self.animacion.start()
+    
+    # Método para definir base de datos ...
+    #self.tabla_ver_productos.setRowCount(0)
 
-"""if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    main_window = ModificarProducto()
-    main_window.show()
-    sys.exit(app.exec_())"""
+    def add_productos(self):
+        referencia = self.add_referencia_lineEdit.text()
+        marca =  self.add_marca_lineEdit.text()
+        precio_adquisicion = self.add_precio_adquisicion_lineEdit.text()
+        precio_venta =  self.add_precio_ventas_lineEdit.text()
+        unidades_actuales = self.add_unidades_actuales_lineEdit.text()
+        codigo_barras = self.add_codigoBarras_lineEdit.text()
+        self.inventario.crear_productos(referencia,codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales)
+    
+    def ver_productos(self):
+        self.tabla_ver_productos.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            self.tabla_ver_productos.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
+        
