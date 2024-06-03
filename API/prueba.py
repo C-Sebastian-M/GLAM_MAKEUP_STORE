@@ -1,30 +1,50 @@
-from DATA import GestionDatos
+from API.DATA import GestionDatos
 from API.Validaciones import *
+import pandas as pd
+import datetime
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
+
+    def agregar_cliente(self, cedula, nombre, telefono):
+            if validar_Cedula(cedula) and validacion_Telefono(telefono) and validar_NombreCom(nombre):
+                if cedula not in self.gestion_datos.clientes["Cedula"].values:
+                    self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+                    return True
+                else:
+                    return False
+                
+            else:
+                return False
     
-    def añadir_cliente(self, cedula, nombre, telefono):
-        if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
-            if not cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
-                self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+   # def seleccionar_cliente(self, cedula):
+    #    usuario_datos = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] == cedula]
+     #   if not usuario_datos.empty:
+      #      return usuario_datos
+        
+    def buscar_y_modificar_cliente(self, cedula, nuevos_datos):
+        #Parámetros:
+        #- cedula: La cédula del cliente a buscar.
+        #- nuevos_datos: Un diccionario con los datos a actualizar.
+    
+            if cedula in self.gestion_datos.clientes["Cedula"].values:
+                cliente_index = self.gestion_datos.clientes.index[self.gestion_datos.clientes["Cedula"] == cedula].tolist()[0]
+                for key, value in nuevos_datos.items():
+                    if key in self.gestion_datos.clientes.columns:
+                        self.gestion_datos.clientes.at[cliente_index, key] = value
+                self.gestion_datos.guardar_dataframes()
                 return True
-            
-            return False
+            else:
+                return False
+    
+    def eliminar_cliente(self, cedula):
+        if cedula in self.gestion_datos.clientes["Cedula"].values:
+            self.gestion_datos.clientes = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] != cedula]
+            self.gestion_datos.guardar_dataframes()
+            return True
         else:
             return False
-                   
-    def mostrar_clientes(self): 
-        cedulas = []
-        nombres = []
-        for i in (self.gestion_datos.clientes["Cedula"]):
-            cedulas.append(i)
-        for i in (self.gestion_datos.clientes["Nombre"]):
-            nombres.append(i)
-        x = list(zip(nombres,cedulas))
-        return x
     
-
     def reporte_diario(self):
         pass
 
@@ -64,7 +84,18 @@ class Cajero:
     def seleccionar_mediopago(self):
         #Necesitamos que creen la tabla de medios de pago
         pass
-    
+      
+    def login(self, username, password, user_role=-1):
+            usuario_datos = self.gestion_datos.usuarios[self.gestion_datos.usuarios["usuario"] == username]
+            if not usuario_datos.empty:
+                if password in usuario_datos["contraseña"].values:
+                    user_role = usuario_datos.loc[0,"Rol ID"]     
+                    return user_role
+                else:
+                    return False
+            else:
+                return False
+      
 class Inventario:
     def __init__(self):
         self.gestion_datos = GestionDatos()
@@ -73,14 +104,7 @@ class Inventario:
         return self.gestion_datos.productos
         
 
-    def crear_productos(self, referencia, precioA, precioV, codigoB, marca, stock):
-        if validacion_Referencia(referencia) and validacion_Precio(precioA) and validacion_Precio(precioV) and validacion_Codigo_Barras(codigoB) and validacion_Marca(marca) and validacion_Stock(stock):
-            if not codigoB in self.gestion_datos.productos["Codigo de barras"].values:
-                self.gestion_datos.agregar_producto(referencia, codigoB, marca, precioA, precioV, stock)
-                return True
-            return False
-        return False
-    
+
 #    def modificar_producto(self,codigoB,nuevos_datos):
 #        x = GestionDatos("datos.xlsx")
 #        producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]==codigoB]
@@ -136,22 +160,21 @@ class Inventario:
         if not producto.empty:
             self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] ==  codigoB, "Unidades actuales"] += cantidad
             self.gestion_datos.guardar_dataframes()
-    
-    def ver_clientes(self):
-        x = self.gestion_datos.Clientes
-        return x
-
-x = Cajero()
-x.añadir_cliente(103318341, "Juan", 3052076540)
-
-
-
-
-
-
-
-
-
-
-
+            
+    def crear_productos(self,referencia, codigo_barras, marca, precio_adquisicion,precio_venta, unidades_actuales):
+        if (
+            validacion_Referencia(referencia) and 
+            validacion_Precio(precio_adquisicion) and 
+            validacion_Precio(precio_venta) and 
+            validacion_Codigo_Barras(codigo_barras) and 
+            validacion_Marca(marca) and 
+            validacion_Stock(unidades_actuales)
+           ):
+            if not codigo_barras  in self.gestion_datos.productos["Codigo de barras"].values:
+                self.gestion_datos.agregar_producto(referencia, codigo_barras, marca, int(precio_adquisicion), int(precio_venta), int(unidades_actuales))
+                return True
+            else:
+                return False
+        else:  
+            return False
 

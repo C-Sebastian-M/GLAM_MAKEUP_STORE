@@ -1,11 +1,13 @@
-
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
-from GUI.ventanas.Caja_X import Ui_Caja
+from GUI.ventanas.Caja import Ui_Caja
 from GUI.ventanas.soporte_admin import AdminSoporteManager
 from API.prueba import Cajero
 from API.DATA import GestionDatos
+<<<<<<< HEAD
 from API.Validaciones import *
+=======
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
 
 
 class Login(QMainWindow):
@@ -15,11 +17,11 @@ class Login(QMainWindow):
             r"GUI\ui\Login.ui",
             self,
         )
-        self.gestion_datos = GestionDatos()
         self.app = app
         # BT CLOSE POPUP
         self.pushButton_close_pupup.clicked.connect(lambda: self.frame_error.hide())
         self.cajero = Cajero()
+        self.gestion_datos = GestionDatos()
 
         # HIDE ERROR
         self.frame_error.hide()
@@ -68,13 +70,15 @@ class Login(QMainWindow):
             text = textUser + textPassword
             showMessage(text)
         else:
-            user_role = self.authenticate_user(username, password)
-            if user_role:
-                if user_role == 1:
+            #Redireccionamos a cada ventana dependiendo del rol
+            rol = self.authenticate_user(username, password)
+            print(rol)
+            if rol:
+                if rol == 1:
                     self.openAdminSupportWindow("soporte")
-                elif user_role == 2:
+                elif rol == 2:
                     self.openAdminSupportWindow("admin")
-                elif user_role == 3:
+                elif rol == 3:
                     self.openCajaWindow()
                 else:
                     showMessage("Credenciales incorrectas")
@@ -90,14 +94,17 @@ class Login(QMainWindow):
         msg_box.exec_()
 
     def authenticate_user(self, username, password):
+        #autenticamos si el usuario y la contraseña coinciden y verificamos su rol
         usuario_datos = self.gestion_datos.usuarios[self.gestion_datos.usuarios["usuario"] == username]
         if not usuario_datos.empty:
             if password in usuario_datos["contraseña"].values:
-                rol = usuario_datos["Rol ID"].values
-                return int(rol)
+                user_role = int(usuario_datos.loc[0,"Rol ID"])
+                return user_role
+        else:
             return False
-        return False
-
+            
+            
+            
     def openAdminSupportWindow(self, user_role: str):
         self.admin_soporte = AdminSoporteManager(self, user_role=user_role)
         self.admin_soporte.leer_estilos(
