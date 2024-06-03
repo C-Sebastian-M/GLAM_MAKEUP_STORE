@@ -35,23 +35,50 @@ class CBackground:
 
         # Dibujando círculos abajo
         painter.setBrush(brocha3)
-        painter.drawEllipse(int(width // 2 - diameter // 2), int(height - offset_y), int(diameter), int(diameter))
+        painter.drawEllipse(
+            int(width // 2 - diameter // 2),
+            int(height - offset_y),
+            int(diameter),
+            int(diameter),
+        )
 
         painter.setBrush(brocha2)
-        painter.drawEllipse(int(width // 4 - diameter // 2), int(height - offset_y * 1.5), int(diameter), int(diameter))
+        painter.drawEllipse(
+            int(width // 4 - diameter // 2),
+            int(height - offset_y * 1.5),
+            int(diameter),
+            int(diameter),
+        )
 
         painter.setBrush(brocha1)
-        painter.drawEllipse(int(width // 8 - diameter // 2), int(height - offset_y * 2), int(diameter), int(diameter))
+        painter.drawEllipse(
+            int(width // 8 - diameter // 2),
+            int(height - offset_y * 2),
+            int(diameter),
+            int(diameter),
+        )
 
         # Dibujando círculos arriba
         painter.setBrush(brocha3)
-        painter.drawEllipse(int(width // 2 - diameter // 2), int(-offset_y), int(diameter), int(diameter))
+        painter.drawEllipse(
+            int(width // 2 - diameter // 2),
+            int(-offset_y),
+            int(diameter),
+            int(diameter),
+        )
 
         painter.setBrush(brocha2)
-        painter.drawEllipse(int(width // 2 + offset_x), int(-offset_y // 2), int(diameter), int(diameter))
+        painter.drawEllipse(
+            int(width // 2 + offset_x),
+            int(-offset_y // 2),
+            int(diameter),
+            int(diameter),
+        )
 
         painter.setBrush(brocha1)
-        painter.drawEllipse(int(width // 2 + offset_x * 2), int(0), int(diameter), int(diameter))
+        painter.drawEllipse(
+            int(width // 2 + offset_x * 2), int(0), int(diameter), int(diameter)
+        )
 
         painter.end()
 
@@ -208,7 +235,7 @@ class GestionServicios(QMainWindow, CBackground):
         msg_box.setWindowTitle("Éxito")
         msg_box.exec_()
 
-    #def registrar_servicio(self):
+    # def registrar_servicio(self):
     #  id_servicio = self.lineEdit_addId.text()
     #  nombre = self.lineEdit_addNombre.text()
     #   precio = self.lineEdit_addPrecio.text()
@@ -239,8 +266,10 @@ class GestionServicios(QMainWindow, CBackground):
             else:
                 return False
         else:
-            self.aviso_modificar.setText("Campo Vacio. Por favor ingrese la información correspondiente.")
-        
+            self.aviso_modificar.setText(
+                "Campo Vacio. Por favor ingrese la información correspondiente."
+            )
+
     def mostar_formulario(self, servicio):
         servicio = self.validar_existencia()
         if servicio:

@@ -95,7 +95,7 @@ class Caja(QMainWindow):
         self.Seleccionar.clicked.connect(self.selCli)
         self.Nuevo_2.clicked.connect(self.New)
         self.AggProducto.clicked.connect(self.total_productos)
-        self.AggServicio.clicked.connect(self.total_servicios)
+        self.AggServicios.clicked.connect(self.total_servicios)
         self.TablaCedulas.hide()
         self.IngCedula.hide()
         self.Cedula_2.hide()
@@ -293,7 +293,7 @@ class Caja(QMainWindow):
     
     def total_servicios(self):
         id_servicio = self.EleServicios.text()
-        cantidad = self.stockServicios
+        cantidad = self.StockServicios
         
     
     def mostrar_productos(self):
