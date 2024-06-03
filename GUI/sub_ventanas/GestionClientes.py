@@ -187,6 +187,7 @@ class GestionClientes(QMainWindow, CBackground):
             validar_Cedula(cedula)
             and validacion_Telefono(telefono)
             and validar_NombreCom(nombre)
+            and cedula not in self.gestion_datos.clientes["Cedula"].values
         ):
             self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
             self.mostrar_clientes()
@@ -215,15 +216,31 @@ class GestionClientes(QMainWindow, CBackground):
         msg_box.setWindowTitle("Éxito")
         msg_box.exec_()
 
+<<<<<<< HEAD
     def mostar_formulario(self):
         cedula = validar_Cedula(self.lineEdit_modificar.text())
         if cedula:
             self.frame_formulario.show()
             return int(self.lineEdit_modificar.text())
+=======
+    def validar_existencia(self):
+        # Los campos para validar son:    
+        cedulaBuscarCliente = self.lineEdit_modificar.text()
+        if cedulaBuscarCliente in self.gestion_datos.clientes["Cedula"].values or int(cedulaBuscarCliente) in self.gestion_datos.clientes["Cedula"]:
+            return True
+        else:
+            return False
+    
+    def mostar_formulario(self, cedula):
+        cedula= self.validar_existencia()
+        if cedula:
+            self.frame_formulario.show()
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
         else:
             self.showErrorMessage(
                 "Error en los datos ingresados. Por favor, verifica la información."
             )
+<<<<<<< HEAD
 
     def modificar_cliente(self):
         cedula = self.mostar_formulario()
@@ -241,6 +258,20 @@ class GestionClientes(QMainWindow, CBackground):
                 "Telefono": int(self.lineEdit_nuevoTelefono.text()),
             }
             self.gestion_datos.actualizar_cliente(cedula, nuevos_datos)
+=======
+    
+    def modificar_cliente(self):
+        cedulaBuscarCliente = self.lineEdit_modificar.text()
+        nuevaCedula = self.lineEdit_nuevaCedula.text()
+        nuevoNombre = self.lineEdit_nuevoNombre.text()
+        nuevoTelefono = self.lineEdit_nuevoTelefono.text()
+        if validar_NombreCom(nuevoNombre) and validacion_Telefono(nuevoTelefono) and validar_Cedula(nuevaCedula):
+            nuevos_datos = {
+                "Nombre": nuevoNombre,
+                "Telefono": nuevoTelefono,
+                "Cedula": nuevaCedula}
+            self.gestion_datos.actualizar_cliente(cedulaBuscarCliente, nuevos_datos)
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
             self.mostrar_clientes()  # Actualizar la tabla de clientes
             self.aviso_eliminar.setText("Cliente eliminado correctamente")
             self.limpiar_campos()
