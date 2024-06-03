@@ -60,7 +60,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayoutCalendar" stretch="0,0">
      <property name="spacing">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="leftMargin">
       <number>0</number>
@@ -143,10 +143,10 @@
        <widget class="QPushButton" name="setBtn">
         <property name="geometry">
          <rect>
-          <x>-1</x>
+          <x>9</x>
           <y>190</y>
-          <width>89</width>
-          <height>23</height>
+          <width>71</width>
+          <height>21</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -154,6 +154,11 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>7</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Set</string>
