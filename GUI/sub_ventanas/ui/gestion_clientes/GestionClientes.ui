@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>992</width>
-    <height>762</height>
+    <height>757</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -1007,7 +1007,7 @@ QListView::item:selected {
                 </layout>
                </widget>
                <widget class="QWidget" name="pagina_eliminar">
-                <layout class="QVBoxLayout" name="verticalLayout_13">
+                <layout class="QVBoxLayout" name="verticalLayout_14">
                  <item>
                   <widget class="QLabel" name="label_17">
                    <property name="text">
@@ -1061,36 +1061,60 @@ QListView::item:selected {
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_10">
+                  <layout class="QVBoxLayout" name="verticalLayout_13">
                    <item>
-                    <widget class="QLabel" name="label_18">
-                     <property name="maximumSize">
-                      <size>
-                       <width>30</width>
-                       <height>30</height>
-                      </size>
-                     </property>
+                    <widget class="QListView" name="listView_eliminar">
                      <property name="styleSheet">
-                      <string notr="true">background-color: #f5eef2
-;</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="pixmap">
-                      <pixmap>../../../recursos/images/search.png</pixmap>
-                     </property>
-                     <property name="scaledContents">
-                      <bool>true</bool>
+                      <string notr="true">QListView {
+    background-color: #f5eef2; /* Fondo */
+}
+
+QListView::item {
+    border-bottom: 1px solid #e4acd0; /* Borde inferior de cada elemento */
+    padding: 5px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+QListView::item:selected {
+    background-color: #dc84bc; /* Color de fondo al seleccionar */
+    color: #ffffff; /* Color de texto al seleccionar */
+}</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_buscarEliminar">
-                     <property name="placeholderText">
-                      <string>INGRESE CÉDULA</string>
-                     </property>
-                    </widget>
+                    <layout class="QHBoxLayout" name="horizontalLayout_10">
+                     <item>
+                      <widget class="QLineEdit" name="lineEdit_buscarEliminar">
+                       <property name="placeholderText">
+                        <string>INGRESE CÉDULA</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_18">
+                       <property name="maximumSize">
+                        <size>
+                         <width>30</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: #f5eef2
+;</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="pixmap">
+                        <pixmap>../../../recursos/images/search.png</pixmap>
+                       </property>
+                       <property name="scaledContents">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
                  </item>

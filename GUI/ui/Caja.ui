@@ -7,7 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>859</width>
-    <height>600</height>
+<<<<<<< HEAD
+    <height>660</height>
+=======
+    <height>625</height>
+>>>>>>> main
    </rect>
   </property>
   <property name="windowTitle">
@@ -443,7 +447,7 @@ QLabel {
 }</string>
                   </property>
                   <property name="currentIndex">
-                   <number>3</number>
+                   <number>0</number>
                   </property>
                   <widget class="QWidget" name="Clientes_2">
                    <property name="styleSheet">
@@ -474,23 +478,8 @@ QLabel {
     color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
 }</string>
                    </property>
-                   <layout class="QFormLayout" name="formLayout_3">
-                    <property name="horizontalSpacing">
-                     <number>1</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>1</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>1</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>1</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>1</number>
-                    </property>
-                    <item row="0" column="0" colspan="2">
+                   <layout class="QVBoxLayout" name="verticalLayout_5">
+                    <item>
                      <widget class="QLabel" name="TiCli_3">
                       <property name="text">
                        <string>Tipo de Cliente</string>
@@ -500,7 +489,24 @@ QLabel {
                       </property>
                      </widget>
                     </item>
+<<<<<<< HEAD
+                    <item>
+=======
+                    <item row="3" column="0" colspan="2">
+                     <spacer name="verticalSpacer_2">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
                     <item row="4" column="0" colspan="2">
+>>>>>>> main
                      <widget class="QPushButton" name="Seleccionar">
                       <property name="text">
                        <string>Seleccionar</string>
@@ -511,7 +517,7 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="5" column="0" colspan="2">
+                    <item>
                      <widget class="QPushButton" name="Nuevo_2">
                       <property name="text">
                        <string>Nuevo</string>
@@ -522,22 +528,142 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="7" column="0" colspan="2">
-                     <widget class="QComboBox" name="Clientes">
-                      <property name="minimumSize">
+<<<<<<< HEAD
+                    <item>
+                     <widget class="QPushButton" name="ChangeCli">
+                      <property name="maximumSize">
                        <size>
-                        <width>0</width>
-                        <height>30</height>
+                        <width>500</width>
+                        <height>500</height>
                        </size>
                       </property>
-                      <item>
-                       <property name="text">
-                        <string>New Item</string>
-                       </property>
-                      </item>
+                      <property name="text">
+                       <string>Cambiar Cliente</string>
+                      </property>
                      </widget>
                     </item>
-                    <item row="10" column="0">
+                    <item>
+                     <widget class="QTableWidget" name="TablaCedulas"/>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_6">
+                      <item>
+                       <widget class="QLabel" name="LabelCedula">
+                        <property name="minimumSize">
+                         <size>
+                          <width>200</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>200</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Ingresar cedula</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="IngCedula"/>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_8">
+                      <item>
+                       <widget class="QLabel" name="Cedula_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>100</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Cédula</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="Ced_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_9">
+                      <item>
+                       <widget class="QLabel" name="Nombre_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>100</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Nombre</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="Nom_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_10">
+                      <item>
+                       <widget class="QLabel" name="Telefono_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>100</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Teléfono</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="Tel_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>30</height>
+                         </size>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+=======
+                    <item row="9" column="0">
                      <widget class="QLabel" name="Cedula_2">
                       <property name="minimumSize">
                        <size>
@@ -553,7 +679,17 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="12" column="0">
+                    <item row="9" column="1">
+                     <widget class="QLineEdit" name="Ced_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="11" column="0">
                      <widget class="QLabel" name="Nombre_2">
                       <property name="minimumSize">
                        <size>
@@ -569,7 +705,7 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="12" column="1">
+                    <item row="11" column="1">
                      <widget class="QLineEdit" name="Nom_2">
                       <property name="minimumSize">
                        <size>
@@ -579,7 +715,7 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="14" column="0">
+                    <item row="13" column="0">
                      <widget class="QLabel" name="Telefono_2">
                       <property name="minimumSize">
                        <size>
@@ -595,7 +731,7 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="14" column="1">
+                    <item row="13" column="1">
                      <widget class="QLineEdit" name="Tel_2">
                       <property name="minimumSize">
                        <size>
@@ -605,14 +741,8 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="17" column="0" colspan="2">
-                     <widget class="QPushButton" name="Confirmar_3">
-                      <property name="text">
-                       <string>Confirmar</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="16" column="0">
+                    <item row="15" column="0">
+>>>>>>> main
                      <spacer name="verticalSpacer_3">
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
@@ -625,35 +755,55 @@ QLabel {
                       </property>
                      </spacer>
                     </item>
-                    <item row="3" column="0" colspan="2">
-                     <spacer name="verticalSpacer_2">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item row="10" column="1">
-                     <widget class="QLineEdit" name="Ced_2">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>30</height>
-                       </size>
+<<<<<<< HEAD
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_7">
+                      <item>
+                       <widget class="QPushButton" name="ConfirmarNew">
+                        <property name="text">
+                         <string>Confirmar</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="ConfirmarAnt">
+                        <property name="text">
+                         <string>Confirmar</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+=======
+                    <item row="16" column="0" colspan="2">
+                     <widget class="QPushButton" name="Confirmar_3">
+                      <property name="text">
+                       <string>Confirmar</string>
                       </property>
                      </widget>
+>>>>>>> main
+                    </item>
+                    <item row="6" column="0" colspan="2">
+                     <widget class="QTableWidget" name="TablaCedulas"/>
+                    </item>
+                    <item row="7" column="0" colspan="2">
+                     <widget class="QLineEdit" name="IngCedula"/>
                     </item>
                    </layout>
                   </widget>
                   <widget class="QWidget" name="Productos_3">
                    <layout class="QGridLayout" name="gridLayout_4">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="TiCli_4">
+                    <item row="3" column="0">
+                     <widget class="QLineEdit" name="StockProductos">
+                      <property name="maximumSize">
+                       <size>
+                        <width>530</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="6" column="0">
+                     <widget class="QPushButton" name="ConfirmarPro">
                       <property name="maximumSize">
                        <size>
                         <width>530</width>
@@ -661,32 +811,8 @@ QLabel {
                        </size>
                       </property>
                       <property name="text">
-                       <string>Productos</string>
+                       <string>Confirmar</string>
                       </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QComboBox" name="comboBox_4">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>35</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>530</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <item>
-                       <property name="text">
-                        <string>New Item</string>
-                       </property>
-                      </item>
                      </widget>
                     </item>
                     <item row="2" column="0">
@@ -705,21 +831,6 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="3" column="0">
-                     <widget class="QComboBox" name="comboBox">
-                      <property name="maximumSize">
-                       <size>
-                        <width>530</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <item>
-                       <property name="text">
-                        <string>1</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
                     <item row="4" column="0">
                      <widget class="QLabel" name="label_3">
                       <property name="maximumSize">
@@ -736,43 +847,16 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="5" column="0">
-                     <widget class="QTableWidget" name="tableWidget">
-                      <property name="maximumSize">
-                       <size>
-                        <width>530</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="6" column="0">
-                     <widget class="QPushButton" name="Confirmar_4">
-                      <property name="maximumSize">
-                       <size>
-                        <width>530</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Confirmar</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                  <widget class="QWidget" name="Servicios_4">
-                   <layout class="QGridLayout" name="gridLayout_2">
                     <item row="0" column="0">
-                     <widget class="QLabel" name="label_8">
-                      <property name="minimumSize">
+                     <widget class="QLabel" name="TiCli_4">
+                      <property name="maximumSize">
                        <size>
-                        <width>0</width>
-                        <height>30</height>
+                        <width>530</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="text">
-                       <string>Servicios</string>
+                       <string>Productos</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -780,63 +864,38 @@ QLabel {
                      </widget>
                     </item>
                     <item row="1" column="0">
-                     <widget class="QComboBox" name="comboBox_7">
-                      <property name="minimumSize">
+                     <widget class="QTableView" name="TablaProductos">
+                      <property name="maximumSize">
                        <size>
-                        <width>0</width>
-                        <height>30</height>
+                        <width>530</width>
+                        <height>16777215</height>
                        </size>
-                      </property>
-                      <item>
-                       <property name="text">
-                        <string>New Item</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="label_9">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Cantidad</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QComboBox" name="comboBox_8">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <item>
-                       <property name="text">
-                        <string>1</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                    <item row="4" column="0">
-                     <widget class="QLabel" name="Total">
-                      <property name="text">
-                       <string>Total</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
                       </property>
                      </widget>
                     </item>
                     <item row="5" column="0">
-                     <widget class="QTableView" name="viewtotal"/>
+                     <widget class="QListView" name="ListaTotal">
+                      <property name="maximumSize">
+                       <size>
+                        <width>530</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                  <widget class="QWidget" name="Servicios_4">
+                   <layout class="QGridLayout" name="gridLayout_2">
+                    <item row="5" column="0">
+                     <widget class="QTableView" name="viewtotal">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>65</height>
+                       </size>
+                      </property>
+                     </widget>
                     </item>
                     <item row="6" column="0">
                      <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -856,8 +915,15 @@ QLabel {
                       </item>
                      </layout>
                     </item>
+                    <item row="8" column="0">
+                     <widget class="QPushButton" name="ConfirmarServicios">
+                      <property name="text">
+                       <string>Confirmar</string>
+                      </property>
+                     </widget>
+                    </item>
                     <item row="7" column="0">
-                     <widget class="QDateEdit" name="dateEdit">
+                     <widget class="QDateEdit" name="Fecha">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -866,12 +932,53 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="8" column="0">
-                     <widget class="QPushButton" name="Confirmar_8">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_8">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
                       <property name="text">
-                       <string>Confirmar</string>
+                       <string>Servicios</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
                       </property>
                      </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="label_9">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Cantidad</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="0">
+                     <widget class="QLabel" name="Total">
+                      <property name="text">
+                       <string>Total</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QTableView" name="TablaServicios"/>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QLineEdit" name="StockServicios"/>
                     </item>
                    </layout>
                   </widget>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>941</width>
-    <height>667</height>
+    <width>1072</width>
+    <height>793</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -79,7 +79,9 @@
          </property>
          <property name="styleSheet">
           <string notr="true">QFrame{
+/*background-color: rgb(235, 188, 220);*/
 background-color: transparent;
+
 }
 
 QPushButton {
@@ -102,7 +104,7 @@ QPushButton:pressed {
 QLabel {
 	background-color:  rgb(235, 188, 220);
     font: 87 14pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: black; /* Color de texto rgb(220, 132, 188) */
+    color:rgb(0, 0, 0); /* Color de texto rgb(220, 132, 188) */
 }</string>
          </property>
          <property name="frameShape">
@@ -450,7 +452,7 @@ QTableWidget::item:selected {
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <layout class="QVBoxLayout" name="verticalLayout_15">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -485,6 +487,9 @@ QTableWidget::item:selected {
                  </item>
                  <item>
                   <widget class="QTableWidget" name="tabla_ver_productos">
+                   <property name="editTriggers">
+                    <set>QAbstractItemView::NoEditTriggers</set>
+                   </property>
                    <attribute name="horizontalHeaderVisible">
                     <bool>true</bool>
                    </attribute>
@@ -497,11 +502,6 @@ QTableWidget::item:selected {
                    <column>
                     <property name="text">
                      <string>Referencia</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>Código barras</string>
                     </property>
                    </column>
                    <column>
@@ -527,32 +527,15 @@ QTableWidget::item:selected {
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_4">
-                   <item>
-                    <spacer name="horizontalSpacer_2">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="ver_actualizar_boton">
-                     <property name="text">
-                      <string>ACTUALIZAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  <widget class="QPushButton" name="ver_actualizar_boton">
+                   <property name="text">
+                    <string>ACTUALIZAR</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -569,6 +552,19 @@ QTableWidget::item:selected {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_5">
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -576,16 +572,16 @@ QTableWidget::item:selected {
                       <number>15</number>
                      </property>
                      <item>
-                      <widget class="QLabel" name="add_codigo_barras_label">
+                      <widget class="QLabel" name="add_referencia_label">
                        <property name="text">
                         <string>Referencia</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLabel" name="add_referencia_label">
+                      <widget class="QLabel" name="label">
                        <property name="text">
-                        <string>Código de barras</string>
+                        <string>CODIGO BARRAS</string>
                        </property>
                       </widget>
                      </item>
@@ -605,9 +601,9 @@ adquisición</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLabel" name="add_precio_venta_label">
+                      <widget class="QLabel" name="add_precio_ventas_label">
                        <property name="text">
-                        <string>Precio venta</string>
+                        <string>Precio ventas</string>
                        </property>
                       </widget>
                      </item>
@@ -634,9 +630,9 @@ actuales</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="add_codigo_barras_lineEdit">
+                      <widget class="QLineEdit" name="add_codigoBarras_lineEdit">
                        <property name="placeholderText">
-                        <string>CÓDIGO DE BARRAS</string>
+                        <string>CODIGO DE BARRAS</string>
                        </property>
                       </widget>
                      </item>
@@ -655,7 +651,7 @@ actuales</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="add_precio_venta_lineEdit">
+                      <widget class="QLineEdit" name="add_precio_ventas_lineEdit">
                        <property name="placeholderText">
                         <string>$</string>
                        </property>
@@ -671,6 +667,19 @@ actuales</string>
                     </layout>
                    </item>
                   </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -725,7 +734,7 @@ actuales</string>
                 </layout>
                </widget>
                <widget class="QWidget" name="modificar_producto_pagina">
-                <layout class="QVBoxLayout" name="verticalLayout_10">
+                <layout class="QVBoxLayout" name="verticalLayout_17">
                  <item>
                   <widget class="QLabel" name="modificar_producto_label">
                    <property name="text">
@@ -737,21 +746,10 @@ actuales</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QTableWidget" name="modify_tabla_productos">
-                   <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>true</bool>
-                   </attribute>
-                   <attribute name="horizontalHeaderDefaultSectionSize">
-                    <number>200</number>
-                   </attribute>
+                  <widget class="QTableWidget" name="tableWidget">
                    <column>
                     <property name="text">
                      <string>Referencia</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>Código de barras</string>
                     </property>
                    </column>
                    <column>
@@ -777,33 +775,46 @@ actuales</string>
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_8">
+                  <layout class="QVBoxLayout" name="verticalLayout_16">
                    <item>
-                    <widget class="QLineEdit" name="modify_buscar_producto_lineEdit">
-                     <property name="placeholderText">
-                      <string>INGRESE CÓDIGO DE BARRAS</string>
-                     </property>
-                    </widget>
+                    <layout class="QHBoxLayout" name="horizontalLayout_3">
+                     <item>
+                      <widget class="QLabel" name="modify_buscar_producto_label">
+                       <property name="text">
+                        <string>Producto:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="modify_buscar_producto_lineEdit">
+                       <property name="placeholderText">
+                        <string>BUSCAR PRODUCTO</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="modify_buscar_boton">
+                       <property name="text">
+                        <string>BUSCAR</string>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>../../../recursos/images/store-search.png</normaloff>../../../recursos/images/store-search.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="modify_buscar_boton">
-                     <property name="text">
-                      <string>SELECCIONAR</string>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>25</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <widget class="QListView" name="modify_buscar_producto_listView">
-                   <property name="styleSheet">
-                    <string notr="true">QListView {
+                    <widget class="QListWidget" name="listWidget_modificar">
+                     <property name="styleSheet">
+                      <string notr="true">QListView {
     background-color: #f5eef2; /* Fondo */
 }
 
@@ -817,94 +828,148 @@ QListView::item:selected {
     background-color: #dc84bc; /* Color de fondo al seleccionar */
     color: #ffffff; /* Color de texto al seleccionar */
 }</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_7">
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_8">
-                     <property name="spacing">
-                      <number>15</number>
                      </property>
-                     <item>
-                      <widget class="QLabel" name="modify_marca_label">
-                       <property name="text">
-                        <string>Marca</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="modify_precio_adquisicion_label">
-                       <property name="text">
-                        <string>Precio
-adquisición</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="modify_precio_venta_label">
-                       <property name="text">
-                        <string>Precio venta</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_9">
-                     <property name="spacing">
-                      <number>15</number>
-                     </property>
-                     <item>
-                      <widget class="QLineEdit" name="modify_marca_lineEdit">
-                       <property name="placeholderText">
-                        <string>MARCA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="modify_precio_adquisicion_lineEdit">
-                       <property name="placeholderText">
-                        <string>$</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="modify_precio_venta_lineEdit">
-                       <property name="placeholderText">
-                        <string>$</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
+                    </widget>
                    </item>
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_9"/>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="modify_guardar_boton">
-                   <property name="text">
-                    <string>GUARDAR</string>
+                  <spacer name="verticalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
                    </property>
-                   <property name="icon">
-                    <iconset>
-                     <normaloff>../../../recursos/images/content-save-all.png</normaloff>../../../recursos/images/content-save-all.png</iconset>
-                   </property>
-                   <property name="iconSize">
+                   <property name="sizeHint" stdset="0">
                     <size>
-                     <width>25</width>
-                     <height>25</height>
+                     <width>20</width>
+                     <height>40</height>
                     </size>
                    </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_formulario">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_10">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_7">
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_8">
+                        <property name="spacing">
+                         <number>15</number>
+                        </property>
+                        <item>
+                         <widget class="QLabel" name="modify_marca_label">
+                          <property name="text">
+                           <string>Marca</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="modify_precio_adquisicion_label">
+                          <property name="text">
+                           <string>Precio
+adquisición</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="modify_precio_venta_label">
+                          <property name="text">
+                           <string>Precio venta</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_9">
+                        <property name="spacing">
+                         <number>15</number>
+                        </property>
+                        <item>
+                         <widget class="QLineEdit" name="modify_marca_lineEdit">
+                          <property name="placeholderText">
+                           <string>MARCA</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLineEdit" name="modify_precio_adquisicion_lineEdit">
+                          <property name="placeholderText">
+                           <string>$</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLineEdit" name="modify_precio_venta_lineEdit">
+                          <property name="placeholderText">
+                           <string>$</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="modify_guardar_boton">
+                      <property name="text">
+                       <string>GUARDAR</string>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>../../../recursos/images/content-save-all.png</normaloff>../../../recursos/images/content-save-all.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>25</width>
+                        <height>25</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <item>
+                    <widget class="QLabel" name="aviso_modify_label">
+                     <property name="minimumSize">
+                      <size>
+                       <width>170</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_4">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </widget>
                <widget class="QWidget" name="descontinuar_producto_pagina">
-                <layout class="QVBoxLayout" name="verticalLayout_11">
+                <layout class="QVBoxLayout" name="verticalLayout_18">
                  <item>
                   <widget class="QLabel" name="descontinuar_producto_label">
                    <property name="text">
@@ -917,20 +982,12 @@ adquisición</string>
                  </item>
                  <item>
                   <widget class="QTableWidget" name="del_tabla_productos">
-                   <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>true</bool>
-                   </attribute>
                    <attribute name="horizontalHeaderDefaultSectionSize">
                     <number>200</number>
                    </attribute>
                    <column>
                     <property name="text">
                      <string>Referencia</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>Código de barras</string>
                     </property>
                    </column>
                    <column>
@@ -945,47 +1002,77 @@ adquisición</string>
                    </column>
                    <column>
                     <property name="text">
-                     <string>Precio venta</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
                      <string>Unidades actuales</string>
                     </property>
                    </column>
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <layout class="QVBoxLayout" name="verticalLayout_11">
                    <item>
-                    <widget class="QLabel" name="del_producto_label">
-                     <property name="maximumSize">
-                      <size>
-                       <width>30</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="pixmap">
-                      <pixmap>../../../recursos/images/search.png</pixmap>
-                     </property>
-                     <property name="scaledContents">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
+                    <layout class="QHBoxLayout" name="horizontalLayout_4">
+                     <item>
+                      <widget class="QLabel" name="del_producto_label">
+                       <property name="text">
+                        <string>Producto:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="del_buscar_producto_lineEdit">
+                       <property name="minimumSize">
+                        <size>
+                         <width>150</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="placeholderText">
+                        <string>BUSCAR PRODUCTO</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="del_buscar_boton">
+                       <property name="minimumSize">
+                        <size>
+                         <width>120</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>BUSCAR</string>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>../../../recursos/images/store-search.png</normaloff>../../../recursos/images/store-search.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="del_buscar_producto_lineEdit">
-                     <property name="minimumSize">
-                      <size>
-                       <width>150</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="placeholderText">
-                      <string>INGRESE CÓDIGO DE BARRAS</string>
+                    <widget class="QListWidget" name="listWidget_eliminar">
+                     <property name="styleSheet">
+                      <string notr="true">QListView {
+    background-color: #f5eef2; /* Fondo */
+}
+
+QListView::item {
+    border-bottom: 1px solid #e4acd0; /* Borde inferior de cada elemento */
+    padding: 5px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+QListView::item:selected {
+    background-color: #dc84bc; /* Color de fondo al seleccionar */
+    color: #ffffff; /* Color de texto al seleccionar */
+}</string>
                      </property>
                     </widget>
                    </item>
@@ -1047,7 +1134,7 @@ adquisición</string>
                 </layout>
                </widget>
                <widget class="QWidget" name="comprar_stock_pagina">
-                <layout class="QVBoxLayout" name="verticalLayout_14">
+                <layout class="QVBoxLayout" name="verticalLayout_20">
                  <item>
                   <widget class="QLabel" name="comprar_stock_label">
                    <property name="minimumSize">
@@ -1065,21 +1152,10 @@ adquisición</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QTableWidget" name="buy_tabla_productos">
-                   <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>true</bool>
-                   </attribute>
-                   <attribute name="horizontalHeaderDefaultSectionSize">
-                    <number>200</number>
-                   </attribute>
+                  <widget class="QTableWidget" name="tableWidget_2">
                    <column>
                     <property name="text">
                      <string>Referencia</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>Código de barras</string>
                     </property>
                    </column>
                    <column>
@@ -1105,108 +1181,193 @@ adquisición</string>
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_13">
+                  <layout class="QVBoxLayout" name="verticalLayout_19">
                    <item>
-                    <widget class="QLineEdit" name="buy_buscar_producto_lineEdit">
-                     <property name="placeholderText">
-                      <string>INGRESE CÓDIGO DE BARRAS</string>
+                    <widget class="QListWidget" name="listWidget">
+                     <property name="styleSheet">
+                      <string notr="true">QListView {
+    background-color: #f5eef2; /* Fondo */
+}
+
+QListView::item {
+    border-bottom: 1px solid #e4acd0; /* Borde inferior de cada elemento */
+    padding: 5px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+QListView::item:selected {
+    background-color: #dc84bc; /* Color de fondo al seleccionar */
+    color: #ffffff; /* Color de texto al seleccionar */
+}</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="buy_buscar_boton">
-                     <property name="text">
-                      <string>SELECCIONAR</string>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>25</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <widget class="QListView" name="buy_buscar_producto_listView"/>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_12">
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_12">
+                    <layout class="QHBoxLayout" name="horizontalLayout_11">
                      <item>
-                      <widget class="QLabel" name="buy_cantidad_ingresar_label">
+                      <widget class="QLabel" name="buy_buscar_producto_label">
                        <property name="text">
-                        <string>Cantidad a Ingresar</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_13">
-                     <item>
-                      <widget class="QLabel" name="buy_cantidad_actual_label_2">
-                       <property name="minimumSize">
-                        <size>
-                         <width>200</width>
-                         <height>30</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string/>
+                        <string>Producto:</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="buy_cantidad_ingresar_lineEdit">
-                       <property name="minimumSize">
-                        <size>
-                         <width>200</width>
-                         <height>30</height>
-                        </size>
-                       </property>
+                      <widget class="QLineEdit" name="buy_buscar_producto_lineEdit">
                        <property name="placeholderText">
-                        <string>INGRESE UNIDADES</string>
+                        <string>BUSCAR PRODUCTO</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLabel" name="buy_aviso_total_pagar_label">
-                       <property name="minimumSize">
-                        <size>
-                         <width>200</width>
-                         <height>30</height>
-                        </size>
-                       </property>
+                      <widget class="QPushButton" name="buy_buscar_boton">
                        <property name="text">
-                        <string/>
+                        <string>BUSCAR</string>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>../../../recursos/images/store-search.png</normaloff>../../../recursos/images/store-search.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
                        </property>
                       </widget>
                      </item>
                     </layout>
                    </item>
                   </layout>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_formulario_comprar_stock">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_14">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_8">
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_12">
+                        <item>
+                         <widget class="QLabel" name="buy_cantidad_actual_label">
+                          <property name="text">
+                           <string>Cantidad actual</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="buy_cantidad_ingresar_label">
+                          <property name="text">
+                           <string>Cantidad a
+Ingresar</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="buy_total_pagar_label">
+                          <property name="text">
+                           <string>Total a pagar</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_13">
+                        <item>
+                         <widget class="QLabel" name="buy_cantidad_actual_label_2">
+                          <property name="minimumSize">
+                           <size>
+                            <width>200</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLineEdit" name="buy_cantidad_ingresar_lineEdit">
+                          <property name="minimumSize">
+                           <size>
+                            <width>200</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                          <property name="placeholderText">
+                           <string>INGRESE UNIDADES</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="buy_aviso_total_pagar_label">
+                          <property name="minimumSize">
+                           <size>
+                            <width>200</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="buy_add_boton">
+                      <property name="text">
+                       <string>AÑADIR</string>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>../../../recursos/images/basket-unfill.png</normaloff>../../../recursos/images/basket-unfill.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>25</width>
+                        <height>25</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_14">
                    <item>
-                    <widget class="QPushButton" name="buy_add_boton">
-                     <property name="text">
-                      <string>AÑADIR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../../recursos/images/basket-unfill.png</normaloff>../../../recursos/images/basket-unfill.png</iconset>
-                     </property>
-                     <property name="iconSize">
+                    <widget class="QLabel" name="buy_aviso_label">
+                     <property name="minimumSize">
                       <size>
-                       <width>25</width>
-                       <height>25</height>
+                       <width>200</width>
+                       <height>30</height>
                       </size>
                      </property>
+                     <property name="text">
+                      <string/>
+                     </property>
                     </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_6">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </item>

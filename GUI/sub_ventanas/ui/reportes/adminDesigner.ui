@@ -78,36 +78,17 @@ QPushButton::after {
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="cerrarBtn">
-         <property name="maximumSize">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>200</width>
-           <height>100</height>
+           <width>40</width>
+           <height>20</height>
           </size>
          </property>
-         <property name="text">
-          <string>Log out</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="title">
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Dubai Medium</family>
-           <pointsize>22</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Title</string>
-         </property>
-        </widget>
+        </spacer>
        </item>
        <item>
         <widget class="QLabel" name="logo">
@@ -130,6 +111,77 @@ QPushButton::after {
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="title">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Dubai Medium</family>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Title</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cerrarBtn">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Log out</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -194,7 +246,7 @@ QPushButton::after {
 }
 </string>
          </property>
-         <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0" columnstretch="0,0,0,0,0,0">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
@@ -213,8 +265,8 @@ QPushButton::after {
           <property name="spacing">
            <number>40</number>
           </property>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="ventasBtn">
+          <item row="2" column="5">
+           <widget class="QPushButton" name="roleBtn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -228,14 +280,11 @@ QPushButton::after {
              </size>
             </property>
             <property name="text">
-             <string>Ventas</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
+             <string/>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
+          <item row="0" column="2">
            <widget class="QPushButton" name="gestionBtn">
             <property name="enabled">
              <bool>true</bool>
@@ -267,8 +316,8 @@ Clientes</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="roleBtn">
+          <item row="0" column="4">
+           <widget class="QPushButton" name="ventasBtn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -282,11 +331,34 @@ Clientes</string>
              </size>
             </property>
             <property name="text">
-             <string/>
+             <string>Ventas</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
           <item row="2" column="2">
+           <widget class="QPushButton" name="inventarioBtn">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Inventario de
+productos</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
            <widget class="QPushButton" name="catalogoBtn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -306,7 +378,7 @@ servicios</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="3">
+          <item row="0" column="5">
            <widget class="QPushButton" name="reportesBtn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -325,23 +397,16 @@ servicios</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="inventarioBtn">
+          <item row="3" column="4">
+           <widget class="QPushButton" name="pushButton_cambiarLogo">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>200</height>
-             </size>
-            </property>
             <property name="text">
-             <string>Inventario de
-productos</string>
+             <string/>
             </property>
            </widget>
           </item>
