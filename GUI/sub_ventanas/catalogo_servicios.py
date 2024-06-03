@@ -9,7 +9,6 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
-from API.DATA import GestionDatos
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from API.DATA import GestionDatos
 from API.Validaciones import *
@@ -25,25 +24,34 @@ class CBackground:
         brocha2 = QBrush(QColor(228, 156, 198), Qt.SolidPattern)
         brocha3 = QBrush(QColor(235, 188, 220), Qt.SolidPattern)
 
-        # Dibujando circulos abajo
+        # Obtén el tamaño actual de la ventana
+        width = self.width()
+        height = self.height()
+
+        # Calcula las posiciones y tamaños en función del tamaño de la ventana
+        diameter = width // 4
+        offset_x = width // 8
+        offset_y = height // 5
+
+        # Dibujando círculos abajo
         painter.setBrush(brocha3)
-        painter.drawEllipse(140, 530, 200, 200)
+        painter.drawEllipse(int(width // 2 - diameter // 2), int(height - offset_y), int(diameter), int(diameter))
 
         painter.setBrush(brocha2)
-        painter.drawEllipse(40, 480, 200, 200)
+        painter.drawEllipse(int(width // 4 - diameter // 2), int(height - offset_y * 1.5), int(diameter), int(diameter))
 
         painter.setBrush(brocha1)
-        painter.drawEllipse(-70, 440, 200, 200)
+        painter.drawEllipse(int(width // 8 - diameter // 2), int(height - offset_y * 2), int(diameter), int(diameter))
 
-        # Dibujando circulos arriba
+        # Dibujando círculos arriba
         painter.setBrush(brocha3)
-        painter.drawEllipse(440, -140, 200, 200)
+        painter.drawEllipse(int(width // 2 - diameter // 2), int(-offset_y), int(diameter), int(diameter))
 
         painter.setBrush(brocha2)
-        painter.drawEllipse(550, -100, 200, 200)
+        painter.drawEllipse(int(width // 2 + offset_x), int(-offset_y // 2), int(diameter), int(diameter))
 
         painter.setBrush(brocha1)
-        painter.drawEllipse(700, -70, 200, 200)
+        painter.drawEllipse(int(width // 2 + offset_x * 2), int(0), int(diameter), int(diameter))
 
         painter.end()
 
