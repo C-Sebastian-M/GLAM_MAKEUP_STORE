@@ -105,6 +105,9 @@ class Caja(QMainWindow):
         self.ConfirmarNew.hide()
         self.ConfirmarAnt.hide()
         self.ChangeCli.hide()
+        self.Fecha.hide()
+        self.Reserva.clicked.connect(self.showdate)
+        self.Fast.clicked.connect(self.hidedate)
 
 ####//////////////////FUNCION BOTONES PRODUCTOS/////////////###
         self.ConfirmarPro.clicked.connect(self.confirmPro)
@@ -224,7 +227,7 @@ class Caja(QMainWindow):
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle("Validación")
         msg_box.setStandardButtons(QMessageBox.Ok)
-        if self.cajero.agregar_cliente(cedula, nombre, telefono):
+        if self.cajero.añadir_cliente(cedula, nombre, telefono):
             msg_box.setText("Cliente ingresado con éxito")
             msg_box.exec_()
             self.LabelCedula.hide()
@@ -251,10 +254,6 @@ class Caja(QMainWindow):
     def backMenu(self):
         self.control_navegacion.mostrar_ventana("menu")
 
-        #definir funciones layout pagina sevicios
-        self.dateEdit.hide()
-        self.Reserva.clicked.connect(self.showdate)
-        self.Fast.clicked.connect(self.hidedate)
     
     def showdate(self):
         self.dateEdit.show()
@@ -267,14 +266,13 @@ class Caja(QMainWindow):
         msg_box = QMessageBox(self)
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle("Validación")
-        if validar_Cedula(cedula):
-            if cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        if str(cedula) in str(self.gestion_datos.clientes["Cedula"].values): #Comprobar si dato ya existe
                 self.cedulaCliente = cedula
-                msg_box.setStandardButtons(QMessageBox.Ok)
                 msg_box.setText("Cliente encontrado en la lista")
         else:
-            msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.setText("Cliente no encontrado")
+        msg_box.exec_()
             
     def mostrar_clientes(self):
         self.TablaCedulas.setRowCount(0)

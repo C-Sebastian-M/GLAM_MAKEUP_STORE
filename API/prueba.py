@@ -6,7 +6,7 @@ class Cajero:
     
     def añadir_cliente(self, cedula, nombre, telefono):
         if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
-            if not cedula in self.gestion_datos.clientes["Cedula"].values: #Comprobar si dato ya existe
+            if not cedula in self.gestion_datos.clientes["Cedula"].values or str(cedula not in self.gestion_datos.clientes["Cedula"].values): #Comprobar si dato ya existe
                 self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
                 return True
             
