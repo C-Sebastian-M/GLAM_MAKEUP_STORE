@@ -5,19 +5,27 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import ( 
     QWidget, QLabel, 
     QHBoxLayout, QSpacerItem, 
-    QSizePolicy, QMainWindow
+    QSizePolicy, QTableWidget,
+    QHeaderView, QGraphicsDropShadowEffect
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
     QPainter, QBrush,
     QColor, QPixmap, 
-    QCursor, QIcon, 
-    QPainterPath, QRegion
+    QCursor, QIcon
 )
 from GUI.sub_ventanas.utils.css import CustomGroupBox
-
+import API.DATA as GD
+from API.Validaciones import (
+    validacion_Referencia, validacion_Codigo_Barras,
+    validacion_Stock
+)
+from GUI.sub_ventanas.custom.validaciones import CustomValidaciones
 # Tipado
 from typing import List, Union, Dict
+
+GD = GD.GestionDatos()
+vald = CustomValidaciones()
 
 class ReportePorFecha(QWidget):
     def __init__(self, ref) -> None:
@@ -40,7 +48,7 @@ class ReportePorFecha(QWidget):
 
     def combo_event(self) -> None:
         comboFocus: str = self.des_hasComboBox.currentText()
-        fecha_seleccionada: str = self.calendarPorFecha.selectedDate().toPyDate()
+        fecha_seleccionada: str = self.calendarioPorFecha.selectedDate().toPyDate()
         if comboFocus.strip().lower() == "desde":
             self.fecha["desde"] = fecha_seleccionada
             self.desdeLabel.setText(f'Desde\n{fecha_seleccionada}')
@@ -52,12 +60,19 @@ class ReportePorFecha(QWidget):
     def confirmar(self) -> None:
         if not self.fecha:
             return
+        
+        fechas_compuesta = f"{self.fecha['desde']} - {self.fecha['hasta']}"
+        fechas_validas = vald.validar_fechas(fechas_compuesta)
 
-        if self.fecha['hasta'] < self.fecha['desde']:
-            # Fecha no valida.
-            return
+        if not fechas_validas:
+            vald.caja_input_no_valido("""
+                Fechas ingresadas no validas,\n 
+                recuerde que la primera fecha (desde)\n
+                debe ser mayor que la segunda(hasta).
+            """)
+            return None
 
-        self.ref.setText(f"{self.fecha['desde']} - {self.fecha['hasta']}")
+        self.ref.setText(fechas_compuesta)
         self.close()
 
     def pintar(self) -> None:
@@ -67,18 +82,6 @@ class ReportePorFecha(QWidget):
         self.setStyleSheet(style_line)
         style_file.close()
 
-        # path = QPainterPath()
-        # path.moveTo(0, 0)
-        # path.lineTo(self.width(), 0)
-        # path.lineTo(self.width(), self.height() - 20)
-        # path.quadTo(self.width(), self.height(), self.width() - 20, self.height())
-        # path.lineTo(20, self.height())
-        # path.quadTo(0, self.height(), 0, self.height() - 20)
-        # path.lineTo(0, 0) 
-
-        # region = QRegion(path.toFillPolygon().toPolygon())
-        # self.setMask(region)
-
 class Plantilla(QWidget):
     def __init__(self, title: str, columns: List[str]) -> None:
         super().__init__()
@@ -87,13 +90,22 @@ class Plantilla(QWidget):
             self
         )
 
+        self.campos: List[Union[str, int, float]] = columns
+        self.BD_DATA = {}
+
         self.titleLabel.setText(title)
-        self.handle_labels(columns)
+        self.handle_table(data=self.BD_DATA)
+        self.handle_labels()
 
         self.fechaBtn.clicked.connect(self.abrir_ventana_por_fecha)
 
-    def handle_labels(self, columns: List[Union[str, int]]) -> None:
-        for nombre in columns:
+        self.pintar()
+
+    def handle_labels(self) -> None:
+        for campo in self.campos:
+            if campo.strip().lower() == 'fecha':
+                continue
+
             contenedor = CustomGroupBox(self)
             contenedor.setObjectName("contenedorColumnas")
             contenedor.setCursor(QCursor(Qt.PointingHandCursor))
@@ -106,7 +118,7 @@ class Plantilla(QWidget):
 
             label = QLabel(contenedor)
             label.setObjectName("campo")
-            label.setText(nombre)
+            label.setText(campo)
             contenedor.label = label
 
             vbox_layout = QHBoxLayout(contenedor)
@@ -119,8 +131,24 @@ class Plantilla(QWidget):
 
         self.labelsLayout.addItem(QSpacerItem(2, 70, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-    def handle_table(self, fields: List[str], data: Dict[str, Union[int, str]]) -> None:
-        pass
+    def handle_table(self, data: Dict[str, Union[int, str]]) -> None:
+        table: QTableWidget = self.tablaReportes
+        table.setColumnCount(len(self.campos))
+        table.setHorizontalHeaderLabels(self.campos)
+        table.resizeColumnsToContents()
+        table.verticalHeader().setDefaultSectionSize(20)
+
+        header = table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)
+
+        shadow_effect = QGraphicsDropShadowEffect(self)
+        shadow_effect.setBlurRadius(8)
+        shadow_effect.setColor(QColor(0, 0, 0, 70))
+        shadow_effect.setOffset(0, 0)
+        header.setGraphicsEffect(shadow_effect)
+
+        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
+        table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
     def abrir_ventana_por_fecha(self) -> None:
         self.consultandoPor.setText("fecha")
@@ -135,6 +163,25 @@ class Plantilla(QWidget):
 
         self.consulta_por_fecha = ReportePorFecha(ref=self.fechas_label)
         self.consulta_por_fecha.show()
+
+    def filtrar(self):
+        eleccion: str = self.consultandoPor.strip().lower()
+        campos = [campo.lower() for campo in self.campos]
+        user_input: str = self.userInput.text()
+
+        def caja_input_no_valido():
+            pass # mostrar caja
+
+        CONRTOLADOR_DE_FILTRADO = {} # funciones para hacer query
+
+        return CONRTOLADOR_DE_FILTRADO[eleccion]
+    
+    def pintar(self) -> None:
+        with open(r"GUI\sub_ventanas\css\reportes_plantilla.css", "r") as style_file:
+            style_line = style_file.read()
+
+        self.setStyleSheet(style_line)
+        style_file.close()
 
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:

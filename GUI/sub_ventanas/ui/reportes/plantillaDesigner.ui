@@ -52,10 +52,28 @@
     <number>0</number>
    </property>
    <item row="1" column="1">
-    <widget class="QTableWidget" name="table">
+    <widget class="QTableWidget" name="tablaReportes">
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="autoScroll">
       <bool>true</bool>
      </property>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>100</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
    <item row="0" column="0" colspan="2">
@@ -274,6 +292,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>400</width>
@@ -304,6 +328,12 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>80</width>
@@ -312,12 +342,16 @@
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>MS Shell Dlg 2</family>
           <pointsize>8</pointsize>
           <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;</string>
         </property>
         <property name="text">
          <string>Volver</string>
@@ -358,7 +392,7 @@
       <item>
        <widget class="QWidget" name="columnsContainer" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -366,10 +400,10 @@
         <property name="font">
          <font>
           <family>Arial</family>
-          <pointsize>13</pointsize>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
          </font>
         </property>
         <layout class="QVBoxLayout" name="labelsLayout">
@@ -377,19 +411,19 @@
           <number>0</number>
          </property>
          <property name="sizeConstraint">
-          <enum>QLayout::SetMaximumSize</enum>
+          <enum>QLayout::SetDefaultConstraint</enum>
          </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>1</number>
+          <number>0</number>
          </property>
         </layout>
        </widget>
@@ -464,7 +498,7 @@
            </font>
           </property>
           <property name="text">
-           <string>...</string>
+           <string>General</string>
           </property>
          </widget>
         </item>
@@ -568,7 +602,7 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>20</height>
+          <height>70</height>
          </size>
         </property>
        </spacer>
