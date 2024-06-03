@@ -1,3 +1,6 @@
+import os
+import json
+
 from typing import List
 from PyQt5 import uic
 from PyQt5.QtWidgets import (
@@ -11,19 +14,19 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QCursor
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
+
+from GUI.sub_ventanas.utils.css import CBackground
 from GUI.sub_ventanas.reportes import (
     ReportePanel, Ventas,
-    Inventario, CBackground,
+    Inventario,
 )
+from GUI.sub_ventanas.reportes_diarios import ReportesDiarios
 from GUI.sub_ventanas.inventario_productos import InventarioProductos
 from GUI.sub_ventanas.GestionClientes import GestionClientes
 from GUI.sub_ventanas.catalogo_servicios import GestionServicios
-import os
-import json
 
 import API.DATA as GD
 GD = GD.GestionDatos()
-
 
 class AdminSoporte(QMainWindow, CBackground):
     def __init__(self, role: str) -> None:
@@ -65,7 +68,6 @@ class AdminSoporteManager(QMainWindow):
         # Inicializando ventanas de reporte
         self.admin_soporte = AdminSoporte(user_role)
         self.reportePanel = ReportePanel()
-        # self.inventarioPanel = InventarioPanel()
         self.ventas = Ventas(
             "Ventas", GD.columnas_venta_productos
         )
@@ -93,6 +95,10 @@ class AdminSoporteManager(QMainWindow):
         # Inicializando ventana de Inventario de productos
         self.principalInventarioProductosPanel = InventarioProductos()
         self.widgets_stack.addWidget(self.principalInventarioProductosPanel)
+
+        # Inicializando ventana de Reportes Diarios
+        self.reportesDiarios = ReportesDiarios()
+        self.widgets_stack.addWidget(self.reportesDiarios)
 
         # Asignando el widget central
         self.setCentralWidget(self.widgets_stack)
@@ -140,6 +146,7 @@ class AdminSoporteManager(QMainWindow):
         self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes)
         self.admin_soporte.catalogoBtn.clicked.connect(self.ventana_gestionServicios)
         self.admin_soporte.inventarioBtn.clicked.connect(self.ventana_principalInventarioProductos)
+        self.admin_soporte.roleBtn.clicked.connect(self.ventana_reportes_diarios)
 
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
 
@@ -156,6 +163,9 @@ class AdminSoporteManager(QMainWindow):
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
         self.gestionServiciosPanel.atrasBtn.clicked.connect(self.anterior)
         self.principalInventarioProductosPanel.atrasBtn.clicked.connect(self.anterior)
+
+        self.reportesDiarios.volverBtn.clicked.connect(self.anterior)
+
 
     def ventana_reportes(self):
         self.widgets_stack.setCurrentWidget(self.reportePanel)
@@ -196,6 +206,10 @@ class AdminSoporteManager(QMainWindow):
 
     def ventana_principalInventarioProductos(self):
         self.widgets_stack.setCurrentWidget(self.principalInventarioProductosPanel)
+        self.stack.append(self.admin_soporte)
+
+    def ventana_reportes_diarios(self):
+        self.widgets_stack.setCurrentWidget(self.reportesDiarios)
         self.stack.append(self.admin_soporte)
 
     def anterior(self):
