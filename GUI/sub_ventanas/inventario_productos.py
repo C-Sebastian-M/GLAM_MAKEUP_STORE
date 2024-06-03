@@ -1,11 +1,18 @@
 import pandas as pd
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QCompleter
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QHeaderView,
+    QTableWidgetItem,
+    QCompleter,
+    QMessageBox,
+)
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from API.DATA import GestionDatos
 from API.prueba import Inventario
+
 
 class CBackground:
     def paintEvent(self, event):
@@ -39,6 +46,7 @@ class CBackground:
 
         painter.end()
 
+
 class InventarioProductos(QMainWindow, CBackground):
     def __init__(self):
         super(InventarioProductos, self).__init__()
@@ -48,17 +56,14 @@ class InventarioProductos(QMainWindow, CBackground):
         )
         self.inventario = Inventario()
         self.gestion_datos = GestionDatos()
-        self.ver_productos()
-        self.ver_productosModificar()
-        self.ver_productosEliminar()
-        self.ver_productosComprar()
         self.menu_boton.clicked.connect(self.mover_menu)
         self.add_boton.clicked.connect(self.add_productos)
         self.ver_actualizar_boton.clicked.connect(self.ver_productos)
         self.pushButton_verStock.clicked.connect(self.ver_productosComprar)
         self.pushButton_verModificar.clicked.connect(self.ver_productosModificar)
         self.pushButton_verEliminar.clicked.connect(self.ver_productosEliminar)
-        self.modify_buscar_boton.clicked.connect(self.mostar_formulario)
+        self.modify_buscar_boton.clicked.connect(self.mostrar_formulario)
+        self.modify_guardar_boton.clicked.connect(self.modificar_productos)
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.ver_productos_pagina)
@@ -73,7 +78,9 @@ class InventarioProductos(QMainWindow, CBackground):
         )
         self.modificar_producto_boton.clicked.connect(self.limpiar_campos)
         self.descontinuar_producto_boton.clicked.connect(
-            lambda: self.stackedWidget.setCurrentWidget(self.descontinuar_producto_pagina)
+            lambda: self.stackedWidget.setCurrentWidget(
+                self.descontinuar_producto_pagina
+            )
         )
         self.descontinuar_producto_boton.clicked.connect(self.limpiar_campos)
         self.comprar_stock_boton.clicked.connect(
@@ -115,10 +122,10 @@ class InventarioProductos(QMainWindow, CBackground):
         self.modify_buscar_producto_lineEdit.setCompleter(self.completer)
         self.del_buscar_producto_lineEdit.setCompleter(self.completer)
         self.buy_buscar_producto_lineEdit.setCompleter(self.completer)
-        
+
     # Método para limpiar los campos cada que se cambiar de página
     def limpiar_campos(self):
-        #Labels añadir_producto
+        # Labels añadir_producto
         self.add_referencia_lineEdit.clear()
         self.add_marca_lineEdit.clear()
         self.add_precio_adquisicion_lineEdit.clear()
@@ -132,30 +139,30 @@ class InventarioProductos(QMainWindow, CBackground):
         self.del_buscar_producto_lineEdit.clear()
         self.buy_buscar_producto_lineEdit.clear()
         self.buy_cantidad_ingresar_lineEdit.clear()
-        
+
     # Método para validar la longitud del código de barras
     def setupValidatorsCodigoBarras(self):
         validacion_referencia = QtGui.QRegularExpressionValidator(
             QtCore.QRegularExpression(r"\d{0,13}")
         )
         self.add_codigoBarras_lineEdit.setValidator(validacion_referencia)
-    
+
     # Método para definir los precios
     def setupValidatorsPrecios(self):
-    # Límite recomendado para precios (hasta 99999999.99)
+        # Límite recomendado para precios (hasta 99999999.99)
         validacion_precios = QtGui.QRegularExpressionValidator(
-            QtCore.QRegularExpression(r"\d{1,8}(\.\d{1,2})?")
+            QtCore.QRegularExpression(r"\d{1,12}(\.\d{1,2})?")
         )
         self.add_precio_adquisicion_lineEdit.setValidator(validacion_precios)
         self.add_precio_ventas_lineEdit.setValidator(validacion_precios)
-    
+
     # Método para definir la cantidad de unidades (máximo 99.999)
     def setupValidatorsUnidades(self):
         validacion_unidades = QtGui.QRegularExpressionValidator(
             QtCore.QRegularExpression(r"\d{0,7}")
         )
         self.add_unidades_actuales_lineEdit.setValidator(validacion_unidades)
-    
+
     # Método que permite mover la barra de menú
     def mover_menu(self):
         if True:
@@ -173,21 +180,50 @@ class InventarioProductos(QMainWindow, CBackground):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
-    
+
+    def showErrorMessage(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Warning)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Error de autenticación")
+        msg_box.exec_()
+
+    def show_success_dialog(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Éxito")
+        msg_box.exec_()
+
     # Método para definir base de datos ...
-    #self.tabla_ver_productos.setRowCount(0)
+    # self.tabla_ver_productos.setRowCount(0)
 
     def add_productos(self):
         referencia = self.add_referencia_lineEdit.text()
-        marca =  self.add_marca_lineEdit.text()
-        precio_adquisicion = int(self.add_precio_adquisicion_lineEdit.text())
-        precio_venta =  int(self.add_precio_ventas_lineEdit.text())
+        marca = self.add_marca_lineEdit.text()
+        precio_adquisicion = float(self.add_precio_adquisicion_lineEdit.text())
+        precio_venta = float(self.add_precio_ventas_lineEdit.text())
         unidades_actuales = int(self.add_unidades_actuales_lineEdit.text())
         codigo_barras = self.add_codigoBarras_lineEdit.text()
-        self.inventario.crear_productos(referencia, precio_adquisicion, precio_venta, codigo_barras, marca, unidades_actuales)
-        self.ver_productos()      
-        
-    def ver_productos(self):   
+        if self.inventario.crear_productos(
+            referencia,
+            precio_adquisicion,
+            precio_venta,
+            codigo_barras,
+            marca,
+            unidades_actuales,
+        ):
+            self.show_success_dialog("Producto agregado correctamente")
+            self.aviso_modify_label.setText("Producto agregado correctamente")
+        else:
+            self.showErrorMessage(
+                "Producto no agregado. Por favor, verifica la información."
+            )
+            self.aviso_modify_label.setText(
+                "Producto no agregado. Por favor, verifica la información."
+            )
+
+    def ver_productos(self):
         self.tabla_ver_productos.setRowCount(0)
         for i, row in self.gestion_datos.productos.iterrows():
             self.tabla_ver_productos.insertRow(i)
@@ -213,26 +249,32 @@ class InventarioProductos(QMainWindow, CBackground):
         for i, row in self.gestion_datos.productos.iterrows():
             self.tableWidget_comprarStock.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
-                self.tableWidget_comprarStock.setItem(i, j, QTableWidgetItem(str(value)))
-    
+                self.tableWidget_comprarStock.setItem(
+                    i, j, QTableWidgetItem(str(value))
+                )
+
     def verificar_existencia(self):
         codigo_barras = self.modify_buscar_producto_lineEdit.text()
         if (
-            str(codigo_barras) in str(self.gestion_datos.productos["Codigo de barras"].values)
+            str(codigo_barras)
+            in str(self.gestion_datos.productos["Codigo de barras"].values)
             or codigo_barras in self.gestion_datos.productos["Codigo de barras"].values
         ):
             return True
         else:
             return False
-    
-    def mostar_formulario(self):
+
+    def mostrar_formulario(self):
         codigo_barras = self.verificar_existencia
         if codigo_barras:
-            self.horizontalLayout_7.show()
+            self.frame_formularioModificar.show()
         else:
             self.showErrorMessage(
-                "Cédula Inexistente. Por favor, verifica la información."
+                "Producto Inexistente. Por favor, verifica la información."
             )
             self.aviso_modificar.setText(
-                "Cédula Inexistente. Por favor, verifica la información."
+                "Producto Inexistente. Por favor, verifica la información."
             )
+
+    def modificar_productos(self):
+        None
