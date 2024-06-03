@@ -80,4 +80,3 @@ class CustomValidaciones:
 
 
 prueba = CustomValidaciones()
-print(prueba.validar_condicional("120 <= 231.23"))

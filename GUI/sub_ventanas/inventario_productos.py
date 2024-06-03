@@ -1,7 +1,8 @@
+import pandas as pd
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox,QApplication
-from PyQt5.QtCore import QPropertyAnimation, Qt
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QCompleter
+from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
+from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from API.DATA import GestionDatos
 from API.prueba import Inventario
@@ -47,10 +48,16 @@ class InventarioProductos(QMainWindow, CBackground):
         )
         self.inventario = Inventario()
         self.gestion_datos = GestionDatos()
+        self.ver_productos()
+        self.ver_productosModificar()
+        self.ver_productosEliminar()
+        self.ver_productosComprar()
         self.menu_boton.clicked.connect(self.mover_menu)
         self.add_boton.clicked.connect(self.add_productos)
         self.ver_actualizar_boton.clicked.connect(self.ver_productos)
-        
+        self.pushButton_verStock.clicked.connect(self.ver_productosComprar)
+        self.pushButton_verModificar.clicked.connect(self.ver_productosModificar)
+        self.pushButton_verEliminar.clicked.connect(self.ver_productosEliminar)
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.ver_productos_pagina)
@@ -73,10 +80,40 @@ class InventarioProductos(QMainWindow, CBackground):
         )
         self.comprar_stock_boton.clicked.connect(self.limpiar_campos)
 
+        # Ancho columna adaptable
+        self.tabla_ver_productos.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        self.tableWidget_modificar.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        self.del_tabla_productos.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        self.tableWidget_comprarStock.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
         # Llamado métodos de validación en constructor
         self.setupValidatorsCodigoBarras()
         self.setupValidatorsPrecios()
         self.setupValidatorsUnidades()
+        self.frame_formularioModificar.hide()
+        self.frame_formulario_comprar_stock.hide()
+        df = pd.read_excel("registros.xlsx", sheet_name="Productos")
+        productos = df["Codigo de barras"].astype(str).tolist()
+        self.modelo_datos = QStringListModel(productos)
+        self.completer = QCompleter(self.modelo_datos, self)
+        self.completer.setCaseSensitivity(False)  # Ignorar mayúsculas y minúsculas
+        self.completer.setFilterMode(
+            Qt.MatchContains
+        )  # Coincidir con cualquier parte del texto
+        self.completer.setCompletionMode(QCompleter.PopupCompletion)
+        self.completer.setPopup(self.listView_comprarStock)
+        self.completer.setPopup(self.listView_modificar)
+        self.completer.setPopup(self.listView_eliminar)
+        self.modify_buscar_producto_lineEdit.setCompleter(self.completer)
+        self.del_buscar_producto_lineEdit.setCompleter(self.completer)
+        self.buy_buscar_producto_lineEdit.setCompleter(self.completer)
         
     # Método para limpiar los campos cada que se cambiar de página
     def limpiar_campos(self):
@@ -86,7 +123,15 @@ class InventarioProductos(QMainWindow, CBackground):
         self.add_precio_adquisicion_lineEdit.clear()
         self.add_precio_ventas_lineEdit.clear()
         self.add_unidades_actuales_lineEdit.clear()
-    
+        self.add_codigoBarras_lineEdit.clear()
+        self.modify_buscar_producto_lineEdit.clear()
+        self.modify_marca_lineEdit.clear()
+        self.modify_precio_adquisicion_lineEdit.clear()
+        self.modify_precio_venta_lineEdit.clear()
+        self.del_buscar_producto_lineEdit.clear()
+        self.buy_buscar_producto_lineEdit.clear()
+        self.buy_cantidad_ingresar_lineEdit.clear()
+        
     # Método para validar la longitud del código de barras
     def setupValidatorsCodigoBarras(self):
         validacion_referencia = QtGui.QRegularExpressionValidator(
@@ -96,8 +141,9 @@ class InventarioProductos(QMainWindow, CBackground):
     
     # Método para definir los precios
     def setupValidatorsPrecios(self):
+    # Límite recomendado para precios (hasta 99999999.99)
         validacion_precios = QtGui.QRegularExpressionValidator(
-            QtCore.QRegularExpression(r"\d{0,12}")
+            QtCore.QRegularExpression(r"\d{1,8}(\.\d{1,2})?")
         )
         self.add_precio_adquisicion_lineEdit.setValidator(validacion_precios)
         self.add_precio_ventas_lineEdit.setValidator(validacion_precios)
@@ -105,7 +151,7 @@ class InventarioProductos(QMainWindow, CBackground):
     # Método para definir la cantidad de unidades (máximo 99.999)
     def setupValidatorsUnidades(self):
         validacion_unidades = QtGui.QRegularExpressionValidator(
-            QtCore.QRegularExpression(r"\d{0,5}")
+            QtCore.QRegularExpression(r"\d{0,7}")
         )
         self.add_unidades_actuales_lineEdit.setValidator(validacion_unidades)
     
@@ -145,4 +191,25 @@ class InventarioProductos(QMainWindow, CBackground):
             self.tabla_ver_productos.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
+
+    def ver_productosModificar(self):
+        self.tableWidget_modificar.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            self.tableWidget_modificar.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tableWidget_modificar.setItem(i, j, QTableWidgetItem(str(value)))
+
+    def ver_productosEliminar(self):
+        self.del_tabla_productos.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            self.del_tabla_productos.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.del_tabla_productos.setItem(i, j, QTableWidgetItem(str(value)))
+
+    def ver_productosComprar(self):
+        self.tableWidget_comprarStock.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            self.tableWidget_comprarStock.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tableWidget_comprarStock.setItem(i, j, QTableWidgetItem(str(value)))
         
