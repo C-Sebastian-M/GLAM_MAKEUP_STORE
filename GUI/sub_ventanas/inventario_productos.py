@@ -5,7 +5,10 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 from API.DATA import GestionDatos
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from API.DATA import GestionDatos
+<<<<<<< HEAD
+=======
 from API.prueba import Inventario
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
 
 class CBackground:
     def paintEvent(self, event):
@@ -47,16 +50,32 @@ class InventarioProductos(QMainWindow, CBackground):
             self,
         )
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+        self.gestion_datos=GestionDatos()
+=======
         self.inventario = Inventario()
         self.gestion_datos = GestionDatos()
+>>>>>>> main
 =======
         self.gestion_datos = GestionDatos()
         
+>>>>>>> main
+<<<<<<< HEAD
+        self.menu_boton.clicked.connect(self.mover_menu)
+
+        self.add_boton.clicked.connect(self.add_productos)
+        self.ver_actualizar_boton.clicked.connect(self.ver_productos)
+=======
+        self.inventario = Inventario()
+        self.gestion_datos = GestionDatos()
+=======
 >>>>>>> main
         self.menu_boton.clicked.connect(self.mover_menu)
         self.add_boton.clicked.connect(self.add_productos)
         self.ver_actualizar_boton.clicked.connect(self.ver_productos)
         
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.ver_productos_pagina)
@@ -151,6 +170,16 @@ class InventarioProductos(QMainWindow, CBackground):
         precio_adquisicion = self.add_precio_adquisicion_lineEdit.text()
         precio_venta =  self.add_precio_ventas_lineEdit.text()
         unidades_actuales = self.add_unidades_actuales_lineEdit.text()
+<<<<<<< HEAD
+        self.gestion_datos.agregar_producto(1,2,3,4,5,6)
+
+    def ver_productos(self):
+        self.tabla_ver_productos.setRowCount(0)
+        for i, row in self.gestion_datos.clientes.iterrows():
+            self.tabla_ver_productos.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
+=======
         codigo_barras = self.add_codigoBarras_lineEdit.text()
         self.inventario.crear_productos(referencia,codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales)
     
@@ -162,6 +191,10 @@ class InventarioProductos(QMainWindow, CBackground):
             for j, (colname, value) in enumerate(row.items()):
                 self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
         
+<<<<<<< HEAD
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
+=======
+>>>>>>> main
 =======
     # VER PRODUCTOS PÁGINA
     # tabla_ver_productos (DATAFRAME)
