@@ -10,9 +10,10 @@ from PyQt5.QtGui import (
 from API.DATA import GestionDatos
 from API.Validaciones import *
 import sys
-#from DATA import GestionDatos
-#from DATA import GestionDatos
-#from API.Validaciones import *
+from API.prueba import Cajero
+from API.Validaciones import *
+
+
 class CBackground:
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -78,9 +79,14 @@ class Caja(QMainWindow):
         loadUi(r"GUI\ui\Caja.ui", self,)
         self.control_navegacion = control_navegacion
         self.Atras.clicked.connect(self.backMenu)
+<<<<<<< HEAD
+        self.cajero = Cajero()
+
+=======
         
         self.gestion_datos = GestionDatos() #<- se instaura un objeto tipo Gestion de datos
         
+>>>>>>> main
         #self.setWindowFlag(QtCore.Qt.FramelessWindowHint) #borrar los botones externos de la pagina original
         self.BotonCliente.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Clientes_2))
         self.BotonProductos.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Productos_3))
@@ -92,7 +98,9 @@ class Caja(QMainWindow):
         self.mostrar_clientes()
 
         #definir funciones botones pagina Clientes
-        self.Confirmar_3.clicked.connect(self.CheckNewClient)
+        self.ChangeCli.clicked.connect(self.clickchange)
+        self.ConfirmarNew.clicked.connect(self.CheckNewClient)
+        self.ConfirmarAnt.clicked.connect(self.creado)
         self.Seleccionar.clicked.connect(self.selCli)
         self.Nuevo_2.clicked.connect(self.New)
         self.TablaCedulas.hide()
@@ -103,7 +111,74 @@ class Caja(QMainWindow):
         self.Ced_2.hide()
         self.Tel_2.hide()
         self.Nom_2.hide()
+<<<<<<< HEAD
+        self.ConfirmarNew.hide()
+        self.ConfirmarAnt.hide()
+        self.ChangeCli.hide()
+##////////FUNCIONES CLIENTES/////////##
+
+    def clickchange(self):
+        self.Seleccionar.show()
+        self.Nuevo_2.show()
+        self.ChangeCli.hide()
+
+    def selCli(self):
+        self.TablaCedulas.show()
+        self.IngCedula.show()
+        self.Cedula_2.hide()
+        self.Nombre_2.hide()
+        self.Telefono_2.hide()
+        self.Ced_2.hide()
+        self.Tel_2.hide()
+        self.Nom_2.hide()
+        self.ConfirmarNew.hide()
+        self.ConfirmarAnt.show()
+
+    def New(self):
+        self.TablaCedulas.hide()
+        self.IngCedula.hide()
+        self.Cedula_2.show()
+        self.Nombre_2.show()
+        self.Telefono_2.show()
+        self.Ced_2.show()
+        self.Tel_2.show()
+        self.Nom_2.show()
+        self.ConfirmarNew.show()
+        self.ConfirmarAnt.hide()
+
+    def CheckNewClient(self):
+        cedula = self.Ced_2.text()
+        nombre = self.Nom_2.text()
+        telefono = self.Tel_2.text()
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle("Validación")
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        if self.cajero.agregar_cliente(cedula, nombre, telefono):
+            msg_box.setText("Cliente ingresado con éxito")
+            msg_box.exec_()
+            self.LabelCedula.hide()
+            self.Seleccionar.hide()
+            self.Nuevo_2.hide()
+            self.ConfirmarNew.hide()
+            self.ConfirmarAnt.hide()
+            self.TablaCedulas.hide()
+            self.IngCedula.hide()
+            self.Cedula_2.hide()
+            self.Nombre_2.hide()
+            self.Telefono_2.hide()
+            self.Ced_2.hide()
+            self.Tel_2.hide()
+            self.Nom_2.hide()
+            self.ConfirmarNew.hide()
+            self.ConfirmarAnt.hide()
+            self.ChangeCli.show()
+        else:
+            msg_box.setText("Cliente Incorrecto")
+            msg_box.exec_()
+=======
         
+>>>>>>> main
 
     def backMenu(self):
         self.control_navegacion.mostrar_ventana("menu")
@@ -125,6 +200,13 @@ class Caja(QMainWindow):
     def hidedate(self):
         self.dateEdit.hide()
 
+<<<<<<< HEAD
+    
+    
+    def creado(self):
+        pass
+
+=======
     def  selCli(self):
         self.TablaCedulas.show()
         self.IngCedula.show()
@@ -173,6 +255,7 @@ class Caja(QMainWindow):
             datos_cliente = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"]==cedula]
             if not datos_cliente.empty:
                 return datos_cliente
+>>>>>>> main
 
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
@@ -191,6 +274,7 @@ class Reporte(QMainWindow, CBackground):
 
     def envio(self):
         pass
+    
 
 #/////CLASE CONEXIONES/////#
 class Aplicacion(QMainWindow):

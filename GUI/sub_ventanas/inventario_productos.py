@@ -4,6 +4,8 @@ from PyQt5.QtCore import QPropertyAnimation, Qt
 from PyQt5 import QtCore, QtWidgets, QtGui
 from API.DATA import GestionDatos
 from PyQt5.QtGui import QPainter, QBrush, QColor
+from API.DATA import GestionDatos
+from API.prueba import Inventario
 
 class CBackground:
     def paintEvent(self, event):
@@ -44,9 +46,16 @@ class InventarioProductos(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\inventario_productos\inventario_productos.ui",
             self,
         )
+<<<<<<< HEAD
+        self.inventario = Inventario()
+        self.gestion_datos = GestionDatos()
+=======
         self.gestion_datos = GestionDatos()
         
+>>>>>>> main
         self.menu_boton.clicked.connect(self.mover_menu)
+        self.add_boton.clicked.connect(self.add_productos)
+        self.ver_actualizar_boton.clicked.connect(self.ver_productos)
         
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
@@ -79,10 +88,9 @@ class InventarioProductos(QMainWindow, CBackground):
     def limpiar_campos(self):
         #Labels añadir_producto
         self.add_referencia_lineEdit.clear()
-        self.add_codigo_barras_lineEdit.clear()
         self.add_marca_lineEdit.clear()
         self.add_precio_adquisicion_lineEdit.clear()
-        self.add_precio_venta_lineEdit.clear()
+        self.add_precio_ventas_lineEdit.clear()
         self.add_unidades_actuales_lineEdit.clear()
     
     # Método para validar la longitud del código de barras
@@ -90,7 +98,7 @@ class InventarioProductos(QMainWindow, CBackground):
         validacion_referencia = QtGui.QRegularExpressionValidator(
             QtCore.QRegularExpression(r"\d{0,13}")
         )
-        self.add_codigo_barras_lineEdit.setValidator(validacion_referencia)
+        self.add_codigoBarras_lineEdit.setValidator(validacion_referencia)
     
     # Método para definir los precios
     def setupValidatorsPrecios(self):
@@ -98,7 +106,7 @@ class InventarioProductos(QMainWindow, CBackground):
             QtCore.QRegularExpression(r"\d{0,12}")
         )
         self.add_precio_adquisicion_lineEdit.setValidator(validacion_precios)
-        self.add_precio_venta_lineEdit.setValidator(validacion_precios)
+        self.add_precio_ventas_lineEdit.setValidator(validacion_precios)
     
     # Método para definir la cantidad de unidades (máximo 99.999)
     def setupValidatorsUnidades(self):
@@ -136,7 +144,25 @@ class InventarioProductos(QMainWindow, CBackground):
     
     # Método para definir base de datos ...
     #self.tabla_ver_productos.setRowCount(0)
+
+    def add_productos(self):
+        referencia = self.add_referencia_lineEdit.text()
+        marca =  self.add_marca_lineEdit.text()
+        precio_adquisicion = self.add_precio_adquisicion_lineEdit.text()
+        precio_venta =  self.add_precio_ventas_lineEdit.text()
+        unidades_actuales = self.add_unidades_actuales_lineEdit.text()
+        codigo_barras = self.add_codigoBarras_lineEdit.text()
+        self.inventario.crear_productos(referencia,codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales)
     
+<<<<<<< HEAD
+    def ver_productos(self):
+        self.tabla_ver_productos.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            self.tabla_ver_productos.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
+        
+=======
     # VER PRODUCTOS PÁGINA
     # tabla_ver_productos (DATAFRAME)
     # ver_actualizar_boton
@@ -170,3 +196,4 @@ class InventarioProductos(QMainWindow, CBackground):
     # buy_cantidad_ingresar_lineEdit (BOTON PARA INGRESAR UNIDADES)
     # buy_add_boton (BOTON PARA AÑADIR)
 >>>>>>> 5b993dea764534de7c7f9bb78fa73890379c23b7
+>>>>>>> main

@@ -10,7 +10,15 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
 from API.DATA import GestionDatos
+<<<<<<< HEAD
+import sys
+=======
 from PyQt5.QtGui import QPainter, QBrush, QColor
+<<<<<<< HEAD
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
+from API.DATA import GestionDatos
+=======
+>>>>>>> main
 from API.Validaciones import *
 
 
@@ -67,6 +75,7 @@ class GestionClientes(QMainWindow, CBackground):
         self.pushButton_add.clicked.connect(self.registrar_cliente)
         self.pushButton_guardarInfo.clicked.connect(self.modificar_cliente)
         self.pushButton_eliminar.clicked.connect(self.eliminar_cliente)
+        self.pushButton_modificar.clicked.connect(self.mostar_formulario)
 
         self.gripSize = 10
         self.grip = QtWidgets.QSizeGrip(self)
@@ -189,7 +198,11 @@ class GestionClientes(QMainWindow, CBackground):
             validar_Cedula(cedula) #Se aplican las validaciones respectivas sobre la cedula, telefono y nombre
             and validacion_Telefono(telefono)
             and validar_NombreCom(nombre)
+<<<<<<< HEAD
+            and cedula not in self.gestion_datos.clientes["Cedula"].values
+=======
             and cedula not in self.gestion_datos.clientes["Cedula"].values #Se comprueba que la cedula no este en la BD
+>>>>>>> main
         ):
             self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
             self.mostrar_clientes()
@@ -222,6 +235,39 @@ class GestionClientes(QMainWindow, CBackground):
         msg_box.setWindowTitle("Éxito")
         msg_box.exec_()
 
+<<<<<<< HEAD
+    def validar_existencia(self):
+        # Los campos para validar son:    
+        cedulaBuscarCliente = self.lineEdit_modificar.text()
+        if cedulaBuscarCliente in self.gestion_datos.clientes["Cedula"].values or int(cedulaBuscarCliente) in self.gestion_datos.clientes["Cedula"]:
+            return True
+        else:
+            return False
+    
+    def mostar_formulario(self, cedula):
+        cedula= self.validar_existencia()
+        if cedula:
+            self.frame_formulario.show()
+        else:
+            self.showErrorMessage(
+                "Error en los datos ingresados. Por favor, verifica la información."
+            )
+    
+    def modificar_cliente(self):
+        cedulaBuscarCliente = self.lineEdit_modificar.text()
+        nuevaCedula = self.lineEdit_nuevaCedula.text()
+        nuevoNombre = self.lineEdit_nuevoNombre.text()
+        nuevoTelefono = self.lineEdit_nuevoTelefono.text()
+        if validar_NombreCom(nuevoNombre) and validacion_Telefono(nuevoTelefono) and validar_Cedula(nuevaCedula):
+            nuevos_datos = {
+                "Nombre": nuevoNombre,
+                "Telefono": nuevoTelefono,
+                "Cedula": nuevaCedula}
+            self.gestion_datos.actualizar_cliente(cedulaBuscarCliente, nuevos_datos)
+            self.mostrar_clientes()  # Actualizar la tabla de clientes
+        else:
+            return False
+=======
     def modificar_cliente(self): # <- Falta terminar
         # Los campos para validar son:
         cedulaBuscarCliente = self.lineEdit_modificar.text() #Campo donde se ingresa la cedula
@@ -232,6 +278,7 @@ class GestionClientes(QMainWindow, CBackground):
             nuevoTelefono = self.lineEdit_nuevoTelefono.text()
         #else:
          #   return False
+>>>>>>> main
 
        # if validar_NombreCom(self.lineEdit_nuevoNombre.text()) and validacion_Telefono(
         #    self.lineEdit_nuevoTelefono.text()

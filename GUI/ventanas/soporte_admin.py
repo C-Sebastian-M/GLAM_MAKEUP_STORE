@@ -2,16 +2,12 @@ from typing import List
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QPushButton
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QCursor
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QCursor
 from PyQt5 import uic
 
 from GUI.sub_ventanas.reportes import (
-    ReportePanel,
-    InventarioPanel,
-    Ventas,
-    Inventario,
-    CBackground,
+    ReportePanel, Ventas,
+    Inventario, CBackground,
 )
 
 from GUI.sub_ventanas.inventario_productos import InventarioProductos
@@ -59,22 +55,22 @@ class AdminSoporteManager(QMainWindow):
         ########################### Inicializando ventanas de reporte ###########################
         self.admin_soporte = AdminSoporte(user_role)
         self.reportePanel = ReportePanel()
-        self.inventarioPanel = InventarioPanel()
+        # self.inventarioPanel = InventarioPanel()
         self.ventas = Ventas(
             "Ventas", ["id", "cantidad", "cliente", "productos", "box_id"]
-        )
-        self.inventarioServicios = Inventario(
-            "Inventario", ["referencia", "marca", "codigo", "stock", "precio venta"]
         )
         self.inventarioProductos = Inventario(
             "Inventario", ["id", "bbm", "cod", "stock", "size"]
         )
+        self.inventarioServicios = Inventario(
+            "Inventario", ["referencia", "marca", "codigo", "stock", "precio venta"]
+        )
         self.widgets_stack.addWidget(self.admin_soporte)
         self.widgets_stack.addWidget(self.reportePanel)
-        self.widgets_stack.addWidget(self.inventarioPanel)
         self.widgets_stack.addWidget(self.ventas)
-        self.widgets_stack.addWidget(self.inventarioServicios)
+        # self.widgets_stack.addWidget(self.inventario)
         self.widgets_stack.addWidget(self.inventarioProductos)
+        self.widgets_stack.addWidget(self.inventarioServicios)
         ########################### fin ###########################
         self.admin_soporte.cerrarBtn.clicked.connect(self.volver_login)
 
@@ -128,22 +124,12 @@ class AdminSoporteManager(QMainWindow):
         # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
 
-        self.reportePanel.inventarioBtn.clicked.connect(self.panel_inventario)
+        self.reportePanel.inventarioBtn.clicked.connect(self.ventana_inventario)
         self.reportePanel.ventasBtn.clicked.connect(self.ventana_ventas)
         self.ventas.volverBtn.clicked.connect(self.anterior)
 
-        self.inventarioPanel.volverBtn.clicked.connect(self.anterior)
-        self.inventarioPanel.serviciosBtn.clicked.connect(
-            self.ventana_inventarioServicios
-        )
-        self.inventarioPanel.serviciosBtn.clicked.connect(self.jump_invServicios)
-        self.inventarioPanel.productosBtn.clicked.connect(
-            self.ventana_inventarioProductos
-        )
-        self.inventarioPanel.productosBtn.clicked.connect(self.jump_invProductos)
-
-        self.inventarioServicios.productosBtn.clicked.connect(self.jump_invProductos)
-        self.inventarioProductos.serviciosBtn.clicked.connect(self.jump_invServicios)
+        self.inventarioServicios.productosBtn.clicked.connect(self.ventana_inventarioProductos)
+        self.inventarioProductos.serviciosBtn.clicked.connect(self.ventana_inventarioServicios)
 
         self.inventarioServicios.volverBtn.clicked.connect(self.anterior)
         self.inventarioProductos.volverBtn.clicked.connect(self.anterior)
@@ -166,27 +152,24 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.ventas)
         self.stack.append(self.reportePanel)
 
-    def panel_inventario(self):
-        self.widgets_stack.setCurrentWidget(self.inventarioPanel)
-        self.stack.append(self.reportePanel)
+    def ventana_inventario(self):
+        self.ventana_inventarioProductos()
 
     def ventana_inventarioServicios(self):
         self.widgets_stack.setCurrentWidget(self.inventarioServicios)
-        self.stack.append(self.inventarioPanel)
+        if not self.reportePanel in self.stack:
+            self.stack.append(self.reportePanel)
 
-    def ventana_inventarioProductos(self):
-        self.widgets_stack.setCurrentWidget(self.inventarioProductos)
-        self.stack.append(self.inventarioPanel)
-
-    def jump_invServicios(self):
-        self.widgets_stack.setCurrentWidget(self.inventarioServicios)
         self.inventarioServicios.serviciosBtn.setStyleSheet(
             "background-color: #FFFFFF;"
         )
         self.inventarioServicios.productosBtn.setStyleSheet("background-color: none;")
 
-    def jump_invProductos(self):
+    def ventana_inventarioProductos(self):
         self.widgets_stack.setCurrentWidget(self.inventarioProductos)
+        if not self.reportePanel in self.stack:
+            self.stack.append(self.reportePanel)
+
         self.inventarioProductos.serviciosBtn.setStyleSheet("background-color: none;")
         self.inventarioProductos.productosBtn.setStyleSheet(
             "background-color: #FFFFFF;"
