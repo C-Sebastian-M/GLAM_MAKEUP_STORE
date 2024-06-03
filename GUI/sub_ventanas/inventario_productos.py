@@ -58,6 +58,7 @@ class InventarioProductos(QMainWindow, CBackground):
         self.pushButton_verStock.clicked.connect(self.ver_productosComprar)
         self.pushButton_verModificar.clicked.connect(self.ver_productosModificar)
         self.pushButton_verEliminar.clicked.connect(self.ver_productosEliminar)
+        self.modify_buscar_boton.clicked.connect(self.mostar_formulario)
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.ver_productos_pagina)
@@ -179,13 +180,14 @@ class InventarioProductos(QMainWindow, CBackground):
     def add_productos(self):
         referencia = self.add_referencia_lineEdit.text()
         marca =  self.add_marca_lineEdit.text()
-        precio_adquisicion = self.add_precio_adquisicion_lineEdit.text()
-        precio_venta =  self.add_precio_ventas_lineEdit.text()
-        unidades_actuales = self.add_unidades_actuales_lineEdit.text()
+        precio_adquisicion = int(self.add_precio_adquisicion_lineEdit.text())
+        precio_venta =  int(self.add_precio_ventas_lineEdit.text())
+        unidades_actuales = int(self.add_unidades_actuales_lineEdit.text())
         codigo_barras = self.add_codigoBarras_lineEdit.text()
-        self.inventario.crear_productos(referencia,codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales)
-    
-    def ver_productos(self):
+        self.inventario.crear_productos(referencia, precio_adquisicion, precio_venta, codigo_barras, marca, unidades_actuales)
+        self.ver_productos()      
+        
+    def ver_productos(self):   
         self.tabla_ver_productos.setRowCount(0)
         for i, row in self.gestion_datos.productos.iterrows():
             self.tabla_ver_productos.insertRow(i)
@@ -212,4 +214,25 @@ class InventarioProductos(QMainWindow, CBackground):
             self.tableWidget_comprarStock.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.tableWidget_comprarStock.setItem(i, j, QTableWidgetItem(str(value)))
-        
+    
+    def verificar_existencia(self):
+        codigo_barras = self.modify_buscar_producto_lineEdit.text()
+        if (
+            str(codigo_barras) in str(self.gestion_datos.productos["Codigo de barras"].values)
+            or codigo_barras in self.gestion_datos.productos["Codigo de barras"].values
+        ):
+            return True
+        else:
+            return False
+    
+    def mostar_formulario(self):
+        codigo_barras = self.verificar_existencia
+        if codigo_barras:
+            self.horizontalLayout_7.show()
+        else:
+            self.showErrorMessage(
+                "Cédula Inexistente. Por favor, verifica la información."
+            )
+            self.aviso_modificar.setText(
+                "Cédula Inexistente. Por favor, verifica la información."
+            )
