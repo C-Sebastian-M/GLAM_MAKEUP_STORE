@@ -4,6 +4,10 @@ from GUI.ventanas.Caja import Ui_Caja
 from GUI.ventanas.soporte_admin import AdminSoporteManager
 from API.prueba import Cajero
 from API.DATA import GestionDatos
+<<<<<<< HEAD
+from API.Validaciones import *
+=======
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
 
 
 class Login(QMainWindow):

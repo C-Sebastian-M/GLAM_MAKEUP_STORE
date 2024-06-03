@@ -9,7 +9,19 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
+<<<<<<< HEAD
+=======
+from API.DATA import GestionDatos
+<<<<<<< HEAD
+import sys
+=======
+>>>>>>> main
 from PyQt5.QtGui import QPainter, QBrush, QColor
+<<<<<<< HEAD
+>>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
+from API.DATA import GestionDatos
+=======
+>>>>>>> main
 from API.Validaciones import *
 
 
@@ -228,12 +240,15 @@ class GestionClientes(QMainWindow, CBackground):
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     def mostar_formulario(self):
         cedula = validar_Cedula(self.lineEdit_modificar.text())
         if cedula:
             self.frame_formulario.show()
             return int(self.lineEdit_modificar.text())
 =======
+=======
+>>>>>>> main
     def validar_existencia(self):
         # Los campos para validar son:    
         cedulaBuscarCliente = self.lineEdit_modificar.text()
@@ -287,6 +302,7 @@ class GestionClientes(QMainWindow, CBackground):
             self.aviso_eliminar.setText("Cliente eliminado correctamente")
             self.limpiar_campos()
         else:
+<<<<<<< HEAD
             self.showErrorMessage(
                 "Error en los datos ingresados. Por favor, verifica la información."
             )
@@ -294,6 +310,9 @@ class GestionClientes(QMainWindow, CBackground):
                 "Error en los datos ingresados. Por favor, verifica la información."
             )
         
+=======
+            return False
+>>>>>>> main
 =======
     def modificar_cliente(self): # <- Falta terminar
         # Los campos para validar son:

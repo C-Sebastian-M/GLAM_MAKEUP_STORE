@@ -51,11 +51,17 @@ class InventarioProductos(QMainWindow, CBackground):
         )
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         self.gestion_datos=GestionDatos()
+=======
+        self.inventario = Inventario()
+        self.gestion_datos = GestionDatos()
+>>>>>>> main
 =======
         self.gestion_datos = GestionDatos()
         
 >>>>>>> main
+<<<<<<< HEAD
         self.menu_boton.clicked.connect(self.mover_menu)
 
         self.add_boton.clicked.connect(self.add_productos)
@@ -63,6 +69,8 @@ class InventarioProductos(QMainWindow, CBackground):
 =======
         self.inventario = Inventario()
         self.gestion_datos = GestionDatos()
+=======
+>>>>>>> main
         self.menu_boton.clicked.connect(self.mover_menu)
         self.add_boton.clicked.connect(self.add_productos)
         self.ver_actualizar_boton.clicked.connect(self.ver_productos)
@@ -183,7 +191,10 @@ class InventarioProductos(QMainWindow, CBackground):
             for j, (colname, value) in enumerate(row.items()):
                 self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
         
+<<<<<<< HEAD
 >>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
+=======
+>>>>>>> main
 =======
     # VER PRODUCTOS PÁGINA
     # tabla_ver_productos (DATAFRAME)
