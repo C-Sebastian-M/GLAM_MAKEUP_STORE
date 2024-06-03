@@ -242,6 +242,7 @@ class GestionClientes(QMainWindow, CBackground):
             self.aviso_modificar.setText("Error en los datos ingresados. Por favor, verifica la información.")
 
     def modificar_cliente(self):
+        cedulaBuscarCliente = int(self.lineEdit_modificar.text())
         nuevaCedula = self.lineEdit_nuevaCedula.text()
         nuevoNombre = self.lineEdit_nuevoNombre.text()
         nuevoTelefono = self.lineEdit_nuevoTelefono.text()
