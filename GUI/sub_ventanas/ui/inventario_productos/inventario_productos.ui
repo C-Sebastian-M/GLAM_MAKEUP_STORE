@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>765</width>
-    <height>600</height>
+    <width>837</width>
+    <height>557</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -452,7 +452,7 @@ QTableWidget::item:selected {
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <layout class="QVBoxLayout" name="verticalLayout_15">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -524,32 +524,15 @@ QTableWidget::item:selected {
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_4">
-                   <item>
-                    <spacer name="horizontalSpacer_2">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="ver_actualizar_boton">
-                     <property name="text">
-                      <string>ACTUALIZAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  <widget class="QPushButton" name="ver_actualizar_boton">
+                   <property name="text">
+                    <string>ACTUALIZAR</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -566,6 +549,19 @@ QTableWidget::item:selected {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_5">
                    <item>
                     <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -576,6 +572,13 @@ QTableWidget::item:selected {
                       <widget class="QLabel" name="add_referencia_label">
                        <property name="text">
                         <string>Referencia</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label">
+                       <property name="text">
+                        <string>CODIGO BARRAS</string>
                        </property>
                       </widget>
                      </item>
@@ -619,6 +622,13 @@ actuales</string>
                      <item>
                       <widget class="QLineEdit" name="add_referencia_lineEdit">
                        <property name="placeholderText">
+                        <string>REFERENCIA</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="add_codigoBarras_lineEdit">
+                       <property name="placeholderText">
                         <string>CODIGO DE BARRAS</string>
                        </property>
                       </widget>
@@ -654,6 +664,19 @@ actuales</string>
                     </layout>
                    </item>
                   </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_6">

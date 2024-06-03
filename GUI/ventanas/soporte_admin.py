@@ -1,11 +1,17 @@
 from typing import List
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QPushButton
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QApplication,
+    QStackedWidget,
+    QPushButton,
+    QFileDialog,
+)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
 from PyQt5.QtGui import QIcon
 from PyQt5 import uic
-
+from PyQt5.QtGui import QPixmap
 from GUI.sub_ventanas.reportes import (
     ReportePanel,
     InventarioPanel,
@@ -13,11 +19,11 @@ from GUI.sub_ventanas.reportes import (
     Inventario,
     CBackground,
 )
-
 from GUI.sub_ventanas.inventario_productos import InventarioProductos
-
 from GUI.sub_ventanas.GestionClientes import GestionClientes
 from GUI.sub_ventanas.catalogo_servicios import GestionServicios
+import os
+import json
 
 
 class AdminSoporte(QMainWindow, CBackground):
@@ -36,27 +42,28 @@ class AdminSoporte(QMainWindow, CBackground):
             self.setWindowTitle("Administrador")
             self.title.setText("Admin")
             self.roleBtn.setText("Reporte\nDiario")
+            self.pushButton_cambiarLogo.hide()
             return
 
         self.setWindowTitle("Soporte")
         self.title.setText("Soporte")
         self.roleBtn.setText("Administrar\nusuario")
+        self.pushButton_cambiarLogo.setText("Cambiar Logo")
 
 
 class AdminSoporteManager(QMainWindow):
-    def __init__(
-        self, ventana_login, user_role: str
-    ) -> None:  # pass role as argument (soporte or admin)
-        super(QMainWindow, self).__init__()
+    def __init__(self, ventana_login, user_role: str) -> None:
+        super().__init__()
         self.ventana_login = ventana_login
         if not user_role:
-            raise TypeError("El rol de usuario no puede estar vacio.")
+            raise TypeError("El rol de usuario no puede estar vacío.")
         self.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
         self.setWindowTitle("GLAM MAKEUP STORE")
         self.stack = []  # Guarda las ventanas anteriores
         self.widgets_stack = QStackedWidget(self)
-        ########################### Inicializando ventanas de reporte ###########################
+
+        # Inicializando ventanas de reporte
         self.admin_soporte = AdminSoporte(user_role)
         self.reportePanel = ReportePanel()
         self.inventarioPanel = InventarioPanel()
@@ -75,29 +82,46 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.addWidget(self.ventas)
         self.widgets_stack.addWidget(self.inventarioServicios)
         self.widgets_stack.addWidget(self.inventarioProductos)
-        ########################### fin ###########################
-        self.admin_soporte.cerrarBtn.clicked.connect(self.volver_login)
 
-        # Inicializando ventanas de gestion
+        # Inicializando ventanas de gestión
         self.gestionPanel = GestionClientes()
         self.gestionServiciosPanel = GestionServicios()
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.gestionServiciosPanel)
-        # fin
 
         # Inicializando ventana de Inventario de productos
         self.principalInventarioProductosPanel = InventarioProductos()
         self.widgets_stack.addWidget(self.principalInventarioProductosPanel)
 
-        # asignando el widget central
+        # Asignando el widget central
         self.setCentralWidget(self.widgets_stack)
-        # set actual
         self.widgets_stack.setCurrentWidget(self.admin_soporte)
 
-        # conexiones
+        # Conexiones
+        self.admin_soporte.cerrarBtn.clicked.connect(self.volver_login)
+        self.admin_soporte.pushButton_cambiarLogo.clicked.connect(self.cambiar_logo)
         self.inicializar()
+        ManejarLogo().register_observer(self)
 
-    # Volver al login
+    def cambiar_logo(self):
+        opciones = QFileDialog.Options()
+        archivo, _ = QFileDialog.getOpenFileName(
+            self,
+            "Seleccionar Logo",
+            "",
+            "Imágenes (*.png *.jpg *.jpeg *.bmp);;Todos los archivos (*)",
+            options=opciones,
+        )
+        if archivo:
+            ManejarLogo().set_logo(archivo)
+
+    def update_logo(self, path):
+        self.admin_soporte.logo.setPixmap(QPixmap(path))
+
+    def closeEvent(self, event):
+        ManejarLogo().unregister_observer(self)
+        event.accept()
+
     def volver_login(self):
         self.ventana_login.show()
         self.close()
@@ -111,36 +135,19 @@ class AdminSoporteManager(QMainWindow):
             button.setCursor(QCursor(Qt.PointingHandCursor))
 
     def conexiones(self):
-        # Main
-        self.admin_soporte.reportesBtn.clicked.connect(
-            self.ventana_reportes
-        )  # Conexión a ventanas Reportes
-        self.admin_soporte.gestionBtn.clicked.connect(
-            self.ventana_gestionClientes
-        )  # Conexión a ventanas Gestión Clientes
-        self.admin_soporte.catalogoBtn.clicked.connect(
-            self.ventana_gestionServicios
-        )  # Conexión a ventanas Gestión servicios
-        self.admin_soporte.inventarioBtn.clicked.connect(
-            self.ventana_principalInventarioProductos
-        )  # Conexión a ventanas Inventario de productos
+        self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes)
+        self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes)
+        self.admin_soporte.catalogoBtn.clicked.connect(self.ventana_gestionServicios)
+        self.admin_soporte.inventarioBtn.clicked.connect(self.ventana_principalInventarioProductos)
 
-        # Panel de reportes
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
-
         self.reportePanel.inventarioBtn.clicked.connect(self.panel_inventario)
         self.reportePanel.ventasBtn.clicked.connect(self.ventana_ventas)
         self.ventas.volverBtn.clicked.connect(self.anterior)
 
         self.inventarioPanel.volverBtn.clicked.connect(self.anterior)
-        self.inventarioPanel.serviciosBtn.clicked.connect(
-            self.ventana_inventarioServicios
-        )
-        self.inventarioPanel.serviciosBtn.clicked.connect(self.jump_invServicios)
-        self.inventarioPanel.productosBtn.clicked.connect(
-            self.ventana_inventarioProductos
-        )
-        self.inventarioPanel.productosBtn.clicked.connect(self.jump_invProductos)
+        self.inventarioPanel.serviciosBtn.clicked.connect(self.ventana_inventarioServicios)
+        self.inventarioPanel.productosBtn.clicked.connect(self.ventana_inventarioProductos)
 
         self.inventarioServicios.productosBtn.clicked.connect(self.jump_invProductos)
         self.inventarioProductos.serviciosBtn.clicked.connect(self.jump_invServicios)
@@ -148,16 +155,10 @@ class AdminSoporteManager(QMainWindow):
         self.inventarioServicios.volverBtn.clicked.connect(self.anterior)
         self.inventarioProductos.volverBtn.clicked.connect(self.anterior)
 
-        # Panel de gestion cliente
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
-
-        # Panel de gestion servicios
         self.gestionServiciosPanel.atrasBtn.clicked.connect(self.anterior)
-
-        # Panel de inventario de productos
         self.principalInventarioProductosPanel.atrasBtn.clicked.connect(self.anterior)
 
-    ###### Reportes ######
     def ventana_reportes(self):
         self.widgets_stack.setCurrentWidget(self.reportePanel)
         self.stack.append(self.admin_soporte)
@@ -180,19 +181,14 @@ class AdminSoporteManager(QMainWindow):
 
     def jump_invServicios(self):
         self.widgets_stack.setCurrentWidget(self.inventarioServicios)
-        self.inventarioServicios.serviciosBtn.setStyleSheet(
-            "background-color: #FFFFFF;"
-        )
+        self.inventarioServicios.serviciosBtn.setStyleSheet("background-color: #FFFFFF;")
         self.inventarioServicios.productosBtn.setStyleSheet("background-color: none;")
 
     def jump_invProductos(self):
         self.widgets_stack.setCurrentWidget(self.inventarioProductos)
         self.inventarioProductos.serviciosBtn.setStyleSheet("background-color: none;")
-        self.inventarioProductos.productosBtn.setStyleSheet(
-            "background-color: #FFFFFF;"
-        )
+        self.inventarioProductos.productosBtn.setStyleSheet("background-color: #FFFFFF;")
 
-    # Gestion clientes
     def ventana_gestionClientes(self):
         self.widgets_stack.setCurrentWidget(self.gestionPanel)
         self.stack.append(self.admin_soporte)
@@ -201,28 +197,67 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.gestionServiciosPanel)
         self.stack.append(self.admin_soporte)
 
-    # Inventario de productos
     def ventana_principalInventarioProductos(self):
         self.widgets_stack.setCurrentWidget(self.principalInventarioProductosPanel)
         self.stack.append(self.admin_soporte)
 
-    #################################### Volver ####################################
     def anterior(self):
         anterior = self.admin_soporte
-
         if self.stack:
             anterior = self.stack.pop()
         self.widgets_stack.setCurrentWidget(anterior)
 
-    def leer_estilos(
-        self, app: QApplication, paths: List[str]
-    ) -> None:  # Toca organizar esta funcion
+    def leer_estilos(self, app: QApplication, paths: List[str]) -> None:
         for path in paths:
             with open(path, "r") as style_file:
                 style_line = style_file.read()
-
         app.setStyleSheet(style_line)
         style_file.close()
 
     def run(self):
         self.show()
+
+
+
+class ManejarLogo:
+    _instacia = None
+
+    def __new__(cls):
+        if cls._instacia == None:
+            cls._instacia = super(ManejarLogo, cls).__new__(cls)
+            cls._instacia.ruta_logo = cls._instacia.load_logo_path()
+            cls._instacia.observers = []
+        return cls._instacia
+
+    @staticmethod
+    def load_logo_path():
+        if os.path.exists("config.json"):
+            with open("config.json", "r") as file:
+                config = json.load(file)
+                return config.get("logo_path", r"GUI\recursos\images\logo.png")
+        return r"GUI\recursos\images\logo.png"
+
+    @staticmethod
+    def save_logo_path(path):
+        with open("config.json", "w") as file:
+            json.dump({"logo_path": path}, file)
+
+    def set_logo(self, path):
+        self.logo_path = path
+        self.save_logo_path(path)
+        self.notify_observers()
+
+    def get_logo(self):
+        return self.logo_path
+
+    def register_observer(self, observer):
+        if observer not in self.observers:
+            self.observers.append(observer)
+
+    def unregister_observer(self, observer):
+        if observer in self.observers:
+            self.observers.remove(observer)
+
+    def notify_observers(self):
+        for observer in self.observers:
+            observer.update_logo(self.logo_path)

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessage
 from PyQt5.QtCore import QPropertyAnimation, Qt
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtGui import QPainter, QBrush, QColor
+from API.DATA import GestionDatos
 
 class CBackground:
     def paintEvent(self, event):
@@ -43,9 +44,11 @@ class InventarioProductos(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\inventario_productos\inventario_productos.ui",
             self,
         )
-        
+        self.gestion_datos=GestionDatos()
         self.menu_boton.clicked.connect(self.mover_menu)
-        
+
+        self.add_boton.clicked.connect(self.add_productos)
+        self.ver_actualizar_boton.clicked.connect(self.ver_productos)
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.ver_productos_pagina)
@@ -124,3 +127,18 @@ class InventarioProductos(QMainWindow, CBackground):
     
     # Método para definir base de datos ...
     #self.tabla_ver_productos.setRowCount(0)
+
+    def add_productos(self):
+        referencia = self.add_referencia_lineEdit.text()
+        marca =  self.add_marca_lineEdit.text()
+        precio_adquisicion = self.add_precio_adquisicion_lineEdit.text()
+        precio_venta =  self.add_precio_ventas_lineEdit.text()
+        unidades_actuales = self.add_unidades_actuales_lineEdit.text()
+        self.gestion_datos.agregar_producto(1,2,3,4,5,6)
+
+    def ver_productos(self):
+        self.tabla_ver_productos.setRowCount(0)
+        for i, row in self.gestion_datos.clientes.iterrows():
+            self.tabla_ver_productos.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))

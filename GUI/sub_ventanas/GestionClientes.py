@@ -9,7 +9,6 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
-from API.DATA import GestionDatos
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from API.DATA import GestionDatos
 from API.Validaciones import *
@@ -37,7 +36,7 @@ class CBackground:
 
         # Dibujando circulos arriba
         painter.setBrush(brocha3)
-        painter.drawEllipse(440, -140, 200, 200)
+        painter.drawEllipse(900, -140, 200, 200)
 
         painter.setBrush(brocha2)
         painter.drawEllipse(550, -100, 200, 200)
@@ -67,6 +66,7 @@ class GestionClientes(QMainWindow, CBackground):
         self.pushButton_add.clicked.connect(self.registrar_cliente)
         self.pushButton_guardarInfo.clicked.connect(self.modificar_cliente)
         self.pushButton_eliminar.clicked.connect(self.eliminar_cliente)
+        self.pushButton_modificar.clicked.connect(self.mostar_formulario)
 
         self.gripSize = 10
         self.grip = QtWidgets.QSizeGrip(self)
@@ -215,24 +215,43 @@ class GestionClientes(QMainWindow, CBackground):
         msg_box.setWindowTitle("Éxito")
         msg_box.exec_()
 
+    def mostar_formulario(self):
+        cedula = validar_Cedula(self.lineEdit_modificar.text())
+        if cedula:
+            self.frame_formulario.show()
+            return int(self.lineEdit_modificar.text())
+        else:
+            self.showErrorMessage(
+                "Error en los datos ingresados. Por favor, verifica la información."
+            )
+
     def modificar_cliente(self):
+        cedula = self.mostar_formulario()
         # Los campos para validar son:
         # cedulaBuscarCliente = self.lineEdit_modificar.text() <- Se necesita validar este campo para mostrar el formulario oculto
         # nuevaCedula = self.lineEdit_nuevaCedula.text()
         # nuevoNombre = self.lineEdit_nuevoNombre.text()
         # nuevoTelefono = lineEdit_nuevoTelefono.text()
-        cedula = self.lineEdit_nuevaCedula.text()
-        if validar_NombreCom(self.lineEdit_nuevoNombre.text()) and validacion_Telefono(
+        if validar_Cedula(self.lineEdit_nuevaCedula.text()) and validar_NombreCom(self.lineEdit_nuevoNombre.text()) and validacion_Telefono(
             self.lineEdit_nuevoTelefono.text()
         ):
             nuevos_datos = {
+                "Cedula" : int(self.lineEdit_nuevaCedula.text()),
                 "Nombre": self.lineEdit_nuevoNombre.text(),
-                "Telefono": self.lineEdit_nuevoTelefono.text(),
+                "Telefono": int(self.lineEdit_nuevoTelefono.text()),
             }
             self.gestion_datos.actualizar_cliente(cedula, nuevos_datos)
             self.mostrar_clientes()  # Actualizar la tabla de clientes
+            self.aviso_eliminar.setText("Cliente eliminado correctamente")
+            self.limpiar_campos()
         else:
-            return False
+            self.showErrorMessage(
+                "Error en los datos ingresados. Por favor, verifica la información."
+            )
+            self.aviso_modificar.setText(
+                "Error en los datos ingresados. Por favor, verifica la información."
+            )
+        
 
     def eliminar_cliente(self):
         cedula = self.lineEdit_buscarEliminar.text()

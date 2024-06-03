@@ -160,6 +160,9 @@ class GestionDatos:
             [[referencia, codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales, disponible,
               fecha]],
             columns=self.columnas_productos)
+        #self.productos = pd.concat([self.productos, nuevo_producto], ignore_index=True)
+        self.guardar_dataframes()
+        
 
         # Especificar los tipos de datos de las columnas
         tipos_de_datos = {'Referencia': str, 'Codigo de barras': str, 'Marca': str,
