@@ -7,7 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>859</width>
+<<<<<<< HEAD
     <height>660</height>
+=======
+    <height>625</height>
+>>>>>>> main
    </rect>
   </property>
   <property name="windowTitle">
@@ -485,7 +489,24 @@ QLabel {
                       </property>
                      </widget>
                     </item>
+<<<<<<< HEAD
                     <item>
+=======
+                    <item row="3" column="0" colspan="2">
+                     <spacer name="verticalSpacer_2">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="4" column="0" colspan="2">
+>>>>>>> main
                      <widget class="QPushButton" name="Seleccionar">
                       <property name="text">
                        <string>Seleccionar</string>
@@ -507,6 +528,7 @@ QLabel {
                       </property>
                      </widget>
                     </item>
+<<<<<<< HEAD
                     <item>
                      <widget class="QPushButton" name="ChangeCli">
                       <property name="maximumSize">
@@ -640,6 +662,87 @@ QLabel {
                      </layout>
                     </item>
                     <item>
+=======
+                    <item row="9" column="0">
+                     <widget class="QLabel" name="Cedula_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Cédula</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="9" column="1">
+                     <widget class="QLineEdit" name="Ced_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="11" column="0">
+                     <widget class="QLabel" name="Nombre_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Nombre</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="11" column="1">
+                     <widget class="QLineEdit" name="Nom_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="13" column="0">
+                     <widget class="QLabel" name="Telefono_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Teléfono</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="13" column="1">
+                     <widget class="QLineEdit" name="Tel_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="15" column="0">
+>>>>>>> main
                      <spacer name="verticalSpacer_3">
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
@@ -652,6 +755,7 @@ QLabel {
                       </property>
                      </spacer>
                     </item>
+<<<<<<< HEAD
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_7">
                       <item>
@@ -669,6 +773,20 @@ QLabel {
                        </widget>
                       </item>
                      </layout>
+=======
+                    <item row="16" column="0" colspan="2">
+                     <widget class="QPushButton" name="Confirmar_3">
+                      <property name="text">
+                       <string>Confirmar</string>
+                      </property>
+                     </widget>
+>>>>>>> main
+                    </item>
+                    <item row="6" column="0" colspan="2">
+                     <widget class="QTableWidget" name="TablaCedulas"/>
+                    </item>
+                    <item row="7" column="0" colspan="2">
+                     <widget class="QLineEdit" name="IngCedula"/>
                     </item>
                    </layout>
                   </widget>
