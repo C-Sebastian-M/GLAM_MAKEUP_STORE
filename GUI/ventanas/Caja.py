@@ -94,6 +94,8 @@ class Caja(QMainWindow):
         self.ConfirmarAnt.clicked.connect(self.creado)
         self.Seleccionar.clicked.connect(self.selCli)
         self.Nuevo_2.clicked.connect(self.New)
+        self.AggProducto.clicked.connect(self.total_productos)
+        self.AggServicio.clicked.connect(self.total_servicios)
         self.TablaCedulas.hide()
         self.IngCedula.hide()
         self.Cedula_2.hide()
@@ -108,6 +110,8 @@ class Caja(QMainWindow):
         self.Fecha.hide()
         self.Reserva.clicked.connect(self.showdate)
         self.Fast.clicked.connect(self.hidedate)
+        self.mostrar_servicios()
+        self.mostrar_productos()
 
 ####//////////////////FUNCION BOTONES PRODUCTOS/////////////###
         self.ConfirmarPro.clicked.connect(self.confirmPro)
@@ -149,7 +153,7 @@ class Caja(QMainWindow):
         self.LabelServ.hide()
         self.StockServicios.hide()
         self.TotalServicios.hide()
-        self.viewtotal.hide()
+        self.TablaTotalSer.hide()
         self.Fast.hide()
         self.Reserva.hide()
         self.Fecha.hide()
@@ -162,7 +166,7 @@ class Caja(QMainWindow):
         self.LabelServ.show()
         self.StockServicios.show()
         self.TotalServicios.show()
-        self.viewtotal.show()
+        self.TablaTotalSer.show()
         self.Fast.show()
         self.Reserva.show()
         self.Fecha.hide()
@@ -175,7 +179,7 @@ class Caja(QMainWindow):
         self.LabelProductos.hide()
         self.StockProductos.hide()
         self.TotalPro.hide()
-        self.ListaTotal.hide()
+        self.TablaTotalPro.hide()
         self.ConfirmarPro.hide()
         self.EditarPro.show()
     
@@ -185,7 +189,7 @@ class Caja(QMainWindow):
         self.LabelProductos.show()
         self.StockProductos.show()
         self.TotalPro.show()
-        self.ListaTotal.show()
+        self.TablaTotalPro.show()
         self.ConfirmarPro.show()
         self.EditarPro.hide()
 
@@ -280,6 +284,38 @@ class Caja(QMainWindow):
             self.TablaCedulas.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.TablaCedulas.setItem(i, j, QTableWidgetItem(str(value)))
+    
+    def total_productos(self):
+        codigo_barras = self.EleProductos.text()
+        cantidad = self.StockProductos.text()
+        self.cajero.mostra_total_productos(codigo_barras, cantidad)
+        self.mostrar_total_productos()
+    
+    def total_servicios(self):
+        id_servicio = self.EleServicios.text()
+        cantidad = self.stockServicios
+        
+    
+    def mostrar_productos(self):
+        self.TablaProductos.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            self.TablaProductos.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaProductos.setItem(i, j, QTableWidgetItem(str(value)))
+    
+    def mostrar_servicios(self):
+        self.TablaServicios.setRowCount(0)
+        for i, row in self.gestion_datos.servicios.iterrows():
+            self.TablaServicios.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaServicios.setItem(i, j, QTableWidgetItem(str(value)))
+    
+    def mostrar_total_productos(self):
+        self.TablaTotalPro.setRowCount(0)
+        for i, row in self.cajero.df.iterrows():
+            self.TablaTotalPro.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaTotalPro.setItem(i, j, QTableWidgetItem(str(value)))
 
 
 class Reporte(QMainWindow, CBackground):

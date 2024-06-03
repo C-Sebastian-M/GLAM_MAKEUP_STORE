@@ -1,8 +1,10 @@
 from API.DATA import GestionDatos
 from API.Validaciones import *
+import pandas as pd
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
+        self.df = pd.DataFrame(columns=["Producto","Precio Total"])
     
     def añadir_cliente(self, cedula, nombre, telefono):
         if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
@@ -118,38 +120,30 @@ class Cajero:
         
     def reporte_diario(self):
         pass
-
-    def mostrar_servicios(self):
-        nombre = []
-        precio = []
-        for i in (self.gestion_datos.servicios["Nombre Servicio"]):
-            nombre.append(i)
-        for i in (self.gestion_datos.servicios["Costo"]):
-            precio.append(i)
-        x = list(zip(nombre,precio))
-        return x
-    
-    def mostrar_productos(self):
-        nombre = []
-        precio = []
-        for i in (self.gestion_datos.productos["Referencia"]):
-            nombre.append(i)
-        for i in (self.gestion_datos.productos["Precio Venta"]):
-            precio.append(i)
-        x = list(zip(nombre,precio))
-        return x
     
     def validar_stock(self, x):
         if x <= self.gestion_datos.productos["Producto disponible"]:
             return True
         return False
+    
+    def mostra_total_productos(self,codigo_barras,cantidad):
+        if(
+            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values or
+            str(codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values) and
+            validacion_Codigo_Barras(codigo_barras) and
+            validar_cantidad(cantidad)
+        ):
+          if codigo_barras in  self.gestion_datos.productos["Codigo de barras"]: 
+            x = self.self.gestion_datos.productos[self.self.gestion_datos.productos['Codigo de barras']== codigo_barras]
+            fila = {'Producto': x["Referencia"], 'Precio total':(float(x["Precio venta"]) * cantidad)}
+            self.df.loc[len(self.df)+1] = fila
+            return self.df
      
     def comprar_servicio(self, producto, cantidad):
         #Necesitamos que hagan los cambios en la tabla inventario
         pass
     
-    def mostra_total(self):
-        #este depende de la compra de productos y servicios
+    def mostra_total_servicios(self):
         pass 
     
     def seleccionar_mediopago(self):
@@ -613,52 +607,6 @@ class Inventario:
         # Modificar referencia, codigo de barras, marca y unidades actuales <- Ya esta
         # Modificar referencia, codigo de barras, marca, precio de adquisicion y precio de vebta <- Ya esta 
         # Modificar referencia, codigo de barras, marca, precio de adquisicion y unidades actuales <- Ya esta
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    def eliminar_producto(self):
-        referecia = []
-        barras = []
-        marca=[]
-        
-        a = []
-        v = []
-        stock = []
-        fecha = []
-        for i in (self.gestion_datos.productos["Marca"]):
-            marca.append(i)
-        for i in (self.gestion_datos.productos["Precio de adquisicion"]):
-            a.append(i)
-        for i in (self.gestion_datos.productos["Precio venta"]):
-            v.append(i)
-        for i in (self.gestion_datos.productos["Referencia"]):
-            referecia.append(i)
-        for i in (self.gestion_datos.productos["Codigo de barras"]):
-            barras.append(i)
-        for i in (self.gestion_datos.productos["Unidades actuales"]):
-            stock.append(i)
-        for i in (self.gestion_datos.productos["Fecha"]):
-            fecha.append(i)
-        x = list(zip(referecia,barras,marca,a,v,stock,fecha))
-        return x
 
     def comprar_stock(self,codigoB,cantidad):
         producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]==codigoB]

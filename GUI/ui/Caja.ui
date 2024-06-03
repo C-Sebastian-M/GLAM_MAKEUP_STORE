@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>859</width>
-    <height>668</height>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -443,7 +443,7 @@ QLabel {
 }</string>
                   </property>
                   <property name="currentIndex">
-                   <number>3</number>
+                   <number>2</number>
                   </property>
                   <widget class="QWidget" name="Clientes_2">
                    <property name="styleSheet">
@@ -729,30 +729,7 @@ QLabel {
                   </widget>
                   <widget class="QWidget" name="Productos_3">
                    <layout class="QGridLayout" name="gridLayout_6">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="Productos">
-                      <property name="maximumSize">
-                       <size>
-                        <width>800</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Productos Disponibles</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QPushButton" name="EditarPro">
-                      <property name="text">
-                       <string>Editar Productos</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="0">
+                    <item row="5" column="0">
                      <widget class="QLabel" name="TotalPro">
                       <property name="maximumSize">
                        <size>
@@ -768,17 +745,7 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="5" column="0">
-                     <widget class="QListView" name="ListaTotal">
-                      <property name="maximumSize">
-                       <size>
-                        <width>800</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="6" column="0">
+                    <item row="7" column="0">
                      <widget class="QPushButton" name="ConfirmarPro">
                       <property name="maximumSize">
                        <size>
@@ -802,7 +769,7 @@ QLabel {
                          </size>
                         </property>
                         <property name="text">
-                         <string>Producto</string>
+                         <string>ID Producto</string>
                         </property>
                         <property name="alignment">
                          <set>Qt::AlignCenter</set>
@@ -847,8 +814,49 @@ QLabel {
                       </item>
                      </layout>
                     </item>
+                    <item row="4" column="0">
+                     <widget class="QPushButton" name="EditarPro">
+                      <property name="text">
+                       <string>Editar Productos</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="Productos">
+                      <property name="maximumSize">
+                       <size>
+                        <width>800</width>
+                        <height>27</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Productos Disponibles</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QPushButton" name="AggProducto">
+                      <property name="text">
+                       <string>Agregar</string>
+                      </property>
+                     </widget>
+                    </item>
                     <item row="1" column="0">
                      <widget class="QTableWidget" name="TablaProductos">
+                      <property name="font">
+                       <font>
+                        <family>Arial</family>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
+                      <column>
+                       <property name="text">
+                        <string>ID</string>
+                       </property>
+                      </column>
                       <column>
                        <property name="text">
                         <string>Producto</string>
@@ -856,7 +864,7 @@ QLabel {
                       </column>
                       <column>
                        <property name="text">
-                        <string>New Column</string>
+                        <string>Cantidad</string>
                        </property>
                       </column>
                       <column>
@@ -865,6 +873,9 @@ QLabel {
                        </property>
                       </column>
                      </widget>
+                    </item>
+                    <item row="6" column="0">
+                     <widget class="QTableWidget" name="TablaTotalPro"/>
                     </item>
                    </layout>
                   </widget>
@@ -886,65 +897,13 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="4" column="0" colspan="2">
+                    <item row="5" column="0" colspan="2">
                      <widget class="QLabel" name="TotalServicios">
                       <property name="text">
                        <string>Total</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="6" column="0" colspan="2">
-                     <layout class="QHBoxLayout" name="horizontalLayout_4">
-                      <item>
-                       <widget class="QPushButton" name="Fast">
-                        <property name="text">
-                         <string>Servicio Inmediato</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="Reserva">
-                        <property name="text">
-                         <string>Reservar Cita</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item row="5" column="0" colspan="2">
-                     <widget class="QTableView" name="viewtotal">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>65</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0" colspan="2">
-                     <widget class="QPushButton" name="EditarServ">
-                      <property name="text">
-                       <string>Editar Servicios</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="8" column="0" colspan="2">
-                     <widget class="QPushButton" name="ConfirmarServicios">
-                      <property name="text">
-                       <string>Confirmar</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="7" column="0" colspan="2">
-                     <widget class="QDateEdit" name="Fecha">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>30</height>
-                       </size>
                       </property>
                      </widget>
                     </item>
@@ -959,7 +918,7 @@ QLabel {
                          </size>
                         </property>
                         <property name="text">
-                         <string>Servicio</string>
+                         <string>ID Servicio</string>
                         </property>
                         <property name="alignment">
                          <set>Qt::AlignCenter</set>
@@ -967,7 +926,7 @@ QLabel {
                        </widget>
                       </item>
                       <item row="1" column="0">
-                       <widget class="QLineEdit" name="StockServicios_2"/>
+                       <widget class="QLineEdit" name="EleServicios"/>
                       </item>
                       <item row="1" column="1">
                        <widget class="QLineEdit" name="StockServicios"/>
@@ -990,11 +949,18 @@ QLabel {
                       </item>
                      </layout>
                     </item>
-                    <item row="1" column="0">
-                     <widget class="QTableWidget" name="tableWidget">
+                    <item row="4" column="0" colspan="2">
+                     <widget class="QPushButton" name="AggServicios">
+                      <property name="text">
+                       <string>Agregar</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0" colspan="2">
+                     <widget class="QTableWidget" name="TablaServicios">
                       <column>
                        <property name="text">
-                        <string>New Column</string>
+                        <string>ID</string>
                        </property>
                       </column>
                       <column>
@@ -1004,10 +970,60 @@ QLabel {
                       </column>
                       <column>
                        <property name="text">
+                        <string>Cantidad</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
                         <string>Precio</string>
                        </property>
                       </column>
                      </widget>
+                    </item>
+                    <item row="9" column="0" colspan="2">
+                     <widget class="QPushButton" name="ConfirmarServicios">
+                      <property name="text">
+                       <string>Confirmar</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0" colspan="2">
+                     <widget class="QPushButton" name="EditarServ">
+                      <property name="text">
+                       <string>Editar Servicios</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="8" column="0" colspan="2">
+                     <widget class="QDateEdit" name="Fecha">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="7" column="0" colspan="2">
+                     <layout class="QHBoxLayout" name="horizontalLayout_4">
+                      <item>
+                       <widget class="QPushButton" name="Fast">
+                        <property name="text">
+                         <string>Servicio Inmediato</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="Reserva">
+                        <property name="text">
+                         <string>Reservar Cita</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="6" column="0">
+                     <widget class="QTableWidget" name="TablaTotalSer"/>
                     </item>
                    </layout>
                   </widget>
