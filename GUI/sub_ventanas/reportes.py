@@ -98,6 +98,7 @@ class Plantilla(QWidget):
         self.handle_labels()
 
         self.fechaBtn.clicked.connect(self.abrir_ventana_por_fecha)
+        self.filtrarBtn.clicked.connect(self.filtrar)
 
         self.pintar()
 
@@ -165,16 +166,22 @@ class Plantilla(QWidget):
         self.consulta_por_fecha.show()
 
     def filtrar(self):
-        eleccion: str = self.consultandoPor.strip().lower()
+        eleccion: str = self.normalizar(self.consultandoPor.text())
         campos = [campo.lower() for campo in self.campos]
         user_input: str = self.userInput.text()
+
+        print(eleccion, user_input)
 
         def caja_input_no_valido():
             pass # mostrar caja
 
         CONRTOLADOR_DE_FILTRADO = {} # funciones para hacer query
 
-        return CONRTOLADOR_DE_FILTRADO[eleccion]
+        # return CONRTOLADOR_DE_FILTRADO[eleccion] comentado para evitar error
+
+    def normalizar(self, cadena: str):
+        cadena = cadena.strip().lower().replace(" ", "_")
+        return cadena
     
     def pintar(self) -> None:
         with open(r"GUI\sub_ventanas\css\reportes_plantilla.css", "r") as style_file:
