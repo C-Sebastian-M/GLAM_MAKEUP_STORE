@@ -2,13 +2,9 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessageBox,QApplication
 from PyQt5.QtCore import QPropertyAnimation, Qt
 from PyQt5 import QtCore, QtWidgets, QtGui
-from API.DATA import GestionDatos
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from API.DATA import GestionDatos
-<<<<<<< HEAD
-=======
 from API.prueba import Inventario
->>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
 
 class CBackground:
     def paintEvent(self, event):
@@ -49,33 +45,12 @@ class InventarioProductos(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\inventario_productos\inventario_productos.ui",
             self,
         )
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        self.gestion_datos=GestionDatos()
-=======
         self.inventario = Inventario()
         self.gestion_datos = GestionDatos()
->>>>>>> main
-=======
-        self.gestion_datos = GestionDatos()
-        
->>>>>>> main
-<<<<<<< HEAD
-        self.menu_boton.clicked.connect(self.mover_menu)
-
-        self.add_boton.clicked.connect(self.add_productos)
-        self.ver_actualizar_boton.clicked.connect(self.ver_productos)
-=======
-        self.inventario = Inventario()
-        self.gestion_datos = GestionDatos()
-=======
->>>>>>> main
         self.menu_boton.clicked.connect(self.mover_menu)
         self.add_boton.clicked.connect(self.add_productos)
         self.ver_actualizar_boton.clicked.connect(self.ver_productos)
         
->>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.ver_productos_pagina)
@@ -151,15 +126,6 @@ class InventarioProductos(QMainWindow, CBackground):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
-<<<<<<< HEAD
-
-    def nuevo_producto_pagina(self):
-        referencia = self.add_referencia_lineEdit.text()
-        marca = self.add_marca_lineEdit.text()
-        precio_a = self.add_precio_adquisicion_lineEdit.text()
-        precio_v = self.add_precio_ventas_lineEdit.text()
-        stock = self.add_unidades_actuales_lineEdit.text()
-=======
     
     # Método para definir base de datos ...
     #self.tabla_ver_productos.setRowCount(0)
@@ -170,20 +136,9 @@ class InventarioProductos(QMainWindow, CBackground):
         precio_adquisicion = self.add_precio_adquisicion_lineEdit.text()
         precio_venta =  self.add_precio_ventas_lineEdit.text()
         unidades_actuales = self.add_unidades_actuales_lineEdit.text()
-<<<<<<< HEAD
-        self.gestion_datos.agregar_producto(1,2,3,4,5,6)
-
-    def ver_productos(self):
-        self.tabla_ver_productos.setRowCount(0)
-        for i, row in self.gestion_datos.clientes.iterrows():
-            self.tabla_ver_productos.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
-=======
         codigo_barras = self.add_codigoBarras_lineEdit.text()
         self.inventario.crear_productos(referencia,codigo_barras, marca, precio_adquisicion, precio_venta, unidades_actuales)
     
-<<<<<<< HEAD
     def ver_productos(self):
         self.tabla_ver_productos.setRowCount(0)
         for i, row in self.gestion_datos.productos.iterrows():
@@ -191,42 +146,3 @@ class InventarioProductos(QMainWindow, CBackground):
             for j, (colname, value) in enumerate(row.items()):
                 self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
         
-<<<<<<< HEAD
->>>>>>> 5d03a52ea2ceeb48405790eb660237d1e6d9b975
-=======
->>>>>>> main
-=======
-    # VER PRODUCTOS PÁGINA
-    # tabla_ver_productos (DATAFRAME)
-    # ver_actualizar_boton
-    
-    # AÑADIR NUEVO PRODUCTO
-    # add_referencia_lineEdit
-    # add_codigo_barras_lineEdit
-    # add_marca_lineEdit
-    # add_precio_adquisicion_lineEdit
-    # add_precio_venta_lineEdit
-    # add_unidades_actuales_lineEdit
-    
-    # MODIFICAR PRODUCTO
-    # modify_tabla_productos (DATAFRAME)
-    # modify_buscar_producto_lineEdit (BARRA DE BUSQUEDA DEL DATAFRAME)
-    # modify_buscar_boton (SELECCIONAR BOTÓN)
-    # modify_marca_lineEdit
-    # modify_precio_adquisicion_lineEdit
-    # modify_precio_venta_lineEdit
-    # modify_guardar_boton (BOTON PARA GUARDAR)
-    
-    # DESCONTINUAR PRODUCTO
-    # del_tabla_productos (DATAFRAME)
-    # del_buscar_producto_lineEdit (BARRA DE BUSQUEDA DEL DATAFRAME)
-    # del_guardar_boton (BOTON PARA GUARDAR)
-    
-    # COMPRAR STOCK
-    # buy_tabla_productos (DATAFRAME)
-    # buy_buscar_producto_lineEdit (BARRA DE BUSQUEDA DEL DATAFRAME)
-    # buy_buscar_boton (BOTON SELECCIONAR)
-    # buy_cantidad_ingresar_lineEdit (BOTON PARA INGRESAR UNIDADES)
-    # buy_add_boton (BOTON PARA AÑADIR)
->>>>>>> 5b993dea764534de7c7f9bb78fa73890379c23b7
->>>>>>> main

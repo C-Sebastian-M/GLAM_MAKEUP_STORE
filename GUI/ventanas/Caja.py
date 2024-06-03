@@ -79,14 +79,9 @@ class Caja(QMainWindow):
         loadUi(r"GUI\ui\Caja.ui", self,)
         self.control_navegacion = control_navegacion
         self.Atras.clicked.connect(self.backMenu)
-<<<<<<< HEAD
-        self.cajero = Cajero()
-
-=======
         
         self.gestion_datos = GestionDatos() #<- se instaura un objeto tipo Gestion de datos
         
->>>>>>> main
         #self.setWindowFlag(QtCore.Qt.FramelessWindowHint) #borrar los botones externos de la pagina original
         self.BotonCliente.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Clientes_2))
         self.BotonProductos.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Productos_3))
@@ -111,7 +106,6 @@ class Caja(QMainWindow):
         self.Ced_2.hide()
         self.Tel_2.hide()
         self.Nom_2.hide()
-<<<<<<< HEAD
         self.ConfirmarNew.hide()
         self.ConfirmarAnt.hide()
         self.ChangeCli.hide()
@@ -176,9 +170,7 @@ class Caja(QMainWindow):
         else:
             msg_box.setText("Cliente Incorrecto")
             msg_box.exec_()
-=======
         
->>>>>>> main
 
     def backMenu(self):
         self.control_navegacion.mostrar_ventana("menu")
@@ -200,13 +192,11 @@ class Caja(QMainWindow):
     def hidedate(self):
         self.dateEdit.hide()
 
-<<<<<<< HEAD
     
     
     def creado(self):
         pass
 
-=======
     def  selCli(self):
         self.TablaCedulas.show()
         self.IngCedula.show()
@@ -255,7 +245,6 @@ class Caja(QMainWindow):
             datos_cliente = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"]==cedula]
             if not datos_cliente.empty:
                 return datos_cliente
->>>>>>> main
 
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):

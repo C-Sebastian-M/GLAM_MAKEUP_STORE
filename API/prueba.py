@@ -100,20 +100,10 @@ class Inventario:
     def __init__(self):
         self.gestion_datos = GestionDatos()
     
-<<<<<<< HEAD
     def ver_productos(self):
         return self.gestion_datos.productos
         
 
-=======
-    def crear_productos(self, referencia, precioA, precioV, codigoB, marca, stock):
-        if validacion_Referencia(referencia) and validacion_Precio(precioA) and validacion_Precio(precioV) and validacion_Codigo_Barras(codigoB) and validacion_Marca(marca) and validacion_Stock(stock):
-            if not codigoB in self.gestion_datos.productos["Codigo de barras"].values:
-                self.gestion_datos.agregar_producto(referencia, codigoB, marca, precioA, precioV, stock)
-                return True
-            return False
-        return False
->>>>>>> main
 
 #    def modificar_producto(self,codigoB,nuevos_datos):
 #        x = GestionDatos("datos.xlsx")
@@ -170,7 +160,6 @@ class Inventario:
         if not producto.empty:
             self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] ==  codigoB, "Unidades actuales"] += cantidad
             self.gestion_datos.guardar_dataframes()
-<<<<<<< HEAD
             
     def crear_productos(self,referencia, codigo_barras, marca, precio_adquisicion,precio_venta, unidades_actuales):
         if (
@@ -189,15 +178,3 @@ class Inventario:
         else:  
             return False
 
-=======
-    
-    class Admin:
-        def __init__(self):
-            self.gestion_datos = GestionDatos()
-
-            
-            
-            
-    #x = Cajero()
-#print(x.login("cajero", "cajero"))
->>>>>>> main

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QHeaderView, QTableWidgetItem, QMessage
 from PyQt5.QtCore import QPropertyAnimation, Qt
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtGui import QPainter, QBrush, QColor
+from API.DATA import GestionDatos
 import sys
 
 class CBackground:
@@ -45,7 +46,7 @@ class GestionServicios(QMainWindow, CBackground):
             r"GUI\sub_ventanas\ui\GestionServicios.ui",
             self,
         )
-        #self.gestion_datos = GestionDatos()
+        self.gestion_datos = GestionDatos()
 
         self.pushButton_menu.clicked.connect(self.mover_menu)
         # Botones
