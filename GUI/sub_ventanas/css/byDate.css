@@ -1,16 +1,30 @@
-ventanaPorFecha #title, #des_hasComboBox {
+QWidget#ventanaPorFecha, #title {
     color: #f5f5f5;
-    background-color: #d484b4;
+    background-color: hsl(324, 48%, 60%);
 }
 
-QCalendarWidget#calendarPorFecha {
-    padding: 5px;
+QCalendarWidget#calendarioPorFecha QToolButton {
+    color: #f5f5f5;
+    background-color: hsl(324, 48%, 60%);
+}
+
+QCalendarWidget QToolButton::right-arrow {
+    background-image: url(GUI\recursos\images\left_arrow.png);
+}
+
+QCalendarWidget QToolButton::left-arrow {
+    background-image: url(GUI\recursos\images\left_arrow.png);
+}
+
+QCalendarWidget QAbstractItemView:enabled {
+    selection-background-color: #D484B4;
 }
 
 QWidget#datosContenedor {
-    border: 2px solid #d484b4;
+    background-color: #f5f5f5;
+    border-right: 2px solid #D484B4;
 }
 
-QCalendarWidget QToolButton {
-    background-color: #d484b4;
+QCalendarWidget QToolButton, #des_hasComboBox {
+    background-color: #D484B4;
 }

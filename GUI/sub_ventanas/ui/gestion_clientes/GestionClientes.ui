@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>992</width>
+    <height>757</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
-    <height>600</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
-    <height>600</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -45,7 +45,7 @@
     <item>
      <widget class="QFrame" name="frame">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(235, 188, 220);</string>
+       <string notr="true"/>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -70,7 +70,7 @@
          </property>
          <property name="styleSheet">
           <string notr="true">QFrame{
-background-color: rgb(235, 188, 220);
+background-color: transparent;
 }
 
 QPushButton {
@@ -93,7 +93,7 @@ QPushButton:pressed {
 QLabel {
 	background-color:  rgb(235, 188, 220);
     font: 87 14pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
+    color: black; /* Color de texto rgb(220, 132, 188) */
 }</string>
          </property>
          <property name="frameShape">
@@ -163,6 +163,10 @@ QPushButton:pressed {
           </item>
           <item>
            <widget class="QLabel" name="label_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: transparent
+</string>
+            </property>
             <property name="text">
              <string>GESTIÓN DE CLIENTES</string>
             </property>
@@ -209,6 +213,9 @@ QPushButton:pressed {
            <height>0</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -232,7 +239,7 @@ QPushButton:pressed {
             </property>
             <property name="styleSheet">
              <string notr="true">QFrame{
-background-color: rgb(220, 132, 188);
+background-color: transparent;
 }
 
 QPushButton {
@@ -360,17 +367,17 @@ QPushButton:pressed {
           <item>
            <widget class="QFrame" name="frame_paginas">
             <property name="styleSheet">
-             <string notr="true">/* styles.css */
-
+             <string notr="true">
 /* Estilo para QFrame */
 QFrame {
-    background-color: #ffffff; /* Fondo blanco */
+    background-color: transparent; /* Fondo blanco */
+	border-radius: 10px
 }
 
 /* Estilo para QLabel */
 QLabel {
-	background-color:  rgb(235, 188, 220);
-    font: 87 14pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
+	background-color:  transparent;
+    font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
     color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
 }
 
@@ -385,20 +392,20 @@ QLineEdit {
     font-size: 14px;
 }
 QLineEdit:hover {
-	border: 2px solid rgb(255, 255, 255);
+	border: 2px solid rgb(220, 149, 196);
 }
 QLineEdit:focus {
-    border: 2px solid #dc84bc; /* Borde al enfocar */
+    border: 2px solid #d484b4; /* Borde al enfocar */
 }
 
 QPushButton {
     border: 2px solid #e4acd0;
     border-radius: 5px;
-    padding: 8px 16px;
+    padding: 8px 8px;
     background-color: #dc95c4; /* Fondo */
     color: #ffffff; /* Color del texto */
     font-family: Arial, sans-serif;
-    font-size: 16px;
+    font-size: 11px;
 }
 
 QPushButton:hover {
@@ -409,21 +416,69 @@ QPushButton:pressed {
     background-color: #d484b4; /* Fondo al presionar */
 }
 
+QFrame{
+border-radius: 10px
+}
+
 QTableWidget {
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 0);
-	gridline-color: #dc84bc;
-	font-size: 12pt;
-	color: #000000;
+    background-color: #f5eef2;
+    gridline-color: #dc84bc;
+    font-size: 14px;
 }
+
 QHeaderView::section {
-	background-color: #dc84bc;
-	border: 1px solid rgb(0, 0, 0);
-	font-size: 12pt;
+    background-color: #dc84bc;
+    color: #ffffff;
+    padding: 5px;
+    border: 1px solid #dc84bc;
 }
-QTableWidget QTableCornerButton::section {
-	background-color: rgb(220, 132, 188) ;
-	border: 1px solid rgb(255, 255, 255);
+
+QTableWidget::item {
+    border: 1px solid dc84bc;
+}
+
+QTableWidget::item:alternate {
+    background-color: dc84bc;
+}
+
+QTableWidget::item:!selected {
+    background-color: transparent;
+}
+
+QTableWidget::item:selected {
+    background-color: #d484b4;
+    color: #ffffff;
+}
+
+QComboBox {
+    border: 2px solid #e4acd0; /* Borde */
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f5eef2; /* Fondo */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+QComboBox:hover {
+    border: 2px solid rgb(220, 149, 196);
+}
+
+QComboBox:focus {
+    border: 2px solid #d484b4; /* Borde al enfocar */
+}
+
+QComboBox::drop-down {
+    width: 20px; /* Ancho del botón desplegable */
+    border: none; /* Quitar el borde */
+}
+
+QComboBox::down-arrow {
+    image: url(drop_down_icon.png); /* Cambiar el icono de flecha */
+}
+
+QComboBox::down-arrow:hover {
+    image: url(drop_down_icon_hover.png); /* Cambiar el icono de flecha al pasar el cursor */
 }</string>
             </property>
             <property name="frameShape">
@@ -476,11 +531,17 @@ QTableWidget QTableCornerButton::section {
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
+                   <property name="editTriggers">
+                    <set>QAbstractItemView::NoEditTriggers</set>
+                   </property>
+                   <property name="dragEnabled">
+                    <bool>false</bool>
+                   </property>
                    <attribute name="horizontalHeaderVisible">
                     <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderDefaultSectionSize">
                     <number>207</number>
@@ -549,11 +610,11 @@ QTableWidget QTableCornerButton::section {
                    <item>
                     <widget class="QPushButton" name="pushButton_actualizar">
                      <property name="text">
-                      <string>ACTUALIZAR</string>
+                      <string>MOSTRAR</string>
                      </property>
                      <property name="icon">
                       <iconset>
-                       <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
+                       <normaloff>../../../recursos/images/eye-outline.png</normaloff>../../../recursos/images/eye-outline.png</iconset>
                      </property>
                     </widget>
                    </item>
@@ -721,11 +782,99 @@ QTableWidget QTableCornerButton::section {
                 <layout class="QVBoxLayout" name="verticalLayout_12">
                  <item>
                   <widget class="QLabel" name="label_13">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: transparent
+;</string>
+                   </property>
                    <property name="text">
                     <string>MODIFICAR CLIENTE</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_mostrarModificar">
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>MOSTRAR</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../../recursos/images/eye-outline.png</normaloff>../../../recursos/images/eye-outline.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <item>
+                    <widget class="QTableWidget" name="tableWidget_modificar">
+                     <property name="editTriggers">
+                      <set>QAbstractItemView::NoEditTriggers</set>
+                     </property>
+                     <attribute name="horizontalHeaderDefaultSectionSize">
+                      <number>200</number>
+                     </attribute>
+                     <column>
+                      <property name="text">
+                       <string>CÉDULA</string>
+                      </property>
+                     </column>
+                     <column>
+                      <property name="text">
+                       <string>NOMBRE</string>
+                      </property>
+                     </column>
+                     <column>
+                      <property name="text">
+                       <string>TELÉFONO</string>
+                      </property>
+                     </column>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_modificar">
+                     <property name="placeholderText">
+                      <string>INGRESE CÉDULA</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_modificar">
+                     <property name="text">
+                      <string>SELECCIONAR</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QListView" name="listView_buscar">
+                   <property name="styleSheet">
+                    <string notr="true">QListView {
+    background-color: #f5eef2; /* Fondo */
+}
+
+QListView::item {
+    border-bottom: 1px solid #e4acd0; /* Borde inferior de cada elemento */
+    padding: 5px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+QListView::item:selected {
+    background-color: #dc84bc; /* Color de fondo al seleccionar */
+    color: #ffffff; /* Color de texto al seleccionar */
+}</string>
                    </property>
                   </widget>
                  </item>
@@ -743,125 +892,87 @@ QTableWidget QTableCornerButton::section {
                   </spacer>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_9">
-                   <item>
-                    <widget class="QLabel" name="label_11">
-                     <property name="text">
-                      <string>CLIENTE:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEdit_buscarModificar">
-                     <property name="placeholderText">
-                      <string>INGRESE PARAMETRO</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_buscarModificar">
-                     <property name="text">
-                      <string>BUSCAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../../recursos/images/account-search-outline.png</normaloff>../../../recursos/images/account-search-outline.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>38</width>
-                       <height>29</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                  <widget class="QFrame" name="frame_formulario">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
                    </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_7">
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_11">
-                     <property name="spacing">
-                      <number>40</number>
-                     </property>
-                     <item>
-                      <widget class="QLabel" name="label_12">
-                       <property name="text">
-                        <string>CÉDULA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_14">
-                       <property name="text">
-                        <string>NOMBRE</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_15">
-                       <property name="text">
-                        <string>TELÉFONO</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_10">
-                     <property name="spacing">
-                      <number>40</number>
-                     </property>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_nuevaCedula">
-                       <property name="placeholderText">
-                        <string>NUEVA CÉDULA</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_nuevoNombre">
-                       <property name="placeholderText">
-                        <string>NUEVO NOMBRE</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="lineEdit_nuevoTelefono">
-                       <property name="placeholderText">
-                        <string>NUEVO TELÉFONO</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
+                   <layout class="QVBoxLayout" name="verticalLayout_6">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_7">
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_11">
+                        <property name="spacing">
+                         <number>5</number>
+                        </property>
+                        <item>
+                         <widget class="QLabel" name="label_12">
+                          <property name="text">
+                           <string>CÉDULA</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_14">
+                          <property name="text">
+                           <string>NOMBRE</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_15">
+                          <property name="text">
+                           <string>TELÉFONO</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_10">
+                        <property name="spacing">
+                         <number>5</number>
+                        </property>
+                        <item>
+                         <widget class="QLineEdit" name="lineEdit_nuevaCedula">
+                          <property name="placeholderText">
+                           <string>NUEVA CÉDULA</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLineEdit" name="lineEdit_nuevoNombre">
+                          <property name="placeholderText">
+                           <string>NUEVO NOMBRE</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLineEdit" name="lineEdit_nuevoTelefono">
+                          <property name="placeholderText">
+                           <string>NUEVO TELÉFONO</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_guardarInfo">
+                      <property name="text">
+                       <string>GUARDAR</string>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>../../../recursos/images/content-save-all.png</normaloff>../../../recursos/images/content-save-all.png</iconset>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -891,23 +1002,12 @@ QTableWidget QTableCornerButton::section {
                      </property>
                     </spacer>
                    </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton_guardarInfo">
-                     <property name="text">
-                      <string>GUARDAR</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>../../../recursos/images/content-save-all.png</normaloff>../../../recursos/images/content-save-all.png</iconset>
-                     </property>
-                    </widget>
-                   </item>
                   </layout>
                  </item>
                 </layout>
                </widget>
                <widget class="QWidget" name="pagina_eliminar">
-                <layout class="QVBoxLayout" name="verticalLayout_13">
+                <layout class="QVBoxLayout" name="verticalLayout_14">
                  <item>
                   <widget class="QLabel" name="label_17">
                    <property name="text">
@@ -919,48 +1019,104 @@ QTableWidget QTableCornerButton::section {
                   </widget>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
+                  <widget class="QPushButton" name="pushButton_mostrarEliminar">
+                   <property name="maximumSize">
                     <size>
-                     <width>20</width>
-                     <height>40</height>
+                     <width>100</width>
+                     <height>16777215</height>
                     </size>
                    </property>
-                  </spacer>
+                   <property name="text">
+                    <string>MOSTRAR</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../../recursos/images/eye-outline.png</normaloff>../../../recursos/images/eye-outline.png</iconset>
+                   </property>
+                  </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_10">
+                  <widget class="QTableWidget" name="tableWidget_Eliminar">
+                   <property name="editTriggers">
+                    <set>QAbstractItemView::NoEditTriggers</set>
+                   </property>
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>200</number>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>CÉDULA</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>NOMBRE</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>TELÉFONO</string>
+                    </property>
+                   </column>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_13">
                    <item>
-                    <widget class="QLabel" name="label_18">
-                     <property name="text">
-                      <string>CLIENTE:</string>
+                    <widget class="QListView" name="listView_eliminar">
+                     <property name="styleSheet">
+                      <string notr="true">QListView {
+    background-color: #f5eef2; /* Fondo */
+}
+
+QListView::item {
+    border-bottom: 1px solid #e4acd0; /* Borde inferior de cada elemento */
+    padding: 5px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+QListView::item:selected {
+    background-color: #dc84bc; /* Color de fondo al seleccionar */
+    color: #ffffff; /* Color de texto al seleccionar */
+}</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_buscarEliminar">
-                     <property name="placeholderText">
-                      <string>INGRESE PARAMETRO</string>
-                     </property>
-                    </widget>
+                    <layout class="QHBoxLayout" name="horizontalLayout_10">
+                     <item>
+                      <widget class="QLineEdit" name="lineEdit_buscarEliminar">
+                       <property name="placeholderText">
+                        <string>INGRESE CÉDULA</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="label_18">
+                       <property name="maximumSize">
+                        <size>
+                         <width>30</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: #f5eef2
+;</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="pixmap">
+                        <pixmap>../../../recursos/images/search.png</pixmap>
+                       </property>
+                       <property name="scaledContents">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_11">

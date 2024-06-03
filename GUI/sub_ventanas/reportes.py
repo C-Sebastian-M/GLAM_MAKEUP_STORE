@@ -5,7 +5,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import ( 
     QWidget, QLabel, 
     QHBoxLayout, QSpacerItem, 
-    QSizePolicy, QMainWindow
+    QSizePolicy, QTableWidget,
+    QHeaderView, QGraphicsDropShadowEffect
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
@@ -14,9 +15,17 @@ from PyQt5.QtGui import (
     QCursor, QIcon
 )
 from GUI.sub_ventanas.utils.css import CustomGroupBox
-
+import API.DATA as GD
+from API.Validaciones import (
+    validacion_Referencia, validacion_Codigo_Barras,
+    validacion_Stock
+)
+from GUI.sub_ventanas.custom.validaciones import CustomValidaciones
 # Tipado
 from typing import List, Union, Dict
+
+GD = GD.GestionDatos()
+vald = CustomValidaciones()
 
 class ReportePorFecha(QWidget):
     def __init__(self, ref) -> None:
@@ -28,9 +37,6 @@ class ReportePorFecha(QWidget):
         self.ref = ref
         self.fecha = {}
 
-        self.setWindowFlags(
-            Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint
-        )
         self.setFixedSize(400, 335)
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
 
@@ -42,7 +48,7 @@ class ReportePorFecha(QWidget):
 
     def combo_event(self) -> None:
         comboFocus: str = self.des_hasComboBox.currentText()
-        fecha_seleccionada: str = self.calendarPorFecha.selectedDate().toPyDate()
+        fecha_seleccionada: str = self.calendarioPorFecha.selectedDate().toPyDate()
         if comboFocus.strip().lower() == "desde":
             self.fecha["desde"] = fecha_seleccionada
             self.desdeLabel.setText(f'Desde\n{fecha_seleccionada}')
@@ -52,11 +58,25 @@ class ReportePorFecha(QWidget):
         self.hastaLabel.setText(f'Hasta\n{fecha_seleccionada}')
 
     def confirmar(self) -> None:
-        self.ref.setText(f"{self.fecha['desde']} - {self.fecha['hasta']}")
+        if not self.fecha:
+            return
+        
+        fechas_compuesta = f"{self.fecha['desde']} - {self.fecha['hasta']}"
+        fechas_validas = vald.validar_fechas(fechas_compuesta)
+
+        if not fechas_validas:
+            vald.caja_input_no_valido("""
+                Fechas ingresadas no validas,\n 
+                recuerde que la primera fecha (desde)\n
+                debe ser mayor que la segunda(hasta).
+            """)
+            return None
+
+        self.ref.setText(fechas_compuesta)
         self.close()
 
     def pintar(self) -> None:
-        with open("GUI\sub_ventanas\css\\byDate.css", "r") as style_file:
+        with open(r"GUI\sub_ventanas\css\byDate.css", "r") as style_file:
             style_line = style_file.read()
 
         self.setStyleSheet(style_line)
@@ -70,13 +90,22 @@ class Plantilla(QWidget):
             self
         )
 
+        self.campos: List[Union[str, int, float]] = columns
+        self.BD_DATA = {}
+
         self.titleLabel.setText(title)
-        self.handle_labels(columns)
+        self.handle_table(data=self.BD_DATA)
+        self.handle_labels()
 
         self.fechaBtn.clicked.connect(self.abrir_ventana_por_fecha)
 
-    def handle_labels(self, columns: List[Union[str, int]]) -> None:
-        for nombre in columns:
+        self.pintar()
+
+    def handle_labels(self) -> None:
+        for campo in self.campos:
+            if campo.strip().lower() == 'fecha':
+                continue
+
             contenedor = CustomGroupBox(self)
             contenedor.setObjectName("contenedorColumnas")
             contenedor.setCursor(QCursor(Qt.PointingHandCursor))
@@ -89,7 +118,7 @@ class Plantilla(QWidget):
 
             label = QLabel(contenedor)
             label.setObjectName("campo")
-            label.setText(nombre)
+            label.setText(campo)
             contenedor.label = label
 
             vbox_layout = QHBoxLayout(contenedor)
@@ -102,8 +131,24 @@ class Plantilla(QWidget):
 
         self.labelsLayout.addItem(QSpacerItem(2, 70, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-    def handle_table(self, fields: List[str], data: Dict[str, Union[int, str]]) -> None:
-        pass
+    def handle_table(self, data: Dict[str, Union[int, str]]) -> None:
+        table: QTableWidget = self.tablaReportes
+        table.setColumnCount(len(self.campos))
+        table.setHorizontalHeaderLabels(self.campos)
+        table.resizeColumnsToContents()
+        table.verticalHeader().setDefaultSectionSize(20)
+
+        header = table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)
+
+        shadow_effect = QGraphicsDropShadowEffect(self)
+        shadow_effect.setBlurRadius(8)
+        shadow_effect.setColor(QColor(0, 0, 0, 70))
+        shadow_effect.setOffset(0, 0)
+        header.setGraphicsEffect(shadow_effect)
+
+        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
+        table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
 
     def abrir_ventana_por_fecha(self) -> None:
         self.consultandoPor.setText("fecha")
@@ -114,9 +159,29 @@ class Plantilla(QWidget):
             self.fechas_label = QLabel()
             self.fechas_label.setObjectName("rangoDeFechasLabel")
             self.fechas_label.setText(f"{fecha_actual} - {fecha_actual}")
-            self.cajaFiltroVerticalLayout.insertWidget(6, self.fechas_label)
+            self.cajaFiltroVerticalLayout.insertWidget(5, self.fechas_label)
+
         self.consulta_por_fecha = ReportePorFecha(ref=self.fechas_label)
         self.consulta_por_fecha.show()
+
+    def filtrar(self):
+        eleccion: str = self.consultandoPor.strip().lower()
+        campos = [campo.lower() for campo in self.campos]
+        user_input: str = self.userInput.text()
+
+        def caja_input_no_valido():
+            pass # mostrar caja
+
+        CONRTOLADOR_DE_FILTRADO = {} # funciones para hacer query
+
+        return CONRTOLADOR_DE_FILTRADO[eleccion]
+    
+    def pintar(self) -> None:
+        with open(r"GUI\sub_ventanas\css\reportes_plantilla.css", "r") as style_file:
+            style_line = style_file.read()
+
+        self.setStyleSheet(style_line)
+        style_file.close()
 
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
@@ -142,35 +207,36 @@ class CBackground:
         brocha2 = QBrush(QColor(228, 156, 198), Qt.SolidPattern)
         brocha3 = QBrush(QColor(235, 188, 220), Qt.SolidPattern)
 
-        # Dibujando circulos abajo
+        # Obtén el tamaño actual de la ventana
+        width = self.width()
+        height = self.height()
+
+        # Calcula las posiciones y tamaños en función del tamaño de la ventana
+        diameter = width // 4
+        offset_x = width // 8
+        offset_y = height // 5
+
+        # Dibujando círculos abajo
         painter.setBrush(brocha3)
-        painter.drawEllipse(140, 530, 200, 200)
+        painter.drawEllipse(int(width // 2 - diameter // 2), int(height - offset_y), int(diameter), int(diameter))
 
         painter.setBrush(brocha2)
-        painter.drawEllipse(40, 480, 200, 200)
+        painter.drawEllipse(int(width // 4 - diameter // 2), int(height - offset_y * 1.5), int(diameter), int(diameter))
 
         painter.setBrush(brocha1)
-        painter.drawEllipse(-70, 440, 200, 200)
+        painter.drawEllipse(int(width // 8 - diameter // 2), int(height - offset_y * 2), int(diameter), int(diameter))
 
-        # Dibujando circulos arriba
+        # Dibujando círculos arriba
         painter.setBrush(brocha3)
-        painter.drawEllipse(440, -140, 200, 200)
+        painter.drawEllipse(int(width // 2 - diameter // 2), int(-offset_y), int(diameter), int(diameter))
 
         painter.setBrush(brocha2)
-        painter.drawEllipse(550, -100, 200, 200)
+        painter.drawEllipse(int(width // 2 + offset_x), int(-offset_y // 2), int(diameter), int(diameter))
 
         painter.setBrush(brocha1)
-        painter.drawEllipse(700, -70, 200, 200)
+        painter.drawEllipse(int(width // 2 + offset_x * 2), int(0), int(diameter), int(diameter))
 
         painter.end()
-
-class InventarioPanel(QWidget, CBackground):
-    def __init__(self) -> None:
-        super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\inventarioPanelDesigner.ui", 
-            self
-        )
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
