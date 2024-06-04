@@ -165,7 +165,6 @@ class Cajero:
 class Inventario:
     def __init__(self):
         self.gestion_datos = GestionDatos()
-        self.filtrar_inventario = 
 
     def crear_productos(self, referencia, precioA, precioV, codigoB, marca, stock):
         if (
@@ -267,50 +266,23 @@ class Inventario:
         else:
             return False
         
-    def filtrar_IDservicio(sel)   
+
+           
 
 
 
 class Reportes:
     def __init__(self):
         self.gestion_datos = GestionDatos()
-        self.filtrado_productos = pd.DataFrame(columns=["Referencia","Codigo de barras","Marca","Precio de adquisicion", "Precio venta","Unidades actuales","Producto disponible","Fecha"])
+        self.filtrado_productos = pd.DataFrame(columns=["Referencia","Codigo de barras","Marca","Precio de adquisicion", "Precio venta","Unidades actuales","Producto disponible","Fecha"])    
+        self.filtrado_servicios = pd.DataFrame(columns= ["ID servicio", "Nombre Servicio", "Costo"])
         
-        producto_o_servicio=None, fecha_min=None, fecha_max=None, id_caja=None):
-        filtered_sales = pd.concat([self.venta_productos, self.venta_servicios], ignore_index=True)
-
-        if id_venta is not None:
-            filtered_sales = filtered_sales[filtered_sales["ID venta"] == id_venta]
-        if cantidad is not None:
-            filtered_sales = filtered_sales[filtered_sales["Cantidad"] == cantidad]
-        if cliente is not None:
-            filtered_sales = filtered_sales[filtered_sales["Cliente"] == cliente]
-        if subtotal is not None and comparacion_subtotal is not None:
-            if comparacion_subtotal == "menor":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] < subtotal]
-            elif comparacion_subtotal == "mayor":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] > subtotal]
-            elif comparacion_subtotal == "igual":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] == subtotal]
-            else:
-                print("Error: Comparación de subtotal no válida.")
-        if producto_o_servicio is not None:
-            filtered_sales = filtered_sales[filtered_sales["Producto" if "producto" in producto_o_servicio.lower() else "Servicio"] == producto_o_servicio]
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_sales = filtered_sales[filtered_sales["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_sales = filtered_sales[filtered_sales["Fecha"] <= fecha_max]
-        if id_caja is not None:
-            filtered_sales = filtered_sales[filtered_sales["ID_Caja"] == id_caja]
-        return filtered_sales
     def filtrar_referencia(self, referencia):
         self.filtrado_productos = (self.gestion_datos.productos[self.gestion_datos.productos["Referencia"]== referencia])
         self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
-
+    
     def filtrar_codigo_de_barras(self, codB):
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]== codB]
         print(self.filtrado_productos)
@@ -350,7 +322,16 @@ class Reportes:
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
     
-
+    def filtrar_ID_Servicio(self,id):
+        self.filtrado_servicios = self.gestion_datos.prodcutos[self.gestion_datos.productos[""]]
+    
+    def filtrar_servicio(self,servicio):
+        self.filtrado_productos = self.gestion_datos.servicios[self.gestion_datos.servicios["Producto disponible"]== servicio]
+        return not self.filtrado_servicios.empty
+    
+    def filtrar_costo(self):
+        self.filtrado_productos = self.gestion_datos.servicios[self.gestion_datos.servicios["Producto disponible"]== servicio]
+        return not self.filtrado_servicios.empty
 x = Reportes()
 x.filtrar_fecha("2024-06-04 - 2024-06-06")
 
