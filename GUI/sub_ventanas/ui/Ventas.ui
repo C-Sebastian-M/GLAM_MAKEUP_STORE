@@ -243,7 +243,7 @@ QPushButton:pressed {
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QPushButton" name="pushButton_addCliente">
+              <widget class="QPushButton" name="pushButton_pagos">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -251,11 +251,11 @@ QPushButton:pressed {
                 </size>
                </property>
                <property name="text">
-                <string>METODOS DE PAGO</string>
+                <string>MÉTODO DE PAGO</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../recursos/images/account-box-plus-outline.png</normaloff>../../recursos/images/account-box-plus-outline.png</iconset>
+                 <normaloff>../../recursos/images/cash-sync.png</normaloff>../../recursos/images/cash-sync.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -266,7 +266,7 @@ QPushButton:pressed {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_modificarCliente">
+              <widget class="QPushButton" name="pushButton_ventas">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -278,7 +278,7 @@ QPushButton:pressed {
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../recursos/images/account-box-edit-outline.png</normaloff>../../recursos/images/account-box-edit-outline.png</iconset>
+                 <normaloff>../../recursos/images/cash-register.png</normaloff>../../recursos/images/cash-register.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -523,14 +523,14 @@ QComboBox::down-arrow:hover {
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
-               <widget class="QWidget" name="pagina_add">
+               <widget class="QWidget" name="pagina_pagos">
                 <layout class="QVBoxLayout" name="verticalLayout_15">
                  <item>
                   <widget class="QLabel" name="label_9">
                    <property name="text">
-                    <string>AÑADIR/ELIMINAR METODO DE PAGO</string>
+                    <string>AÑADIR/ELIMINAR MÉTODO DE PAGO</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -565,7 +565,7 @@ QComboBox::down-arrow:hover {
                      </column>
                      <column>
                       <property name="text">
-                       <string>METODO DE PAGO</string>
+                       <string>MÉTODO DE PAGO</string>
                       </property>
                      </column>
                     </widget>
@@ -575,7 +575,7 @@ QComboBox::down-arrow:hover {
                      <item>
                       <widget class="QPushButton" name="pushButton_addPago">
                        <property name="text">
-                        <string>AÑADIR METODO DE PAGO</string>
+                        <string>AÑADIR MÉTODO DE PAGO</string>
                        </property>
                        <property name="icon">
                         <iconset>
@@ -586,7 +586,7 @@ QComboBox::down-arrow:hover {
                      <item>
                       <widget class="QPushButton" name="pushButton_eliminarPago">
                        <property name="text">
-                        <string>ELIMINAR METODO DE PAGO</string>
+                        <string>ELIMINAR MÉTODO DE PAGO</string>
                        </property>
                        <property name="icon">
                         <iconset>
@@ -619,7 +619,14 @@ QComboBox::down-arrow:hover {
                        <string/>
                       </property>
                       <property name="placeholderText">
-                       <string>INGRESE METODO DE PAGO</string>
+                       <string>INGRESE ID MÉTODO DE PAGO</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="lineEdit">
+                      <property name="placeholderText">
+                       <string>ESPECIFIQUE MÉTODO DE PAGO</string>
                       </property>
                      </widget>
                     </item>
@@ -652,7 +659,7 @@ QComboBox::down-arrow:hover {
                      <widget class="QComboBox" name="comboBox_pago">
                       <item>
                        <property name="text">
-                        <string>Seleccionar metodo de pago</string>
+                        <string>Seleccionar método de pago</string>
                        </property>
                        <property name="icon">
                         <iconset>
@@ -709,7 +716,7 @@ QComboBox::down-arrow:hover {
                  </item>
                 </layout>
                </widget>
-               <widget class="QWidget" name="pagina_modificar">
+               <widget class="QWidget" name="pagina_ventas">
                 <layout class="QVBoxLayout" name="verticalLayout_12">
                  <item>
                   <widget class="QLabel" name="label_13">
@@ -745,7 +752,7 @@ QComboBox::down-arrow:hover {
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton">
+                    <widget class="QPushButton" name="pushButton_eliminarVenta">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -832,7 +839,7 @@ QComboBox::down-arrow:hover {
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton_modificar">
+                    <widget class="QPushButton" name="pushButton_modificarBuscar">
                      <property name="text">
                       <string>SELECCIONAR</string>
                      </property>
