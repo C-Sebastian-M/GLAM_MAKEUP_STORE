@@ -275,9 +275,7 @@ class GestionDatos:
             if producto.iloc[0]["Unidades actuales"] > 0:
                 print(f"El producto con referencia {codigo} está disponible.")
             else:
-                print(
-                    f"El producto con referecodigoBarrascia {codigo} no está disponible."
-                )
+                print(f"El producto con referecodigoBarrascia {codigo} no está disponible.")
         else:
             print(f"Producto con la referencia: {codigo} no ha sido encontrado")
 
@@ -290,14 +288,14 @@ class GestionDatos:
                         self.productos["Codigo de barras"] == codigoBarras, key
                     ] = value
             self.guardar_dataframes()
-            # print(f"Producto con codigoBarras {codigoBarras} ha sido actualizado.")
+            #print(f"Producto con codigoBarras {codigoBarras} ha sido actualizado.")
         else:
-            # print(f"Producto con codigoBarras {codigoBarras} no encontrado.")
+            #print(f"Producto con codigoBarras {codigoBarras} no encontrado.")
             None
 
     def descontinuar_producto(self, codigo):
         if codigo in self.productos["Codigo de barras"].values:
-            producto = self.productos[self.productos["Codigo de barras"] == codigo]
+            producto = self.productos[self.productos["Codigo de barras"] == producto]
         if not producto.empty:
             producto["Producto disponible"] = False
             self.productos = self.productos[
@@ -365,52 +363,6 @@ class GestionDatos:
         )
         self.guardar_dataframes()
 
-    def crear_sub_dataframe_productos_servicios(self):
-        try:
-            # Fusionar venta de productos y servicios en un nuevo DataFrame
-            sub_dataframe = pd.merge(
-                self.venta_productos,
-                self.venta_servicios,
-                on=[
-                    "ID venta",
-                    "Cedula",
-                    "Cliente",
-                    "Fecha",
-                    "Cantidad",
-                    "Subtotal",
-                    "ID_MetodoPago",
-                ],
-                how="outer",
-            )
-
-            # Seleccionar solo las columnas necesarias
-            sub_dataframe = sub_dataframe[
-                [
-                    "ID venta",
-                    "Cedula",
-                    "Cliente",
-                    "Producto",
-                    "Servicio",
-                    "Fecha",
-                    "Cantidad",
-                    "Subtotal",
-                    "ID_MetodoPago",
-                ]
-            ]
-
-            # Guardar este sub-dataframe como una nueva hoja en el archivo Excel
-            with pd.ExcelWriter(
-                self.nombre_archivo, mode="a", engine="openpyxl"
-            ) as writer:
-                sub_dataframe.to_excel(
-                    writer, sheet_name="productosServicios", index=False
-                )
-
-            # Ajustar las columnas después de guardar
-            self.ajustar_columnas_excel()
-        except Exception as e:
-            print(f"Error al guardar el sub-dataframe en el archivo Excel: {e}")
-
     def actualizar_venta(self, id_venta, nuevos_datos, tipo_venta="producto"):
         if tipo_venta == "producto":
             venta = self.venta_productos[self.venta_productos["ID venta"] == id_venta]
@@ -468,13 +420,11 @@ class GestionDatos:
         self.guardar_dataframes()
 
     def actualizar_servicio(self, id_servicio, nuevos_datos):
-        servicio = self.servicios[self.servicios["ID servicio"] == id_servicio]
+        servicio = self.servicios[self.servicios['ID servicio'] == id_servicio]
         if not servicio.empty:
             for key, value in nuevos_datos.items():
                 if key in self.servicios.columns:
-                    self.servicios.loc[
-                        self.servicios["ID servicio"] == id_servicio, key
-                    ] = value
+                    self.servicios.loc[self.servicios['ID servicio'] == id_servicio, key] = value
             self.guardar_dataframes()
 
     def buscar_servicio(self, id_servicio):
@@ -623,6 +573,3 @@ class GestionDatos:
             self.guardar_dataframes()
         except Exception as e:
             print(f"Error al generar la factura: {e}")
-
-gestion = GestionDatos()
-gestion.crear_sub_dataframe_productos_servicios()
