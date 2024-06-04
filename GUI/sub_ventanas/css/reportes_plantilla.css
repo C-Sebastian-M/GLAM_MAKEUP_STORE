@@ -22,6 +22,7 @@ QWidget QTableWidget#tablaReportes {
 
 QWidget QTableWidget#tablaReportes::item {
     margin-top: 20px;
+    font-size: 12px;
 }
 
 #ventanaDeConsultas QPushButton#serviciosBtn, 
