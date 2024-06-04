@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>859</width>
-    <height>710</height>
+    <height>718</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -443,7 +443,7 @@ QLabel {
 }</string>
                   </property>
                   <property name="currentIndex">
-                   <number>2</number>
+                   <number>1</number>
                   </property>
                   <widget class="QWidget" name="Clientes_2">
                    <property name="styleSheet">
@@ -594,13 +594,21 @@ QLabel {
                           <height>16777215</height>
                          </size>
                         </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
+                        </property>
                         <property name="text">
                          <string>Ingresar cedula</string>
                         </property>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QLineEdit" name="IngCedula"/>
+                       <widget class="QLineEdit" name="IngCedula">
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(255, 213, 250);</string>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </item>
@@ -613,6 +621,10 @@ QLabel {
                           <width>100</width>
                           <height>30</height>
                          </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
                         </property>
                         <property name="text">
                          <string>Cédula</string>
@@ -630,6 +642,9 @@ QLabel {
                           <height>30</height>
                          </size>
                         </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(255, 213, 250);</string>
+                        </property>
                        </widget>
                       </item>
                      </layout>
@@ -643,6 +658,10 @@ QLabel {
                           <width>100</width>
                           <height>30</height>
                          </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
                         </property>
                         <property name="text">
                          <string>Nombre</string>
@@ -660,6 +679,10 @@ QLabel {
                           <height>30</height>
                          </size>
                         </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(255, 213, 250);
+</string>
+                        </property>
                        </widget>
                       </item>
                      </layout>
@@ -673,6 +696,10 @@ QLabel {
                           <width>100</width>
                           <height>30</height>
                          </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
                         </property>
                         <property name="text">
                          <string>Teléfono</string>
@@ -737,6 +764,10 @@ QLabel {
                         <height>16777215</height>
                        </size>
                       </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
+                      </property>
                       <property name="text">
                        <string>Total</string>
                       </property>
@@ -768,6 +799,10 @@ QLabel {
                           <height>16777215</height>
                          </size>
                         </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
+                        </property>
                         <property name="text">
                          <string>ID Producto</string>
                         </property>
@@ -783,6 +818,10 @@ QLabel {
                           <width>530</width>
                           <height>16777215</height>
                          </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
                         </property>
                         <property name="text">
                          <string>Cantidad</string>
@@ -899,6 +938,10 @@ QLabel {
                     </item>
                     <item row="5" column="0" colspan="2">
                      <widget class="QLabel" name="TotalServicios">
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
+                      </property>
                       <property name="text">
                        <string>Total</string>
                       </property>
@@ -916,6 +959,10 @@ QLabel {
                           <width>0</width>
                           <height>30</height>
                          </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
                         </property>
                         <property name="text">
                          <string>ID Servicio</string>
@@ -938,6 +985,10 @@ QLabel {
                           <width>0</width>
                           <height>30</height>
                          </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
                         </property>
                         <property name="text">
                          <string>Cantidad</string>
@@ -1002,6 +1053,9 @@ QLabel {
                         <height>30</height>
                        </size>
                       </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(170, 255, 255);</string>
+                      </property>
                      </widget>
                     </item>
                     <item row="7" column="0" colspan="2">
@@ -1029,6 +1083,9 @@ QLabel {
                   </widget>
                   <widget class="QWidget" name="Carrito_4">
                    <layout class="QGridLayout" name="gridLayout">
+                    <item row="2" column="0">
+                     <widget class="QTableView" name="TablaCompras"/>
+                    </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="Carro">
                       <property name="minimumSize">
@@ -1054,37 +1111,66 @@ QLabel {
                       </property>
                      </widget>
                     </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="totalCompra">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>200</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>350</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">border-color: rgb(0, 255, 255);
-background-color: rgb(255, 226, 254);
-color: rgb(0, 0, 0);</string>
-                      </property>
-                      <property name="text">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Total:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
+                    <item row="3" column="0">
                      <layout class="QHBoxLayout" name="horizontalLayout_5">
                       <item>
-                       <widget class="QLabel" name="label_4">
+                       <widget class="QLabel" name="LabelTotal">
+                        <property name="minimumSize">
+                         <size>
+                          <width>80</width>
+                          <height>25</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>80</width>
+                          <height>25</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
+                        </property>
+                        <property name="text">
+                         <string>Total</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="TotalGeneral">
+                        <property name="minimumSize">
+                         <size>
+                          <width>500</width>
+                          <height>25</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>80</width>
+                          <height>25</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(252, 202, 255);</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="4" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout_11">
+                      <item>
+                       <widget class="QLabel" name="IVA">
                         <property name="minimumSize">
                          <size>
                           <width>100</width>
@@ -1096,6 +1182,10 @@ color: rgb(0, 0, 0);</string>
                           <width>60</width>
                           <height>40</height>
                          </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
                         </property>
                         <property name="text">
                          <string>¿IVA?</string>
@@ -1169,20 +1259,21 @@ color: rgb(0, 0, 0);</string>
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <spacer name="horizontalSpacer_2">
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
                      </layout>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="LabelCompras">
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
+                      </property>
+                      <property name="text">
+                       <string>Compras</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -1219,6 +1310,18 @@ color: rgb(0, 0, 0);</string>
                     </item>
                     <item>
                      <widget class="QComboBox" name="MetodosPago">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>100</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Arial</family>
+                        <pointsize>16</pointsize>
+                       </font>
+                      </property>
                       <item>
                        <property name="text">
                         <string>Efectivo</string>

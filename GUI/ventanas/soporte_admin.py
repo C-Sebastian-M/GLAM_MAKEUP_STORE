@@ -24,6 +24,7 @@ from GUI.sub_ventanas.reportes_diarios import (
     ReportesDiarios, ReporteDiarioCatalogo,
     ReporteDiarioProductos, ReporteDiarioVentas
 )
+from GUI.sub_ventanas.administrar_usuarios import AdministrarUsuarios
 from GUI.sub_ventanas.inventario_productos import InventarioProductos
 from GUI.sub_ventanas.GestionClientes import GestionClientes
 from GUI.sub_ventanas.catalogo_servicios import GestionServicios
@@ -127,6 +128,9 @@ class AdminSoporteManager(QMainWindow):
         self.password_change = PasswordChange()
         self.widgets_stack.addWidget(self.password_change)
 
+        self.administrarUsuarios = AdministrarUsuarios()
+        self.widgets_stack.addWidget(self.administrarUsuarios)
+
         # Asignando el widget central
         self.setCentralWidget(self.widgets_stack)
         self.widgets_stack.setCurrentWidget(self.admin_soporte)
@@ -180,7 +184,7 @@ class AdminSoporteManager(QMainWindow):
         if self.role == 'admin':
             self.findChild(QPushButton, 'reporteDiarioBtn').clicked.connect(self.ventana_reportes_diarios)
         else:
-            pass
+            self.findChild(QPushButton, 'administrarUsuarioBtn').clicked.connect(self.ventana_administrarUsuarios)
 
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
 
@@ -208,7 +212,7 @@ class AdminSoporteManager(QMainWindow):
             self.reportesDiariosProductos.volverBtn.clicked.connect(self.anterior)
             self.reportesDiariosCatalogo.volverBtn.clicked.connect(self.anterior)
         else:
-            pass # misma logica que arriba
+            self.administrarUsuarios.atrasBtn.clicked.connect(self.anterior)
 
     def ventana_reportes(self):
         self.widgets_stack.setCurrentWidget(self.reportePanel)
@@ -266,6 +270,10 @@ class AdminSoporteManager(QMainWindow):
     def ventana_reporte_diario_catalogo(self):
         self.widgets_stack.setCurrentWidget(self.reportesDiariosCatalogo)
         self.stack.append(self.reportesDiarios)
+        
+    def ventana_administrarUsuarios(self):
+        self.widgets_stack.setCurrentWidget(self.administrarUsuarios)
+        self.stack.append(self.admin_soporte)
 
     def passoword_change_window(self):
         self.widgets_stack.setCurrentWidget(self.password_change)
@@ -286,8 +294,6 @@ class AdminSoporteManager(QMainWindow):
 
     def run(self):
         self.show()
-
-
 
 class ManejarLogo:
     _instacia = None
