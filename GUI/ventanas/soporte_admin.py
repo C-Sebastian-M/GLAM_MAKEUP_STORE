@@ -114,7 +114,11 @@ class AdminSoporteManager(QMainWindow):
                 "Reporte Diario de Productos", GD.columnas_productos
             ) 
             self.reportesDiariosCatalogo = ReporteDiarioCatalogo(
-                "Reporte Diario de Catalogos", []
+                "Reporte Diario de Catalogos", [
+                    "ID",
+                    "Servicio",
+                    "Precio",
+                ]
             )
 
             self.widgets_stack.addWidget(self.reportesDiarios)
