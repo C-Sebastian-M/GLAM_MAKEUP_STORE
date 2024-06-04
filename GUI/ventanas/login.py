@@ -22,7 +22,10 @@ class Login(QMainWindow):
         # BT CLOSE POPUP
         self.pushButton_close_pupup.clicked.connect(lambda: self.frame_error.hide())
         self.cajero = Cajero()
-        self.manual = ""
+        self.manual = (
+            r"DESIGN\Manual_de_Uso_del_Sistema_de_Gestión_de_Glam_Makeup_Store.pdf"
+        )
+        self.pushBoton_manual.clicked.connect(self.abrir_manual)
         # HIDE ERROR
         self.frame_error.hide()
 
@@ -94,7 +97,9 @@ class Login(QMainWindow):
         msg_box.exec_()
 
     def authenticate_user(self, username, password):
-        usuario_datos = self.gestion_datos.usuarios[self.gestion_datos.usuarios["usuario"] == username]
+        usuario_datos = self.gestion_datos.usuarios[
+            self.gestion_datos.usuarios["usuario"] == username
+        ]
         if not usuario_datos.empty:
             if password in usuario_datos["contraseña"].values:
                 rol = usuario_datos["Rol ID"].values
@@ -119,5 +124,5 @@ class Login(QMainWindow):
         self.close()
 
     def abrir_manual(self):
-        file=self.manual
-        subprocess.call(['start', file], shell=True)
+        file = self.manual
+        subprocess.call(["start", file], shell=True)
