@@ -119,7 +119,7 @@ class Login(QMainWindow):
         self.close()
 
     def openCajaWindow(self):
-        caja = Aplicacion()
+        caja = Aplicacion(self)
         caja.show()
         self.close()
 

@@ -408,10 +408,6 @@ class GestionDatos:
 
             # Ajustar las columnas después de guardar
             self.ajustar_columnas_excel()
-
-            print(
-                "Sub-dataframe productosServicios agregado y guardado correctamente en el archivo Excel."
-            )
         except Exception as e:
             print(f"Error al guardar el sub-dataframe en el archivo Excel: {e}")
 

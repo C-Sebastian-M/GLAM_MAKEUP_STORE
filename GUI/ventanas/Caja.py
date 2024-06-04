@@ -59,17 +59,17 @@ class ControlNavegacion:
 
 #/////CLASES VENTANAS/////#
 class Menu(CBackground, QMainWindow):
-    def __init__(self, control_navegacion):
+    def __init__(self, control_navegacion, ventana_login):
         super().__init__()
         loadUi(r"GUI\ui\PruebaMenu.ui", self)
+        self.ventana_login  =ventana_login
         self.control_navegacion=control_navegacion
         self.MenuButton.clicked.connect(self.CajaWin)
         self.ReportButton.clicked.connect(self.repWin)
-        self.LogOut.clicked.connect(self.BackLogin)
+        self.LogOut.clicked.connect(self.volver_login)
 
-    def BackLogin(self):
-        #self.log=Login()
-        self.log.show()
+    def volver_login(self):
+        self.ventana_login.show()
         self.close()
 
     def CajaWin(self):
@@ -299,7 +299,7 @@ class Caja(QMainWindow):
             self.ConfirmarNew.hide()
             self.ConfirmarAnt.hide()
             self.ChangeCli.show()
-            self.cedulaCliente = cedula
+            #self.cedulaCliente = cedula
         else:
             msg_box.setText("Cliente Incorrecto")
             msg_box.exec_()
@@ -428,12 +428,12 @@ class Reporte(QMainWindow, CBackground):
 
 #/////CLASE CONEXIONES/////#
 class Aplicacion(QMainWindow):
-    def __init__(self):
+    def __init__(self, ventana_login):
         super().__init__()
-        
+        self.ventana_login = ventana_login
         self.control_navegacion = ControlNavegacion()
 
-        self.ventana_principal = Menu(self.control_navegacion)
+        self.ventana_principal = Menu(self.control_navegacion, self.ventana_login)
         self.ventana1 = Caja(self.control_navegacion)
         self.ventana2 = Reporte(self.control_navegacion)
 
