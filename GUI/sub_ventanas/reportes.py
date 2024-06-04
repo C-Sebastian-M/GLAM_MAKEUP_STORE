@@ -22,7 +22,7 @@ from typing import List, Union, Dict
 from API.prueba import Reportes
 
 GD = GD.GestionDatos()
-vald = CustomValidaciones()
+validacion = CustomValidaciones()
 
 class ReportePorFecha(QWidget):
     def __init__(self, ref) -> None:
@@ -57,14 +57,14 @@ class ReportePorFecha(QWidget):
 
     def confirmar(self) -> None:
         if not self.fecha or len(self.fecha) == 1:
-            vald.caja_input_no_valido("Asegurese de poner ambas fechas.")
+            validacion.caja_input_no_valido("Asegurese de poner ambas fechas.")
             return None
         
         fechas_compuesta = f"{self.fecha['desde']} - {self.fecha['hasta']}"
-        fechas_validas = vald.validar_fechas(fechas_compuesta)
+        fechas_validas = validacion.validar_fechas(fechas_compuesta)
 
         if not fechas_validas:
-            vald.caja_input_no_valido("Fechas ingresadas no validas, recuerde que la primera fecha (desde)\ndebe ser menor que la segunda(hasta).")
+            validacion.caja_input_no_valido("Fechas ingresadas no validas, recuerde que la primera fecha (desde)\ndebe ser menor que la segunda(hasta).")
             return None
 
         self.ref.setText(fechas_compuesta)
@@ -166,14 +166,17 @@ class Plantilla(QWidget):
 
     def filtrar(self):
         eleccion: str = self.normalizar(self.consultandoPor.text())
-        if eleccion == "fecha":
-            fechas: str = self.fechas_label.text()
+        user_input: str = self.userInput.text().strip()
+        if not user_input:
+            validacion.caja_input_no_valido("Ingresastes una consulta vacia")
+            return None
 
-        user_input: str = self.userInput.text()
         if eleccion == "referencia":
             if user_input in self.gestion_datos.productos["Referencia"].values:
                 self.reportes.filtrar_referencia(user_input)
                 self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("Referencia ingresada no valida")
         elif eleccion == "codigo_de_barras":
             if user_input in self.gestion_datos.productos["Codigo de barras"].values:
                 self.reportes.filtrar_codigo_de_barras(user_input)
@@ -182,10 +185,14 @@ class Plantilla(QWidget):
                 user_input = int(user_input)
                 self.reportes.filtrar_codigo_de_barras(user_input)
                 self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("El codigo de barras ingresado no es valido")
         elif eleccion == "marca":
             if user_input in self.gestion_datos.productos["Marca"].values:
                 self.reportes.filtrar_marca(user_input)
                 self.mostrar_referencia()    
+            else:
+                validacion.caja_input_no_valido("La marca ingresada no es valida")
         elif eleccion == "precio_de_adquisicion":
             if user_input in self.gestion_datos.productos["Precio de adquisicion"].values:
                 self.reportes.filtrar_precioA(user_input)
@@ -194,6 +201,8 @@ class Plantilla(QWidget):
                 user_input = int(user_input)
                 self.reportes.filtrar_precioA(user_input)
                 self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("El precio de adquisicion no es valido")
         elif eleccion == "precio_venta":
             if user_input in self.gestion_datos.productos["Precio venta"].values:
                 self.reportes.filtrar_precioV(user_input)
@@ -202,6 +211,8 @@ class Plantilla(QWidget):
                 user_input = int(user_input)
                 self.reportes.filtrar_precioV(user_input)
                 self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("El precio de venta ingresado no es valido")
         elif eleccion == "unidades_actuales":
             if user_input in self.gestion_datos.productos["Unidades actuales"].values:
                 self.reportes.filtrar_stock(user_input)
@@ -210,6 +221,8 @@ class Plantilla(QWidget):
                 user_input = int(user_input)
                 self.reportes.filtrar_stock(user_input)
                 self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("Las unidades que ingresastes no son validas")
         elif eleccion == "producto_disponible":
             if user_input in self.gestion_datos.productos["Producto disponible"].values:
                 self.reportes.filtrar_disponibilidad(user_input)
@@ -242,8 +255,11 @@ class Plantilla(QWidget):
                 user_input = int(user_input)
                 self.reportes.filtrar_costo(user_input)
                 self.mostrar_servicios()
-        print(eleccion)
-            
+            else:
+                validacion.caja_input_no_valido("Campo producto disponible no valido")
+        else:
+            validacion.caja_input_no_valido("Input no valido")
+
     def mostrar_referencia(self):
         self.tablaReportes.setRowCount(0)
         table: QTableWidget = self.tablaReportes
