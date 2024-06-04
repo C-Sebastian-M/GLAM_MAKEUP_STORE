@@ -140,8 +140,9 @@ class Plantilla(QWidget):
         shadow_effect.setOffset(0, 0)
         header.setGraphicsEffect(shadow_effect)
 
-        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
         table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
+        # logica para implementar los registros de la tabla
 
     def abrir_ventana_por_fecha(self) -> None:
         self.consultandoPor.setText("fecha")

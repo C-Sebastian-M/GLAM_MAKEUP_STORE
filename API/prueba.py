@@ -153,7 +153,7 @@ class Cajero:
         nombre_servicio = datos_producto["Nombre Servicio"]
         nuevo_producto = pd.DataFrame([[nombre_servicio, preciot]], columns=["Servicio" , "Precio total"])
         self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
-        
+
     def seleccionar_mediopago(self):
         #Necesitamos que creen la tabla de medios de pago
         pass
@@ -241,7 +241,7 @@ class Inventario:
             return False
         return False
     
-    def  eliminar_servicio(self,servicio):
+    def eliminar_servicio(self,servicio):
         self.gestion_datos.eliminar_servicio(servicio)
     
     def modificar_servicio(self, id, nombreN, precioN, idO,datosS):
