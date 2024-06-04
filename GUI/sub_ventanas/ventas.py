@@ -52,7 +52,7 @@ class VentasAdmin(QMainWindow, CBackground):
         #    Qt.MatchContains
         #)  # Coincidir con cualquier parte del texto
         #self.completer.setCompletionMode(QCompleter.PopupCompletion)
-        #self.completer.setPopup(self.listView_buscar)
+        self.completer.setPopup(self.listView_buscar)
         #self.lineEdit_idVenta.setCompleter(self.completer)
 
         # Mas botones

@@ -115,31 +115,22 @@ class GestionDatos:
         except Exception as e:
             print(f"Error al cargar los DataFrames desde el archivo Excel: {e}")
 
-    def guardar_dataframes(self):
+    def exportar_a_json(self):
         try:
-            with pd.ExcelWriter(self.nombre_archivo) as writer:
-                # Guardar todos los DataFrames en el archivo Excel
-                self.clientes.to_excel(writer, sheet_name="Clientes", index=False)
-                self.productos.to_excel(writer, sheet_name="Productos", index=False)
-                self.metodo_pago.to_excel(
-                    writer, sheet_name="Metodo de pago", index=False
-                )
-                self.venta_productos.to_excel(
-                    writer, sheet_name="VentaProductos", index=False
-                )
-                self.venta_servicios.to_excel(
-                    writer, sheet_name="VentaServicios", index=False
-                )
-                self.servicios.to_excel(writer, sheet_name="Servicios", index=False)
-                self.reservas_servicios.to_excel(
-                    writer, sheet_name="ReservasServicios", index=False
-                )
-                self.facturas.to_excel(writer, sheet_name="Facturas", index=False)
-                self.usuarios.to_excel(writer, sheet_name="Usuarios", index=False)
-                self.roles.to_excel(writer, sheet_name="Roles", index=False)
-            self.ajustar_columnas_excel()
+            self.clientes.to_json('clientes.json', orient='records', lines=True)
+            self.productos.to_json('productos.json', orient='records', lines=True)
+            self.metodo_pago.to_json('metodo_pago.json', orient='records', lines=True)
+            self.venta_productos.to_json('venta_productos.json', orient='records', lines=True)
+            self.venta_servicios.to_json('venta_servicios.json', orient='records', lines=True)
+            self.servicios.to_json('servicios.json', orient='records', lines=True)
+            self.reservas_servicios.to_json('reservas_servicios.json', orient='records', lines=True)
+            self.facturas.to_json('facturas.json', orient='records', lines=True)
+            self.usuarios.to_json('usuarios.json', orient='records', lines=True)
+            self.roles.to_json('roles.json', orient='records', lines=True)
+            print("Datos exportados a JSON exitosamente.")
         except Exception as e:
-            print(f"Error al guardar los dataframes en el archivo Excel: {e}")
+            print(f"Error al exportar los DataFrames a JSON: {e}")
+
 
     def ajustar_columnas_excel(self):
         try:
