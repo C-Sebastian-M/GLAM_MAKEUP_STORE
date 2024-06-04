@@ -81,10 +81,10 @@ class AdminSoporteManager(QMainWindow):
             "Ventas", GD.columnas_venta_productos
         )
         self.inventarioProductos = Inventario(
-            "Inventario", GD.columnas_productos
+            "Inventario", GD.columnas_productos, ref=0
         )
         self.inventarioServicios = Inventario(
-            "Inventario", GD.columnas_servicios
+            "Inventario", GD.columnas_servicios, ref=1
         )
         self.widgets_stack.addWidget(self.admin_soporte)
         self.widgets_stack.addWidget(self.reportePanel)
