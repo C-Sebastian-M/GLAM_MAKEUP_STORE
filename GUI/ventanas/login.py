@@ -7,7 +7,7 @@ from GUI.ventanas.soporte_admin import AdminSoporteManager
 from API.prueba import Cajero
 from API.DATA import GestionDatos
 from API.Validaciones import *
-import sys
+import subprocess
 
 
 class Login(QMainWindow):
@@ -22,7 +22,7 @@ class Login(QMainWindow):
         # BT CLOSE POPUP
         self.pushButton_close_pupup.clicked.connect(lambda: self.frame_error.hide())
         self.cajero = Cajero()
-
+        self.manual = ""
         # HIDE ERROR
         self.frame_error.hide()
 
@@ -117,3 +117,7 @@ class Login(QMainWindow):
         caja = Aplicacion()
         caja.show()
         self.close()
+
+    def abrir_manual(self):
+        file=self.manual
+        subprocess.call(['start', file], shell=True)
