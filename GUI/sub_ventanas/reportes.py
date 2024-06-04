@@ -294,8 +294,11 @@ class Ventas(Plantilla):
             self.navbar.deleteLater()
 
 class Inventario(Plantilla):
-    def __init__(self, title: str, columns: List[str | int]) -> None:
+    def __init__(self, title: str, columns: List[str | int], ref: int) -> None:
         super().__init__(title, columns)
+        if ref == 1:
+            self.fechaBtn.hide()
+        
 
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
