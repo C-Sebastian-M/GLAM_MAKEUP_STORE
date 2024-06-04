@@ -1,0 +1,1201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1072</width>
+    <height>793</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,8">
+       <property name="spacing">
+        <number>7</number>
+       </property>
+       <property name="leftMargin">
+        <number>11</number>
+       </property>
+       <property name="topMargin">
+        <number>11</number>
+       </property>
+       <property name="rightMargin">
+        <number>11</number>
+       </property>
+       <property name="bottomMargin">
+        <number>11</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="frame_superior">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QFrame{
+/*background-color: rgb(235, 188, 220);*/
+background-color: transparent;
+
+}
+
+QPushButton {
+    border: 2px solid #e4acd0;
+    border-radius: 5px;
+    padding: 8px 16px;
+    background-color: #dc95c4; /* Fondo */
+    color: #ffffff; /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+QPushButton:hover {
+    background-color: #dc84bc; /* Fondo al pasar el cursor */
+}
+
+QPushButton:pressed {
+    background-color: #d484b4; /* Fondo al presionar */
+}
+QLabel {
+	background-color:  rgb(235, 188, 220);
+    font: 87 14pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
+    color:rgb(0, 0, 0); /* Color de texto rgb(220, 132, 188) */
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="menu_boton">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../../recursos/images/barra-de-menus.png</normaloff>../../recursos/images/barra-de-menus.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="titulo_label">
+            <property name="styleSheet">
+             <string notr="true">background-color: transparent;</string>
+            </property>
+            <property name="text">
+             <string>ADMINISTRAR USUARIOS</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="atrasBtn">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>115</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>ATRAS</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../../../recursos/images/arrow-left.png</normaloff>../../../recursos/images/arrow-left.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_contenido">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="frame_control">
+            <property name="minimumSize">
+             <size>
+              <width>270</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>0</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QFrame{
+background-color:transparent;
+}
+
+QPushButton {
+    border: 2px solid #e4acd0;
+	border-top-left-radius:20px;
+    border-bottom-left-radius: 20px;
+    background-color: #dc95c4; /* Fondo */
+    color: #ffffff; /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+QPushButton:hover {
+    background-color: #dc84bc; /* Fondo al pasar el cursor */
+	border-top-left-radius:20px;
+    border-bottom-left-radius: 20px;
+}
+
+QPushButton:pressed {
+    background-color: #d484b4; /* Fondo al presionar */
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QPushButton" name="ver_usuarios_boton">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string>VER
+USUARIOS</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../recursos/images/database.png</normaloff>../../recursos/images/database.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="add_usuario_boton">
+               <property name="text">
+                <string>AÑADIR
+USUARIO</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../recursos/images/account-box-plus-outline.png</normaloff>../../recursos/images/account-box-plus-outline.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="modificar_usuario_boton">
+               <property name="text">
+                <string>MODIFICAR
+USUARIO</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../recursos/images/account-box-plus-outline.png</normaloff>../../recursos/images/account-box-plus-outline.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="eliminar_usuario_boton">
+               <property name="text">
+                <string>ELIMINAR
+USUARIO</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../recursos/images/account-box-minus-outline.png</normaloff>../../recursos/images/account-box-minus-outline.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_paginas">
+            <property name="styleSheet">
+             <string notr="true">
+/* Estilo para QFrame */
+QFrame {
+    background-color: transparent; /* Fondo blanco */
+	border-radius: 10px
+}
+
+/* Estilo para QLabel */
+QLabel {
+	background-color:  transparent;
+    font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
+    color: rgb(0, 0, 0); /* Color de texto rgb(220, 132, 188) */
+}
+
+/* Estilo para QLineEdit */
+QLineEdit {
+    border: 2px solid #e4acd0; /* Borde */
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f5eef2; /* Fondo */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(220, 149, 196);
+}
+QLineEdit:focus {
+    border: 2px solid #d484b4; /* Borde al enfocar */
+}
+
+QPushButton {
+    border: 2px solid #e4acd0;
+    border-radius: 5px;
+    padding: 8px 8px;
+    background-color: #dc95c4; /* Fondo */
+    color: #ffffff; /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+QPushButton:hover {
+    background-color: #dc84bc; /* Fondo al pasar el cursor */
+}
+
+QPushButton:pressed {
+    background-color: #d484b4; /* Fondo al presionar */
+}
+
+QFrame{
+border-radius: 10px
+}
+
+QTableWidget {
+    background-color: #f5eef2;
+    gridline-color: #dc84bc;
+    font-size: 14px;
+	border: 2px solid black;
+     border-radius: 5px;
+}
+
+QHeaderView::section {
+    background-color: #dc84bc;
+    color: black;
+    padding: 5px;
+    border: 1px solid #dc84bc;
+}
+
+QTableWidget::item {
+    border: 1px solid dc84bc;
+}
+
+QTableWidget::item:alternate {
+    background-color: dc84bc;
+}
+
+QTableWidget::item:!selected {
+    background-color: transparent;
+}
+
+QTableWidget::item:selected {
+    background-color: #d484b4;
+    color: #ffffff;
+}
+
+QComboBox {
+    border: 2px solid #e4acd0; /* Borde */
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f5eef2; /* Fondo */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+QComboBox:hover {
+    border: 2px solid rgb(220, 149, 196);
+}
+
+QComboBox:focus {
+    border: 2px solid #d484b4; /* Borde al enfocar */
+}
+
+QComboBox::drop-down {
+    width: 20px; /* Ancho del botón desplegable */
+    border: none; /* Quitar el borde */
+}
+
+QComboBox::down-arrow {
+    image: url(drop_down_icon.png); /* Cambiar el icono de flecha */
+}
+
+QComboBox::down-arrow:hover {
+    image: url(drop_down_icon_hover.png); /* Cambiar el icono de flecha al pasar el cursor */
+}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_15">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>1</number>
+             </property>
+             <property name="topMargin">
+              <number>1</number>
+             </property>
+             <property name="rightMargin">
+              <number>1</number>
+             </property>
+             <property name="bottomMargin">
+              <number>1</number>
+             </property>
+             <item>
+              <widget class="QStackedWidget" name="stackedWidget">
+               <property name="currentIndex">
+                <number>3</number>
+               </property>
+               <widget class="QWidget" name="ver_usuarios_pagina">
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <item>
+                  <widget class="QLabel" name="ver_productos_label">
+                   <property name="text">
+                    <string>USUARIOS</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTableWidget" name="tabla_ver_usuarios">
+                   <property name="editTriggers">
+                    <set>QAbstractItemView::NoEditTriggers</set>
+                   </property>
+                   <attribute name="horizontalHeaderVisible">
+                    <bool>false</bool>
+                   </attribute>
+                   <attribute name="horizontalHeaderCascadingSectionResizes">
+                    <bool>true</bool>
+                   </attribute>
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>200</number>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>ID Usuario</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Usuario</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Contraseña</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Rol ID</string>
+                    </property>
+                   </column>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="ver_actualizar_boton">
+                   <property name="text">
+                    <string>ACTUALIZAR</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../recursos/images/reload.png</normaloff>../../recursos/images/reload.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="add_usuario_pagina">
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <item>
+                  <widget class="QLabel" name="add_usuario_label">
+                   <property name="text">
+                    <string>AÑADIR USUARIO</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_5">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_5">
+                     <property name="spacing">
+                      <number>15</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="add_id_usuario_label">
+                       <property name="text">
+                        <string>ID Usuario</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="add_nombre_usuario_label">
+                       <property name="text">
+                        <string>Usuario</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="add_password_label">
+                       <property name="text">
+                        <string>Contraseña</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="add_rol_id_label">
+                       <property name="text">
+                        <string>Rol ID</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_6">
+                     <property name="spacing">
+                      <number>15</number>
+                     </property>
+                     <item>
+                      <widget class="QLineEdit" name="add_id_usuario_lineEdit">
+                       <property name="placeholderText">
+                        <string>ID USUARIO</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="add_nombre_usuario_lineEdit">
+                       <property name="placeholderText">
+                        <string>NOMBRE USUARIO</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="add_password_lineEdit">
+                       <property name="placeholderText">
+                        <string>CONTRASEÑA</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="add_rol_combobox">
+                       <property name="currentText">
+                        <string>SELECCIONE EL ROL</string>
+                       </property>
+                       <item>
+                        <property name="text">
+                         <string>SELECCIONE EL ROL</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Soporte</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Cajero</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Admin</string>
+                        </property>
+                       </item>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_6">
+                   <item>
+                    <widget class="QLabel" name="aviso_add_usuario_label">
+                     <property name="minimumSize">
+                      <size>
+                       <width>170</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_3">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="add_add_usuario_boton">
+                     <property name="text">
+                      <string>AÑADIR</string>
+                     </property>
+                     <property name="icon">
+                      <iconset>
+                       <normaloff>../../recursos/images/account-box-plus-outline.png</normaloff>../../recursos/images/account-box-plus-outline.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>25</width>
+                       <height>25</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="modificar_usuario_pagina">
+                <layout class="QVBoxLayout" name="verticalLayout_17">
+                 <item>
+                  <widget class="QLabel" name="modify_usuario_titulo">
+                   <property name="text">
+                    <string>MODIFICAR USUARIO</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="modify_actualizar_boton">
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Actualizar/Mostrar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTableWidget" name="modify_tabla_usuarios">
+                   <attribute name="horizontalHeaderCascadingSectionResizes">
+                    <bool>true</bool>
+                   </attribute>
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>200</number>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>ID Usuario</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Usuario</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Contraseña</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Rol ID</string>
+                    </property>
+                   </column>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_16">
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_3">
+                     <item>
+                      <widget class="QLabel" name="modify_buscar_usuario_label">
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Usuario:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="modify_buscar_usuario_lineEdit">
+                       <property name="placeholderText">
+                        <string>INGRESE ID USUARIO</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="modify_buscar_boton">
+                       <property name="text">
+                        <string>BUSCAR</string>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>../../recursos/images/search.png</normaloff>../../recursos/images/search.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QListView" name="listView_modificar">
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QListView {
+    background-color: #f5eef2; /* Fondo */
+}
+
+QListView::item {
+    border-bottom: 1px solid #e4acd0; /* Borde inferior de cada elemento */
+    padding: 5px; /* Espaciado interno */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+QListView::item:selected {
+    background-color: #dc84bc; /* Color de fondo al seleccionar */
+    color: #ffffff; /* Color de texto al seleccionar */
+}</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_formularioModificar">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_10">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_7">
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_8">
+                        <property name="spacing">
+                         <number>15</number>
+                        </property>
+                        <item>
+                         <widget class="QLabel" name="modify_nombre_usuario_label">
+                          <property name="text">
+                           <string>Nombre usuario</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="modify_password_label">
+                          <property name="text">
+                           <string>Contraseña</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="modify_rol_label">
+                          <property name="text">
+                           <string>Rol</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_9">
+                        <property name="spacing">
+                         <number>15</number>
+                        </property>
+                        <item>
+                         <widget class="QLineEdit" name="modify_nombre_usuario_lineEdit">
+                          <property name="placeholderText">
+                           <string>NOMBRE USUARIO</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLineEdit" name="modify_password_lineEdit">
+                          <property name="placeholderText">
+                           <string>CONTRASEÑA</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QComboBox" name="modify_rol_combobox">
+                          <item>
+                           <property name="text">
+                            <string>SELECCIONE EL ROL</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Soporte</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Cajero</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>Admin</string>
+                           </property>
+                          </item>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="modify_guardar_boton">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>GUARDAR</string>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>../../recursos/images/content-save-all.png</normaloff>../../recursos/images/content-save-all.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>25</width>
+                        <height>25</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <item>
+                    <widget class="QLabel" name="aviso_modify_usuario_label">
+                     <property name="minimumSize">
+                      <size>
+                       <width>170</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_4">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="eliminar_usuario_pagina">
+                <layout class="QVBoxLayout" name="verticalLayout_18">
+                 <item>
+                  <widget class="QLabel" name="del_eliminar_usuario_label">
+                   <property name="text">
+                    <string>ELIMINAR USUARIO</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="del_actualizar_boton">
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Actualizar/Mostrar</string>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../../recursos/images/reload.png</normaloff>../../../recursos/images/reload.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTableWidget" name="del_tabla_usuarios">
+                   <attribute name="horizontalHeaderDefaultSectionSize">
+                    <number>200</number>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>ID Usuario</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Usuario</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Contraseña</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Rol ID</string>
+                    </property>
+                   </column>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_11">
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_4">
+                     <item>
+                      <widget class="QLineEdit" name="del_buscar_usuario_lineEdit">
+                       <property name="minimumSize">
+                        <size>
+                         <width>200</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>800</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="placeholderText">
+                        <string>INGRESE ID USUARIO</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="del_buscar_boton">
+                       <property name="minimumSize">
+                        <size>
+                         <width>100</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>BUSCAR</string>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>../../recursos/images/search.png</normaloff>../../recursos/images/search.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_10">
+                     <item>
+                      <widget class="QLabel" name="del_aviso_label">
+                       <property name="minimumSize">
+                        <size>
+                         <width>200</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="horizontalSpacer_5">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="del_guardar_boton">
+                       <property name="minimumSize">
+                        <size>
+                         <width>120</width>
+                         <height>30</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>ELIMINAR</string>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>../../recursos/images/account-box-minus-outline.png</normaloff>../../recursos/images/account-box-minus-outline.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

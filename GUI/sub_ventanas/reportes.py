@@ -140,7 +140,7 @@ class Plantilla(QWidget):
         table.verticalHeader().setDefaultSectionSize(20)
 
         header = table.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(QHeaderView.Stretch)
 
         shadow_effect = QGraphicsDropShadowEffect(self)
         shadow_effect.setBlurRadius(8)
