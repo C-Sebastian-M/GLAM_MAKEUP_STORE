@@ -576,6 +576,16 @@ QComboBox::down-arrow:hover {
                      <string>Unidades actuales</string>
                     </property>
                    </column>
+                   <column>
+                    <property name="text">
+                     <string>Disponibilidad</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Fecha</string>
+                    </property>
+                   </column>
                   </widget>
                  </item>
                  <item>
