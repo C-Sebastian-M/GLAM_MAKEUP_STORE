@@ -92,9 +92,15 @@ QPushButton::after {
        </item>
        <item>
         <widget class="QLabel" name="logo">
-         <property name="maximumSize">
+         <property name="minimumSize">
           <size>
            <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
            <height>100</height>
           </size>
          </property>
@@ -103,9 +109,6 @@ QPushButton::after {
          </property>
          <property name="text">
           <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap>../../../recursos/images/store_logo.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
