@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 from API.DATA import GestionDatos
 from API.Validaciones import *
 
-from GUI.sub_ventanas.utils.css import CBackground
+from GUI.sub_ventanas.custom.utils.css import CBackground
 
 class GestionServicios(QMainWindow, CBackground):
     def __init__(self):

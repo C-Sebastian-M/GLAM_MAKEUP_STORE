@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui
 from API.DATA import GestionDatos
 from API.prueba import Inventario
 
-from GUI.sub_ventanas.utils.css import CBackground
+from GUI.sub_ventanas.custom.utils.css import CBackground
 
 class InventarioProductos(QMainWindow, CBackground):
     def __init__(self):
