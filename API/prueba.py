@@ -1,13 +1,14 @@
-from DATA import GestionDatos
-from Validaciones import *
+from API.DATA import GestionDatos
+from API.Validaciones import *
 import pandas as pd
 import datetime 
 
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
-        self.df = pd.DataFrame(columns=["Producto","Precio total"])
-        self.serviciosC = pd.DataFrame(columns=["Servicio","Precio total"])
+        self.df = pd.DataFrame(columns=["Nombre","Precio total"])
+        self.serviciosC = pd.DataFrame(columns=["Nombre","Precio total"])
+        self.servF = pd.DataFrame(columns=["Nombre","Precio total"])
     
     def añadir_cliente(self, cedula, nombre, telefono):
         if (
@@ -153,14 +154,20 @@ class Cajero:
         nombre_servicio = datos_producto["Nombre Servicio"]
         nuevo_producto = pd.DataFrame([[nombre_servicio, preciot]], columns=["Servicio" , "Precio total"])
         self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
-        
-    def seleccionar_mediopago(self):
+
+    def df_carro(self):
+        for index, fila in self.df.iterrows():
+           self.servF = self.servF.append(fila)
+
+        for index, fila in self.serviciosC.iterrows():
+           self.servF = self.servF.append(fila)
+        return not self.servF.empty
+         
+    def vaciar_carrito(self):
         #Necesitamos que creen la tabla de medios de pago
         pass
 
-    def seleccionar_mediopago(self):
-        # Necesitamos que creen la tabla de medios de pago
-        pass
+    
 
 class Inventario:
     def __init__(self):
@@ -285,31 +292,37 @@ class Reportes:
     
     def filtrar_codigo_de_barras(self, codB):
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]== codB]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
     
     def filtrar_marca(self,marca):
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Marca"]== marca]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
     
     def filtrar_precioA(self,precio):
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Precio de adquisicion"]== precio]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
     
     def filtrar_precioV(self,precio):
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Precio venta"]== precio]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
     
     def filtrar_stock(self,unidades):
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Unidades actuales"]== unidades]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
 
     def filtrar_disponibilidad(self,disponibles = True):
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Producto disponible"]== disponibles]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
         
@@ -319,18 +332,23 @@ class Reportes:
         fecha2 = datetime.datetime.strptime(fecha_str2, "%Y-%m-%d")
         self.gestion_datos.productos['Fecha'] = pd.to_datetime(self.gestion_datos.productos['Fecha'])
         self.filtrado_productos = self.gestion_datos.productos[(self.gestion_datos.productos['Fecha'] >= fecha1) & (self.gestion_datos.productos['Fecha'] <= fecha2)]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
     
     def filtrar_ID_Servicio(self,id):
-        self.filtrado_servicios = self.gestion_datos.prodcutos[self.gestion_datos.productos[""]]
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"]== id]
+        self.filtrado_servicios = self.filtrado_productos.reset_index(drop=True)
+        return  not self.filtrado_servicios.empty
     
     def filtrar_servicio(self,servicio):
-        self.filtrado_productos = self.gestion_datos.servicios[self.gestion_datos.servicios["Producto disponible"]== servicio]
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["Nombre Servicio"]== servicio]
+        self.filtrado_servicios= self.filtrado_productos.reset_index(drop=True)
         return not self.filtrado_servicios.empty
     
-    def filtrar_costo(self):
-        self.filtrado_productos = self.gestion_datos.servicios[self.gestion_datos.servicios["Producto disponible"]== servicio]
+    def filtrar_costo(self,costo):
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["Costo"]== costo]
+        self.filtrado_servicios = self.filtrado_productos.reset_index(drop=True)
         return not self.filtrado_servicios.empty
 x = Reportes()
 x.filtrar_fecha("2024-06-04 - 2024-06-06")

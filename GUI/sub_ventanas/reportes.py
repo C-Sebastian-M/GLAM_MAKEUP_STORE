@@ -214,10 +214,32 @@ class Plantilla(QWidget):
                 user_input = int(user_input)
                 self.reportes.filtrar_disponibilidad(user_input)
                 self.mostrar_referencia()
-            elif eleccion == "fecha":
-                fechas = self.findChild(QLabel, "rangoDeFechasLabel").text()
-        
-    
+        elif eleccion == "fecha":
+            fechas = self.findChild(QLabel, "rangoDeFechasLabel").text()
+            self.reportes.filtrar_fecha(fechas)
+            self.mostrar_referencia()
+        elif eleccion ==  "id_servicio":
+            if user_input in self.gestion_datos.servicios["ID servicio"].values:
+                self.reportes.filtrar_ID_Servicio(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["ID servicio"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_ID_Servicio(user_input)
+                self.mostrar_referencia()   
+        elif eleccion == "nombre_servicio":
+            if user_input in self.gestion_datos.productos["Nombre Servicio"].values:
+                self.reportes.filtrar_servicio(user_input)
+                self.mostrar_referencia()
+        elif eleccion == "costo":
+            if user_input in self.gestion_datos.servicios["Costo"].values:
+                self.reportes.filtrar_costo(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Costo"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_costo(user_input)
+                self.mostrar_referencia()
+        print(eleccion)
+            
     def mostrar_referencia(self):
         self.tablaReportes.setRowCount(0)
         table: QTableWidget = self.tablaReportes
