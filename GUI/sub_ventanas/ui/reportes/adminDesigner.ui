@@ -138,8 +138,10 @@ QPushButton::after {
          </property>
          <property name="font">
           <font>
-           <family>Dubai Medium</family>
+           <family>Arial</family>
            <pointsize>22</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="text">
