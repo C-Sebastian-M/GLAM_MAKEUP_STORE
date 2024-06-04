@@ -79,7 +79,7 @@
    <item row="0" column="0" colspan="2">
     <widget class="QWidget" name="queryHeader" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -350,8 +350,7 @@
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-bottom-left-radius: 5px;
-border-bottom-right-radius: 5px;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Volver</string>

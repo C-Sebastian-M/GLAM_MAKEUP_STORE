@@ -1,0 +1,22 @@
+QWidget QLabel#rDPlantillaTitle {
+    color: #3d3c3c;
+    background-color: #EBBCDC;
+}
+
+QWidget QFrame#accionesContenedor QPushButton {
+    padding: 5px;
+
+    border-radius: 2px;
+    background-color: #EBBCDC;
+}
+
+QFrame#accionesContenedor QPushButton#pdfBtn {
+    border-left: 2px solid #3d3c3ca2;
+    border-right: 2px solid #3d3c3ca2;
+    border-radius: none;
+}
+
+QWidget QTableWidget#tableReporteDiario {
+    border-top: none;
+    border-bottom: none;
+}
