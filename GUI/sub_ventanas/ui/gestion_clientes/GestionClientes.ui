@@ -378,7 +378,7 @@ QFrame {
 QLabel {
 	background-color:  transparent;
     font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: rgb(220, 132, 188); /* Color de texto rgb(220, 132, 188) */
+    color: black; /* Color de texto rgb(220, 132, 188) */
 }
 
 /* Estilo para QLineEdit */

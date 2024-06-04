@@ -56,18 +56,15 @@ class ReportePorFecha(QWidget):
         self.hastaLabel.setText(f'Hasta\n{fecha_seleccionada}')
 
     def confirmar(self) -> None:
-        if not self.fecha:
-            return
+        if not self.fecha or len(self.fecha) == 1:
+            vald.caja_input_no_valido("Asegurese de poner ambas fechas.")
+            return None
         
         fechas_compuesta = f"{self.fecha['desde']} - {self.fecha['hasta']}"
         fechas_validas = vald.validar_fechas(fechas_compuesta)
 
         if not fechas_validas:
-            vald.caja_input_no_valido("""
-                Fechas ingresadas no validas,\n 
-                recuerde que la primera fecha (desde)\n
-                debe ser menor que la segunda(hasta).
-            """)
+            vald.caja_input_no_valido("Fechas ingresadas no validas, recuerde que la primera fecha (desde)\ndebe ser menor que la segunda(hasta).")
             return None
 
         self.ref.setText(fechas_compuesta)
