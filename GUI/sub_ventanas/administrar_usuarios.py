@@ -9,7 +9,6 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import QPainter, QBrush, QColor
-
 class CBackground:
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -98,3 +97,6 @@ class AdministrarUsuarios(QMainWindow, CBackground):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
+
+
+ 

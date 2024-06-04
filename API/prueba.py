@@ -6,9 +6,9 @@ import datetime
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
-        self.df = pd.DataFrame(columns=["Nombre","Precio total"])
-        self.serviciosC = pd.DataFrame(columns=["Nombre","Precio total"])
-        self.carrito = pd.DataFrame(columns=["Nombre","Precio total"])
+        self.df = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
+        self.serviciosC = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
+        self.carrito = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
     
     def añadir_cliente(self, cedula, nombre, telefono):
         if (
@@ -134,34 +134,45 @@ class Cajero:
         return False
     
     def mostra_total_productos(self,codigo_barras,cantidad):
-       if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
+        if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == (codigo_barras)]
-       elif int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
-           datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == int(codigo_barras)]
-       precio = datos_producto["Precio venta"]
-       preciot = cantidad*precio
-       nuevo_producto = pd.DataFrame([[codigo_barras, preciot]], columns=["Producto","Precio total"])
-       self.df = pd.concat([self.df, nuevo_producto], ignore_index=True)
-       print(self.df)
+        elif int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
+           datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == int(codigo_barras)]         
+        precio = datos_producto["Precio venta"]
+        preciot = cantidad*precio
+        nuevo_producto = pd.DataFrame([[datos_producto["Referencia"],cantidad,preciot]], columns=["Nombre","Cantidad","Precio total"])
+        self.df= pd.concat([self.df, nuevo_producto], ignore_index=True)
+        self.df = self.df.reset_index(drop=True)
+       
         
     def mostra_total_servicios(self, id, cantidad):
-        if id in self.gestion_datos.productos["ID servicio"].values:
-            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["ID servicio"] == (id)]
-        elif int(id) in self.gestion_datos.productos["ID servicio"].values:
-            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["ID servicio"] == int(id)]
+        if id in self.gestion_datos.servicios["ID servicio"].values:
+            datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == (id)]
+        elif int(id) in self.gestion_datos.servicios["ID servicio"].values:
+            datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == int(id)]
         precio = datos_producto["Costo"]
         preciot = cantidad*precio
-        nombre_servicio = datos_producto["Nombre Servicio"]
-        nuevo_producto = pd.DataFrame([[nombre_servicio, preciot]], columns=["Servicio" , "Precio total"])
+        nuevo_producto = pd.DataFrame([[datos_producto["Nombre Servicio"],cantidad, preciot]], columns=["Nombre","Cantidad","Precio total"])
         self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
+        self.serviciosC = self.serviciosC.reset_index(drop=True)
 
     def df_carro(self):
-        df_unido = pd.merge(self.serviciosC,  on='ID', how='inner')
+        self.carrito = pd.concat([self.df, self.serviciosC], ignore_index=True)  
+        self.carrito = self.carrito.reset_index(drop=True)
+        print(self.carrito)
         return not self.carrito.empty
          
     def vaciar_carrito(self):
-        self.carrtio.drop(self.carrito.index, inplace = True)
+        self.carrito.drop(self.carrito.index, inplace = True)
+        return not self.carrito.empty
 
+    def factura(self):
+     for i in range(len(self.df)):
+      print(f"Nombre del producto: {self.df.loc[i, 'Producto']}")
+      print(f"Subtotal de compra: {self.df.loc[i, 'Precio total']}")
+      print("------------------------------")
+     print(f"TOTAL: {self.df['Precio total'].sum()}")  
+    
        
 
     
@@ -181,12 +192,12 @@ class Inventario:
         ):
             print(type(referencia))
             if not codigoB in self.gestion_datos.productos["Codigo de barras"].values:
-                self.gestion_datos.agregar_producto(
-                    referencia, codigoB, marca, precioA, precioV, stock
-                )
+                self.gestion_datos.agregar_producto(referencia, codigoB, marca, precioA, precioV, stock)
                 return True
+            else:
+                return False
+        else:   
             return False
-        return False
 
     def modificar_producto(
         self, marca, precio_a, precio_v, codigo_barras, datosP):
@@ -346,6 +357,57 @@ class Reportes:
         self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
         print(self.filtrado_servicios)
         return not self.filtrado_servicios.empty
+    
+    
+class AdministrarUsuarios:
+    def __init__(self, gestion_datos):
+        self.gestion_datos = gestion_datos
+
+    def añadir_usuario(self):
+        usuario=self.add_nombre_usuario_lineEdit.text()
+        contraseña=self.add_password_lineEdit.text()
+        #rol=
+        if usuario in self.gestion_datos.contraseñas['Usuario'].values:
+            return False
+        else:
+            self.gestion_datos.agregar_contraseña(usuario, contraseña, rol)
+            self.gestion_datos.guardar_dataframes()
+            return True
+):
+        usuario=self.del_buscar_usuario_lineEdit.text()
+        nuevo_usuario=self.add_nombre_usuario_lineEdit.text()
+        nueva_contraseña=self.add_password_lineEdit.text()
+        nuevo_rol= rol
+        if usuario in self.gestion_datos.contraseñas['Usuario'].values:
+            self.gestion_datos.contraseñas.loc[self.gestion_datos.contraseñas['Usuario'] == usuario, 'Usuario'] = nuevo_usuario
+            self.gestion_datos.contraseñas.loc[self.gestion_datos.contraseñas['Usuario'] == usuario, 'Contraseña'] = nueva_contraseña
+            self.gestion_datos.contraseñas.loc[self.gestion_datos.contraseñas['Usuario'] == usuario, 'Rol'] = nuevo_rol
+            self.gestion_datos.guardar_dataframes()
+            return True  # Usuario modificado correctamente
+        else:
+            return False  # Usuario no existe
+
+    def eliminar_usuario(self, usuario):
+        if usuario in self.gestion_datos.contraseñas['Usuario'].values:
+            self.gestion_datos.contraseñas = self.gestion_datos.contraseñas[self.gestion_datos.contraseñas['Usuario'] != usuario]
+            self.gestion_datos.guardar_dataframes()
+            return True  # Usuario eliminado correctamente
+        else:
+            return False  # Usuario no existe
+# from prueba import AdministrarUsuarios
+        # int(self.add_id_usuario_lineEdit.text())
+        # self.add_nombre_usuario_lineEdit.text()
+        # self.add_password_lineEdit.text()
+        # self.modify_buscar_usuario_lineEdit.text()
+        # self.modify_nombre_usuario_lineEdit.text()
+        # self.modify_password_lineEdit.text()
+        # self.del_buscar_usuario_lineEdit.text()
+    #
+
+
+
+
+
 
 
 

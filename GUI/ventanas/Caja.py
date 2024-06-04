@@ -103,7 +103,8 @@ class Caja(QMainWindow):
         self.TablaTotalPro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.TablaServicios.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.TablaTotalSer.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.TablaCarro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TaCaro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TaSer.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
 ##////////FUNCIONES CLIENTES/////////##
         self.ChangeCli.clicked.connect(self.clickchange)
@@ -114,7 +115,7 @@ class Caja(QMainWindow):
         self.AggProducto.clicked.connect(self.total_productos)
         self.AggServicios.clicked.connect(self.total_servicios)
         self.ConfirmarPago.clicked.connect(self.saber_pago)
-        self.YES.clicked.connect(self.mostrar_carrito)
+        self.YES.clicked.connect(self.mostrar_carrito_yes)
         self.NO.clicked.connect(self.mostrar_carrito)
         self.TablaCedulas.hide()
         self.IngCedula.hide()
@@ -349,7 +350,7 @@ class Caja(QMainWindow):
         id_servicio = self.EleServicios.text()
         cantidad = self.StockServicios.text()
         if cantidad != "" and id_servicio != "":
-            self.cajero.mostra_total_servicios(id_servicio, cantidad)
+            self.cajero.mostra_total_servicios(id_servicio, int(cantidad))
             self.mostrar_total_servicios()
     
     def mostrar_productos(self):
@@ -384,25 +385,23 @@ class Caja(QMainWindow):
         metodo_pago = self.MetodosPago.currentText()
         print(metodo_pago)
 
-    def mostrar_carrito(self):
-        #mostrar_productos
+    def mostrar_carrito_yes(self):
+        self.cajero.df_carroo()
         self.TablaCarro.setRowCount(0)
-        for i, row in self.cajero.df.iterrows():
+        for i, row in self.cajero.carrito.iterrows():
             self.TablaTotalPro.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.TablaTotalPro.setItem(i, j, QTableWidgetItem(str(value)))
-        #mostrar_servicios
-       # self.TablaCarro.setRowCount(0)
-       # for i, row in self.cajero.serviciosC.iterrows():
-       #     self.TablaCarro.insertRow(i)
-       #     for j, (colname, value) in enumerate(row.items()):
-       #         self.TablaCarro.setItem(i, j, QTableWidgetItem(str(value)))
-    def factura(self):
-     for i in range(len(self.df)):
-      print(f"Nombre del producto: {self.df.loc[i, 'Producto']}")
-      print(f"Subtotal de compra: {self.df.loc[i, 'Precio total']}")
-      print("------------------------------")
-     print(f"TOTAL: {self.df['Precio total'].sum()}")  
+    
+    def mostrar_carrito(self):
+        self.cajero.df_carro()
+        carrito = self.cajero.carrito
+        self.TablaCarro.setRowCount(0)
+        for i, row in carrito.iterrows():
+            self.TablaTotalPro.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaTotalPro.setItem(i, j, QTableWidgetItem(str(value)))
+
     
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
