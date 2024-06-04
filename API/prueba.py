@@ -1,5 +1,5 @@
-from DATA import GestionDatos
-from Validaciones import *
+from API.DATA import GestionDatos
+from API.Validaciones import *
 import pandas as pd
 import datetime 
 
@@ -296,15 +296,15 @@ class Reportes:
         #        print("Error: Comparación de subtotal no válida.")
         #if producto_o_servicio is not None:
         #    filtered_sales = filtered_sales[filtered_sales["Producto" if "producto" in producto_o_servicio.lower() else "Servicio"] == producto_o_servicio]
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_sales = filtered_sales[filtered_sales["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_sales = filtered_sales[filtered_sales["Fecha"] <= fecha_max]
+        #if fecha_min is not None:
+        #    fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
+        #    filtered_sales = filtered_sales[filtered_sales["Fecha"] >= fecha_min]
+        #if fecha_max is not None:
+        #    fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
+        #    filtered_sales = filtered_sales[filtered_sales["Fecha"] <= fecha_max]
         #if id_caja is not None:
         #    filtered_sales = filtered_sales[filtered_sales["ID_Caja"] == id_caja]
-        return filtered_sales
+        #return filtered_sales
     def filtrar_referencia(self, referencia):
         self.filtrado_productos = (self.gestion_datos.productos[self.gestion_datos.productos["Referencia"]== referencia])
         self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
