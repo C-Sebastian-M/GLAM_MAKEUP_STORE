@@ -146,8 +146,9 @@ class Plantilla(QWidget):
         shadow_effect.setOffset(0, 0)
         header.setGraphicsEffect(shadow_effect)
 
-        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
         table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
+        # logica para implementar los registros de la tabla
 
     def abrir_ventana_por_fecha(self) -> None:
         self.consultandoPor.setText("fecha")
@@ -165,6 +166,9 @@ class Plantilla(QWidget):
 
     def filtrar(self):
         eleccion: str = self.normalizar(self.consultandoPor.text())
+        if eleccion == "fecha":
+            fechas: str = self.fechas_label.text()
+
         user_input: str = self.userInput.text()
         if eleccion == "referencia":
             if user_input in self.gestion_datos.productos["Referencia"].values:
@@ -214,6 +218,7 @@ class Plantilla(QWidget):
                 user_input = int(user_input)
                 self.reportes.filtrar_disponibilidad(user_input)
                 self.mostrar_referencia()
+<<<<<<< HEAD
         elif eleccion == "fecha":
             fechas = self.findChild(QLabel, "rangoDeFechasLabel").text()
             self.reportes.filtrar_fecha(fechas)
@@ -240,6 +245,13 @@ class Plantilla(QWidget):
                 self.mostrar_referencia()
         print(eleccion)
             
+=======
+        
+        print(eleccion,user_input)
+                    
+        campos = [campo.lower() for campo in self.campos]
+    
+>>>>>>> 89c166ef2193238828890ba2ea166dd35a9b6d6e
     def mostrar_referencia(self):
         self.tablaReportes.setRowCount(0)
         table: QTableWidget = self.tablaReportes

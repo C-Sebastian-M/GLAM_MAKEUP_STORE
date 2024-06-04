@@ -248,7 +248,7 @@ class Inventario:
             return False
         return False
     
-    def  eliminar_servicio(self,servicio):
+    def eliminar_servicio(self,servicio):
         self.gestion_datos.eliminar_servicio(servicio)
     
     def modificar_servicio(self, id, nombreN, precioN, idO,datosS):
@@ -273,11 +273,7 @@ class Inventario:
         else:
             return False
         
-
-           
-
-
-
+        
 class Reportes:
     def __init__(self):
         self.gestion_datos = GestionDatos()

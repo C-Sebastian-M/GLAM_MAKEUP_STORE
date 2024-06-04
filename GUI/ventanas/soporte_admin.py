@@ -29,7 +29,7 @@ from GUI.sub_ventanas.inventario_productos import InventarioProductos
 from GUI.sub_ventanas.GestionClientes import GestionClientes
 from GUI.sub_ventanas.catalogo_servicios import GestionServicios
 from GUI.sub_ventanas.cambio_contrasena import PasswordChange
-# from GUI.sub_ventanas.ventas import VentasAdmin
+from GUI.sub_ventanas.ventas import VentasAdmin
 import API.DATA as GD
 GD = GD.GestionDatos()
 
@@ -97,10 +97,10 @@ class AdminSoporteManager(QMainWindow):
         # Inicializando ventanas de gestión
         self.gestionPanel = GestionClientes()
         self.gestionServiciosPanel = GestionServicios()
-        #self.gestionVentasPanel= VentasAdmin()
-        #self.widgets_stack.addWidget(self.gestionPanel)
-        #self.widgets_stack.addWidget(self.gestionServiciosPanel)
-        #self.widgets_stack.addWidget(self.gestionVentasPanel)
+        self.gestionVentasPanel= VentasAdmin()
+        self.widgets_stack.addWidget(self.gestionPanel)
+        self.widgets_stack.addWidget(self.gestionServiciosPanel)
+        self.widgets_stack.addWidget(self.gestionVentasPanel)
 
         # Inicializando ventana de Inventario de productos
         self.principalInventarioProductosPanel = InventarioProductos()
@@ -116,7 +116,11 @@ class AdminSoporteManager(QMainWindow):
                 "Reporte Diario de Productos", GD.columnas_productos
             ) 
             self.reportesDiariosCatalogo = ReporteDiarioCatalogo(
-                "Reporte Diario de Catalogos", []
+                "Reporte Diario de Catalogos", [
+                    "ID",
+                    "Servicio",
+                    "Precio",
+                ]
             )
 
             self.widgets_stack.addWidget(self.reportesDiarios)
