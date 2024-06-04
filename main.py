@@ -5,7 +5,7 @@ from GUI.ventanas.login import Login
 class Main:
     def __init__(self):
         self.app = QApplication(sys.argv)
-        self.login_window = Login(self.app)
+        self.login_window = Login(self.app) 
 
     def run(self):
         self.login_window.show()

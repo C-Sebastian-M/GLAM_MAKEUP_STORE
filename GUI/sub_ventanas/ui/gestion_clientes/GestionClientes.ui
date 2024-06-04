@@ -424,6 +424,9 @@ QTableWidget {
     background-color: #f5eef2;
     gridline-color: #dc84bc;
     font-size: 14px;
+	border: 2px solid black;
+     border-radius: 5px;
+
 }
 
 QHeaderView::section {
