@@ -218,7 +218,6 @@ class Plantilla(QWidget):
                 user_input = int(user_input)
                 self.reportes.filtrar_disponibilidad(user_input)
                 self.mostrar_referencia()
-<<<<<<< HEAD
         elif eleccion == "fecha":
             fechas = self.findChild(QLabel, "rangoDeFechasLabel").text()
             self.reportes.filtrar_fecha(fechas)
@@ -227,31 +226,24 @@ class Plantilla(QWidget):
             if user_input in self.gestion_datos.servicios["ID servicio"].values:
                 self.reportes.filtrar_ID_Servicio(user_input)
                 self.mostrar_referencia()
-            elif int(user_input) in self.gestion_datos.productos["ID servicio"].values:
+            elif int(user_input) in self.gestion_datos.servicios["ID servicio"].values:
                 user_input = int(user_input)
                 self.reportes.filtrar_ID_Servicio(user_input)
-                self.mostrar_referencia()   
+                self.mostrar_servicios()   
         elif eleccion == "nombre_servicio":
-            if user_input in self.gestion_datos.productos["Nombre Servicio"].values:
+            if user_input in self.gestion_datos.servicios["Nombre Servicio"].values:
                 self.reportes.filtrar_servicio(user_input)
-                self.mostrar_referencia()
+                self.mostrar_servicios()
         elif eleccion == "costo":
             if user_input in self.gestion_datos.servicios["Costo"].values:
                 self.reportes.filtrar_costo(user_input)
-                self.mostrar_referencia()
-            elif int(user_input) in self.gestion_datos.productos["Costo"].values:
+                self.mostrar_servicios()
+            elif int(user_input) in self.gestion_datos.servicios["Costo"].values:
                 user_input = int(user_input)
                 self.reportes.filtrar_costo(user_input)
-                self.mostrar_referencia()
+                self.mostrar_servicios()
         print(eleccion)
             
-=======
-        
-        print(eleccion,user_input)
-                    
-        campos = [campo.lower() for campo in self.campos]
-    
->>>>>>> 89c166ef2193238828890ba2ea166dd35a9b6d6e
     def mostrar_referencia(self):
         self.tablaReportes.setRowCount(0)
         table: QTableWidget = self.tablaReportes
@@ -260,7 +252,15 @@ class Plantilla(QWidget):
             self.tablaReportes.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.tablaReportes.setItem(i, j, QTableWidgetItem(str(value)))
-
+    
+    def mostrar_servicios(self):
+        self.tablaReportes.setRowCount(0)
+        table: QTableWidget = self.tablaReportes
+        table.setRowCount(0)
+        for i, row in self.reportes.filtrado_servicios.iterrows():
+            self.tablaReportes.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tablaReportes.setItem(i, j, QTableWidgetItem(str(value)))
         
 
         def caja_input_no_valido():

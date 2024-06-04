@@ -8,7 +8,7 @@ class Cajero:
         self.gestion_datos = GestionDatos()
         self.df = pd.DataFrame(columns=["Nombre","Precio total"])
         self.serviciosC = pd.DataFrame(columns=["Nombre","Precio total"])
-        self.servF = pd.DataFrame(columns=["Nombre","Precio total"])
+        self.carrito = pd.DataFrame(columns=["Nombre","Precio total"])
     
     def añadir_cliente(self, cedula, nombre, telefono):
         if (
@@ -156,16 +156,13 @@ class Cajero:
         self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
 
     def df_carro(self):
-        for index, fila in self.df.iterrows():
-           self.servF = self.servF.append(fila)
-
-        for index, fila in self.serviciosC.iterrows():
-           self.servF = self.servF.append(fila)
-        return not self.servF.empty
+        df_unido = pd.merge(self.serviciosC,  on='ID', how='inner')
+        return not self.carrito.empty
          
     def vaciar_carrito(self):
-        #Necesitamos que creen la tabla de medios de pago
-        pass
+        self.carrtio.drop(self.carrito.index, inplace = True)
+
+       
 
     
 
@@ -334,20 +331,22 @@ class Reportes:
     
     def filtrar_ID_Servicio(self,id):
         self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"]== id]
-        self.filtrado_servicios = self.filtrado_productos.reset_index(drop=True)
+        self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
         return  not self.filtrado_servicios.empty
     
     def filtrar_servicio(self,servicio):
         self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["Nombre Servicio"]== servicio]
-        self.filtrado_servicios= self.filtrado_productos.reset_index(drop=True)
+        self.filtrado_servicios= self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
         return not self.filtrado_servicios.empty
     
     def filtrar_costo(self,costo):
         self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["Costo"]== costo]
-        self.filtrado_servicios = self.filtrado_productos.reset_index(drop=True)
+        self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
         return not self.filtrado_servicios.empty
-x = Reportes()
-x.filtrar_fecha("2024-06-04 - 2024-06-06")
+
 
 
 

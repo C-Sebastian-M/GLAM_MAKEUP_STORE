@@ -14,10 +14,6 @@ from API.Validaciones import *
 from API.prueba import Cajero
 from GUI.sub_ventanas.custom.utils.css import CBackground
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 89c166ef2193238828890ba2ea166dd35a9b6d6e
 class VentasAdmin(QMainWindow, CBackground):
     def __init__(self):
         super(VentasAdmin, self).__init__()
@@ -87,8 +83,6 @@ class VentasAdmin(QMainWindow, CBackground):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
-<<<<<<< HEAD
-=======
 
 
 
@@ -132,4 +126,3 @@ class VentasAdmin(QMainWindow, CBackground):
         # Implement your logic to display the calendar here
         # Similar to mostrar_pagos, it likely returns None
         return None
->>>>>>> 89c166ef2193238828890ba2ea166dd35a9b6d6e
