@@ -14,7 +14,6 @@ from API.Validaciones import *
 from API.prueba import Cajero
 from GUI.sub_ventanas.custom.utils.css import CBackground
 
-
 class VentasAdmin(QMainWindow, CBackground):
     def __init__(self):
         super(VentasAdmin, self).__init__()
