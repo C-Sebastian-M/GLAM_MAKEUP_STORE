@@ -12,43 +12,7 @@ from PyQt5 import QtCore, QtGui
 from API.DATA import GestionDatos
 from API.prueba import Inventario
 
-<<<<<<< HEAD
 from GUI.sub_ventanas.utils.css import CBackground
-=======
-
-class CBackground:
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setPen(Qt.NoPen)
-        painter.setRenderHint(QPainter.Antialiasing)
-
-        brocha1 = QBrush(QColor(212, 132, 180), Qt.SolidPattern)
-        brocha2 = QBrush(QColor(228, 156, 198), Qt.SolidPattern)
-        brocha3 = QBrush(QColor(235, 188, 220), Qt.SolidPattern)
-
-        # Dibujando circulos abajo
-        painter.setBrush(brocha3)
-        painter.drawEllipse(140, 530, 200, 200)
-
-        painter.setBrush(brocha2)
-        painter.drawEllipse(40, 480, 200, 200)
-
-        painter.setBrush(brocha1)
-        painter.drawEllipse(-70, 440, 200, 200)
-
-        # Dibujando circulos arriba
-        painter.setBrush(brocha3)
-        painter.drawEllipse(440, -140, 200, 200)
-
-        painter.setBrush(brocha2)
-        painter.drawEllipse(550, -100, 200, 200)
-
-        painter.setBrush(brocha1)
-        painter.drawEllipse(700, -70, 200, 200)
-
-        painter.end()
->>>>>>> 569bb33e423502e7c0713ad12a1fa1b861ccadf2
-
 
 class InventarioProductos(QMainWindow, CBackground):
     def __init__(self):
