@@ -500,7 +500,7 @@ QComboBox::down-arrow:hover {
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
                <widget class="QWidget" name="ver_usuarios_pagina">
                 <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -520,7 +520,7 @@ QComboBox::down-arrow:hover {
                     <set>QAbstractItemView::NoEditTriggers</set>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
                     <bool>true</bool>
@@ -631,28 +631,28 @@ QComboBox::down-arrow:hover {
                       <number>15</number>
                      </property>
                      <item>
-                      <widget class="QLineEdit" name="id_usuario_lineEdit">
+                      <widget class="QLineEdit" name="add_id_usuario_lineEdit">
                        <property name="placeholderText">
                         <string>ID USUARIO</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="nombre_usuario_lineEdit">
+                      <widget class="QLineEdit" name="add_nombre_usuario_lineEdit">
                        <property name="placeholderText">
                         <string>NOMBRE USUARIO</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="password_lineEdit">
+                      <widget class="QLineEdit" name="add_password_lineEdit">
                        <property name="placeholderText">
                         <string>CONTRASEÑA</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QComboBox" name="rol_combobox">
+                      <widget class="QComboBox" name="add_rol_combobox">
                        <property name="currentText">
                         <string>SELECCIONE EL ROL</string>
                        </property>
@@ -929,7 +929,7 @@ QListView::item:selected {
                          </widget>
                         </item>
                         <item>
-                         <widget class="QLineEdit" name="modify_lineEdit">
+                         <widget class="QLineEdit" name="modify_password_lineEdit">
                           <property name="placeholderText">
                            <string>CONTRASEÑA</string>
                           </property>
