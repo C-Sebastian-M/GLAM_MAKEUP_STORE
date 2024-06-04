@@ -185,6 +185,20 @@
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>9</pointsize>
+            <italic>true</italic>
+           </font>
+          </property>
+          <property name="text">
+           <string>La contraseña debe tener mas de 7 caracteres</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="cambiarBtn">
           <property name="minimumSize">
            <size>
