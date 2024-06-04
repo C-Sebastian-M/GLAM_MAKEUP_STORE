@@ -70,6 +70,20 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         )
         self.eliminar_usuario_boton.clicked.connect(self.limpiar_campos)
         
+        # Ancho columna adaptable
+        self.tabla_ver_usuarios.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        self.modify_tabla_usuarios.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        self.del_tabla_usuarios.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        
+        # Llamada de método de validación en los LineEdit
+        self.setupValidatorsIdUsuario()
+        self.setupValidatorsPassword()
         
     # Método para limpiar los campos cada que se cambiar de página
     def limpiar_campos(self):
@@ -80,6 +94,22 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         self.modify_nombre_usuario_lineEdit.clear()
         self.modify_password_lineEdit.clear()
         self.del_buscar_usuario_lineEdit.clear()
+
+    # Método para validar la longitud del código de barras
+    def setupValidatorsIdUsuario(self):
+        validacion = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(r"\d{1,10}")
+        )
+        self.add_id_usuario_lineEdit.setValidator(validacion)
+        self.modify_buscar_usuario_lineEdit.setValidator(validacion)
+        self.del_buscar_usuario_lineEdit.setValidator(validacion)
+    
+    def setupValidatorsPassword(self):
+        password_validacion = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(r"[A-Za-z0-9]{8,64}")
+        )
+        self.add_password_lineEdit.setValidator(password_validacion)
+        self.modify_password_lineEdit.setValidator(password_validacion)
 
     # Método que permite mover la barra de menú
     def mover_menu(self):
