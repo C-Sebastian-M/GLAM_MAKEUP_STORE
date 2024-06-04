@@ -64,6 +64,8 @@ class InventarioProductos(QMainWindow, CBackground):
         self.pushButton_verEliminar.clicked.connect(self.ver_productosEliminar)
         self.modify_buscar_boton.clicked.connect(self.mostrar_formulario)
         self.modify_guardar_boton.clicked.connect(self.modificar_productos)
+        self.buy_buscar_boton.clicked.connect(self.mostrar_formulario2)
+        self.buy_add_boton.clicked.connect(self.comprar_stock)
         # Conexión botones barra lateral con páginas
         self.ver_productos_boton.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.ver_productos_pagina)
@@ -257,7 +259,7 @@ class InventarioProductos(QMainWindow, CBackground):
         codigo_barras = self.modify_buscar_producto_lineEdit.text()
         if (
             str(codigo_barras)
-            in str(self.gestion_datos.productos["Codigo de barras"].values)
+            in int(self.gestion_datos.productos["Codigo de barras"].values)
             or codigo_barras in self.gestion_datos.productos["Codigo de barras"].values
         ):
             return True
@@ -277,4 +279,54 @@ class InventarioProductos(QMainWindow, CBackground):
             )
 
     def modificar_productos(self):
-        None
+        codigo = self.modify_buscar_producto_lineEdit.text()
+        if int(codigo) in self.gestion_datos.productos["Codigo de barras"].values:
+            datos_producto= self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == int(codigo)]
+            codigo = int(codigo)
+        elif codigo in self.gestion_datos.productos["Codigo de barras"].values:
+            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == codigo]
+        marca = self.modify_marca_lineEdit.text()
+        precio_a = self.modify_precio_adquisicion_lineEdit.text()
+        precio_v = self.modify_precio_venta_lineEdit.text()
+        if not datos_producto.empty:
+            self.inventario.modificar_producto(marca, precio_a, precio_v, codigo, datos_producto)
+            print(datos_producto)
+
+    def descontinuar_producto(self): #Falta terminar
+        codigo = self.del_buscar_producto_lineEdit.text()
+        if codigo in self.gestion_datos.productos["Codigo de barras"].values:
+            self.inventario.descontinuar_producto(codigo)
+        elif int(codigo) in self.gestion_datos.productos["Codigo de barras"].values:
+            codigo = int(codigo)
+            self.inventario.descontinuar_producto(codigo)
+ 
+    def verificar_existencia_stock(self):
+        codigo = self.buy_buscar_producto_lineEdit.text()
+        if (
+            int(codigo) in self.gestion_datos.productos["Codigo de barras"].values
+            or codigo in self.gestion_datos.productos["Codigo de barras"].values
+        ):
+            return True
+        else:
+            return False
+        
+    def mostrar_formulario2(self):
+        codigo_barras = self.verificar_existencia_stock()
+        if codigo_barras == True:
+            self.frame_formulario_comprar_stock.show()
+        else:
+            self.showErrorMessage(
+                "Producto Inexistente. Por favor, verifica la información."
+            )
+            self.aviso_modificar.setText(
+                "Producto Inexistente. Por favor, verifica la información."
+            )
+        
+    def comprar_stock(self):
+        if self.verificar_existencia_stock():
+            codigo = self.buy_buscar_producto_lineEdit.text()
+            stock = self.buy_cantidad_ingresar_lineEdit.text()
+            if int(codigo) in self.gestion_datos.productos["Codigo de barras"].values:
+                codigo = int(codigo)
+            self.inventario.comprar_stock(codigo, int(stock))
+            self.ver_productosComprar()

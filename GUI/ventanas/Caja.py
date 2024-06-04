@@ -11,7 +11,7 @@ import sys
 from API.prueba import Cajero
 from API.Validaciones import *
 from API.DATA import GestionDatos
-
+#from ventanas.login import Login
 
 class CBackground:
     def paintEvent(self, event):
