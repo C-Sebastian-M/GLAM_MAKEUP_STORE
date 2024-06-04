@@ -221,7 +221,7 @@ class GestionDatos:
         unidades_actuales,
     ):
         fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
-        disponible = unidades_actuales > 0
+        disponible = int(unidades_actuales) > 0
         nuevo_producto = pd.DataFrame(
             [
                 [
@@ -261,43 +261,48 @@ class GestionDatos:
 
         self.guardar_dataframes()
 
-    def buscar_producto(self, referencia):
-        producto = self.productos[self.productos["Referencia"] == referencia]
+    def buscar_producto(self, codigo):
+        codigo = int(codigo)
+        producto = self.productos[self.productos["Codigo de barras"] == codigo]
         if not producto.empty:
-            return producto
+            return True
         else:
-            print(f"Producto con la referencia: {referencia} no ha sido encontrado")
-            return None
+            print(f"Producto con la referencia: {codigo} no ha sido encontrado")
+            return False
 
-    def verificar_disponibilidad(self, referencia):
-        producto = self.productos[self.productos["Referencia"] == referencia]
+    def verificar_disponibilidad(self, codigo):
+        producto = self.productos[self.productos["Codigo de barras"] == codigo]
         if not producto.empty:
             if producto.iloc[0]["Unidades actuales"] > 0:
-                print(f"El producto con referencia {referencia} está disponible.")
+                print(f"El producto con referencia {codigo} está disponible.")
             else:
-                print(f"El producto con referencia {referencia} no está disponible.")
+                print(f"El producto con referencia {codigo} no está disponible.")
         else:
-            print(f"Producto con la referencia: {referencia} no ha sido encontrado")
+            print(f"Producto con la referencia: {codigo} no ha sido encontrado")
 
     def actualizar_producto(self, referencia, nuevos_datos):
-        producto = self.productos[self.productos['Codigo de barras'] == referencia]
+        producto = self.productos[self.productos["Codigo de barras"] == referencia]
         if not producto.empty:
             print("a")
             print(producto)
             for key, value in nuevos_datos.items():
                 if key in self.productos.columns:
-                    self.productos.loc[self.productos['Codigo de barras'] == referencia, key] = value
+                    self.productos.loc[
+                        self.productos["Codigo de barras"] == referencia, key
+                    ] = value
             self.guardar_dataframes()
             print(f"Producto con referencia {referencia} ha sido actualizado.")
         else:
             print(f"Producto con referencia {referencia} no encontrado.")
-    
+
     def descontinuar_producto(self, codigo):
         if codigo in self.productos["Codigo de barras"].values:
             producto = self.productos[self.productos["Codigo de barras"] == producto]
         if not producto.empty:
             producto["Producto disponible"] = False
-            self.productos = self.productos[self.productos["Codigo de barras"] != codigo]
+            self.productos = self.productos[
+                self.productos["Codigo de barras"] != codigo
+            ]
             pd.concat([self.productos, producto], ignore_index=True)
             self.guardar_dataframes()
             return True

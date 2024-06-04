@@ -174,6 +174,7 @@ class Inventario:
             and validacion_Marca(marca)
             and validacion_Stock(stock)
         ):
+            print(type(referencia))
             if not codigoB in self.gestion_datos.productos["Codigo de barras"].values:
                 self.gestion_datos.agregar_producto(
                     referencia, codigoB, marca, precioA, precioV, stock
@@ -200,8 +201,8 @@ class Inventario:
                 "Codigo de barras": codigo_barras,
                 "Referencia": datosP["Referencia"],
                 "Marca": marca,
-                "Precio venta": int(precio_v),
-                "Precio de adquisicion": int(precio_a),
+                "Precio venta": float(precio_v),
+                "Precio de adquisicion": float(precio_a),
                 "Unidades actuales": datosP["Unidades actuales"],
             }
             self.gestion_datos.actualizar_producto(codigo_barras, nuevos_datos)

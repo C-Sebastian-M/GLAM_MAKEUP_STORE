@@ -1136,25 +1136,9 @@ adquisición</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QPushButton" name="del_buscar_boton">
-                       <property name="minimumSize">
-                        <size>
-                         <width>120</width>
-                         <height>30</height>
-                        </size>
-                       </property>
+                      <widget class="QLabel" name="label_2">
                        <property name="text">
-                        <string>BUSCAR</string>
-                       </property>
-                       <property name="icon">
-                        <iconset>
-                         <normaloff>../../../recursos/images/store-search.png</normaloff>../../../recursos/images/store-search.png</iconset>
-                       </property>
-                       <property name="iconSize">
-                        <size>
-                         <width>25</width>
-                         <height>25</height>
-                        </size>
+                        <string>PRODUCTO:</string>
                        </property>
                       </widget>
                      </item>
@@ -1167,7 +1151,7 @@ adquisición</string>
                         </size>
                        </property>
                        <property name="placeholderText">
-                        <string>BUSCAR PRODUCTO</string>
+                        <string>INGRESE CÓDIGO DE BARRAS</string>
                        </property>
                       </widget>
                      </item>
@@ -1460,6 +1444,9 @@ Ingresar</string>
                           <property name="text">
                            <string/>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
@@ -1485,6 +1472,12 @@ Ingresar</string>
                           </property>
                           <property name="text">
                            <string/>
+                          </property>
+                          <property name="scaledContents">
+                           <bool>true</bool>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
                           </property>
                          </widget>
                         </item>
