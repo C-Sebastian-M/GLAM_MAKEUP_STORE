@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from API.DATA import GestionDatos
 from API.Validaciones import *
+from API.prueba import Inventario
 
 
 class CBackground:
@@ -91,15 +92,17 @@ class GestionServicios(QMainWindow, CBackground):
             self,
         )
         self.gestion_datos = GestionDatos()
+        self.inventario = Inventario()
+        
         self.pushButton_menu.clicked.connect(self.mover_menu)
         # Botones
         self.pushButton_actualizar.clicked.connect(self.mostrar_servicios)
         self.pushButton_mostrarModificar.clicked.connect(self.mostrar_servicioModificar)
         self.pushButton_mostrarEliminar.clicked.connect(self.mostrar_servicioEliminar)
-        # self.pushButton_add.clicked.connect(self.registrar_servicio)
+        self.pushButton_add.clicked.connect(self.registrar_servicio)
         self.pushButton_guardarInfo.clicked.connect(self.modificar_servicio)
         self.pushButton_eliminar.clicked.connect(self.eliminar_servicio)
-        self.pushButton_modificar.clicked.connect(self.mostar_formulario)
+        self.pushButton_modificar.clicked.connect(self.mostrar_formulario)
 
         self.gripSize = 10
         self.grip = QtWidgets.QSizeGrip(self)
@@ -217,9 +220,9 @@ class GestionServicios(QMainWindow, CBackground):
     def mostrar_servicioEliminar(self):
         self.tableWidget_eliminarServicio.setRowCount(0)
         for i, row in self.gestion_datos.servicios.iterrows():
-            self.tableWidget_Eliminar.insertRow(i)
+            self.tableWidget_eliminarServicio.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
-                self.tableWidget_Eliminar.setItem(i, j, QTableWidgetItem(str(value)))
+                self.tableWidget_eliminarServicio.setItem(i, j, QTableWidgetItem(str(value)))
 
     def showErrorMessage(self, message):
         msg_box = QMessageBox()
@@ -235,24 +238,6 @@ class GestionServicios(QMainWindow, CBackground):
         msg_box.setWindowTitle("Éxito")
         msg_box.exec_()
 
-    # def registrar_servicio(self):
-    #  id_servicio = self.lineEdit_addId.text()
-    #  nombre = self.lineEdit_addNombre.text()
-    #   precio = self.lineEdit_addPrecio.text()
-    #   if (
-    #       validar_Id(id_servicio)
-    #       and validar_Precio(precio)
-    #       and validar_NombreCom(nombre)
-    #   ):
-    #       self.gestion_datos.agregar_servicio(id_servicio, nombre, precio)
-    #       self.mostrar_servicios()
-    #       self.label_aviso.setText("Servicio registrado con éxito")
-    #       self.show_success_dialog("Servicio registrado con éxito.")
-    #       self.limpiar_campos()
-    #   else:
-    #       self.showErrorMessage(
-    #           "Error en los datos ingresados. Por favor, verifica la información."
-    #       )
 
     def validar_existencia(self):
         # Los campos para validar son:
@@ -260,7 +245,7 @@ class GestionServicios(QMainWindow, CBackground):
             idBuscarServicio = self.lineEdit_modificar.text()
             if (
                 idBuscarServicio in self.gestion_datos.servicios["ID servicio"].values
-                or int(idBuscarServicio) in self.gestion_datos.servicios["ID servicio"]
+                or int(idBuscarServicio) in self.gestion_datos.servicios["ID servicio"].values
             ):
                 return True
             else:
@@ -270,7 +255,7 @@ class GestionServicios(QMainWindow, CBackground):
                 "Campo Vacio. Por favor ingrese la información correspondiente."
             )
 
-    def mostar_formulario(self, servicio):
+    def mostrar_formulario(self, servicio):
         servicio = self.validar_existencia()
         if servicio:
             self.frame_formulario.show()
@@ -282,16 +267,44 @@ class GestionServicios(QMainWindow, CBackground):
                 "Error en los datos ingresados. Por favor, verifica la información."
             )
 
-    def modificar_servicio(self):
-        id_servicio = int(self.lineEdit_.text())
-        nuevos_datos = {
-            "Nombre Servicio": self.lineEdit_nuevoServicio.text(),
-            "Costo": self.lineEdit_nuevoPrecio.text(),
-        }
-        self.gestion_datos.agregar_servicio(id_servicio, nuevos_datos)
-        self.mostrar_servicios()  # Actualizar la tabla de servicios
+    def modificar_servicio(self):   
+        id_servicio = self.lineEdit_nuevoId.text()
+        nombre_servicio = self.lineEdit_nuevoServicio.text()
+        precio = int(self.lineEdit_nuevoPrecio.text())
+        id_original = self.lineEdit_modificar.text()
+        
+        if int(id_original) in self.gestion_datos.servicios["ID servicio"].values:
+            datos_servicio= self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == int(id_original)]
+            id_original = int(id_original)
+        elif id_original in self.gestion_datos.servicios["ID servicio"].values:
+            datos_servicio = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == id_original]
+        if not datos_servicio.empty:
+            self.inventario.modificar_servicio(id_servicio, nombre_servicio, precio, id_original, datos_servicio)
+            self.mostrar_servicios()  # Actualizar la tabla de servicios
 
     def eliminar_servicio(self):
         id_servicio = self.lineEdit_buscarEliminar.text()
         self.gestion_datos.eliminar_servicio(id_servicio)
         self.mostrar_servicios()  # Actualizar la tabla de clientes
+
+    def registrar_servicio(self):
+        id = int(self.lineEdit_idServicio.text())
+        nombre = self.lineEdit_addServicio.text()
+        precio = int(self.lineEdit_addPrecio.text())
+        if self.inventario.crear_servicio(id, nombre, precio):
+            self.mostrar_servicios()
+            self.label_aviso.setText("Servicio registrado con éxito")
+            self.show_success_dialog("Servicio registrado con éxito.")
+            self.limpiar_campos()
+        else:
+            self.showErrorMessage(
+                "Error en los datos ingresados. Por favor, verifica la información."
+        )
+    
+    def descontinuar_servicio(self):
+        id_buscar = self.lineEdit_buscarEliminar.text()
+        if id_buscar in self.gestion_datos.servicios["ID servicios"].values:
+            self.inventario.eliminar_servicio(id_buscar)
+        elif int(id_buscar) in self.gestion_datos.servicios["ID servicios"].values:
+            id_buscar = int(id_buscar)
+            self.inventario.eliminar_servicio(id_buscar)

@@ -11,7 +11,7 @@ import sys
 from API.prueba import Cajero
 from API.Validaciones import *
 from API.DATA import GestionDatos
-#from ventanas.login import Login
+#from login import Login
 
 class CBackground:
     def paintEvent(self, event):
@@ -65,6 +65,12 @@ class Menu(CBackground, QMainWindow):
         self.control_navegacion=control_navegacion
         self.MenuButton.clicked.connect(self.CajaWin)
         self.ReportButton.clicked.connect(self.repWin)
+        self.LogOut.clicked.connect(self.BackLogin)
+
+    def BackLogin(self):
+        #self.log=Login()
+        self.log.show()
+        self.close()
 
     def CajaWin(self):
         self.control_navegacion.mostrar_ventana("caja")
@@ -81,6 +87,9 @@ class Caja(QMainWindow):
         self.cajero = Cajero()
         self.gestion_datos = GestionDatos()
         self.cedulaCliente = None
+        self.posibleCedula = None
+        self.posibleTelefono = None
+        self.posibleNombre = None
         #self.setWindowFlag(QtCore.Qt.FramelessWindowHint) #borrar los botones externos de la pagina original
         self.BotonCliente.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Clientes_2))
         self.BotonProductos.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Productos_3))
@@ -88,15 +97,25 @@ class Caja(QMainWindow):
         self.BotonPago.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Pago_4))
         self.BotonCarrito.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Carrito_4))
 
+        #ancho de columnas tablas
+        self.TablaCedulas.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaProductos.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaTotalPro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaServicios.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaTotalSer.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaCarro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
 ##////////FUNCIONES CLIENTES/////////##
         self.ChangeCli.clicked.connect(self.clickchange)
-        self.ConfirmarNew.clicked.connect(self.CheckNewClient)
+        self.ConfirmarNew.clicked.connect(self.posible_cliente)
         self.ConfirmarAnt.clicked.connect(self.creado)
         self.Seleccionar.clicked.connect(self.selCli)
         self.Nuevo_2.clicked.connect(self.New)
         self.AggProducto.clicked.connect(self.total_productos)
         self.AggServicios.clicked.connect(self.total_servicios)
         self.ConfirmarPago.clicked.connect(self.saber_pago)
+        self.YES.clicked.connect(self.mostrar_carrito)
+        self.NO.clicked.connect(self.mostrar_carrito)
         self.TablaCedulas.hide()
         self.IngCedula.hide()
         self.Cedula_2.hide()
@@ -198,6 +217,9 @@ class Caja(QMainWindow):
         self.TablaTotalPro.hide()
         self.ConfirmarPro.hide()
         self.EditarPro.show()
+        self.LabelStockPro.hide()
+        self.AggProducto.hide()
+        self.EleProductos.hide()
 
     #metodo para cambiar los productos
     def changePro(self):
@@ -209,6 +231,9 @@ class Caja(QMainWindow):
         self.TablaTotalPro.show()
         self.ConfirmarPro.show()
         self.EditarPro.hide()
+        self.LabelStockPro.show()
+        self.AggProducto.show()
+        self.EleProductos.show()
 
     #metodo para confirmar el seleccionar un cliente que ya esta dentro de la base de datos
     def selCli(self):
@@ -244,15 +269,18 @@ class Caja(QMainWindow):
         self.ChangeCli.hide()
 
     #metodo para verificar si el cliente nuevo es correcto
+    def posible_cliente(self):
+        self.posibleCedula = self.Ced_2.text()
+        self.posibleNombre = self.Nom_2.text()
+        self.posibleTelefono = self.Tel_2.text()
+        
+        
     def CheckNewClient(self):
-        cedula = self.Ced_2.text()
-        nombre = self.Nom_2.text()
-        telefono = self.Tel_2.text()
         msg_box = QMessageBox(self)
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle("Validación")
         msg_box.setStandardButtons(QMessageBox.Ok)
-        if self.cajero.añadir_cliente(cedula, nombre, telefono):
+        if self.cajero.añadir_cliente(self.posibleCedula, self.posibleNombre, self.posibleTelefono):
             msg_box.setText("Cliente ingresado con éxito")
             msg_box.exec_()
             self.LabelCedula.hide()
@@ -301,12 +329,22 @@ class Caja(QMainWindow):
                 self.TablaCedulas.setItem(i, j, QTableWidgetItem(str(value)))
     
     def total_productos(self):
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle("Validación")
+        msg_box.setStandardButtons(QMessageBox.Ok)
         codigo_barras = self.EleProductos.text()
         cantidad = self.StockProductos.text()
-        if codigo_barras != "" and cantidad != "":
-            self.cajero.mostra_total_productos(codigo_barras, int(cantidad))
-            self.mostrar_total_productos()
-    
+        if codigo_barras != "" and cantidad != "": 
+            if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values or int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values:
+                self.cajero.mostra_total_productos(codigo_barras, int(cantidad))
+                self.mostrar_total_productos()
+            else:
+                msg_box.setText("Codigo inexistente")
+        else:
+            msg_box.setText("campos vacios")
+        msg_box.exec_()
+            
     def total_servicios(self):
         id_servicio = self.EleServicios.text()
         cantidad = self.StockServicios.text()
@@ -354,12 +392,17 @@ class Caja(QMainWindow):
             for j, (colname, value) in enumerate(row.items()):
                 self.TablaTotalPro.setItem(i, j, QTableWidgetItem(str(value)))
         #mostrar_servicios
-        self.TablaCarro.setRowCount(0)
-        for i, row in self.cajero.serviciosC.iterrows():
-            self.TablaCarro.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.TablaCarro.setItem(i, j, QTableWidgetItem(str(value)))
-        
+       # self.TablaCarro.setRowCount(0)
+       # for i, row in self.cajero.serviciosC.iterrows():
+       #     self.TablaCarro.insertRow(i)
+       #     for j, (colname, value) in enumerate(row.items()):
+       #         self.TablaCarro.setItem(i, j, QTableWidgetItem(str(value)))
+    def factura(self):
+     for i in range(len(self.df)):
+      print(f"Nombre del producto: {self.df.loc[i, 'Producto']}")
+      print(f"Subtotal de compra: {self.df.loc[i, 'Precio total']}")
+      print("------------------------------")
+     print(f"TOTAL: {self.df['Precio total'].sum()}")  
     
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):

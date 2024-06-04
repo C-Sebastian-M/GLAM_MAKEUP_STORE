@@ -278,13 +278,12 @@ class GestionDatos:
         self.guardar_dataframes()
 
     def actualizar_servicio(self, id_servicio, nuevos_datos):
-        servicio = self.servicios[self.servicios["ID servicio"] == id_servicio]
+        servicio = self.servicios[self.servicios['ID servicio'] == id_servicio]
         if not servicio.empty:
-            self.servicios.update(nuevos_datos)
+            for key, value in nuevos_datos.items():
+                if key in self.servicios.columns:
+                    self.servicios.loc[self.servicios['ID servicio'] == id_servicio, key] = value
             self.guardar_dataframes()
-            print(f"El servicio con el ID: {id_servicio} ha sido actualizado")
-        else:
-            print(f"El servicio con el ID: {id_servicio} no pudo ser encontrado")
 
     def buscar_servicio(self, id_servicio):
         servicio = self.servicios[self.servicios['ID servicio'] == id_servicio]
