@@ -185,7 +185,6 @@ class Inventario:
 
     def modificar_producto(
         self, marca, precio_a, precio_v, codigo_barras, datosP):
-
         if (
             codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
             or str(

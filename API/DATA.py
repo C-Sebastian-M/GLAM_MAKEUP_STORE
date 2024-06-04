@@ -267,7 +267,6 @@ class GestionDatos:
         if not producto.empty:
             return True
         else:
-            print(f"Producto con la referencia: {codigo} no ha sido encontrado")
             return False
 
     def verificar_disponibilidad(self, codigo):
@@ -276,24 +275,23 @@ class GestionDatos:
             if producto.iloc[0]["Unidades actuales"] > 0:
                 print(f"El producto con referencia {codigo} está disponible.")
             else:
-                print(f"El producto con referencia {codigo} no está disponible.")
+                print(f"El producto con referecodigoBarrascia {codigo} no está disponible.")
         else:
             print(f"Producto con la referencia: {codigo} no ha sido encontrado")
 
-    def actualizar_producto(self, referencia, nuevos_datos):
-        producto = self.productos[self.productos["Codigo de barras"] == referencia]
+    def actualizar_producto(self, codigoBarras, nuevos_datos):
+        producto = self.productos[self.productos["Codigo de barras"] == codigoBarras]
         if not producto.empty:
-            print("a")
-            print(producto)
             for key, value in nuevos_datos.items():
                 if key in self.productos.columns:
                     self.productos.loc[
-                        self.productos["Codigo de barras"] == referencia, key
+                        self.productos["Codigo de barras"] == codigoBarras, key
                     ] = value
             self.guardar_dataframes()
-            print(f"Producto con referencia {referencia} ha sido actualizado.")
+            #print(f"Producto con codigoBarras {codigoBarras} ha sido actualizado.")
         else:
-            print(f"Producto con referencia {referencia} no encontrado.")
+            #print(f"Producto con codigoBarras {codigoBarras} no encontrado.")
+            None
 
     def descontinuar_producto(self, codigo):
         if codigo in self.productos["Codigo de barras"].values:

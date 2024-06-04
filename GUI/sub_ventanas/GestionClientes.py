@@ -129,6 +129,20 @@ class GestionClientes(QMainWindow, CBackground):
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
 
+    def showErrorMessage(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Warning)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Error")
+        msg_box.exec_()
+
+    def show_success_dialog(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Éxito")
+        msg_box.exec_()
+
     # Acá se configura la base de datos
     def mostrar_clientes(self):
         self.tabla_verClientes.setRowCount(0)
@@ -174,20 +188,6 @@ class GestionClientes(QMainWindow, CBackground):
             self.aviso_add.setText(
                 "Error en los datos ingresados. Por favor, verifica la información."
             )
-
-    def showErrorMessage(self, message):
-        msg_box = QMessageBox()
-        msg_box.setIcon(QMessageBox.Warning)
-        msg_box.setText(message)
-        msg_box.setWindowTitle("Error")
-        msg_box.exec_()
-
-    def show_success_dialog(self, message):
-        msg_box = QMessageBox()
-        msg_box.setIcon(QMessageBox.Information)
-        msg_box.setText(message)
-        msg_box.setWindowTitle("Éxito")
-        msg_box.exec_()
 
     def validar_existencia(self):
         # Los campos para validar son:

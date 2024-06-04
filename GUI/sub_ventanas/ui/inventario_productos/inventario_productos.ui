@@ -856,6 +856,16 @@ actuales</string>
                      <string>Unidades actuales</string>
                     </property>
                    </column>
+                   <column>
+                    <property name="text">
+                     <string>Disponibilidad</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Fecha</string>
+                    </property>
+                   </column>
                   </widget>
                  </item>
                  <item>
@@ -1116,6 +1126,16 @@ adquisición</string>
                      <string>Unidades actuales</string>
                     </property>
                    </column>
+                   <column>
+                    <property name="text">
+                     <string>Disponibilidad</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Fecha</string>
+                    </property>
+                   </column>
                   </widget>
                  </item>
                  <item>
@@ -1314,6 +1334,16 @@ QListView::item:selected {
                    <column>
                     <property name="text">
                      <string>Unidades actuales</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Disponibilidad</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Fecha</string>
                     </property>
                    </column>
                   </widget>
