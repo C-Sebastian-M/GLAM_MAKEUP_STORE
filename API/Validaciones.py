@@ -24,8 +24,8 @@ def validacion_Telefono(telefono)->bool:
 
   #Validar referencia
 def validacion_Referencia(referencia)->bool:
-    referencia = str(referencia)
-    if len(referencia) >= 2 and len(referencia) <= 12:
+    prueba = str(referencia)
+    if len(prueba) >= 2 and len(prueba) <= 12:
         return True
     else:
         return False
@@ -127,7 +127,7 @@ def validacion_Producto(producto):
 
  #Validar que el stock  positivo
 def validacion_Stock( x)->bool:
-        x = float(x)
+        x = int(x)
         if x > 0:
             return True
         return False
