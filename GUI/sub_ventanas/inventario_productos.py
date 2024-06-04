@@ -185,7 +185,7 @@ class InventarioProductos(QMainWindow, CBackground):
         precio_venta = self.add_precio_ventas_lineEdit.text()
         unidades_actuales = self.add_unidades_actuales_lineEdit.text()
         codigo_barras = self.add_codigoBarras_lineEdit.text()
-        if precio_venta and precio_venta and unidades_actuales != "":
+        if precio_venta and precio_adquisicion and unidades_actuales and codigo_barras != "":
             if self.inventario.crear_productos(
                 referencia,
                 precio_adquisicion,
@@ -288,8 +288,8 @@ class InventarioProductos(QMainWindow, CBackground):
                     marca, precio_a, precio_v, codigo, datos_producto
                 )
                 self.ver_productos()  # Actualizar la tabla de productos
-                self.show_success_dialog("Cliente modificado correctamente")
-                self.aviso_modify_label.setText("Cliente modificado correctamente")
+                self.show_success_dialog("Producto modificado correctamente")
+                self.aviso_modify_label.setText("Produdcto modificado correctamente")
                 self.limpiar_campos()
                 self.frame_formularioModificar.hide()
                 # print(datos_producto)
