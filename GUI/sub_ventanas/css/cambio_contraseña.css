@@ -1,0 +1,21 @@
+#passwordChangeWindow QLineEdit#userInput {
+    border: 2px solid #e4acd0;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f5eef2;
+    color: #dc84bc;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+#passwordChangeWindow QLineEdit#userInput:hover {
+    border: 2px solid rgb(255, 255, 255);
+}
+
+#passwordChangeWindow QLineEdit#userInput:focus {
+    border: 2px solid #dc84bc;
+}
+
+#passwordChangeWindow QPushButton#volverBtn {
+    color: #dc84bc;
+}

@@ -10,16 +10,11 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
-    QPainter, QBrush,
     QColor, QPixmap, 
     QCursor, QIcon
 )
-from GUI.sub_ventanas.utils.css import CustomGroupBox, CBackground
+from GUI.sub_ventanas.custom.utils.css import CustomGroupBox, CBackground
 import API.DATA as GD
-from API.Validaciones import (
-    validacion_Referencia, validacion_Codigo_Barras,
-    validacion_Stock
-)
 from GUI.sub_ventanas.custom.validaciones import CustomValidaciones
 # Tipado
 from typing import List, Union, Dict
@@ -140,7 +135,7 @@ class Plantilla(QWidget):
         table.verticalHeader().setDefaultSectionSize(20)
 
         header = table.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(QHeaderView.Stretch)
 
         shadow_effect = QGraphicsDropShadowEffect(self)
         shadow_effect.setBlurRadius(8)
