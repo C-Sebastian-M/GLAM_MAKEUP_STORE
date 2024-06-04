@@ -107,8 +107,8 @@ class InventarioProductos(QMainWindow, CBackground):
         self.setupValidatorsUnidades()
         self.frame_formularioModificar.hide()
         self.frame_formulario_comprar_stock.hide()
-        df = pd.read_excel("registros.xlsx", sheet_name="Productos")
-        productos = df["Codigo de barras"].astype(str).tolist()
+        self.df = pd.read_excel("registros.xlsx", sheet_name="Productos")
+        productos = self.df["Codigo de barras"].astype(str).tolist()
         self.modelo_datos = QStringListModel(productos)
         self.completer = QCompleter(self.modelo_datos, self)
         self.completer.setCaseSensitivity(False)  # Ignorar mayúsculas y minúsculas
@@ -225,7 +225,7 @@ class InventarioProductos(QMainWindow, CBackground):
 
     def ver_productos(self):
         self.tabla_ver_productos.setRowCount(0)
-        for i, row in self.gestion_datos.productos.iterrows():
+        for i, row in self.df.iterrows():
             self.tabla_ver_productos.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
