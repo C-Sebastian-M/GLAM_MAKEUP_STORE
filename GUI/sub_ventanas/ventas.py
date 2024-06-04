@@ -38,8 +38,16 @@ class VentasAdmin(QMainWindow, CBackground):
         self.pushButton_CancelarEliminado.clicked.connect(self.CancelarEliminado)
         self.pushButton_guardarInfo.clicked.connect(self.pushButton_guardarInfo)
         self.pushButton_fecha.clicked.connect(self.mostrar_calendario)
-        
 
+        # Mas botones
+        self.pushButton_pagos.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.pagina_pagos)
+        )
+        self.pushButton_pagos.clicked.connect(self.limpiar_campos)
+        self.pushButton_ventas.clicked.connect(
+            lambda: self.stackedWidget.setCurrentWidget(self.pagina_ventas)
+        )
+        self.pushButton_ventas.clicked.connect(self.limpiar_campos)
 
     def mover_menu(self):
         if True:
