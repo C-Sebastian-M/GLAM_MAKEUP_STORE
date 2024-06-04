@@ -33,7 +33,7 @@ def validacion_Referencia(referencia)->bool:
   #Validar codigo de barras
 def validacion_Codigo_Barras(codigo)->bool:
     codigo=str(codigo)
-    if len(codigo) == 3 and codigo.isdigit():
+    if len(codigo) == 13 and codigo.isdigit():
         return True
     else:
         return False
