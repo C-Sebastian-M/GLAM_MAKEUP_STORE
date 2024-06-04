@@ -280,23 +280,13 @@ class GestionDatos:
             print(f"Producto con la referencia: {referencia} no ha sido encontrado")
 
     def actualizar_producto(self, referencia, nuevos_datos):
-<<<<<<< HEAD
-        producto = self.productos[self.productos["Referencia"] == referencia]
-=======
         producto = self.productos[self.productos['Codigo de barras'] == referencia]
->>>>>>> a7233fb04c8e1075eaee78a66657b6143c3f3629
         if not producto.empty:
             print("a")
             print(producto)
             for key, value in nuevos_datos.items():
                 if key in self.productos.columns:
-<<<<<<< HEAD
-                    self.productos.loc[
-                        self.productos["Referencia"] == referencia, key
-                    ] = value
-=======
                     self.productos.loc[self.productos['Codigo de barras'] == referencia, key] = value
->>>>>>> a7233fb04c8e1075eaee78a66657b6143c3f3629
             self.guardar_dataframes()
             print(f"Producto con referencia {referencia} ha sido actualizado.")
         else:

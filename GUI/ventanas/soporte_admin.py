@@ -15,10 +15,10 @@ from PyQt5.QtGui import QIcon, QCursor
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 
-from GUI.sub_ventanas.utils.css import CBackground
+from GUI.sub_ventanas.custom.utils.css import CBackground
 from GUI.sub_ventanas.reportes import (
     ReportePanel, Ventas,
-    Inventario,
+    Inventario
 )
 from GUI.sub_ventanas.reportes_diarios import (
     ReportesDiarios, ReporteDiarioCatalogo,
@@ -28,6 +28,7 @@ from GUI.sub_ventanas.administrar_usuarios import AdministrarUsuarios
 from GUI.sub_ventanas.inventario_productos import InventarioProductos
 from GUI.sub_ventanas.GestionClientes import GestionClientes
 from GUI.sub_ventanas.catalogo_servicios import GestionServicios
+from GUI.sub_ventanas.cambio_contrasena import PasswordChange
 
 import API.DATA as GD
 GD = GD.GestionDatos()
@@ -50,6 +51,7 @@ class AdminSoporte(QMainWindow, CBackground):
             self.roleBtn.setText("Reporte\nDiario")
             self.roleBtn.setObjectName("reporteDiarioBtn")
             self.pushButton_cambiarLogo.setText("Cambiar Contraseña")
+            self.pushButton_cambiarLogo.setObjectName("cambiarContraseñaBtn")
             return None
 
         self.setWindowTitle("Soporte")
@@ -57,7 +59,6 @@ class AdminSoporte(QMainWindow, CBackground):
         self.roleBtn.setText("Administrar\nusuario")
         self.roleBtn.setObjectName("administrarUsuarioBtn")
         self.pushButton_cambiarLogo.setText("Cambiar Logo")
-
 
 class AdminSoporteManager(QMainWindow):
     def __init__(self, ventana_login, user_role: str) -> None:
@@ -121,16 +122,26 @@ class AdminSoporteManager(QMainWindow):
             self.widgets_stack.addWidget(self.reportesDiariosProductos)
             self.widgets_stack.addWidget(self.reportesDiariosCatalogo)
         else:
-            self.administrarUsuarios = AdministrarUsuarios()
-            self.widgets_stack.addWidget(self.administrarUsuarios)
-            
+            pass ## si no es admin es porque el usuario es soporte
+
+        # Cambiar contraseña
+        self.password_change = PasswordChange()
+        self.widgets_stack.addWidget(self.password_change)
+
+        self.administrarUsuarios = AdministrarUsuarios()
+        self.widgets_stack.addWidget(self.administrarUsuarios)
+
         # Asignando el widget central
         self.setCentralWidget(self.widgets_stack)
         self.widgets_stack.setCurrentWidget(self.admin_soporte)
 
         # Conexiones
         self.admin_soporte.cerrarBtn.clicked.connect(self.volver_login)
-        self.admin_soporte.pushButton_cambiarLogo.clicked.connect(self.cambiar_logo)
+        if self.role == 'admin':
+            self.password_change.volverBtn.clicked.connect(self.anterior)
+            self.findChild(QPushButton, 'cambiarContraseñaBtn').clicked.connect(self.passoword_change_window)
+        else:
+            self.admin_soporte.pushButton_cambiarLogo.clicked.connect(self.cambiar_logo)
         self.inicializar()
         ManejarLogo().register_observer(self)
 
@@ -262,6 +273,10 @@ class AdminSoporteManager(QMainWindow):
         
     def ventana_administrarUsuarios(self):
         self.widgets_stack.setCurrentWidget(self.administrarUsuarios)
+        self.stack.append(self.admin_soporte)
+
+    def passoword_change_window(self):
+        self.widgets_stack.setCurrentWidget(self.password_change)
         self.stack.append(self.admin_soporte)
 
     def anterior(self):

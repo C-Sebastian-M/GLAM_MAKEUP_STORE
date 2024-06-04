@@ -13,7 +13,7 @@ from API.DATA import GestionDatos
 from API.Validaciones import *
 from API.prueba import Cajero
 
-from GUI.sub_ventanas.utils.css import CBackground
+from GUI.sub_ventanas.custom.utils.css import CBackground
 
 class GestionClientes(QMainWindow, CBackground):
     def __init__(self):

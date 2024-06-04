@@ -121,8 +121,8 @@ border-radius: 10px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Arial,sans-serif</family>
-       <pointsize>-1</pointsize>
+       <family>Arial</family>
+       <pointsize>1</pointsize>
       </font>
      </property>
      <property name="toolTipDuration">
@@ -166,8 +166,8 @@ QLineEdit:focus {
      </property>
      <property name="font">
       <font>
-       <family>Arial,sans-serif</family>
-       <pointsize>-1</pointsize>
+       <family>Arial</family>
+       <pointsize>1</pointsize>
       </font>
      </property>
      <property name="toolTipDuration">
@@ -249,6 +249,9 @@ QPushButton:pressed {
      </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../recursos/images/store_logo.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
