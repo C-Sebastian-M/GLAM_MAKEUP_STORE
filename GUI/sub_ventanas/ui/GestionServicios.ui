@@ -529,6 +529,9 @@ QComboBox::down-arrow:hover {
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
+                   <property name="editTriggers">
+                    <set>QAbstractItemView::NoEditTriggers</set>
+                   </property>
                    <attribute name="horizontalHeaderVisible">
                     <bool>true</bool>
                    </attribute>

@@ -29,7 +29,7 @@ from GUI.sub_ventanas.inventario_productos import InventarioProductos
 from GUI.sub_ventanas.GestionClientes import GestionClientes
 from GUI.sub_ventanas.catalogo_servicios import GestionServicios
 from GUI.sub_ventanas.cambio_contrasena import PasswordChange
-
+from GUI.sub_ventanas.ventas import VentasAdmin
 import API.DATA as GD
 GD = GD.GestionDatos()
 
@@ -97,8 +97,10 @@ class AdminSoporteManager(QMainWindow):
         # Inicializando ventanas de gestión
         self.gestionPanel = GestionClientes()
         self.gestionServiciosPanel = GestionServicios()
+        self.gestionVentasPanel= VentasAdmin()
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.gestionServiciosPanel)
+        self.widgets_stack.addWidget(self.gestionVentasPanel)
 
         # Inicializando ventana de Inventario de productos
         self.principalInventarioProductosPanel = InventarioProductos()
@@ -180,6 +182,7 @@ class AdminSoporteManager(QMainWindow):
         self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes)
         self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes)
         self.admin_soporte.catalogoBtn.clicked.connect(self.ventana_gestionServicios)
+        self.admin_soporte.ventasBtn.clicked.connect(self.ventana_gestionVentas)
         self.admin_soporte.inventarioBtn.clicked.connect(self.ventana_principalInventarioProductos)
         if self.role == 'admin':
             self.findChild(QPushButton, 'reporteDiarioBtn').clicked.connect(self.ventana_reportes_diarios)
@@ -249,6 +252,10 @@ class AdminSoporteManager(QMainWindow):
 
     def ventana_gestionServicios(self):
         self.widgets_stack.setCurrentWidget(self.gestionServiciosPanel)
+        self.stack.append(self.admin_soporte)
+
+    def ventana_gestionVentas(self):
+        self.widgets_stack.setCurrentWidget(self.gestionVentasPanel)
         self.stack.append(self.admin_soporte)
 
     def ventana_principalInventarioProductos(self):
