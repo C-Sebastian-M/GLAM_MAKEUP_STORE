@@ -10,16 +10,11 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
-    QPainter, QBrush,
     QColor, QPixmap, 
     QCursor, QIcon
 )
-from GUI.sub_ventanas.utils.css import CustomGroupBox, CBackground
+from GUI.sub_ventanas.custom.utils.css import CustomGroupBox, CBackground
 import API.DATA as GD
-from API.Validaciones import (
-    validacion_Referencia, validacion_Codigo_Barras,
-    validacion_Stock
-)
 from GUI.sub_ventanas.custom.validaciones import CustomValidaciones
 # Tipado
 from typing import List, Union, Dict
@@ -58,18 +53,15 @@ class ReportePorFecha(QWidget):
         self.hastaLabel.setText(f'Hasta\n{fecha_seleccionada}')
 
     def confirmar(self) -> None:
-        if not self.fecha:
-            return
+        if not self.fecha or len(self.fecha) == 1:
+            vald.caja_input_no_valido("Asegurese de poner ambas fechas.")
+            return None
         
         fechas_compuesta = f"{self.fecha['desde']} - {self.fecha['hasta']}"
         fechas_validas = vald.validar_fechas(fechas_compuesta)
 
         if not fechas_validas:
-            vald.caja_input_no_valido("""
-                Fechas ingresadas no validas,\n 
-                recuerde que la primera fecha (desde)\n
-                debe ser menor que la segunda(hasta).
-            """)
+            vald.caja_input_no_valido("Fechas ingresadas no validas, recuerde que la primera fecha (desde)\ndebe ser menor que la segunda(hasta).")
             return None
 
         self.ref.setText(fechas_compuesta)
@@ -148,8 +140,9 @@ class Plantilla(QWidget):
         shadow_effect.setOffset(0, 0)
         header.setGraphicsEffect(shadow_effect)
 
-        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
         table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
+        # logica para implementar los registros de la tabla
 
     def abrir_ventana_por_fecha(self) -> None:
         self.consultandoPor.setText("fecha")
