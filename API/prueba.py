@@ -307,9 +307,10 @@ class Reportes:
         return filtered_sales
     def filtrar_referencia(self, referencia):
         self.filtrado_productos = (self.gestion_datos.productos[self.gestion_datos.productos["Referencia"]== referencia])
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
-    
+
     def filtrar_codigo_de_barras(self, codB):
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]== codB]
         print(self.filtrado_productos)
