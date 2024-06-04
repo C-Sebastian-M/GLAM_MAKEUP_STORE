@@ -271,6 +271,10 @@ class Inventario:
 
 
 class Reportes:
+    def __init__(self):
+        self.gestion_datos = GestionDatos()
+        self.filtrado_productos = pd.DataFrame(columns=["Referencia","Codigo de barras","Marca","Precio de adquisicion", "Precio venta","Unidades actuales","Producto disponible","Fecha"])
+        
     def filtrar_productos(self, referencia=None, codigo_barras=None, marca=None,
                       precio_adquisicion=None, stock=None, precio_venta=None, comparacion_precio_venta=None,
                       fecha_min=None, fecha_max=None):
@@ -361,6 +365,42 @@ class Reportes:
             filtered_sales = filtered_sales[filtered_sales["ID_Caja"] == id_caja]
         return filtered_sales
     
+    def filtrar_referencia(self, referencia):
+        self.filtrado_productos = (self.gestion_datos.productos[self.gestion_datos.productos["Referencia"]== referencia])
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+    
+    def filtrar_codigo_de_barras(self, codB):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]== codB]
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+    
+    def filtrar_marca(self,marca):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Marca"]== marca]
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+    
+    def filtrar_precioA(self,precio):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Precio de adquisicion"]== precio]
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+    
+    def filtrar_precioV(self,precio):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Precio venta"]== precio]
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+    
+    def filtrar_stock(self,unidades):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Unidades actuales"]== unidades]
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+
+    def filtrar_disponibilidad(self,disponibles = True):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Producto disponible"]== disponibles]
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+    
+
 x = Inventario()
 
 

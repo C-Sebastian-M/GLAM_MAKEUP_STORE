@@ -6,7 +6,8 @@ from PyQt5.QtWidgets import (
     QWidget, QLabel, 
     QHBoxLayout, QSpacerItem, 
     QSizePolicy, QTableWidget,
-    QHeaderView, QGraphicsDropShadowEffect
+    QHeaderView, QGraphicsDropShadowEffect, 
+    QTableWidgetItem
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
@@ -18,6 +19,7 @@ import API.DATA as GD
 from GUI.sub_ventanas.custom.validaciones import CustomValidaciones
 # Tipado
 from typing import List, Union, Dict
+from API.prueba import Reportes
 
 GD = GD.GestionDatos()
 vald = CustomValidaciones()
@@ -31,6 +33,7 @@ class ReportePorFecha(QWidget):
         )
         self.ref = ref
         self.fecha = {}
+        
 
         self.setFixedSize(400, 335)
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
@@ -38,7 +41,7 @@ class ReportePorFecha(QWidget):
         self.setBtn.clicked.connect(self.combo_event)
         self.cancelarBtn.clicked.connect(self.close)
         self.confirmarBtn.clicked.connect(self.confirmar)
-
+        
         self.pintar()
 
     def combo_event(self) -> None:
@@ -94,9 +97,11 @@ class Plantilla(QWidget):
 
         self.fechaBtn.clicked.connect(self.abrir_ventana_por_fecha)
         self.filtrarBtn.clicked.connect(self.filtrar)
+        self.filtrarBtn.clicked.connect(self.mostrar_referencia)
 
         self.pintar()
-
+        self.reportes = Reportes()
+        self.gestion_datos = GD
     def handle_labels(self) -> None:
         for campo in self.campos:
             if campo.strip().lower() == 'fecha':
@@ -162,10 +167,23 @@ class Plantilla(QWidget):
 
     def filtrar(self):
         eleccion: str = self.normalizar(self.consultandoPor.text())
-        campos = [campo.lower() for campo in self.campos]
         user_input: str = self.userInput.text()
+        if eleccion == "referencia":
+            if user_input in self.gestion_datos.productos["Referencia"].values:
+                self.reportes.filtrar_referencia(user_input)
+                self.mostrar_referencia()
+        print(eleccion,user_input)
+                    
+        campos = [campo.lower() for campo in self.campos]
+    
+    def mostrar_referencia(self):
+        self.tablaReportes.setRowCount(0)
+        for i, row in self.reportes.filtrado_productos.iterrows():
+            self.tablaReportes.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tablaReportes.setItem(i, j, QTableWidgetItem(str(value)))
 
-        print(eleccion, user_input)
+        
 
         def caja_input_no_valido():
             pass # mostrar caja
@@ -185,10 +203,12 @@ class Plantilla(QWidget):
         self.setStyleSheet(style_line)
         style_file.close()
 
+
+
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
         super().__init__(title, columns)
-
+        
         self.inicializar()
 
     def inicializar(self):

@@ -68,7 +68,7 @@ class Menu(CBackground, QMainWindow):
         self.LogOut.clicked.connect(self.BackLogin)
 
     def BackLogin(self):
-        #self.log=Login()
+        self.log=Login()
         self.log.show()
         self.close()
 
