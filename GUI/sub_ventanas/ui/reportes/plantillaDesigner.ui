@@ -661,46 +661,6 @@
      <attribute name="verticalHeaderStretchLastSection">
       <bool>false</bool>
      </attribute>
-     <column>
-      <property name="text">
-       <string>Referencia</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Codigo de barras</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Marca</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Precio de adquisicon</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Precio venta</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Unidades actuales</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Producto disponible</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Fecha</string>
-      </property>
-     </column>
     </widget>
    </item>
   </layout>

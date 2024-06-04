@@ -41,7 +41,7 @@ class ReportePorFecha(QWidget):
         self.setBtn.clicked.connect(self.combo_event)
         self.cancelarBtn.clicked.connect(self.close)
         self.confirmarBtn.clicked.connect(self.confirmar)
-        
+
         self.pintar()
 
     def combo_event(self) -> None:
@@ -59,7 +59,7 @@ class ReportePorFecha(QWidget):
         if not self.fecha or len(self.fecha) == 1:
             vald.caja_input_no_valido("Asegurese de poner ambas fechas.")
             return None
-        
+
         fechas_compuesta = f"{self.fecha['desde']} - {self.fecha['hasta']}"
         fechas_validas = vald.validar_fechas(fechas_compuesta)
 
@@ -99,6 +99,7 @@ class Plantilla(QWidget):
         self.pintar()
         self.reportes = Reportes()
         self.gestion_datos = GD
+
     def handle_labels(self) -> None:
         for campo in self.campos:
             if campo.strip().lower() == 'fecha':
@@ -169,25 +170,18 @@ class Plantilla(QWidget):
             if user_input in self.gestion_datos.productos["Referencia"].values:
                 self.reportes.filtrar_referencia(user_input)
                 self.mostrar_referencia()
-        print(eleccion,user_input)
-                    
+        if eleccion == "fecha":
+            fechas = self.findChild(QLabel, "rangoDeFechasLabel").text()
+
         campos = [campo.lower() for campo in self.campos]
     
     def mostrar_referencia(self):
-        self.tablaReportes.setRowCount(0)
+        table: QTableWidget = self.tablaReportes
+        table.setRowCount(0)
         for i, row in self.reportes.filtrado_productos.iterrows():
-            self.tablaReportes.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tablaReportes.setItem(i, j, QTableWidgetItem(str(value)))
-
-        
-
-        def caja_input_no_valido():
-            pass # mostrar caja
-
-        CONRTOLADOR_DE_FILTRADO = {} # funciones para hacer query
-
-        # return CONRTOLADOR_DE_FILTRADO[eleccion] comentado para evitar error
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
 
     def normalizar(self, cadena: str):
         cadena = cadena.strip().lower().replace(" ", "_")
@@ -199,8 +193,6 @@ class Plantilla(QWidget):
 
         self.setStyleSheet(style_line)
         style_file.close()
-
-
 
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
