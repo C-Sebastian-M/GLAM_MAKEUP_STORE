@@ -500,7 +500,7 @@ QComboBox::down-arrow:hover {
              <item>
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>3</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="ver_usuarios_pagina">
                 <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -520,7 +520,7 @@ QComboBox::down-arrow:hover {
                     <set>QAbstractItemView::NoEditTriggers</set>
                    </property>
                    <attribute name="horizontalHeaderVisible">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderCascadingSectionResizes">
                     <bool>true</bool>
@@ -646,8 +646,20 @@ QComboBox::down-arrow:hover {
                      </item>
                      <item>
                       <widget class="QLineEdit" name="add_password_lineEdit">
+                       <property name="inputMask">
+                        <string/>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="echoMode">
+                        <enum>QLineEdit::Password</enum>
+                       </property>
                        <property name="placeholderText">
                         <string>CONTRASEÑA</string>
+                       </property>
+                       <property name="clearButtonEnabled">
+                        <bool>false</bool>
                        </property>
                       </widget>
                      </item>
