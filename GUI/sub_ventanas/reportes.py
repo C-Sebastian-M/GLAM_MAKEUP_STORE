@@ -160,6 +160,8 @@ class Plantilla(QWidget):
 
     def filtrar(self):
         eleccion: str = self.normalizar(self.consultandoPor.text())
+        if eleccion == "fecha":
+            fechas: str = self.fechas_label
         campos = [campo.lower() for campo in self.campos]
         user_input: str = self.userInput.text()
 
