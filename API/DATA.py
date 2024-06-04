@@ -280,17 +280,39 @@ class GestionDatos:
             print(f"Producto con la referencia: {referencia} no ha sido encontrado")
 
     def actualizar_producto(self, referencia, nuevos_datos):
+<<<<<<< HEAD
         producto = self.productos[self.productos["Referencia"] == referencia]
+=======
+        producto = self.productos[self.productos['Codigo de barras'] == referencia]
+>>>>>>> a7233fb04c8e1075eaee78a66657b6143c3f3629
         if not producto.empty:
+            print("a")
+            print(producto)
             for key, value in nuevos_datos.items():
                 if key in self.productos.columns:
+<<<<<<< HEAD
                     self.productos.loc[
                         self.productos["Referencia"] == referencia, key
                     ] = value
+=======
+                    self.productos.loc[self.productos['Codigo de barras'] == referencia, key] = value
+>>>>>>> a7233fb04c8e1075eaee78a66657b6143c3f3629
             self.guardar_dataframes()
             print(f"Producto con referencia {referencia} ha sido actualizado.")
         else:
             print(f"Producto con referencia {referencia} no encontrado.")
+    
+    def descontinuar_producto(self, codigo):
+        if codigo in self.productos["Codigo de barras"].values:
+            producto = self.productos[self.productos["Codigo de barras"] == producto]
+        if not producto.empty:
+            producto["Producto disponible"] = False
+            self.productos = self.productos[self.productos["Codigo de barras"] != codigo]
+            pd.concat([self.productos, producto], ignore_index=True)
+            self.guardar_dataframes()
+            return True
+        else:
+            return False
 
     # Venta de productos y servicios
     def agregar_venta_servicio(
