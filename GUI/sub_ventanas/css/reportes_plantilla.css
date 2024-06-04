@@ -15,6 +15,11 @@ QWidget#queryHeader {
     background-color: #EBBCDC;
 }
 
+QWidget QTableWidget#ventanaDeConsultas {
+    border-top: none;
+    border-bottom: none;
+}
+
 #ventanaDeConsultas QPushButton#serviciosBtn, 
 #ventanaDeConsultas QPushButton#productosBtn {
     padding: 8px;
