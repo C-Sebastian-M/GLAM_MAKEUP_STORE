@@ -146,8 +146,9 @@ class Plantilla(QWidget):
         shadow_effect.setOffset(0, 0)
         header.setGraphicsEffect(shadow_effect)
 
-        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
         table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
+        # logica para implementar los registros de la tabla
 
     def abrir_ventana_por_fecha(self) -> None:
         self.consultandoPor.setText("fecha")
@@ -165,12 +166,14 @@ class Plantilla(QWidget):
 
     def filtrar(self):
         eleccion: str = self.normalizar(self.consultandoPor.text())
+        if eleccion == "fecha":
+            fechas: str = self.fechas_label.text()
+
         user_input: str = self.userInput.text()
         if eleccion == "referencia":
             if user_input in self.gestion_datos.productos["Referencia"].values:
                 self.reportes.filtrar_referencia(user_input)
                 self.mostrar_referencia()
-<<<<<<< HEAD
         elif eleccion == "codigo_de_barras":
             if user_input in self.gestion_datos.productos["Codigo de barras"].values:
                 self.reportes.filtrar_codigo_de_barras(user_input)
@@ -216,15 +219,8 @@ class Plantilla(QWidget):
                 self.reportes.filtrar_disponibilidad(user_input)
                 self.mostrar_referencia()
         
-        
-        
         print(eleccion,user_input)
                     
-=======
-        if eleccion == "fecha":
-            fechas = self.findChild(QLabel, "rangoDeFechasLabel").text()
-
->>>>>>> 9ab90341a1217c6cc1156587a71d313c6603d132
         campos = [campo.lower() for campo in self.campos]
     
     def mostrar_referencia(self):
