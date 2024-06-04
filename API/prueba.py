@@ -1,5 +1,5 @@
-from API.DATA import GestionDatos
-from API.Validaciones import *
+from DATA import GestionDatos
+from Validaciones import *
 import pandas as pd
 import datetime 
 
@@ -165,6 +165,7 @@ class Cajero:
 class Inventario:
     def __init__(self):
         self.gestion_datos = GestionDatos()
+        self.filtrar_inventario = 
 
     def crear_productos(self, referencia, precioA, precioV, codigoB, marca, stock):
         if (
@@ -266,7 +267,7 @@ class Inventario:
         else:
             return False
         
-    
+    def filtrar_IDservicio(sel)   
 
 
 
@@ -275,67 +276,7 @@ class Reportes:
         self.gestion_datos = GestionDatos()
         self.filtrado_productos = pd.DataFrame(columns=["Referencia","Codigo de barras","Marca","Precio de adquisicion", "Precio venta","Unidades actuales","Producto disponible","Fecha"])
         
-    def filtrar_productos(self, referencia=None, codigo_barras=None, marca=None,
-                      precio_adquisicion=None, stock=None, precio_venta=None, comparacion_precio_venta=None,
-                      fecha_min=None, fecha_max=None):
-        filtered_products = self.productos.copy()
-    
-        if referencia is not None:
-            filtered_products = filtered_products[filtered_products["Referencia"] == referencia]
-        if codigo_barras is not None:
-            filtered_products = filtered_products[filtered_products["Codigo de barras"] == codigo_barras]
-        if marca is not None:
-            filtered_products = filtered_products[filtered_products["Marca"] == marca]
-        if precio_adquisicion is not None:
-            filtered_products = filtered_products[filtered_products["Precio de adquisicion"] == precio_adquisicion]
-        if stock is not None:
-            filtered_products = filtered_products[filtered_products["Unidades actuales"] == stock]
-        if precio_venta is not None and comparacion_precio_venta is not None:
-            if comparacion_precio_venta == "menor":
-                filtered_products = filtered_products[filtered_products["Precio venta"] < precio_venta]
-            elif comparacion_precio_venta == "mayor":
-                filtered_products = filtered_products[filtered_products["Precio venta"] > precio_venta]
-            elif comparacion_precio_venta == "igual":
-                filtered_products = filtered_products[filtered_products["Precio venta"] == precio_venta]
-            else:
-                print("Error: Comparación de precio de venta no válida.")
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_products = filtered_products[filtered_products["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_products = filtered_products[filtered_products["Fecha"] <= fecha_max]
-    
-        return filtered_products
-    
-    def filtrar_servicios(self, nombre=None, id_servicio=None, precio=None, comparacion_precio=None,
-                     fecha_min=None, fecha_max=None):
-        filtered_services = self.servicios.copy()
-    
-        if nombre is not None:
-            filtered_services = filtered_services[filtered_services["Nombre Servicio"] == nombre]
-        if id_servicio is not None:
-            filtered_services = filtered_services[filtered_services["ID servicio"] == id_servicio]
-        if precio is not None and comparacion_precio is not None:
-            if comparacion_precio == "menor":
-                filtered_services = filtered_services[filtered_services["Costo"] < precio]
-            elif comparacion_precio == "mayor":
-                filtered_services = filtered_services[filtered_services["Costo"] > precio]
-            elif comparacion_precio == "igual":
-                filtered_services = filtered_services[filtered_services["Costo"] == precio]
-            else:
-                print("Error: Comparación de precio no válida.")
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_services = filtered_services[filtered_services["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_services = filtered_services[filtered_services["Fecha"] <= fecha_max]
-    
-        return filtered_services
-                         
-    def filtrar_ventas(self, id_venta=None, cantidad=None, cliente=None, subtotal=None, comparacion_subtotal=None,
-                   producto_o_servicio=None, fecha_min=None, fecha_max=None, id_caja=None):
+        producto_o_servicio=None, fecha_min=None, fecha_max=None, id_caja=None):
         filtered_sales = pd.concat([self.venta_productos, self.venta_servicios], ignore_index=True)
 
         if id_venta is not None:
@@ -364,7 +305,6 @@ class Reportes:
         if id_caja is not None:
             filtered_sales = filtered_sales[filtered_sales["ID_Caja"] == id_caja]
         return filtered_sales
-    
     def filtrar_referencia(self, referencia):
         self.filtrado_productos = (self.gestion_datos.productos[self.gestion_datos.productos["Referencia"]== referencia])
         print(self.filtrado_productos)
@@ -399,9 +339,19 @@ class Reportes:
         self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Producto disponible"]== disponibles]
         print(self.filtrado_productos)
         return not self.filtrado_productos.empty
+        
+    def filtrar_fecha(self,fechas):
+        fecha_str1, fecha_str2 = fechas.split(" - ")
+        fecha1 = datetime.datetime.strptime(fecha_str1, "%Y-%m-%d")
+        fecha2 = datetime.datetime.strptime(fecha_str2, "%Y-%m-%d")
+        self.gestion_datos.productos['Fecha'] = pd.to_datetime(self.gestion_datos.productos['Fecha'])
+        self.filtrado_productos = self.gestion_datos.productos[(self.gestion_datos.productos['Fecha'] >= fecha1) & (self.gestion_datos.productos['Fecha'] <= fecha2)]
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
 
-x = Inventario()
+x = Reportes()
+x.filtrar_fecha("2024-06-04 - 2024-06-06")
 
 
 

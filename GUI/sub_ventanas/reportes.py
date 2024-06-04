@@ -169,6 +169,53 @@ class Plantilla(QWidget):
             if user_input in self.gestion_datos.productos["Referencia"].values:
                 self.reportes.filtrar_referencia(user_input)
                 self.mostrar_referencia()
+        elif eleccion == "codigo_de_barras":
+            if user_input in self.gestion_datos.productos["Codigo de barras"].values:
+                self.reportes.filtrar_codigo_de_barras(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Codigo de barras"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_codigo_de_barras(user_input)
+                self.mostrar_referencia()
+        elif eleccion == "marca":
+            if user_input in self.gestion_datos.productos["Marca"].values:
+                self.reportes.filtrar_marca(user_input)
+                self.mostrar_referencia()    
+        elif eleccion == "precio_de_adquisicion":
+            if user_input in self.gestion_datos.productos["Precio de adquisicion"].values:
+                self.reportes.filtrar_precioA(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Precio de adquisicion"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_precioA(user_input)
+                self.mostrar_referencia()
+        elif eleccion == "precio_venta":
+            if user_input in self.gestion_datos.productos["Precio venta"].values:
+                self.reportes.filtrar_precioV(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Precio venta"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_precioV(user_input)
+                self.mostrar_referencia()
+        elif eleccion == "unidades_actuales":
+            if user_input in self.gestion_datos.productos["Unidades actuales"].values:
+                self.reportes.filtrar_stock(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Unidades actuales"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_stock(user_input)
+                self.mostrar_referencia()
+        elif eleccion == "producto_disponible":
+            if user_input in self.gestion_datos.productos["Producto disponible"].values:
+                self.reportes.filtrar_disponibilidad(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Producto disponible"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_disponibilidad(user_input)
+                self.mostrar_referencia()
+        
+        
+        
         print(eleccion,user_input)
                     
         campos = [campo.lower() for campo in self.campos]

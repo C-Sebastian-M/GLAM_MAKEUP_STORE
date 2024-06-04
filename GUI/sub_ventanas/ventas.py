@@ -26,28 +26,28 @@ class VentasAdmin(QMainWindow, CBackground):
         self.cajero = Cajero()
         self.pushButton_menu.clicked.connect(self.mover_menu)
         # Botones
-        self.pushButton_actualizarPagos.clicked.connect(self.mostrar_pagos)
-        self.pushButton_mostrarModificar.clicked.connect(self.mostrar_ventas)
-        self.pushButton_addPago.clicked.connect(self.mostrar_formulario_addPago)
-        self.pushButton_eliminarPago.clicked.connect(self.mostrar_formulario_delPago)
-        self.pushButton_confirmarPago.clicked.connect(self.add_metodoPago)
-        self.pushButton_delPago.clicked.connect(self.del_metodoPago)
-        self.pushButton_modificarBuscar.clicked.connect(self.mostrar_formulario)
-        self.pushButton_eliminarVenta.clicked.connect(self.mostrar_formularioEliminar)
-        self.pushButton_ConfirmarEliminado.clicked.connect(self.ConfirmarEliminado)
-        self.pushButton_CancelarEliminado.clicked.connect(self.CancelarEliminado)
-        self.pushButton_guardarInfo.clicked.connect(self.pushButton_guardarInfo)
-        self.pushButton_fecha.clicked.connect(self.mostrar_calendario)
+        #self.pushButton_actualizarPagos.clicked.connect(self.mostrar_pagos)
+        # #self.pushButton_mostrarModificar.clicked.connect(self.mostrar_ventas)
+        # self.pushButton_addPago.clicked.connect(self.mostrar_formulario_addPago)
+        # self.pushButton_eliminarPago.clicked.connect(self.mostrar_formulario_delPago)
+        # self.pushButton_confirmarPago.clicked.connect(self.add_metodoPago)
+        # self.pushButton_delPago.clicked.connect(self.del_metodoPago)
+        # self.pushButton_modificarBuscar.clicked.connect(self.mostrar_formulario)
+        # self.pushButton_eliminarVenta.clicked.connect(self.mostrar_formularioEliminar)
+        # self.pushButton_ConfirmarEliminado.clicked.connect(self.ConfirmarEliminado)
+        # self.pushButton_CancelarEliminado.clicked.connect(self.CancelarEliminado)
+        # self.pushButton_guardarInfo.clicked.connect(self.pushButton_guardarInfo)
+        # self.pushButton_fecha.clicked.connect(self.mostrar_calendario)
 
         # Mas botones
-        self.pushButton_pagos.clicked.connect(
-            lambda: self.stackedWidget.setCurrentWidget(self.pagina_pagos)
-        )
-        self.pushButton_pagos.clicked.connect(self.limpiar_campos)
-        self.pushButton_ventas.clicked.connect(
-            lambda: self.stackedWidget.setCurrentWidget(self.pagina_ventas)
-        )
-        self.pushButton_ventas.clicked.connect(self.limpiar_campos)
+        # self.pushButton_pagos.clicked.connect(
+        #     lambda: self.stackedWidget.setCurrentWidget(self.pagina_pagos)
+        # )
+        # self.pushButton_pagos.clicked.connect(self.limpiar_campos)
+        # self.pushButton_ventas.clicked.connect(
+        #     lambda: self.stackedWidget.setCurrentWidget(self.pagina_ventas)
+        # )
+        # self.pushButton_ventas.clicked.connect(self.limpiar_campos)
 
     def mover_menu(self):
         if True:
