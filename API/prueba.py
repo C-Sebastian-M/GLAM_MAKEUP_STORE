@@ -4,7 +4,8 @@ import pandas as pd
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
-        self.df = pd.DataFrame(columns=["Producto","Precio Total"])
+        self.df = pd.DataFrame(columns=["Producto","Precio total"])
+        self.serviciosC = pd.DataFrame(columns=["Servicio","Precio total"])
     
     def añadir_cliente(self, cedula, nombre, telefono):
         if validar_Cedula(cedula) and validar_NombreCom(nombre) and validacion_Telefono(telefono):
@@ -127,25 +128,26 @@ class Cajero:
         return False
     
     def mostra_total_productos(self,codigo_barras,cantidad):
-        if(
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values or
-            str(codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values) and
-            validacion_Codigo_Barras(codigo_barras) and
-            validar_cantidad(cantidad)
-        ):
-          if codigo_barras in  self.gestion_datos.productos["Codigo de barras"]: 
-            x = self.self.gestion_datos.productos[self.self.gestion_datos.productos['Codigo de barras']== codigo_barras]
-            fila = {'Producto': x["Referencia"], 'Precio total':(float(x["Precio venta"]) * cantidad)}
-            self.df.loc[len(self.df)+1] = fila
-            return self.df
-     
-    def comprar_servicio(self, producto, cantidad):
-        #Necesitamos que hagan los cambios en la tabla inventario
-        pass
-    
-    def mostra_total_servicios(self):
-        pass 
-    
+        if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values:
+            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == (codigo_barras)]
+        elif int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values:
+            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == int(codigo_barras)]
+        precio = datos_producto["Precio venta"]
+        preciot = cantidad*precio
+        nuevo_producto = pd.DataFrame([[codigo_barras, preciot]], columns=["Producto","Precio total"])
+        self.df = pd.concat([self.df, nuevo_producto], ignore_index=True)
+        
+    def mostra_total_servicios(self, id, cantidad):
+        if id in self.gestion_datos.productos["ID servicio"].values:
+            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["ID servicio"] == (id)]
+        elif int(id) in self.gestion_datos.productos["ID servicio"].values:
+            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["ID servicio"] == int(id)]
+        precio = datos_producto["Costo"]
+        preciot = cantidad*precio
+        nombre_servicio = datos_producto["Nombre Servicio"]
+        nuevo_producto = pd.DataFrame([[nombre_servicio, preciot]], columns=["Servicio" , "Precio total"])
+        self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
+        
     def seleccionar_mediopago(self):
         #Necesitamos que creen la tabla de medios de pago
         pass
@@ -618,6 +620,11 @@ class Inventario:
         x = self.gestion_datos.Clientes
         return x
 
+
+
+        return filtered_sales
+x = Cajero()
+x.mostra_total_productos("123", 8)
 
 
 

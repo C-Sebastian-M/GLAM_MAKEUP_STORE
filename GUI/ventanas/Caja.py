@@ -95,7 +95,8 @@ class Caja(QMainWindow):
         self.Seleccionar.clicked.connect(self.selCli)
         self.Nuevo_2.clicked.connect(self.New)
         self.AggProducto.clicked.connect(self.total_productos)
-        self.AggServicio.clicked.connect(self.total_servicios)
+        self.AggServicios.clicked.connect(self.total_servicios)
+        self.ConfirmarPago.clicked.connect(self.saber_pago)
         self.TablaCedulas.hide()
         self.IngCedula.hide()
         self.Cedula_2.hide()
@@ -108,8 +109,8 @@ class Caja(QMainWindow):
         self.ConfirmarAnt.hide()
         self.ChangeCli.hide()
         self.Fecha.hide()
-        self.Reserva.clicked.connect(self.showdate)
-        self.Fast.clicked.connect(self.hidedate)
+        self.Reserva.clicked.connect(self.date)
+        self.Fast.clicked.connect(self.nodate)
         self.mostrar_servicios()
         self.mostrar_productos()
 
@@ -129,26 +130,35 @@ class Caja(QMainWindow):
         self.CambiarPago.clicked.connect(self.changePay)
         self.CambiarPago.hide()
     
+    #Metodo para ocultar los botones y crear el boton cambiar metodo de pago
     def confirmPay(self):
         #espacio para almacenar el dato
         self.MetodosPago.hide()
         self.ConfirmarPago.hide()
         self.CambiarPago.show()
 
+    #Metodo para cambiar metodo de pago
     def changePay(self):
         #espacio para borrar el dato
         self.MetodosPago.show()
         self.ConfirmarPago.show()
         self.CambiarPago.hide()
     
+    #metodo para ocutar la fecha
     def nodate(self):
         self.Fecha.hide()
 
+    #metodo para mostra la fecha
     def date(self):
         self.Fecha.show()
 
+    #metodo para ocultar los objetos de servicios y mostrar el boton de cambiar servicios
     def confirmServ(self):
         #espacio para almacenar los datos
+        self.Servicios.hide()
+        self.LabelStock.hide()
+        self.EleServicios.hide()
+        self.AggServicios.hide()
         self.TablaServicios.hide()
         self.LabelServ.hide()
         self.StockServicios.hide()
@@ -160,8 +170,13 @@ class Caja(QMainWindow):
         self.ConfirmarServicios.hide()
         self.EditarServ.show()
 
+    #metodo para cambiar los servicios
     def changeServ(self):
         #espacio para borrar los datos
+        self.Servicios.show()
+        self.LabelStock.show()
+        self.EleServicios.show()
+        self.AggServicios.show()
         self.TablaServicios.show()
         self.LabelServ.show()
         self.StockServicios.show()
@@ -172,7 +187,8 @@ class Caja(QMainWindow):
         self.Fecha.hide()
         self.ConfirmarServicios.show()
         self.EditarServ.hide()
-        
+
+    #metodo para oculatr los objetos de productos y crear el boton cambiar productos
     def confirmPro(self):
         #espacio para añadir los productos
         self.TablaProductos.hide()
@@ -182,7 +198,8 @@ class Caja(QMainWindow):
         self.TablaTotalPro.hide()
         self.ConfirmarPro.hide()
         self.EditarPro.show()
-    
+
+    #metodo para cambiar los productos
     def changePro(self):
         #espacio para borarr los productos
         self.TablaProductos.show()
@@ -193,11 +210,7 @@ class Caja(QMainWindow):
         self.ConfirmarPro.show()
         self.EditarPro.hide()
 
-    def clickchange(self):
-        self.Seleccionar.show()
-        self.Nuevo_2.show()
-        self.ChangeCli.hide()
-
+    #metodo para confirmar el seleccionar un cliente que ya esta dentro de la base de datos
     def selCli(self):
         self.mostrar_clientes()
         self.TablaCedulas.show()
@@ -211,6 +224,7 @@ class Caja(QMainWindow):
         self.ConfirmarNew.hide()
         self.ConfirmarAnt.show()
 
+    #metodo para confirmar un cliente nuevo ingresado por el usuario
     def New(self):
         self.TablaCedulas.hide()
         self.IngCedula.hide()
@@ -223,6 +237,13 @@ class Caja(QMainWindow):
         self.ConfirmarNew.show()
         self.ConfirmarAnt.hide()
 
+    #metodo para cambiar el client y mostrar
+    def clickchange(self):
+        self.Seleccionar.show()
+        self.Nuevo_2.show()
+        self.ChangeCli.hide()
+
+    #metodo para verificar si el cliente nuevo es correcto
     def CheckNewClient(self):
         cedula = self.Ced_2.text()
         nombre = self.Nom_2.text()
@@ -255,15 +276,9 @@ class Caja(QMainWindow):
             msg_box.setText("Cliente Incorrecto")
             msg_box.exec_()
 
+    #metodo para volver al menu
     def backMenu(self):
         self.control_navegacion.mostrar_ventana("menu")
-
-    
-    def showdate(self):
-        self.dateEdit.show()
-    
-    def hidedate(self):
-        self.dateEdit.hide()
 
     def creado(self):
         cedula = self.IngCedula.text()
@@ -288,13 +303,16 @@ class Caja(QMainWindow):
     def total_productos(self):
         codigo_barras = self.EleProductos.text()
         cantidad = self.StockProductos.text()
-        self.cajero.mostra_total_productos(codigo_barras, cantidad)
-        self.mostrar_total_productos()
+        if codigo_barras != "" and cantidad != "":
+            self.cajero.mostra_total_productos(codigo_barras, int(cantidad))
+            self.mostrar_total_productos()
     
     def total_servicios(self):
         id_servicio = self.EleServicios.text()
-        cantidad = self.stockServicios
-        
+        cantidad = self.StockServicios.text()
+        if cantidad != "" and id_servicio != "":
+            self.cajero.mostra_total_servicios(id_servicio, cantidad)
+            self.mostrar_total_servicios()
     
     def mostrar_productos(self):
         self.TablaProductos.setRowCount(0)
@@ -316,8 +334,33 @@ class Caja(QMainWindow):
             self.TablaTotalPro.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.TablaTotalPro.setItem(i, j, QTableWidgetItem(str(value)))
+    
+    def mostrar_total_servicios(self):
+        self.TablaTotalSer.setRowCount(0)
+        for i, row in self.cajero.serviciosC.iterrows():
+            self.TablaTotalSer.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaTotalSer.setItem(i, j, QTableWidgetItem(str(value)))
 
+    def saber_pago(self):
+        metodo_pago = self.MetodosPago.currentText()
+        print(metodo_pago)
 
+    def mostrar_carrito(self):
+        #mostrar_productos
+        self.TablaCarro.setRowCount(0)
+        for i, row in self.cajero.df.iterrows():
+            self.TablaTotalPro.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaTotalPro.setItem(i, j, QTableWidgetItem(str(value)))
+        #mostrar_servicios
+        self.TablaCarro.setRowCount(0)
+        for i, row in self.cajero.serviciosC.iterrows():
+            self.TablaCarro.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaCarro.setItem(i, j, QTableWidgetItem(str(value)))
+        
+    
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
         super().__init__()
@@ -334,6 +377,9 @@ class Reporte(QMainWindow, CBackground):
         pass
 
     def envio(self):
+        pass
+    
+    def showdate(self):
         pass
     
 
