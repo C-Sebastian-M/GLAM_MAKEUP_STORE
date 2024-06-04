@@ -211,7 +211,7 @@ class GestionDatos:
         precio_venta,
         unidades_actuales,
     ):
-        fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
+        fecha = datetime.now().strftime("%Y-%m-%d") 
         disponible = int(unidades_actuales) > 0
         nuevo_producto = pd.DataFrame(
             [

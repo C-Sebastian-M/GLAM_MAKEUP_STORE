@@ -6,8 +6,9 @@ import datetime
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
-        self.df = pd.DataFrame(columns=["Producto","Precio total"])
-        self.serviciosC = pd.DataFrame(columns=["Servicio","Precio total"])
+        self.df = pd.DataFrame(columns=["Nombre","Precio total"])
+        self.serviciosC = pd.DataFrame(columns=["Nombre","Precio total"])
+        self.carrito = pd.DataFrame(columns=["Nombre","Precio total"])
     
     def añadir_cliente(self, cedula, nombre, telefono):
         if (
@@ -154,13 +155,16 @@ class Cajero:
         nuevo_producto = pd.DataFrame([[nombre_servicio, preciot]], columns=["Servicio" , "Precio total"])
         self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
 
-    def seleccionar_mediopago(self):
-        #Necesitamos que creen la tabla de medios de pago
-        pass
+    def df_carro(self):
+        df_unido = pd.merge(self.serviciosC,  on='ID', how='inner')
+        return not self.carrito.empty
+         
+    def vaciar_carrito(self):
+        self.carrtio.drop(self.carrito.index, inplace = True)
 
-    def seleccionar_mediopago(self):
-        # Necesitamos que creen la tabla de medios de pago
-        pass
+       
+
+    
 
 class Inventario:
     def __init__(self):
@@ -266,102 +270,83 @@ class Inventario:
         else:
             return False
         
-    
-
-
-
+        
 class Reportes:
-    def filtrar_productos(self, referencia=None, codigo_barras=None, marca=None,
-                      precio_adquisicion=None, stock=None, precio_venta=None, comparacion_precio_venta=None,
-                      fecha_min=None, fecha_max=None):
-        filtered_products = self.productos.copy()
+    def __init__(self):
+        self.gestion_datos = GestionDatos()
+        self.filtrado_productos = pd.DataFrame(columns=["Referencia","Codigo de barras","Marca","Precio de adquisicion", "Precio venta","Unidades actuales","Producto disponible","Fecha"])    
+        self.filtrado_servicios = pd.DataFrame(columns= ["ID servicio", "Nombre Servicio", "Costo"])
+        
+    def filtrar_referencia(self, referencia):
+        self.filtrado_productos = (self.gestion_datos.productos[self.gestion_datos.productos["Referencia"]== referencia])
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-        if referencia is not None:
-            filtered_products = filtered_products[filtered_products["Referencia"] == referencia]
-        if codigo_barras is not None:
-            filtered_products = filtered_products[filtered_products["Codigo de barras"] == codigo_barras]
-        if marca is not None:
-            filtered_products = filtered_products[filtered_products["Marca"] == marca]
-        if precio_adquisicion is not None:
-            filtered_products = filtered_products[filtered_products["Precio de adquisicion"] == precio_adquisicion]
-        if stock is not None:
-            filtered_products = filtered_products[filtered_products["Unidades actuales"] == stock]
-        if precio_venta is not None and comparacion_precio_venta is not None:
-            if comparacion_precio_venta == "menor":
-                filtered_products = filtered_products[filtered_products["Precio venta"] < precio_venta]
-            elif comparacion_precio_venta == "mayor":
-                filtered_products = filtered_products[filtered_products["Precio venta"] > precio_venta]
-            elif comparacion_precio_venta == "igual":
-                filtered_products = filtered_products[filtered_products["Precio venta"] == precio_venta]
-            else:
-                print("Error: Comparación de precio de venta no válida.")
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_products = filtered_products[filtered_products["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_products = filtered_products[filtered_products["Fecha"] <= fecha_max]
+    def filtrar_codigo_de_barras(self, codB):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]== codB]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-        return filtered_products
+    def filtrar_marca(self,marca):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Marca"]== marca]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-    def filtrar_servicios(self, nombre=None, id_servicio=None, precio=None, comparacion_precio=None,
-                     fecha_min=None, fecha_max=None):
-        filtered_services = self.servicios.copy()
+    def filtrar_precioA(self,precio):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Precio de adquisicion"]== precio]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-        if nombre is not None:
-            filtered_services = filtered_services[filtered_services["Nombre Servicio"] == nombre]
-        if id_servicio is not None:
-            filtered_services = filtered_services[filtered_services["ID servicio"] == id_servicio]
-        if precio is not None and comparacion_precio is not None:
-            if comparacion_precio == "menor":
-                filtered_services = filtered_services[filtered_services["Costo"] < precio]
-            elif comparacion_precio == "mayor":
-                filtered_services = filtered_services[filtered_services["Costo"] > precio]
-            elif comparacion_precio == "igual":
-                filtered_services = filtered_services[filtered_services["Costo"] == precio]
-            else:
-                print("Error: Comparación de precio no válida.")
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_services = filtered_services[filtered_services["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_services = filtered_services[filtered_services["Fecha"] <= fecha_max]
+    def filtrar_precioV(self,precio):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Precio venta"]== precio]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-        return filtered_services
-                         
-    def filtrar_ventas(self, id_venta=None, cantidad=None, cliente=None, subtotal=None, comparacion_subtotal=None,
-                   producto_o_servicio=None, fecha_min=None, fecha_max=None, id_caja=None):
-        filtered_sales = pd.concat([self.venta_productos, self.venta_servicios], ignore_index=True)
+    def filtrar_stock(self,unidades):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Unidades actuales"]== unidades]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
 
-        if id_venta is not None:
-            filtered_sales = filtered_sales[filtered_sales["ID venta"] == id_venta]
-        if cantidad is not None:
-            filtered_sales = filtered_sales[filtered_sales["Cantidad"] == cantidad]
-        if cliente is not None:
-            filtered_sales = filtered_sales[filtered_sales["Cliente"] == cliente]
-        if subtotal is not None and comparacion_subtotal is not None:
-            if comparacion_subtotal == "menor":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] < subtotal]
-            elif comparacion_subtotal == "mayor":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] > subtotal]
-            elif comparacion_subtotal == "igual":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] == subtotal]
-            else:
-                print("Error: Comparación de subtotal no válida.")
-        if producto_o_servicio is not None:
-            filtered_sales = filtered_sales[filtered_sales["Producto" if "producto" in producto_o_servicio.lower() else "Servicio"] == producto_o_servicio]
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_sales = filtered_sales[filtered_sales["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_sales = filtered_sales[filtered_sales["Fecha"] <= fecha_max]
-        if id_caja is not None:
-            filtered_sales = filtered_sales[filtered_sales["ID_Caja"] == id_caja]
-        return filtered_sales
+    def filtrar_disponibilidad(self,disponibles = True):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Producto disponible"]== disponibles]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+        
+    def filtrar_fecha(self,fechas):
+        fecha_str1, fecha_str2 = fechas.split(" - ")
+        fecha1 = datetime.datetime.strptime(fecha_str1, "%Y-%m-%d")
+        fecha2 = datetime.datetime.strptime(fecha_str2, "%Y-%m-%d")
+        self.gestion_datos.productos['Fecha'] = pd.to_datetime(self.gestion_datos.productos['Fecha'])
+        self.filtrado_productos = self.gestion_datos.productos[(self.gestion_datos.productos['Fecha'] >= fecha1) & (self.gestion_datos.productos['Fecha'] <= fecha2)]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-x = Inventario()
+    def filtrar_ID_Servicio(self,id):
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"]== id]
+        self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
+        return  not self.filtrado_servicios.empty
+    
+    def filtrar_servicio(self,servicio):
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["Nombre Servicio"]== servicio]
+        self.filtrado_servicios= self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
+        return not self.filtrado_servicios.empty
+    
+    def filtrar_costo(self,costo):
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["Costo"]== costo]
+        self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
+        return not self.filtrado_servicios.empty
+
 
 
 

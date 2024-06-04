@@ -388,7 +388,7 @@ QFrame {
 QLabel {
 	background-color:  transparent;
     font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: rgb(0, 0, 0); /* Color de texto rgb(220, 132, 188) */
+    color: black; /* Color de texto rgb(220, 132, 188) */
 }
 
 /* Estilo para QLineEdit */
@@ -436,11 +436,12 @@ QTableWidget {
     font-size: 14px;
 	border: 2px solid black;
      border-radius: 5px;
+
 }
 
 QHeaderView::section {
     background-color: #dc84bc;
-    color: black;
+    color: #ffffff;
     padding: 5px;
     border: 1px solid #dc84bc;
 }
@@ -544,7 +545,7 @@ QComboBox::down-arrow:hover {
                     <bool>true</bool>
                    </attribute>
                    <attribute name="horizontalHeaderDefaultSectionSize">
-                    <number>190</number>
+                    <number>230</number>
                    </attribute>
                    <column>
                     <property name="text">
@@ -747,10 +748,13 @@ actuales</string>
                   <layout class="QHBoxLayout" name="horizontalLayout_6">
                    <item>
                     <widget class="QLabel" name="aviso_add_label">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
                      <property name="minimumSize">
                       <size>
-                       <width>170</width>
-                       <height>0</height>
+                       <width>200</width>
+                       <height>30</height>
                       </size>
                      </property>
                      <property name="text">
@@ -1041,8 +1045,8 @@ adquisición</string>
                     <widget class="QLabel" name="aviso_modify_label">
                      <property name="minimumSize">
                       <size>
-                       <width>170</width>
-                       <height>0</height>
+                       <width>200</width>
+                       <height>30</height>
                       </size>
                      </property>
                      <property name="text">
