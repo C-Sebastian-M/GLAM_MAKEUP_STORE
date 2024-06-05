@@ -428,7 +428,7 @@ class Reporte(QMainWindow, CBackground):
         self.control_navegacion=control_navegacion
         self.Reporte_2.clicked.connect(self.Backmenu)
         self.Reporte.clicked.connect(self.VistaPre)
-        self.VistaPrevia.clicked.connect(self.envio)
+
         self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
 
     def Backmenu(self):

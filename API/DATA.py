@@ -291,18 +291,11 @@ class GestionDatos:
             #print(f"Producto con codigoBarras {codigoBarras} ha sido actualizado.")
         else:
             #print(f"Producto con codigoBarras {codigoBarras} no encontrado.")
-            None
-
-    def descontinuar_producto(self, codigo):
+            None    
+    def descontinuar_producto(self,codigo):
         if codigo in self.productos["Codigo de barras"].values:
-            producto = self.productos[self.productos["Codigo de barras"] == producto]
-        if not producto.empty:
-            producto["Producto disponible"] = False
-            self.productos = self.productos[
-                self.productos["Codigo de barras"] != codigo
-            ]
-            pd.concat([self.productos, producto], ignore_index=True)
-            self.guardar_dataframes()
+            id = self.productos[self.productos["Codigo de barras"] == codigo].index
+            self.productos.drop(index=id,inplace=True)
             return True
         else:
             return False

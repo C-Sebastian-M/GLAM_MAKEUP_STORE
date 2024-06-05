@@ -270,7 +270,6 @@ class Inventario:
             and validar_NombreServ(nombreN)
             and validacion_Precio(precioN)
         ):  # Caso en el que se actualizan Todos
-            
             nuevos_datos = {
                 "ID servicio": id,
                 "Nombre Servicio": nombreN,
@@ -280,6 +279,14 @@ class Inventario:
             return True
         else:
             return False
+    
+    
+    def filtrar_fecha_actual(self):
+        fecha_actual = datetime.datetime.now()
+        self.gestion_datos.productos['Fecha'] = pd.to_datetime(self.gestion_datos.productos['Fecha'])
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos['Fecha'] == fecha_actual]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        return not self.filtrado_productos.empty
         
         
 class Reportes:
@@ -357,6 +364,9 @@ class Reportes:
         self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
         print(self.filtrado_servicios)
         return not self.filtrado_servicios.empty
+
+
+    
     
     
 

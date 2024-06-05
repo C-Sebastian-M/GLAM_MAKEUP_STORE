@@ -14,18 +14,44 @@
    <string>Caja Opciones</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame{
-background-color: rgb(235, 188, 220);
+   <string notr="true">/* Estilo para QFrame */
+QFrame {
+    background-color: transparent; /* Fondo blanco */
+	border-radius: 10px
+}
+
+/* Estilo para QLabel */
+QLabel {
+	background-color:  transparent;
+    font: 70 10pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
+    color: rgb(0,0,0); /* Color de texto rgb(220, 132, 188) */
+}
+
+/* Estilo para QLineEdit */
+QLineEdit {
+    border: 2px solid #e4acd0; /* Borde */
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f5eef2; /* Fondo */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+QLineEdit:hover {
+	border: 2px solid rgb(220, 149, 196);
+}
+QLineEdit:focus {
+    border: 2px solid #d484b4; /* Borde al enfocar */
 }
 
 QPushButton {
     border: 2px solid #e4acd0;
     border-radius: 5px;
-    padding: 8px 16px;
+    padding: 8px 8px;
     background-color: #dc95c4; /* Fondo */
     color: #ffffff; /* Color del texto */
     font-family: Arial, sans-serif;
-    font-size: 16px;
+    font-size: 11px;
 }
 
 QPushButton:hover {
@@ -35,9 +61,72 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #d484b4; /* Fondo al presionar */
 }
-QLabel {
-    font: 87 16pt &quot;Arial Black&quot;; /* Fuente Arial Black, peso 87 */
-    color: rgb(0,0,0); /* Color de texto rgb(220, 132, 188) */
+
+QFrame{
+border-radius: 10px
+}
+
+QTableWidget {
+    background-color: #f5eef2;
+    gridline-color: #dc84bc;
+    font-size: 14px;
+	border: 2px solid black;
+     border-radius: 5px;
+}
+
+QHeaderView::section {
+    background-color: #dc84bc;
+    color: #ffffff;
+    padding: 5px;
+    border: 1px solid #dc84bc;
+}
+
+QTableWidget::item {
+    border: 1px solid dc84bc;
+}
+
+QTableWidget::item:alternate {
+    background-color: dc84bc;
+}
+
+QTableWidget::item:!selected {
+    background-color: transparent;
+}
+
+QTableWidget::item:selected {
+    background-color: #d484b4;
+    color: #ffffff;
+}
+
+QComboBox {
+    border: 2px solid #e4acd0; /* Borde */
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f5eef2; /* Fondo */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+QComboBox:hover {
+    border: 2px solid rgb(220, 149, 196);
+}
+
+QComboBox:focus {
+    border: 2px solid #d484b4; /* Borde al enfocar */
+}
+
+QComboBox::drop-down {
+    width: 20px; /* Ancho del botón desplegable */
+    border: none; /* Quitar el borde */
+}
+
+QComboBox::down-arrow {
+    image: url(drop_down_icon.png); /* Cambiar el icono de flecha */
+}
+
+QComboBox::down-arrow:hover {
+    image: url(drop_down_icon_hover.png); /* Cambiar el icono de flecha al pasar el cursor */
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -60,8 +149,8 @@ QLabel {
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>40</x>
+      <y>90</y>
       <width>71</width>
       <height>61</height>
      </rect>
@@ -89,32 +178,6 @@ QLabel {
      <string>Enviar Reporte Diario</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="VistaPrevia">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>170</y>
-      <width>341</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Vista Previa</string>
-    </property>
-   </widget>
-   <widget class="QTableView" name="tableView">
-    <property name="geometry">
-     <rect>
-      <x>205</x>
-      <y>271</y>
-      <width>391</width>
-      <height>271</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="Reporte_2">
     <property name="geometry">
      <rect>
@@ -127,6 +190,143 @@ QLabel {
     <property name="text">
      <string>Volver</string>
     </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>200</y>
+      <width>571</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>258</width>
+       <height>230</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Ventas Productos</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="Tabla_diario_productos">
+        <column>
+         <property name="text">
+          <string>ID venta</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Cedula</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Cliente</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Producto</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Fecha</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Cantidad</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Subtotal</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Metodo de pago</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>20</y>
+       <width>258</width>
+       <height>230</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Venta Servicios</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="Tabla_venta_servicio">
+        <column>
+         <property name="text">
+          <string>ID venta</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Cliente</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Producto</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Fecha</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Cantidad</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Metodo de pago</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

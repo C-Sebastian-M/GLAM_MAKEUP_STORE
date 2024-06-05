@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem,
     QMessageBox,
     QCompleter,
+    QTableWidget
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
@@ -62,10 +63,22 @@ class VentasAdmin(QMainWindow, CBackground):
         self.pushButton_ventas.clicked.connect(
             lambda: self.stackedWidget.setCurrentWidget(self.pagina_ventas)
         )
+        self.tableWidget_pagos.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch
+        )
+        self.pagos = self.gestion_datos.metodo_pago["Metodo de pago"].tolist()
+        self.comboBox_pago.addItems(self.pagos)
         self.pushButton_ventas.clicked.connect(self.limpiar_campos)
-    
+       
     def limpiar_campos(self):
-        None
+        self.lineEdit_addPago.clear()
+        self.lineEdit.clear()
+        self.lineEdit_addPrecio.clear()
+        self.lineEdit_addServicio.clear()
+        self.lineEdit_buscarEliminar.clear()
+        self.lineEdit_nuevoServicio.clear()
+        self.lineEdit_nuevoPrecio.clear()
+        self.lineEdit_modificar.clear()
 
     def mover_menu(self):
         if True:
@@ -83,30 +96,60 @@ class VentasAdmin(QMainWindow, CBackground):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
+    
+    def showErrorMessage(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Warning)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Error de autenticación")
+        msg_box.exec_()
 
+    def show_success_dialog(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Éxito")
+        msg_box.exec_()
 
 
     def mostrar_pagos(self):
-        None
+        table: QTableWidget = self.tableWidget_pagos
+        table.setRowCount(0)
+        for i, row in self.gestion_datos.metodo_pago.iterrows():
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
 
     def mostrar_ventas(self):
         # Implement your logic to display the ventas page here
         # Similar to mostrar_pagos, it likely returns None
         return None
 
-    def mostrar_formulario_addPago(self):
-        # Implement your logic to display the add payment form here
-        # Similar to mostrar_pagos, it likely returns None
-        return None
-
+    def mostrar_formulario_addPago(self, servicio):
+        self.frame_addPago.show()
+    
     def mostrar_formulario_delPago(self):
-        None
-
-    def add_metodoPago(self):
-        None
-
+        self.frame_delPago.show()
+    
     def del_metodoPago(self):
-        None
+        if self.comboBox_pago.currentIndex() != -1:
+            pago = self.comboBox_pago.currenText()
+            if pago in self.gestion_datos.metodo_pago["Metodos de pago"].values:
+                self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[self.gestion_datos.metodo_pago['ID'] != pago]
+                self.gestion_datos.guardar_dataframes()
+            self.show_success_dialog("Metodo de pago eliminado correctamente")
+            self.aviso_pago.show("Metodo de pago eliminado correctamente")
+            self.frame_delPago.hide()
+        elif int(pago) in self.gestion_datos.metodo_pago['ID'].values:
+            pago = int(usuario)
+            self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[self.gestion_datos.metodo_pago['ID'] != pago]
+            self.gestion_datos.guardar_dataframes()
+            self.show_success_dialog("Metodo de pago eliminado correctamente")
+            self.aviso_pago.show("Metodo de pago eliminado correctamente")
+            self.frame_delPago.hide()
+        else:
+            return False  
+                
 
     def mostrar_formulario(self):
         None
@@ -126,3 +169,15 @@ class VentasAdmin(QMainWindow, CBackground):
         # Implement your logic to display the calendar here
         # Similar to mostrar_pagos, it likely returns None
         return None
+    
+
+    def add_metodoPago(self):
+        id_metodo = self.lineEdit_addPago.text()
+        metodo = self.lineEdit.text()
+        if id_metodo not in self.gestion_datos.metodo_pago["ID"].values and int(id_metodo) not in self.gestion_datos.metodo_pago["ID"].values:
+            nueva_fila = pd.DataFrame([[id_metodo, metodo]], columns=['ID', 'Metodo de pago'])
+            self.gestion_datos.metodo_pago = pd.concat([self.gestion_datos.metodo_pago, nueva_fila], ignore_index=True)
+            self.frame_addPago.hide()
+            
+            self.pagos = self.gestion_datos.metodo_pago["Metodo de pago"].tolist()
+            self.comboBox_pago.addItems(self.pagos)

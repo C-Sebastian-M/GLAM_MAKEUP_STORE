@@ -11,6 +11,7 @@ from API.DATA import GestionDatos
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import QPainter, QBrush, QColor
+from API.Validaciones import *
 class CBackground:
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -144,36 +145,114 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         rol = self.add_rol_combobox.currentIndex()
         id_usuario = int(self.add_id_usuario_lineEdit.text())
 
-        if usuario in self.gestion_datos.usuarios['usuario'].values:
-            return False
-        else:
-            nueva_fila = pd.DataFrame([[id_usuario, usuario, contraseña, rol]], columns=['ID usuario', 'usuario', 'contraseña', 'Rol ID'])
-            self.gestion_datos.usuarios = pd.concat([self.gestion_datos.usuarios, nueva_fila], ignore_index=True)
-
-            self.gestion_datos.guardar_dataframes()
-            return True
+        if usuario  != "" and contraseña  != "" and id_usuario != "":
+            if usuario in self.gestion_datos.usuarios['usuario'].values:
+                return False
+            else:
+                if usuario not in self.gestion_datos.usuarios['usuario'].values:
+                    nueva_fila = pd.DataFrame([[id_usuario, usuario, contraseña, rol]], columns=['ID usuario', 'usuario', 'contraseña', 'Rol ID'])
+                    self.gestion_datos.usuarios = pd.concat([self.gestion_datos.usuarios, nueva_fila], ignore_index=True)
+                self.gestion_datos.guardar_dataframes()
+                return True
 
     def modificar_usuario(self):
         usuario=self.modify_buscar_usuario_lineEdit.text()
         nuevo_usuario=self.add_nombre_usuario_lineEdit.text()
         nueva_contraseña=self.add_password_lineEdit.text()
         nuevo_rol= self.add_rol_combobox.currentIndex()
-        if usuario in self.gestion_datos.usuarios['ID usuario'].values:
-            self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
-            self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
-            self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
-            self.gestion_datos.guardar_dataframes()
-            return True
-        elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
-            usuario = int(usuario)
-            self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
-            self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
-            self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
-            self.gestion_datos.guardar_dataframes()
-            return True
+        if nuevo_usuario != "" and nueva_contraseña !="" and nuevo_rol != "":
+            if usuario in self.gestion_datos.usuarios['ID usuario'].values:
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
+                usuario = int(usuario)
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
+                self.gestion_datos.guardar_dataframes()
+                return True
+            return False
+        elif nueva_contraseña !="" and nuevo_usuario == "" and nuevo_rol =="":
+            if usuario in self.gestion_datos.usuarios['ID usuario'].values:
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
+                usuario = int(usuario)
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
+                self.gestion_datos.guardar_dataframes()
+                return True
+        
+        elif nueva_contraseña =="" and nuevo_usuario != "" and nuevo_rol =="":
+            if usuario in self.gestion_datos.usuarios['ID usuario'].values:
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
+                usuario = int(usuario)
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
+                self.gestion_datos.guardar_dataframes()
+                return True
+        
+        elif nuevo_rol !="" and nuevo_usuario  == "" and nueva_contraseña == "":
+            if usuario in self.gestion_datos.usuarios['ID usuario'].values:
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
+                usuario = int(usuario)
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
+                self.gestion_datos.guardar_dataframes()
+                return True
+            return False
+        
+        elif nueva_contraseña !="" and nuevo_rol !="" and nuevo_usuario == "":
+            if usuario in self.gestion_datos.usuarios['ID usuario'].values:
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
+                usuario = int(usuario)
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
+                self.gestion_datos.guardar_dataframes()
+                return True
+            return False 
+        
+        elif nueva_contraseña !="" and nuevo_usuario !="" and nuevo_rol == "":
+            if usuario in self.gestion_datos.usuarios['ID usuario'].values:
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
+                usuario = int(usuario)
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
+                self.gestion_datos.guardar_dataframes()
+                return True
+            return False
+
+        elif nueva_contraseña =="" and nuevo_rol !="" and nuevo_usuario != "":
+            if usuario in self.gestion_datos.usuarios['ID usuario'].values:
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
+                usuario = int(usuario)
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
+                self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
+                self.gestion_datos.guardar_dataframes()
+                return True
+            return False
         else:
             return False 
-
+        
     def eliminar_usuario(self):
         usuario=self.del_buscar_usuario_lineEdit.text()
         if usuario in self.gestion_datos.usuarios['ID usuario'].values:
@@ -208,3 +287,5 @@ class AdministrarUsuarios(QMainWindow, CBackground):
             self.del_tabla_usuarios.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.del_tabla_usuarios.setItem(i, j, QTableWidgetItem(str(value)))
+
+    
