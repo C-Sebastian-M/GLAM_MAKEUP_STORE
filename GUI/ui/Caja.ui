@@ -819,7 +819,7 @@ QComboBox::down-arrow:hover {
 }</string>
                   </property>
                   <property name="currentIndex">
-                   <number>1</number>
+                   <number>3</number>
                   </property>
                   <widget class="QWidget" name="Clientes_2">
                    <property name="styleSheet">
@@ -2585,6 +2585,80 @@ background-color: rgb(255, 85, 255);</string>
                       </property>
                      </widget>
                     </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="LabelCompras">
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
+                      </property>
+                      <property name="text">
+                       <string>Compras</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout_12">
+                      <item>
+                       <widget class="QTableWidget" name="TaCaro">
+                        <column>
+                         <property name="text">
+                          <string>Referencia</string>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>MS Shell Dlg 2</family>
+                           <pointsize>8</pointsize>
+                          </font>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Cantidad</string>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>MS Shell Dlg 2</family>
+                           <pointsize>8</pointsize>
+                          </font>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Precio</string>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>MS Shell Dlg 2</family>
+                           <pointsize>8</pointsize>
+                          </font>
+                         </property>
+                        </column>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QTableWidget" name="TaSer">
+                        <column>
+                         <property name="text">
+                          <string>Servicios</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Cantidad</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Total</string>
+                         </property>
+                        </column>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
                     <item row="3" column="0">
                      <layout class="QHBoxLayout" name="horizontalLayout_5">
                       <item>
@@ -2740,57 +2814,6 @@ background-color: rgb(255, 85, 255);</string>
                        </widget>
                       </item>
                      </layout>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="LabelCompras">
-                      <property name="styleSheet">
-                       <string notr="true">color: rgb(170, 0, 255);
-background-color: rgb(255, 85, 255);</string>
-                      </property>
-                      <property name="text">
-                       <string>Compras</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QTableWidget" name="TablaCarro">
-                      <column>
-                       <property name="text">
-                        <string>Elemento</string>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>MS Shell Dlg 2</family>
-                         <pointsize>8</pointsize>
-                        </font>
-                       </property>
-                      </column>
-                      <column>
-                       <property name="text">
-                        <string>Cantidad</string>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>MS Shell Dlg 2</family>
-                         <pointsize>8</pointsize>
-                        </font>
-                       </property>
-                      </column>
-                      <column>
-                       <property name="text">
-                        <string>Precio</string>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>MS Shell Dlg 2</family>
-                         <pointsize>8</pointsize>
-                        </font>
-                       </property>
-                      </column>
-                     </widget>
                     </item>
                    </layout>
                   </widget>

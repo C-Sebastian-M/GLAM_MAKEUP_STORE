@@ -1,3 +1,5 @@
+import time
+
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
@@ -57,6 +59,7 @@ class Login(QMainWindow):
                 self.frame_error.setStyleSheet(self.stylePopupError)
             else:
                 self.frame_error.setStyleSheet(self.stylePopupOk)
+            self.frame_error.hide()
 
         # CHECK USER
         if not username:
@@ -85,6 +88,7 @@ class Login(QMainWindow):
                     self.openCajaWindow()
                 else:
                     showMessage("Credenciales incorrectas")
+                    time.sleep(2)
             else:
                 showMessage("Usuario o contraseña incorrecta. ")
                 self.showErrorMessage("Credenciales Incorrectas")

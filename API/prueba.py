@@ -150,28 +150,28 @@ class Cajero:
             datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == (id)]
         elif int(id) in self.gestion_datos.servicios["ID servicio"].values:
             datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == int(id)]
+        else:
+            return False
         precio = datos_producto["Costo"]
         preciot = cantidad*precio
         nuevo_producto = pd.DataFrame([[datos_producto["Nombre Servicio"],cantidad, preciot]], columns=["Nombre","Cantidad","Precio total"])
         self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
         self.serviciosC = self.serviciosC.reset_index(drop=True)
-
-    def df_carro(self):
-        self.carrito = pd.concat([self.df, self.serviciosC], ignore_index=True)  
-        self.carrito = self.carrito.reset_index(drop=True)
-        print(self.carrito)
-        return not self.carrito.empty
          
     def vaciar_carrito(self):
-        self.carrito.drop(self.carrito.index, inplace = True)
-        return not self.carrito.empty
+        self.df.drop(self.df.index, inplace = True)
+        self.serviciosC.drop(self.serviciosC.index, inplace = True)
+        return not self.df.empty and self.serviciosC.empty
 
-    def factura(self):
-     for i in range(len(self.df)):
-      print(f"Nombre del producto: {self.df.loc[i, 'Producto']}")
-      print(f"Subtotal de compra: {self.df.loc[i, 'Precio total']}")
-      print("------------------------------")
-     print(f"TOTAL: {self.df['Precio total'].sum()}")  
+    def factura_con(self):
+      x =self.serviciosC['Precio total'].sum() #+ {self.df['Precio total'].sum()}
+      #x = x*1.19
+      print(x)
+      return x
+    
+    def factura_sin(self):
+      x ={self.serviciosC['Precio total'].sum()} + {self.df['Precio total'].sum()}
+      return x
     
        
 
@@ -359,54 +359,6 @@ class Reportes:
         return not self.filtrado_servicios.empty
     
     
-class AdministrarUsuarios:
-    def __init__(self, gestion_datos):
-        self.gestion_datos = gestion_datos
-
-    def añadir_usuario(self):
-        usuario=self.add_nombre_usuario_lineEdit.text()
-        contraseña=self.add_password_lineEdit.text()
-        #rol=
-        if usuario in self.gestion_datos.contraseñas['Usuario'].values:
-            return False
-        else:
-            self.gestion_datos.agregar_contraseña(usuario, contraseña, rol)
-            self.gestion_datos.guardar_dataframes()
-            return True
-):
-        usuario=self.del_buscar_usuario_lineEdit.text()
-        nuevo_usuario=self.add_nombre_usuario_lineEdit.text()
-        nueva_contraseña=self.add_password_lineEdit.text()
-        nuevo_rol= rol
-        if usuario in self.gestion_datos.contraseñas['Usuario'].values:
-            self.gestion_datos.contraseñas.loc[self.gestion_datos.contraseñas['Usuario'] == usuario, 'Usuario'] = nuevo_usuario
-            self.gestion_datos.contraseñas.loc[self.gestion_datos.contraseñas['Usuario'] == usuario, 'Contraseña'] = nueva_contraseña
-            self.gestion_datos.contraseñas.loc[self.gestion_datos.contraseñas['Usuario'] == usuario, 'Rol'] = nuevo_rol
-            self.gestion_datos.guardar_dataframes()
-            return True  # Usuario modificado correctamente
-        else:
-            return False  # Usuario no existe
-
-    def eliminar_usuario(self, usuario):
-        if usuario in self.gestion_datos.contraseñas['Usuario'].values:
-            self.gestion_datos.contraseñas = self.gestion_datos.contraseñas[self.gestion_datos.contraseñas['Usuario'] != usuario]
-            self.gestion_datos.guardar_dataframes()
-            return True  # Usuario eliminado correctamente
-        else:
-            return False  # Usuario no existe
-# from prueba import AdministrarUsuarios
-        # int(self.add_id_usuario_lineEdit.text())
-        # self.add_nombre_usuario_lineEdit.text()
-        # self.add_password_lineEdit.text()
-        # self.modify_buscar_usuario_lineEdit.text()
-        # self.modify_nombre_usuario_lineEdit.text()
-        # self.modify_password_lineEdit.text()
-        # self.del_buscar_usuario_lineEdit.text()
-    #
-
-
-
-
 
 
 

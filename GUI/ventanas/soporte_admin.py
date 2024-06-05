@@ -208,6 +208,8 @@ class AdminSoporteManager(QMainWindow):
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
         self.gestionServiciosPanel.atrasBtn.clicked.connect(self.anterior)
         self.principalInventarioProductosPanel.atrasBtn.clicked.connect(self.anterior)
+        
+        self.gestionVentasPanel.atrasBtn.clicked.connect(self.anterior)
 
         if self.role == "admin":
             self.reportesDiarios.volverBtn.clicked.connect(self.anterior)
