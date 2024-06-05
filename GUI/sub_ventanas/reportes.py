@@ -1,39 +1,32 @@
 import datetime
-
 from PyQt5 import uic
-
-from PyQt5.QtWidgets import ( 
-    QWidget, QLabel, 
-    QHBoxLayout, QSpacerItem, 
-    QSizePolicy, QTableWidget,
-    QHeaderView, QGraphicsDropShadowEffect
+from PyQt5.QtWidgets import (
+    QWidget, QLabel, QHBoxLayout, QSpacerItem, QSizePolicy, QTableWidget,
+    QHeaderView, QGraphicsDropShadowEffect, QTableWidgetItem, QLineEdit, QComboBox
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
-    QPainter, QBrush,
-    QColor, QPixmap, 
-    QCursor, QIcon
+    QPainter, QBrush, QColor, QPixmap, QCursor, QIcon
 )
 from GUI.sub_ventanas.utils.css import CustomGroupBox
 import API.DATA as GD
 from API.Validaciones import (
-    validacion_Referencia, validacion_Codigo_Barras,
-    validacion_Stock
+    validacion_Referencia, validacion_Codigo_Barras, validacion_Stock
 )
+from API.prueba import Reportes
 from GUI.sub_ventanas.custom.validaciones import CustomValidaciones
+
 # Tipado
 from typing import List, Union, Dict
 
+RP = Reportes()
 GD = GD.GestionDatos()
 vald = CustomValidaciones()
 
 class ReportePorFecha(QWidget):
     def __init__(self, ref) -> None:
         super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\reportePorFecha.ui", 
-            self
-        )
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportePorFecha.ui", self)
         self.ref = ref
         self.fecha = {}
 
@@ -60,7 +53,7 @@ class ReportePorFecha(QWidget):
     def confirmar(self) -> None:
         if not self.fecha:
             return
-        
+
         fechas_compuesta = f"{self.fecha['desde']} - {self.fecha['hasta']}"
         fechas_validas = vald.validar_fechas(fechas_compuesta)
 
@@ -85,10 +78,7 @@ class ReportePorFecha(QWidget):
 class Plantilla(QWidget):
     def __init__(self, title: str, columns: List[str]) -> None:
         super().__init__()
-        uic.loadUi(
-            r"GUI\sub_ventanas\ui\reportes\plantillaDesigner.ui", 
-            self
-        )
+        uic.loadUi(r"GUI\sub_ventanas\ui\reportes\plantillaDesigner.ui", self)
 
         self.campos: List[Union[str, int, float]] = columns
         self.BD_DATA = {}
@@ -98,6 +88,7 @@ class Plantilla(QWidget):
         self.handle_labels()
 
         self.fechaBtn.clicked.connect(self.abrir_ventana_por_fecha)
+        self.filtrarBtn.clicked.connect(self.filtrar)
 
         self.pintar()
 
@@ -165,17 +156,68 @@ class Plantilla(QWidget):
         self.consulta_por_fecha.show()
 
     def filtrar(self):
-        eleccion: str = self.consultandoPor.strip().lower()
-        campos = [campo.lower() for campo in self.campos]
+        eleccion: str = self.consultandoPor.currentText().strip().lower()
         user_input: str = self.userInput.text()
 
-        def caja_input_no_valido():
-            pass # mostrar caja
+        if eleccion == "productos":
+            productos_filtrados = self.filtrar_productos(user_input)
+            self.actualizar_tabla(productos_filtrados)
+        elif eleccion == "servicios":
+            servicios_filtrados = self.filtrar_servicios(user_input)
+            self.actualizar_tabla(servicios_filtrados)
+        elif eleccion == "ventas":
+            ventas_filtradas = self.filtrar_ventas(user_input)
+            self.actualizar_tabla(ventas_filtradas)
+        else:
+            print("Error: Opción de filtrado no válida.")
 
-        CONRTOLADOR_DE_FILTRADO = {} # funciones para hacer query
+    def filtrar_productos(self):
+        referencia = self.filtroReferencia.text() if self.filtroReferencia.text() else None
+        codigo_barras = self.filtroCodigoBarras.text() if self.filtroCodigoBarras.text() else None
+        marca = self.filtroMarca.text() if self.filtroMarca.text() else None
+        precio_adquisicion = float(self.filtroPrecioAdquisicion.text()) if self.filtroPrecioAdquisicion.text() else None
+        stock = int(self.filtroStock.text()) if self.filtroStock.text() else None
+        precio_venta = float(self.filtroPrecioVenta.text()) if self.filtroPrecioVenta.text() else None
+        comparacion_precio_venta = self.filtroComparacionPrecioVenta.currentText() if self.filtroComparacionPrecioVenta.currentText() else None
+        fecha_min = self.fechas_label.text().split(' - ')[0] if self.fechas_label else None
+        fecha_max = self.fechas_label.text().split(' - ')[1] if self.fechas_label else None
 
-        return CONRTOLADOR_DE_FILTRADO[eleccion]
-    
+        return RP.filtrar_productos(referencia, codigo_barras, marca, precio_adquisicion, stock, precio_venta, comparacion_precio_venta, fecha_min, fecha_max)
+    def filtrar_servicios(self):
+        nombre = self.filtroNombre.text() if self.filtroNombre.text() else None
+        id_servicio = self.filtroIdServicio.text() if self.filtroIdServicio.text() else None
+        precio = float(self.filtroPrecio.text()) if self.filtroPrecio.text() else None
+        comparacion_precio = self.filtroComparacionPrecio.currentText() if self.filtroComparacionPrecio.currentText() else None
+        fecha_min = self.fechas_label.text().split(' - ')[0] if self.fechas_label else None
+        fecha_max = self.fechas_label.text().split(' - ')[1] if self.fechas_label else None
+
+        return RP.filtrar_servicios(nombre, id_servicio, precio, comparacion_precio, fecha_min, fecha_max)
+
+    def filtrar_ventas(self):
+        id_venta = self.filtroIdVenta.text() if self.filtroIdVenta.text() else None
+        cantidad = int(self.filtroCantidad.text()) if self.filtroCantidad.text() else None
+        cliente = self.filtroCliente.text() if self.filtroCliente.text() else None
+        subtotal = float(self.filtroSubtotal.text()) if self.filtroSubtotal.text() else None
+        comparacion_subtotal = self.filtroComparacionSubtotal.currentText() if self.filtroComparacionSubtotal.currentText() else None
+        producto_o_servicio = self.filtroProductoOServicio.currentText() if self.filtroProductoOServicio.currentText() else None
+        fecha_min = self.fechas_label.text().split(' - ')[0] if self.fechas_label else None
+        fecha_max = self.fechas_label.text().split(' - ')[1] if self.fechas_label else None
+        id_caja = self.filtroIdCaja.text() if self.filtroIdCaja.text() else None
+
+        return RP.filtrar_ventas(id_venta, cantidad, cliente, subtotal, comparacion_subtotal, producto_o_servicio, fecha_min, fecha_max, id_caja)
+    def actualizar_tabla(self, data):
+        table: QTableWidget = self.tablaReportes
+        table.setRowCount(len(data))
+        table.setColumnCount(len(self.campos))
+        table.setHorizontalHeaderLabels(self.campos)
+
+        for row_idx, row_data in enumerate(data.iterrows()):
+            for col_idx, col in enumerate(self.campos):
+                item = QTableWidgetItem(str(row_data[1][col]))
+                table.setItem(row_idx, col_idx, item)
+
+        table.resizeColumnsToContents()
+
     def pintar(self) -> None:
         with open(r"GUI\sub_ventanas\css\reportes_plantilla.css", "r") as style_file:
             style_line = style_file.read()
@@ -186,7 +228,6 @@ class Plantilla(QWidget):
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
         super().__init__(title, columns)
-
         self.inicializar()
 
     def inicializar(self):
