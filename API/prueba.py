@@ -6,8 +6,10 @@ import datetime
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
-        self.df = pd.DataFrame(columns=["Producto", "Precio Total"])
-
+        self.df = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
+        self.serviciosC = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
+        self.carrito = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
+    
     def añadir_cliente(self, cedula, nombre, telefono):
         if (
             validar_Cedula(cedula)
@@ -130,40 +132,50 @@ class Cajero:
         if x <= self.gestion_datos.productos["Producto disponible"]:
             return True
         return False
+    
+    def mostra_total_productos(self,codigo_barras,cantidad):
+        if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
+           datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == (codigo_barras)]
+        elif int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
+           datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == int(codigo_barras)]         
+        precio = datos_producto["Precio venta"]
+        preciot = cantidad*precio
+        nuevo_producto = pd.DataFrame([[datos_producto["Referencia"],cantidad,preciot]], columns=["Nombre","Cantidad","Precio total"])
+        self.df= pd.concat([self.df, nuevo_producto], ignore_index=True)
+        self.df = self.df.reset_index(drop=True)
+       
+        
+    def mostra_total_servicios(self, id, cantidad):
+        if id in self.gestion_datos.servicios["ID servicio"].values:
+            datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == (id)]
+        elif int(id) in self.gestion_datos.servicios["ID servicio"].values:
+            datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == int(id)]
+        else:
+            return False
+        precio = datos_producto["Costo"]
+        preciot = cantidad*precio
+        nuevo_producto = pd.DataFrame([[datos_producto["Nombre Servicio"],cantidad, preciot]], columns=["Nombre","Cantidad","Precio total"])
+        self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
+        self.serviciosC = self.serviciosC.reset_index(drop=True)
+         
+    def vaciar_carrito(self):
+        self.df.drop(self.df.index, inplace = True)
+        self.serviciosC.drop(self.serviciosC.index, inplace = True)
+        return not self.df.empty and self.serviciosC.empty
 
-    def mostra_total_productos(self, codigo_barras, cantidad):
-        if (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_cantidad(cantidad)
-        ):
-            if codigo_barras in self.gestion_datos.productos["Codigo de barras"]:
-                x = self.self.gestion_datos.productos[
-                    self.self.gestion_datos.productos["Codigo de barras"]
-                    == codigo_barras
-                ]
-                fila = {
-                    "Producto": x["Referencia"],
-                    "Precio total": (float(x["Precio venta"]) * cantidad),
-                }
-                self.df.loc[len(self.df) + 1] = fila
-                return self.df
+    def factura_con(self):
+      x =self.serviciosC['Precio total'].sum() #+ {self.df['Precio total'].sum()}
+      #x = x*1.19
+      print(x)
+      return x
+    
+    def factura_sin(self):
+      x ={self.serviciosC['Precio total'].sum()} + {self.df['Precio total'].sum()}
+      return x
+    
+       
 
-    def comprar_servicio(self, producto, cantidad):
-        # Necesitamos que hagan los cambios en la tabla inventario
-        pass
-
-    def mostra_total_servicios(self):
-        pass
-
-    def seleccionar_mediopago(self):
-        # Necesitamos que creen la tabla de medios de pago
-        pass
-
+    
 
 class Inventario:
     def __init__(self):
@@ -178,507 +190,47 @@ class Inventario:
             and validacion_Marca(marca)
             and validacion_Stock(stock)
         ):
+            print(type(referencia))
             if not codigoB in self.gestion_datos.productos["Codigo de barras"].values:
-                self.gestion_datos.agregar_producto(
-                    referencia, codigoB, marca, precioA, precioV, stock
-                )
+                self.gestion_datos.agregar_producto(referencia, codigoB, marca, precioA, precioV, stock)
                 return True
+            else:
+                return False
+        else:   
             return False
-        return False
 
     def modificar_producto(
-        self,
-        referencia,
-        codigo_barras,
-        marca,
-        precio_adquisicion,
-        precio_venta,
-        unidades_actuales,
-        barrasO,
-        datosP,
-    ):
-
+        self, marca, precio_a, precio_v, codigo_barras, datosP):
         if (
             codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and validar_NombreCli(marca)
-            and validacion_Precio(precio_adquisicion)
-            and validacion_Precio(precio_venta)
-            and validacion_Stock(unidades_actuales)
+            or str(codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values)
+            and validacion_Marca(marca)
+            and validacion_Precio(precio_a)
+            and validacion_Precio(precio_v)
         ):  # Caso en el que se actualizan Todos
-            nuevos_datos = {
-                "Codigo de barras": codigo_barras,
-                "Referencia": referencia,
-                "Marca": marca,
-                "Precio venta": int(precio_venta),
-                "Precio de adquisicion": int(precio_adquisicion),
-                "Unidades actuales": int(unidades_actuales),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and validar_NombreCli(referencia)
-            and marca == ""
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar solo referencia
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio de adquisicion"]),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and referencia == ""
-            and marca == ""
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar solo codigo barras
+            
             nuevos_datos = {
                 "Codigo de barras": codigo_barras,
                 "Referencia": datosP["Referencia"],
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio de adquisicion"]),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and referencia == ""
-            and validar_NombreCli(marca)
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar solo marca
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": datosP["Referencia"],
                 "Marca": marca,
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio de adquisicion"]),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and referencia == ""
-            and marca == ""
-            and validacion_Precio(precio_adquisicion)
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar solo precio adquisicion
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": datosP["Referencia"],
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(precio_adquisicion),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and referencia == ""
-            and marca == ""
-            and validacion_Precio(precio_venta)
-            and precio_adquisicion == ""
-            and unidades_actuales == ""
-        ):  # Modificar solo precio venta
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": datosP["Referencia"],
-                "Marca": datosP["Marca"],
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
-                "Precio venta": int(precio_venta),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and referencia == ""
-            and marca == ""
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and validacion_Stock(unidades_actuales)
-        ):  # Modificar solo unidades actuales
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": datosP["Referencia"],
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
-                "Unidades actuales": int(unidades_actuales),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Referencia(referencia)
-            and marca == ""
-            and precio_venta == ""
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # referencia y codigo de barras
-            nuevos_datos = {
-                "Codigo de barras": codigo_barras,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
-                "Unidades actuales": int(datosP["Referencia"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and validar_NombreCli(referencia)
-            and validar_NombreCli(marca)
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar referanci y marca
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": marca,
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio de adquisicion"]),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and validar_NombreCli(referencia)
-            and marca == ""
-            and validacion_Precio(precio_adquisicion)
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar referancia y precio adquisicion
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(precio_adquisicion),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and validar_NombreCli(referencia)
-            and marca == ""
-            and precio_adquisicion == ""
-            and validacion_Precio(precio_venta)
-            and unidades_actuales == ""
-        ):  # Modificar referancia y precio venta
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(precio_venta),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras == ""
-            and validar_NombreCli(referencia)
-            and marca == ""
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and validacion_Stock(unidades_actuales)
-        ):  # Modificar referancia y stock
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
-                "Unidades actuales": unidades_actuales,
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and validar_NombreCli(marca) == ""
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar referancia y codigo barras y marca
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": marca,
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
-                "Unidades actuales": unidades_actuales,
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and marca == ""
-            and validacion_Precio(precio_adquisicion) == ""
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar referancia codigo de barras y precio adquisicion
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(precio_adquisicion),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and validacion_Codigo_Barras(codigo_barras)
-            and precio_adquisicion == ""
-            and validacion_Precio(precio_venta)
-            and unidades_actuales == ""
-        ):  # Modificar referancia codigo de barras y precio venta
-            nuevos_datos = {
-                "Codigo de barras": codigo_barras,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(precio_venta),
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
+                "Precio venta": float(precio_v),
+                "Precio de adquisicion": float(precio_a),
                 "Unidades actuales": datosP["Unidades actuales"],
             }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
+            self.gestion_datos.actualizar_producto(codigo_barras, nuevos_datos)
             return True
+        else:
+            return False
 
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and marca == ""
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and validacion_Stock(unidades_actuales)
-        ):  # Modificar referancia codigo de barras y unidades actuales
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
-                "Unidades actuales": unidades_actuales,
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
 
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and validacion_Marca(marca)
-            and validacion_Precio(precio_adquisicion)
-            and precio_venta == ""
-            and unidades_actuales == ""
-        ):  # Modificar referencia, codigo de barras, marca y precio_adquisicion
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": marca,
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(precio_adquisicion),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validar_NombreCli(referencia)
-            and validacion_Codigo_Barras(codigo_barras)
-            and marca == ""
-            and precio_adquisicion == ""
-            and validacion_Precio(precio_adquisicion)
-            and unidades_actuales == ""
-        ):  # Modificar referencia, codigo de barras, marca y precio_venta
-            nuevos_datos = {
-                "Codigo de barras": codigo_barras,
-                "Referencia": referencia,
-                "Marca": datosP["Marca"],
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(precio_adquisicion),
-                "Unidades actuales": int(datosP["Unidades actuaes"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and validacion_Marca(marca)
-            and precio_adquisicion == ""
-            and precio_venta == ""
-            and validar_cantidad(unidades_actuales)
-        ):  # Modificar referencia, codigo de barras, marca y precio_adquisicion
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": marca,
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
-                "Unidades actuales": int(unidades_actuales),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and validacion_Marca(marca)
-            and precio_adquisicion == ""
-            and validacion_Precio(precio_venta)
-            and unidades_actuales == ""
-        ):  # Modificar referencia, codigo de barras, marca, precio de adquisicion y precio de venta
-            nuevos_datos = {
-                "Codigo de barras": codigo_barras,
-                "Referencia": referencia,
-                "Marca": marca,
-                "Precio venta": int(precio_venta),
-                "Precio adquisicion": int(datosP["Precio adquisicion"]),
-                "Unidades actuales": int(datosP["Unidades actuales"]),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        elif (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(
-                codigo_barras
-                not in self.gestion_datos.productos["Codigo de barras"].values
-            )
-            and validacion_Codigo_Barras(codigo_barras)
-            and validar_NombreCli(referencia)
-            and validacion_Marca(marca)
-            and validacion_Precio(precio_adquisicion) == ""
-            and precio_venta == ""
-            and validar_cantidad(unidades_actuales)
-        ):  # Modificar referencia, codigo de barras, marca, precio adquisicion y unidades actuales
-            nuevos_datos = {
-                "Codigo de barras": barrasO,
-                "Referencia": referencia,
-                "Marca": marca,
-                "Precio venta": int(datosP["Precio venta"]),
-                "Precio adquisicion": int(precio_adquisicion),
-                "Unidades actuales": int(unidades_actuales),
-            }
-            self.gestion_datos.actualizar_producto(barrasO, nuevos_datos)
-            return True
-
-        # Modificar todos los datos <- Ya esta
-        # Modificar solo referencia <- Ya esta
-        # Modificar solo codigo barras <- Ya esta
-        # Modificar solo marca <- Ya esta
-        # Modificar solo precio Adquisicion <- Ya esta
-        # Modificar solo precio venta <- Ya esta
-        # Modificar solo stock <- Ya esta
-        # Modificar referencia y codigo de barras <- Ya esta
-        # Modificar referencia y marca <- Ya esta
-        # Modificar referencia y precio de venta <- Ya esta
-        # Modificar referencia y precio de adquisicion <- Ya esta
-        # Modificar referencia y stock <- Ya esta
-        # Modificar referencia codigo de barras y marca <- Ya esta
-        # Modificar referencia, codigo de barras y precio_a <- Ya esta
-        # Modificar referencia, codigo de barras y precio venta <- Ya esta
-        # Modificar referencia, codigo de barras y unidades actuales <- Ya esta
-        # Modificar referencia, codigo de barras, marca y precio_adquisicion <- Ya esta
-        # Modificar referencia, codigo de barras, marca y precio_venta <- Ya esta
-        # Modificar referencia, codigo de barras, marca y unidades actuales <- Ya esta
-        # Modificar referencia, codigo de barras, marca, precio de adquisicion y precio de vebta <- Ya esta
-        # Modificar referencia, codigo de barras, marca, precio de adquisicion y unidades actuales <- Ya esta
+    def descontinuar_producto(self,codigo):
+        GestionDatos.descontinuar_producto(codigo)
 
     def comprar_stock(self, codigoB, cantidad):
+        if codigoB in self.gestion_datos.productos["Codigo de barras"].values:
+            print("hola")
+        else:
+            print("adios")
         producto = self.gestion_datos.productos[
             self.gestion_datos.productos["Codigo de barras"] == codigoB
         ]
@@ -688,98 +240,137 @@ class Inventario:
                 "Unidades actuales",
             ] += cantidad
             self.gestion_datos.guardar_dataframes()
+    
+    def crear_servicio(self, id, nombre_servicio, precio):
+        #id nombre servicio y precio
+        if (id not in self.gestion_datos.servicios["ID servicio"].values
+            or str(id not in self.gestion_datos.servicios["ID servicio"].values)
+            and validacion_Stock(id)
+            and validar_NombreServ(nombre_servicio)
+            and validacion_Precio(precio)
+   
+        ):
+            if not id in self.gestion_datos.servicios["ID servicio"].values:
+                self.gestion_datos.agregar_servicio(id,nombre_servicio,precio)
+                return True
+            return False
+        return False
+    
+    def eliminar_servicio(self,servicio):
+        self.gestion_datos.eliminar_servicio(servicio)
+    
+    def modificar_servicio(self, id, nombreN, precioN, idO,datosS):
 
-    def ver_clientes(self):
-        x = self.gestion_datos.clientes
-        return x
+        if (idO not in self.gestion_datos.servicios["ID servicio"].values
+            or str(idO not in self.gestion_datos.servicios["ID servicio"].values)
+            and id  in self.gestion_datos.servicios["ID servicio"].values
+            or str(id  in self.gestion_datos.servicios["ID servicio"].values)
+            and validacion_Precio(id)
+            and validacion_Precio(idO)
+            and validar_NombreServ(nombreN)
+            and validacion_Precio(precioN)
+        ):  # Caso en el que se actualizan Todos
+            
+            nuevos_datos = {
+                "ID servicio": id,
+                "Nombre Servicio": nombreN,
+                "Costo": precioN
+            }
+            self.gestion_datos.actualizar_servicio(idO, nuevos_datos)
+            return True
+        else:
+            return False
+        
+        
 class Reportes:
-    def filtrar_productos(self, referencia=None, codigo_barras=None, marca=None,
-                      precio_adquisicion=None, stock=None, precio_venta=None, comparacion_precio_venta=None,
-                      fecha_min=None, fecha_max=None):
-        filtered_products = self.productos.copy()
+    def __init__(self):
+        self.gestion_datos = GestionDatos()
+        self.filtrado_productos = pd.DataFrame(columns=["Referencia","Codigo de barras","Marca","Precio de adquisicion", "Precio venta","Unidades actuales","Producto disponible","Fecha"])    
+        self.filtrado_servicios = pd.DataFrame(columns= ["ID servicio", "Nombre Servicio", "Costo"])
+        
+    def filtrar_referencia(self, referencia):
+        self.filtrado_productos = (self.gestion_datos.productos[self.gestion_datos.productos["Referencia"]== referencia])
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-        if referencia is not None:
-            filtered_products = filtered_products[filtered_products["Referencia"] == referencia]
-        if codigo_barras is not None:
-            filtered_products = filtered_products[filtered_products["Codigo de barras"] == codigo_barras]
-        if marca is not None:
-            filtered_products = filtered_products[filtered_products["Marca"] == marca]
-        if precio_adquisicion is not None:
-            filtered_products = filtered_products[filtered_products["Precio de adquisicion"] == precio_adquisicion]
-        if stock is not None:
-            filtered_products = filtered_products[filtered_products["Unidades actuales"] == stock]
-        if precio_venta is not None and comparacion_precio_venta is not None:
-            if comparacion_precio_venta == "menor":
-                filtered_products = filtered_products[filtered_products["Precio venta"] < precio_venta]
-            elif comparacion_precio_venta == "mayor":
-                filtered_products = filtered_products[filtered_products["Precio venta"] > precio_venta]
-            elif comparacion_precio_venta == "igual":
-                filtered_products = filtered_products[filtered_products["Precio venta"] == precio_venta]
-            else:
-                print("Error: Comparación de precio de venta no válida.")
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_products = filtered_products[filtered_products["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_products = filtered_products[filtered_products["Fecha"] <= fecha_max]
+    def filtrar_codigo_de_barras(self, codB):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"]== codB]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-        return filtered_products
+    def filtrar_marca(self,marca):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Marca"]== marca]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-    def filtrar_servicios(self, nombre=None, id_servicio=None, precio=None, comparacion_precio=None,
-                     fecha_min=None, fecha_max=None):
-        filtered_services = self.servicios.copy()
+    def filtrar_precioA(self,precio):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Precio de adquisicion"]== precio]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-        if nombre is not None:
-            filtered_services = filtered_services[filtered_services["Nombre Servicio"] == nombre]
-        if id_servicio is not None:
-            filtered_services = filtered_services[filtered_services["ID servicio"] == id_servicio]
-        if precio is not None and comparacion_precio is not None:
-            if comparacion_precio == "menor":
-                filtered_services = filtered_services[filtered_services["Costo"] < precio]
-            elif comparacion_precio == "mayor":
-                filtered_services = filtered_services[filtered_services["Costo"] > precio]
-            elif comparacion_precio == "igual":
-                filtered_services = filtered_services[filtered_services["Costo"] == precio]
-            else:
-                print("Error: Comparación de precio no válida.")
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_services = filtered_services[filtered_services["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_services = filtered_services[filtered_services["Fecha"] <= fecha_max]
+    def filtrar_precioV(self,precio):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Precio venta"]== precio]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
     
-        return filtered_services
-                         
-    def filtrar_ventas(self, id_venta=None, cantidad=None, cliente=None, subtotal=None, comparacion_subtotal=None,
-                   producto_o_servicio=None, fecha_min=None, fecha_max=None, id_caja=None):
-        filtered_sales = pd.concat([self.venta_productos, self.venta_servicios], ignore_index=True)
+    def filtrar_stock(self,unidades):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Unidades actuales"]== unidades]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
 
-        if id_venta is not None:
-            filtered_sales = filtered_sales[filtered_sales["ID venta"] == id_venta]
-        if cantidad is not None:
-            filtered_sales = filtered_sales[filtered_sales["Cantidad"] == cantidad]
-        if cliente is not None:
-            filtered_sales = filtered_sales[filtered_sales["Cliente"] == cliente]
-        if subtotal is not None and comparacion_subtotal is not None:
-            if comparacion_subtotal == "menor":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] < subtotal]
-            elif comparacion_subtotal == "mayor":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] > subtotal]
-            elif comparacion_subtotal == "igual":
-                filtered_sales = filtered_sales[filtered_sales["Subtotal"] == subtotal]
-            else:
-                print("Error: Comparación de subtotal no válida.")
-        if producto_o_servicio is not None:
-            filtered_sales = filtered_sales[filtered_sales["Producto" if "producto" in producto_o_servicio.lower() else "Servicio"] == producto_o_servicio]
-        if fecha_min is not None:
-            fecha_min = datetime.strptime(fecha_min, "%d/%m/%Y")
-            filtered_sales = filtered_sales[filtered_sales["Fecha"] >= fecha_min]
-        if fecha_max is not None:
-            fecha_max = datetime.strptime(fecha_max, "%d/%m/%Y")
-            filtered_sales = filtered_sales[filtered_sales["Fecha"] <= fecha_max]
-        if id_caja is not None:
-            filtered_sales = filtered_sales[filtered_sales["ID_Caja"] == id_caja]
+    def filtrar_disponibilidad(self,disponibles = True):
+        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos["Producto disponible"]== disponibles]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+        
+    def filtrar_fecha(self,fechas):
+        fecha_str1, fecha_str2 = fechas.split(" - ")
+        fecha1 = datetime.datetime.strptime(fecha_str1, "%Y-%m-%d")
+        fecha2 = datetime.datetime.strptime(fecha_str2, "%Y-%m-%d")
+        self.gestion_datos.productos['Fecha'] = pd.to_datetime(self.gestion_datos.productos['Fecha'])
+        self.filtrado_productos = self.gestion_datos.productos[(self.gestion_datos.productos['Fecha'] >= fecha1) & (self.gestion_datos.productos['Fecha'] <= fecha2)]
+        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
+        print(self.filtrado_productos)
+        return not self.filtrado_productos.empty
+    
+    def filtrar_ID_Servicio(self,id):
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"]== id]
+        self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
+        return  not self.filtrado_servicios.empty
+    
+    def filtrar_servicio(self,servicio):
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["Nombre Servicio"]== servicio]
+        self.filtrado_servicios= self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
+        return not self.filtrado_servicios.empty
+    
+    def filtrar_costo(self,costo):
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios["Costo"]== costo]
+        self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
+        print(self.filtrado_servicios)
+        return not self.filtrado_servicios.empty
+    
+    
 
-        return filtered_sales
+
+
+
+
+
+
+
+
+
+
+
+
+
+

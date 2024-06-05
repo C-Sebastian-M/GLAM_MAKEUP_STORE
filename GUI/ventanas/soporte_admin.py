@@ -15,16 +15,21 @@ from PyQt5.QtGui import QIcon, QCursor
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 
-from GUI.sub_ventanas.utils.css import CBackground
+from GUI.sub_ventanas.custom.utils.css import CBackground
 from GUI.sub_ventanas.reportes import (
     ReportePanel, Ventas,
-    Inventario,
+    Inventario
 )
-from GUI.sub_ventanas.reportes_diarios import ReportesDiarios
+from GUI.sub_ventanas.reportes_diarios import (
+    ReportesDiarios, ReporteDiarioCatalogo,
+    ReporteDiarioProductos, ReporteDiarioVentas
+)
+from GUI.sub_ventanas.administrar_usuarios import AdministrarUsuarios
 from GUI.sub_ventanas.inventario_productos import InventarioProductos
 from GUI.sub_ventanas.GestionClientes import GestionClientes
 from GUI.sub_ventanas.catalogo_servicios import GestionServicios
-
+from GUI.sub_ventanas.cambio_contrasena import PasswordChange
+from GUI.sub_ventanas.ventas import VentasAdmin
 import API.DATA as GD
 GD = GD.GestionDatos()
 
@@ -44,20 +49,24 @@ class AdminSoporte(QMainWindow, CBackground):
             self.setWindowTitle("Administrador")
             self.title.setText("Admin")
             self.roleBtn.setText("Reporte\nDiario")
-            self.pushButton_cambiarLogo.hide()
-            return
+            self.roleBtn.setObjectName("reporteDiarioBtn")
+            self.pushButton_cambiarLogo.setText("Cambiar Contraseña")
+            self.pushButton_cambiarLogo.setObjectName("cambiarContraseñaBtn")
+            return None
 
         self.setWindowTitle("Soporte")
         self.title.setText("Soporte")
         self.roleBtn.setText("Administrar\nusuario")
+        self.roleBtn.setObjectName("administrarUsuarioBtn")
         self.pushButton_cambiarLogo.setText("Cambiar Logo")
-
 
 class AdminSoporteManager(QMainWindow):
     def __init__(self, ventana_login, user_role: str) -> None:
         super().__init__()
         self.ventana_login = ventana_login
-        if not user_role:
+        self.role = user_role
+
+        if not self.role:
             raise TypeError("El rol de usuario no puede estar vacío.")
         self.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
@@ -66,39 +75,67 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack = QStackedWidget(self)
 
         # Inicializando ventanas de reporte
-        self.admin_soporte = AdminSoporte(user_role)
+        self.admin_soporte = AdminSoporte(self.role)
         self.reportePanel = ReportePanel()
         self.ventas = Ventas(
             "Ventas", GD.columnas_venta_productos
         )
         self.inventarioProductos = Inventario(
-            "Inventario", GD.columnas_productos
+            "Inventario", GD.columnas_productos, ref=0
         )
         self.inventarioServicios = Inventario(
-            "Inventario", GD.columnas_servicios
+            "Inventario", GD.columnas_servicios, ref=1
         )
         self.widgets_stack.addWidget(self.admin_soporte)
         self.widgets_stack.addWidget(self.reportePanel)
         self.widgets_stack.addWidget(self.ventas)
-        # self.widgets_stack.addWidget(self.inventario)
         self.widgets_stack.addWidget(self.inventarioProductos)
         self.widgets_stack.addWidget(self.inventarioServicios)
-        ########################### fin ###########################
+
         self.admin_soporte.cerrarBtn.clicked.connect(self.volver_login)
 
         # Inicializando ventanas de gestión
         self.gestionPanel = GestionClientes()
         self.gestionServiciosPanel = GestionServicios()
+        self.gestionVentasPanel= VentasAdmin()
         self.widgets_stack.addWidget(self.gestionPanel)
         self.widgets_stack.addWidget(self.gestionServiciosPanel)
+        self.widgets_stack.addWidget(self.gestionVentasPanel)
 
         # Inicializando ventana de Inventario de productos
         self.principalInventarioProductosPanel = InventarioProductos()
         self.widgets_stack.addWidget(self.principalInventarioProductosPanel)
 
-        # Inicializando ventana de Reportes Diarios
-        self.reportesDiarios = ReportesDiarios()
-        self.widgets_stack.addWidget(self.reportesDiarios)
+        # Inicializando ventanas de Reportes Diarios / Administracion de usuarios
+        if self.role == "admin":
+            self.reportesDiarios = ReportesDiarios()
+            self.reportesDiariosVentas = ReporteDiarioVentas(
+                "Reporte Diario de Ventas", GD.columnas_venta_productos
+            )
+            self.reportesDiariosProductos = ReporteDiarioProductos(
+                "Reporte Diario de Productos", GD.columnas_productos
+            ) 
+            self.reportesDiariosCatalogo = ReporteDiarioCatalogo(
+                "Reporte Diario de Catalogos", [
+                    "ID",
+                    "Servicio",
+                    "Precio",
+                ]
+            )
+
+            self.widgets_stack.addWidget(self.reportesDiarios)
+            self.widgets_stack.addWidget(self.reportesDiariosVentas)
+            self.widgets_stack.addWidget(self.reportesDiariosProductos)
+            self.widgets_stack.addWidget(self.reportesDiariosCatalogo)
+        else:
+            pass ## si no es admin es porque el usuario es soporte
+
+        # Cambiar contraseña
+        self.password_change = PasswordChange()
+        self.widgets_stack.addWidget(self.password_change)
+
+        self.administrarUsuarios = AdministrarUsuarios()
+        self.widgets_stack.addWidget(self.administrarUsuarios)
 
         # Asignando el widget central
         self.setCentralWidget(self.widgets_stack)
@@ -106,7 +143,11 @@ class AdminSoporteManager(QMainWindow):
 
         # Conexiones
         self.admin_soporte.cerrarBtn.clicked.connect(self.volver_login)
-        self.admin_soporte.pushButton_cambiarLogo.clicked.connect(self.cambiar_logo)
+        if self.role == 'admin':
+            self.password_change.volverBtn.clicked.connect(self.anterior)
+            self.findChild(QPushButton, 'cambiarContraseñaBtn').clicked.connect(self.passoword_change_window)
+        else:
+            self.admin_soporte.pushButton_cambiarLogo.clicked.connect(self.cambiar_logo)
         self.inicializar()
         ManejarLogo().register_observer(self)
 
@@ -145,8 +186,12 @@ class AdminSoporteManager(QMainWindow):
         self.admin_soporte.reportesBtn.clicked.connect(self.ventana_reportes)
         self.admin_soporte.gestionBtn.clicked.connect(self.ventana_gestionClientes)
         self.admin_soporte.catalogoBtn.clicked.connect(self.ventana_gestionServicios)
+        self.admin_soporte.ventasBtn.clicked.connect(self.ventana_gestionVentas)
         self.admin_soporte.inventarioBtn.clicked.connect(self.ventana_principalInventarioProductos)
-        self.admin_soporte.roleBtn.clicked.connect(self.ventana_reportes_diarios)
+        if self.role == 'admin':
+            self.findChild(QPushButton, 'reporteDiarioBtn').clicked.connect(self.ventana_reportes_diarios)
+        else:
+            self.findChild(QPushButton, 'administrarUsuarioBtn').clicked.connect(self.ventana_administrarUsuarios)
 
         self.reportePanel.volverBtn.clicked.connect(self.anterior)
 
@@ -163,9 +208,20 @@ class AdminSoporteManager(QMainWindow):
         self.gestionPanel.atrasBtn.clicked.connect(self.anterior)
         self.gestionServiciosPanel.atrasBtn.clicked.connect(self.anterior)
         self.principalInventarioProductosPanel.atrasBtn.clicked.connect(self.anterior)
+        
+        self.gestionVentasPanel.atrasBtn.clicked.connect(self.anterior)
 
-        self.reportesDiarios.volverBtn.clicked.connect(self.anterior)
+        if self.role == "admin":
+            self.reportesDiarios.volverBtn.clicked.connect(self.anterior)
+            self.reportesDiarios.ventasBtn.clicked.connect(self.ventana_reportes_diarios_ventas)
+            self.reportesDiarios.productosBtn.clicked.connect(self.ventana_reporte_diario_productos)
+            self.reportesDiarios.catalogoBtn.clicked.connect(self.ventana_reporte_diario_catalogo)
 
+            self.reportesDiariosVentas.volverBtn.clicked.connect(self.anterior)
+            self.reportesDiariosProductos.volverBtn.clicked.connect(self.anterior)
+            self.reportesDiariosCatalogo.volverBtn.clicked.connect(self.anterior)
+        else:
+            self.administrarUsuarios.atrasBtn.clicked.connect(self.anterior)
 
     def ventana_reportes(self):
         self.widgets_stack.setCurrentWidget(self.reportePanel)
@@ -204,12 +260,36 @@ class AdminSoporteManager(QMainWindow):
         self.widgets_stack.setCurrentWidget(self.gestionServiciosPanel)
         self.stack.append(self.admin_soporte)
 
+    def ventana_gestionVentas(self):
+        self.widgets_stack.setCurrentWidget(self.gestionVentasPanel)
+        self.stack.append(self.admin_soporte)
+
     def ventana_principalInventarioProductos(self):
         self.widgets_stack.setCurrentWidget(self.principalInventarioProductosPanel)
         self.stack.append(self.admin_soporte)
 
     def ventana_reportes_diarios(self):
         self.widgets_stack.setCurrentWidget(self.reportesDiarios)
+        self.stack.append(self.admin_soporte)
+ 
+    def ventana_reportes_diarios_ventas(self):
+        self.widgets_stack.setCurrentWidget(self.reportesDiariosVentas)
+        self.stack.append(self.reportesDiarios)
+
+    def ventana_reporte_diario_productos(self):
+        self.widgets_stack.setCurrentWidget(self.reportesDiariosProductos)
+        self.stack.append(self.reportesDiarios)
+
+    def ventana_reporte_diario_catalogo(self):
+        self.widgets_stack.setCurrentWidget(self.reportesDiariosCatalogo)
+        self.stack.append(self.reportesDiarios)
+        
+    def ventana_administrarUsuarios(self):
+        self.widgets_stack.setCurrentWidget(self.administrarUsuarios)
+        self.stack.append(self.admin_soporte)
+
+    def passoword_change_window(self):
+        self.widgets_stack.setCurrentWidget(self.password_change)
         self.stack.append(self.admin_soporte)
 
     def anterior(self):
@@ -227,8 +307,6 @@ class AdminSoporteManager(QMainWindow):
 
     def run(self):
         self.show()
-
-
 
 class ManejarLogo:
     _instacia = None

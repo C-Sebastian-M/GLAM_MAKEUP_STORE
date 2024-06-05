@@ -10,51 +10,10 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
 from API.DATA import GestionDatos
-from PyQt5.QtGui import QPainter, QBrush, QColor
 from API.Validaciones import *
 from API.prueba import Cajero
 
-
-class CBackground:
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setPen(Qt.NoPen)
-        painter.setRenderHint(QPainter.Antialiasing)
-
-        brocha1 = QBrush(QColor(212, 132, 180), Qt.SolidPattern)
-        brocha2 = QBrush(QColor(228, 156, 198), Qt.SolidPattern)
-        brocha3 = QBrush(QColor(235, 188, 220), Qt.SolidPattern)
-
-        # Obtén el tamaño actual de la ventana
-        width = self.width()
-        height = self.height()
-
-        # Calcula las posiciones y tamaños en función del tamaño de la ventana
-        diameter = width // 4
-        offset_x = width // 8
-        offset_y = height // 5
-
-        # Dibujando círculos abajo
-        painter.setBrush(brocha3)
-        painter.drawEllipse(int(width // 2 - diameter // 2), int(height - offset_y), int(diameter), int(diameter))
-
-        painter.setBrush(brocha2)
-        painter.drawEllipse(int(width // 4 - diameter // 2), int(height - offset_y * 1.5), int(diameter), int(diameter))
-
-        painter.setBrush(brocha1)
-        painter.drawEllipse(int(width // 8 - diameter // 2), int(height - offset_y * 2), int(diameter), int(diameter))
-
-        # Dibujando círculos arriba
-        painter.setBrush(brocha3)
-        painter.drawEllipse(int(width // 2 - diameter // 2), int(-offset_y), int(diameter), int(diameter))
-
-        painter.setBrush(brocha2)
-        painter.drawEllipse(int(width // 2 + offset_x), int(-offset_y // 2), int(diameter), int(diameter))
-
-        painter.setBrush(brocha1)
-        painter.drawEllipse(int(width // 2 + offset_x * 2), int(0), int(diameter), int(diameter))
-
-        painter.end()
+from GUI.sub_ventanas.custom.utils.css import CBackground
 
 
 class GestionClientes(QMainWindow, CBackground):
@@ -170,6 +129,20 @@ class GestionClientes(QMainWindow, CBackground):
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
 
+    def showErrorMessage(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Warning)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Error")
+        msg_box.exec_()
+
+    def show_success_dialog(self, message):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText(message)
+        msg_box.setWindowTitle("Éxito")
+        msg_box.exec_()
+
     # Acá se configura la base de datos
     def mostrar_clientes(self):
         self.tabla_verClientes.setRowCount(0)
@@ -216,26 +189,13 @@ class GestionClientes(QMainWindow, CBackground):
                 "Error en los datos ingresados. Por favor, verifica la información."
             )
 
-    def showErrorMessage(self, message):
-        msg_box = QMessageBox()
-        msg_box.setIcon(QMessageBox.Warning)
-        msg_box.setText(message)
-        msg_box.setWindowTitle("Error")
-        msg_box.exec_()
-
-    def show_success_dialog(self, message):
-        msg_box = QMessageBox()
-        msg_box.setIcon(QMessageBox.Information)
-        msg_box.setText(message)
-        msg_box.setWindowTitle("Éxito")
-        msg_box.exec_()
-
     def validar_existencia(self):
         # Los campos para validar son:
         if self.lineEdit_modificar.text():
             cedulaBuscarCliente = int(self.lineEdit_modificar.text())
             if (
-                str(cedulaBuscarCliente) in str(self.gestion_datos.clientes["Cedula"].values)
+                str(cedulaBuscarCliente)
+                in str(self.gestion_datos.clientes["Cedula"].values)
                 or cedulaBuscarCliente in self.gestion_datos.clientes["Cedula"].values
             ):
                 return True
@@ -245,7 +205,7 @@ class GestionClientes(QMainWindow, CBackground):
             self.aviso_modificar.setText(
                 "Campo Vacio. Por favor ingrese la información correspondiente."
             )
-    
+
     def mostrar_formulario(self):
         cedula = self.validar_existencia()
         if cedula:
@@ -262,15 +222,25 @@ class GestionClientes(QMainWindow, CBackground):
     def modificar_cliente(self):
         cedulaBuscarCliente = int(self.lineEdit_modificar.text())
         if str(cedulaBuscarCliente) in self.gestion_datos.clientes["Cedula"].values:
-            datos_cliente = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] == str(cedulaBuscarCliente)]
+            datos_cliente = self.gestion_datos.clientes[
+                self.gestion_datos.clientes["Cedula"] == str(cedulaBuscarCliente)
+            ]
         elif cedulaBuscarCliente in self.gestion_datos.clientes["Cedula"].values:
-            datos_cliente = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] == cedulaBuscarCliente]
+            datos_cliente = self.gestion_datos.clientes[
+                self.gestion_datos.clientes["Cedula"] == cedulaBuscarCliente
+            ]
         print(datos_cliente)
         nuevaCedula = self.lineEdit_nuevaCedula.text()
         nuevoNombre = self.lineEdit_nuevoNombre.text()
         nuevoTelefono = self.lineEdit_nuevoTelefono.text()
         if not datos_cliente.empty:
-            if self.cajero.modificar_cliente(nuevaCedula, nuevoNombre, nuevoTelefono, cedulaBuscarCliente, datos_cliente):
+            if self.cajero.modificar_cliente(
+                nuevaCedula,
+                nuevoNombre,
+                nuevoTelefono,
+                cedulaBuscarCliente,
+                datos_cliente,
+            ):
                 self.mostrar_clientes()  # Actualizar la tabla de clientes
                 self.show_success_dialog("Cliente modificado correctamente")
                 self.aviso_modificar.setText("Cliente modificado correctamente")
@@ -278,7 +248,7 @@ class GestionClientes(QMainWindow, CBackground):
                 self.frame_formulario.hide()
             else:
                 self.showErrorMessage(
-                "Error en los datos ingresados. Por favor, verifica la información."
+                    "Error en los datos ingresados. Por favor, verifica la información."
                 )
                 self.aviso_add.setText(
                     "Error en los datos ingresados. Por favor, verifica la información."
@@ -292,21 +262,25 @@ class GestionClientes(QMainWindow, CBackground):
             )
 
     def eliminar_cliente(self):
+        if not self.lineEdit_buscarEliminar.text():
+            self.aviso_eliminar.setText("Cédula Inexistente. Por favor, verifica la información.")
+            return self.showErrorMessage(
+                "Cédula Inexistente. Por favor, verifica la información."
+            )
         cedula = int(self.lineEdit_buscarEliminar.text())
         eliminado = self.gestion_datos.eliminar_clientes(cedula)
-        if (
-            eliminado
-        ):  # No elimina nada, solo añadí el if para usar los valores de retorno del metodo y mostrar las ventanas emergentes
-            self.mostrar_clientes()
-            self.show_success_dialog("Cliente eliminado correctamente")
-            self.aviso_eliminar.setText("Cliente eliminado correctamente")
-            self.limpiar_campos()
-        else:
-            self.showErrorMessage(
-                "Error en los datos ingresados. Por favor, verifica la información."
-            )
-            self.aviso_eliminar.setText(
-                "Error en los datos ingresados. Por favor, verifica la información."
-            )
-
-    
+        if cedula:
+            if (
+                eliminado
+            ):  # No elimina nada, solo añadí el if para usar los valores de retorno del metodo y mostrar las ventanas emergentes
+                self.mostrar_clientes()
+                self.show_success_dialog("Cliente eliminado correctamente")
+                self.aviso_eliminar.setText("Cliente eliminado correctamente")
+                self.limpiar_campos()
+            else:
+                self.showErrorMessage(
+                    "Error en los datos ingresados. Por favor, verifica la información."
+                )
+                self.aviso_eliminar.setText(
+                    "Error en los datos ingresados. Por favor, verifica la información."
+                )

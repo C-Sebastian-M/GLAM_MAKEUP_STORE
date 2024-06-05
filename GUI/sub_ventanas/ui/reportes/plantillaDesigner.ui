@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>825</width>
     <height>624</height>
    </rect>
   </property>
@@ -51,35 +51,10 @@
    <property name="verticalSpacing">
     <number>0</number>
    </property>
-   <item row="1" column="1">
-    <widget class="QTableWidget" name="tablaReportes">
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>14</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="autoScroll">
-      <bool>true</bool>
-     </property>
-     <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>100</number>
-     </attribute>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderStretchLastSection">
-      <bool>false</bool>
-     </attribute>
-    </widget>
-   </item>
    <item row="0" column="0" colspan="2">
     <widget class="QWidget" name="queryHeader" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -350,8 +325,7 @@
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-bottom-left-radius: 5px;
-border-bottom-right-radius: 5px;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Volver</string>
@@ -620,6 +594,12 @@ border-bottom-right-radius: 5px;</string>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <family>Arial</family>
@@ -662,6 +642,31 @@ border-bottom-right-radius: 5px;</string>
        </spacer>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QTableWidget" name="tablaReportes">
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="autoScroll">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>100</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
   </layout>

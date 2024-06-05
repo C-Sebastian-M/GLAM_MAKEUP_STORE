@@ -11,7 +11,7 @@ import sys
 from API.prueba import Cajero
 from API.Validaciones import *
 from API.DATA import GestionDatos
-
+#from login import Login
 
 class CBackground:
     def paintEvent(self, event):
@@ -59,12 +59,19 @@ class ControlNavegacion:
 
 #/////CLASES VENTANAS/////#
 class Menu(CBackground, QMainWindow):
-    def __init__(self, control_navegacion):
+    def __init__(self, control_navegacion, ventana_login):
         super().__init__()
         loadUi(r"GUI\ui\PruebaMenu.ui", self)
+        self.ventana_login  =ventana_login
         self.control_navegacion=control_navegacion
         self.MenuButton.clicked.connect(self.CajaWin)
         self.ReportButton.clicked.connect(self.repWin)
+        self.LogOut.clicked.connect(self.volver_login)
+        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
+
+    def volver_login(self):
+        self.ventana_login.show()
+        self.close()
 
     def CajaWin(self):
         self.control_navegacion.mostrar_ventana("caja")
@@ -81,21 +88,37 @@ class Caja(QMainWindow):
         self.cajero = Cajero()
         self.gestion_datos = GestionDatos()
         self.cedulaCliente = None
-        #self.setWindowFlag(QtCore.Qt.FramelessWindowHint) #borrar los botones externos de la pagina original
+        self.posibleCedula = None
+        self.posibleTelefono = None
+        self.posibleNombre = None
+        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
         self.BotonCliente.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Clientes_2))
         self.BotonProductos.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Productos_3))
         self.BotonServicios.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Servicios_4))
         self.BotonPago.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Pago_4))
         self.BotonCarrito.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Carrito_4))
 
+        #ancho de columnas tablas
+        self.TablaCedulas.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaProductos.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaTotalPro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaServicios.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TablaTotalSer.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TaCaro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TaSer.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
 ##////////FUNCIONES CLIENTES/////////##
         self.ChangeCli.clicked.connect(self.clickchange)
-        self.ConfirmarNew.clicked.connect(self.CheckNewClient)
+        self.ConfirmarNew.clicked.connect(self.posible_cliente)
         self.ConfirmarAnt.clicked.connect(self.creado)
         self.Seleccionar.clicked.connect(self.selCli)
         self.Nuevo_2.clicked.connect(self.New)
         self.AggProducto.clicked.connect(self.total_productos)
         self.AggServicios.clicked.connect(self.total_servicios)
+        self.ConfirmarPago.clicked.connect(self.saber_pago)
+        self.YES.clicked.connect(self.mostrar_carrito_yes)
+        self.NO.clicked.connect(self.mostrar_carrito_yes)
+        self.Factura.clicked.connect(self.crear_factura)
         self.TablaCedulas.hide()
         self.IngCedula.hide()
         self.Cedula_2.hide()
@@ -108,8 +131,8 @@ class Caja(QMainWindow):
         self.ConfirmarAnt.hide()
         self.ChangeCli.hide()
         self.Fecha.hide()
-        self.Reserva.clicked.connect(self.showdate)
-        self.Fast.clicked.connect(self.hidedate)
+        self.Reserva.clicked.connect(self.date)
+        self.Fast.clicked.connect(self.nodate)
         self.mostrar_servicios()
         self.mostrar_productos()
 
@@ -129,26 +152,35 @@ class Caja(QMainWindow):
         self.CambiarPago.clicked.connect(self.changePay)
         self.CambiarPago.hide()
     
+    #Metodo para ocultar los botones y crear el boton cambiar metodo de pago
     def confirmPay(self):
         #espacio para almacenar el dato
         self.MetodosPago.hide()
         self.ConfirmarPago.hide()
         self.CambiarPago.show()
 
+    #Metodo para cambiar metodo de pago
     def changePay(self):
         #espacio para borrar el dato
         self.MetodosPago.show()
         self.ConfirmarPago.show()
         self.CambiarPago.hide()
     
+    #metodo para ocutar la fecha
     def nodate(self):
         self.Fecha.hide()
 
+    #metodo para mostra la fecha
     def date(self):
         self.Fecha.show()
 
+    #metodo para ocultar los objetos de servicios y mostrar el boton de cambiar servicios
     def confirmServ(self):
         #espacio para almacenar los datos
+        self.Servicios.hide()
+        self.LabelStock.hide()
+        self.EleServicios.hide()
+        self.AggServicios.hide()
         self.TablaServicios.hide()
         self.LabelServ.hide()
         self.StockServicios.hide()
@@ -160,8 +192,13 @@ class Caja(QMainWindow):
         self.ConfirmarServicios.hide()
         self.EditarServ.show()
 
+    #metodo para cambiar los servicios
     def changeServ(self):
         #espacio para borrar los datos
+        self.Servicios.show()
+        self.LabelStock.show()
+        self.EleServicios.show()
+        self.AggServicios.show()
         self.TablaServicios.show()
         self.LabelServ.show()
         self.StockServicios.show()
@@ -172,7 +209,8 @@ class Caja(QMainWindow):
         self.Fecha.hide()
         self.ConfirmarServicios.show()
         self.EditarServ.hide()
-        
+
+    #metodo para oculatr los objetos de productos y crear el boton cambiar productos
     def confirmPro(self):
         #espacio para añadir los productos
         self.TablaProductos.hide()
@@ -182,7 +220,11 @@ class Caja(QMainWindow):
         self.TablaTotalPro.hide()
         self.ConfirmarPro.hide()
         self.EditarPro.show()
-    
+        self.LabelStockPro.hide()
+        self.AggProducto.hide()
+        self.EleProductos.hide()
+
+    #metodo para cambiar los productos
     def changePro(self):
         #espacio para borarr los productos
         self.TablaProductos.show()
@@ -192,12 +234,11 @@ class Caja(QMainWindow):
         self.TablaTotalPro.show()
         self.ConfirmarPro.show()
         self.EditarPro.hide()
+        self.LabelStockPro.show()
+        self.AggProducto.show()
+        self.EleProductos.show()
 
-    def clickchange(self):
-        self.Seleccionar.show()
-        self.Nuevo_2.show()
-        self.ChangeCli.hide()
-
+    #metodo para confirmar el seleccionar un cliente que ya esta dentro de la base de datos
     def selCli(self):
         self.mostrar_clientes()
         self.TablaCedulas.show()
@@ -211,6 +252,7 @@ class Caja(QMainWindow):
         self.ConfirmarNew.hide()
         self.ConfirmarAnt.show()
 
+    #metodo para confirmar un cliente nuevo ingresado por el usuario
     def New(self):
         self.TablaCedulas.hide()
         self.IngCedula.hide()
@@ -223,15 +265,25 @@ class Caja(QMainWindow):
         self.ConfirmarNew.show()
         self.ConfirmarAnt.hide()
 
+    #metodo para cambiar el client y mostrar
+    def clickchange(self):
+        self.Seleccionar.show()
+        self.Nuevo_2.show()
+        self.ChangeCli.hide()
+
+    #metodo para verificar si el cliente nuevo es correcto
+    def posible_cliente(self):
+        self.posibleCedula = self.Ced_2.text()
+        self.posibleNombre = self.Nom_2.text()
+        self.posibleTelefono = self.Tel_2.text()
+        
+        
     def CheckNewClient(self):
-        cedula = self.Ced_2.text()
-        nombre = self.Nom_2.text()
-        telefono = self.Tel_2.text()
         msg_box = QMessageBox(self)
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle("Validación")
         msg_box.setStandardButtons(QMessageBox.Ok)
-        if self.cajero.añadir_cliente(cedula, nombre, telefono):
+        if self.cajero.añadir_cliente(self.posibleCedula, self.posibleNombre, self.posibleTelefono):
             msg_box.setText("Cliente ingresado con éxito")
             msg_box.exec_()
             self.LabelCedula.hide()
@@ -250,20 +302,14 @@ class Caja(QMainWindow):
             self.ConfirmarNew.hide()
             self.ConfirmarAnt.hide()
             self.ChangeCli.show()
-            self.cedulaCliente = cedula
+            #self.cedulaCliente = cedula
         else:
             msg_box.setText("Cliente Incorrecto")
             msg_box.exec_()
 
+    #metodo para volver al menu
     def backMenu(self):
         self.control_navegacion.mostrar_ventana("menu")
-
-    
-    def showdate(self):
-        self.dateEdit.show()
-    
-    def hidedate(self):
-        self.dateEdit.hide()
 
     def creado(self):
         cedula = self.IngCedula.text()
@@ -286,15 +332,38 @@ class Caja(QMainWindow):
                 self.TablaCedulas.setItem(i, j, QTableWidgetItem(str(value)))
     
     def total_productos(self):
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle("Validación")
+        msg_box.setStandardButtons(QMessageBox.Ok)
         codigo_barras = self.EleProductos.text()
         cantidad = self.StockProductos.text()
-        self.cajero.mostra_total_productos(codigo_barras, cantidad)
-        self.mostrar_total_productos()
-    
+        if codigo_barras != "" and cantidad != "": 
+            if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values or int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values:
+                self.cajero.mostra_total_productos(codigo_barras, int(cantidad))
+                self.mostrar_total_productos()
+            else:
+                msg_box.setText("Codigo inexistente")
+                msg_box.exec_()
+        else:
+            msg_box.setText("campos vacios")
+            msg_box.exec_()
+            
     def total_servicios(self):
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle("Validación")
+        msg_box.setStandardButtons(QMessageBox.Ok)
         id_servicio = self.EleServicios.text()
-        cantidad = self.StockServicios
-        
+        cantidad = self.StockServicios.text()
+        if cantidad != "" and id_servicio != "":
+            self.cajero.mostra_total_servicios(id_servicio, int(cantidad))
+            self.mostrar_total_servicios()
+            msg_box.setText("Servicio añadido")
+            msg_box.exec_()
+        else:
+            msg_box.setText("Servicios invalido")
+            msg_box.exec_()
     
     def mostrar_productos(self):
         self.TablaProductos.setRowCount(0)
@@ -316,8 +385,38 @@ class Caja(QMainWindow):
             self.TablaTotalPro.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.TablaTotalPro.setItem(i, j, QTableWidgetItem(str(value)))
+    
+    def mostrar_total_servicios(self):
+        self.TablaTotalSer.setRowCount(0)
+        for i, row in self.cajero.serviciosC.iterrows():
+            self.TablaTotalSer.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TablaTotalSer.setItem(i, j, QTableWidgetItem(str(value)))
+
+    def saber_pago(self):
+        metodo_pago = self.MetodosPago.currentText()
+        print(metodo_pago)
+
+    def mostrar_carrito_yes(self):
+        self.TaCaro.setRowCount(0)
+        precio = str(self.cajero.factura_con())
+        self.TotalGeneral.setText(precio)
+        for i, row in self.cajero.df.iterrows():
+            self.TaCaro.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TaCaro.setItem(i, j, QTableWidgetItem(str(value)))
+        
+        self.TaSer.setRowCount(0)
+        for i, row in self.cajero.serviciosC.iterrows():
+            self.TaSer.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TaSer.setItem(i, j, QTableWidgetItem(str(value)))
+        
 
 
+    def crear_factura(self):
+        self.cajero.factura_con()
+    
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
         super().__init__()
@@ -326,6 +425,7 @@ class Reporte(QMainWindow, CBackground):
         self.Reporte_2.clicked.connect(self.Backmenu)
         self.Reporte.clicked.connect(self.VistaPre)
         self.VistaPrevia.clicked.connect(self.envio)
+        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
 
     def Backmenu(self):
         self.control_navegacion.mostrar_ventana("menu")
@@ -336,15 +436,18 @@ class Reporte(QMainWindow, CBackground):
     def envio(self):
         pass
     
+    def showdate(self):
+        pass
+    
 
 #/////CLASE CONEXIONES/////#
 class Aplicacion(QMainWindow):
-    def __init__(self):
+    def __init__(self, ventana_login):
         super().__init__()
-        
+        self.ventana_login = ventana_login
         self.control_navegacion = ControlNavegacion()
 
-        self.ventana_principal = Menu(self.control_navegacion)
+        self.ventana_principal = Menu(self.control_navegacion, self.ventana_login)
         self.ventana1 = Caja(self.control_navegacion)
         self.ventana2 = Reporte(self.control_navegacion)
 

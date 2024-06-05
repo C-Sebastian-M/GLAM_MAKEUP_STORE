@@ -1,5 +1,6 @@
 import datetime
 from PyQt5 import uic
+<<<<<<< HEAD
 from PyQt5.QtWidgets import (
     QWidget, QLabel, QHBoxLayout, QSpacerItem, QSizePolicy, QTableWidget,
     QHeaderView, QGraphicsDropShadowEffect, QTableWidgetItem, QLineEdit, QComboBox
@@ -7,21 +8,39 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import (
     QPainter, QBrush, QColor, QPixmap, QCursor, QIcon
+=======
+
+from PyQt5.QtWidgets import ( 
+    QWidget, QLabel, 
+    QHBoxLayout, QSpacerItem, 
+    QSizePolicy, QTableWidget,
+    QHeaderView, QGraphicsDropShadowEffect, 
+    QTableWidgetItem
 )
-from GUI.sub_ventanas.utils.css import CustomGroupBox, CBackground
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import (
+    QColor, QPixmap, 
+    QCursor, QIcon
+>>>>>>> 1ad6c325e29c0a4dff76fbaae393dada6989ff39
+)
+from GUI.sub_ventanas.custom.utils.css import CustomGroupBox, CBackground
 import API.DATA as GD
+<<<<<<< HEAD
 from API.Validaciones import (
     validacion_Referencia, validacion_Codigo_Barras, validacion_Stock
 )
 from API.prueba import Reportes
+=======
+>>>>>>> 1ad6c325e29c0a4dff76fbaae393dada6989ff39
 from GUI.sub_ventanas.custom.validaciones import CustomValidaciones
 
 # Tipado
 from typing import List, Union, Dict
+from API.prueba import Reportes
 
 RP = Reportes()
 GD = GD.GestionDatos()
-vald = CustomValidaciones()
+validacion = CustomValidaciones()
 
 class ReportePorFecha(QWidget):
     def __init__(self, ref) -> None:
@@ -29,6 +48,7 @@ class ReportePorFecha(QWidget):
         uic.loadUi(r"GUI\sub_ventanas\ui\reportes\reportePorFecha.ui", self)
         self.ref = ref
         self.fecha = {}
+        
 
         self.setFixedSize(400, 335)
         self.setWindowIcon(QIcon(r"GUI\recursos\images\icono.ico"))
@@ -36,7 +56,7 @@ class ReportePorFecha(QWidget):
         self.setBtn.clicked.connect(self.combo_event)
         self.cancelarBtn.clicked.connect(self.close)
         self.confirmarBtn.clicked.connect(self.confirmar)
-
+        
         self.pintar()
 
     def combo_event(self) -> None:
@@ -51,18 +71,21 @@ class ReportePorFecha(QWidget):
         self.hastaLabel.setText(f'Hasta\n{fecha_seleccionada}')
 
     def confirmar(self) -> None:
+<<<<<<< HEAD
         if not self.fecha:
             return
 
+=======
+        if not self.fecha or len(self.fecha) == 1:
+            validacion.caja_input_no_valido("Asegurese de poner ambas fechas.")
+            return None
+        
+>>>>>>> 1ad6c325e29c0a4dff76fbaae393dada6989ff39
         fechas_compuesta = f"{self.fecha['desde']} - {self.fecha['hasta']}"
-        fechas_validas = vald.validar_fechas(fechas_compuesta)
+        fechas_validas = validacion.validar_fechas(fechas_compuesta)
 
         if not fechas_validas:
-            vald.caja_input_no_valido("""
-                Fechas ingresadas no validas,\n 
-                recuerde que la primera fecha (desde)\n
-                debe ser menor que la segunda(hasta).
-            """)
+            validacion.caja_input_no_valido("Fechas ingresadas no validas, recuerde que la primera fecha (desde)\ndebe ser menor que la segunda(hasta).")
             return None
 
         self.ref.setText(fechas_compuesta)
@@ -89,9 +112,12 @@ class Plantilla(QWidget):
 
         self.fechaBtn.clicked.connect(self.abrir_ventana_por_fecha)
         self.filtrarBtn.clicked.connect(self.filtrar)
+        self.filtrarBtn.clicked.connect(self.mostrar_referencia)
 
         self.pintar()
-
+        self.reportes = Reportes()
+        self.gestion_datos = GD
+    
     def handle_labels(self) -> None:
         for campo in self.campos:
             if campo.strip().lower() == 'fecha':
@@ -130,7 +156,7 @@ class Plantilla(QWidget):
         table.verticalHeader().setDefaultSectionSize(20)
 
         header = table.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(QHeaderView.Stretch)
 
         shadow_effect = QGraphicsDropShadowEffect(self)
         shadow_effect.setBlurRadius(8)
@@ -138,8 +164,9 @@ class Plantilla(QWidget):
         shadow_effect.setOffset(0, 0)
         header.setGraphicsEffect(shadow_effect)
 
-        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
         table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
+        # logica para implementar los registros de la tabla
 
     def abrir_ventana_por_fecha(self) -> None:
         self.consultandoPor.setText("fecha")
@@ -173,11 +200,105 @@ class Plantilla(QWidget):
             print("Error: Opción de filtrado no válida.")
 =======
         eleccion: str = self.normalizar(self.consultandoPor.text())
-        campos = [campo.lower() for campo in self.campos]
-        user_input: str = self.userInput.text()
+        user_input: str = self.userInput.text().strip()
+        if not user_input:
+            validacion.caja_input_no_valido("Ingresastes una consulta vacia")
+            return None
 
-        print(eleccion, user_input)
+        if eleccion == "referencia":
+            if user_input in self.gestion_datos.productos["Referencia"].values:
+                self.reportes.filtrar_referencia(user_input)
+                self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("Referencia ingresada no valida")
+        elif eleccion == "codigo_de_barras":
+            if user_input in self.gestion_datos.productos["Codigo de barras"].values:
+                self.reportes.filtrar_codigo_de_barras(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Codigo de barras"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_codigo_de_barras(user_input)
+                self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("El codigo de barras ingresado no es valido")
+        elif eleccion == "marca":
+            if user_input in self.gestion_datos.productos["Marca"].values:
+                self.reportes.filtrar_marca(user_input)
+                self.mostrar_referencia()    
+            else:
+                validacion.caja_input_no_valido("La marca ingresada no es valida")
+        elif eleccion == "precio_de_adquisicion":
+            if user_input in self.gestion_datos.productos["Precio de adquisicion"].values:
+                self.reportes.filtrar_precioA(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Precio de adquisicion"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_precioA(user_input)
+                self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("El precio de adquisicion no es valido")
+        elif eleccion == "precio_venta":
+            if user_input in self.gestion_datos.productos["Precio venta"].values:
+                self.reportes.filtrar_precioV(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Precio venta"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_precioV(user_input)
+                self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("El precio de venta ingresado no es valido")
+        elif eleccion == "unidades_actuales":
+            if user_input in self.gestion_datos.productos["Unidades actuales"].values:
+                self.reportes.filtrar_stock(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Unidades actuales"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_stock(user_input)
+                self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("Las unidades que ingresastes no son validas")
+        elif eleccion == "producto_disponible":
+            if user_input in self.gestion_datos.productos["Producto disponible"].values:
+                self.reportes.filtrar_disponibilidad(user_input)
+                self.mostrar_referencia()
+            elif int(user_input) in self.gestion_datos.productos["Producto disponible"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_disponibilidad(user_input)
+                self.mostrar_referencia()
+            else:
+                validacion.caja_input_no_valido("Input no valido")
+        elif eleccion ==  "id_servicio":
+            if user_input in self.gestion_datos.servicios["ID servicio"].values:
+                self.reportes.filtrar_ID_Servicio(user_input)
+                self.mostrar_servicios()
+            elif int(user_input) in self.gestion_datos.servicios["ID servicio"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_ID_Servicio(user_input)
+                self.mostrar_servicios()
+            else:
+                validacion.caja_input_no_valido("referencia de servicio no valida")
+        elif eleccion == "nombre_servicio":
+            if user_input in self.gestion_datos.servicios["Nombre Servicio"].values:
+                self.reportes.filtrar_servicio(user_input)
+                self.mostrar_servicios()
+            else:
+                validacion.caja_input_no_valido("Nombre de servicio no valido")
+        elif eleccion == "costo":
+            if user_input in self.gestion_datos.servicios["Costo"].values:
+                self.reportes.filtrar_costo(user_input)
+                self.mostrar_servicios()
+            elif int(user_input) in self.gestion_datos.servicios["Costo"].values:
+                user_input = int(user_input)
+                self.reportes.filtrar_costo(user_input)
+                self.mostrar_servicios()
+        elif eleccion == "fecha":
+            fechas = self.findChild(QLabel, "rangoDeFechasLabel").text()
+            self.reportes.filtrar_fecha(fechas)
+            self.mostrar_servicios()
+        else:
+            validacion.caja_input_no_valido("Input no valido")
 
+<<<<<<< HEAD
         def caja_input_no_valido():
             pass # mostrar caja
 >>>>>>> f10651b2ad0734a1918bc2c1b88ec02be087dd71
@@ -232,6 +353,23 @@ class Plantilla(QWidget):
 <<<<<<< HEAD
 =======
         # return CONRTOLADOR_DE_FILTRADO[eleccion] comentado para evitar error
+=======
+    def mostrar_referencia(self):
+        table: QTableWidget = self.tablaReportes
+        table.setRowCount(0)
+        for i, row in self.reportes.filtrado_productos.iterrows():
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
+    
+    def mostrar_servicios(self):
+        table: QTableWidget = self.tablaReportes
+        table.setRowCount(0)
+        for i, row in self.reportes.filtrado_servicios.iterrows():
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
+>>>>>>> 1ad6c325e29c0a4dff76fbaae393dada6989ff39
 
     def normalizar(self, cadena: str):
         cadena = cadena.strip().lower().replace(" ", "_")
@@ -248,6 +386,10 @@ class Plantilla(QWidget):
 class Ventas(Plantilla):
     def __init__(self, title: str, columns: List[str | int]) -> None:
         super().__init__(title, columns)
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 1ad6c325e29c0a4dff76fbaae393dada6989ff39
         self.inicializar()
 
     def inicializar(self):
@@ -255,9 +397,11 @@ class Ventas(Plantilla):
             self.navbar.deleteLater()
 
 class Inventario(Plantilla):
-    def __init__(self, title: str, columns: List[str | int]) -> None:
+    def __init__(self, title: str, columns: List[str | int], ref: int) -> None:
         super().__init__(title, columns)
-
+        if ref == 1:
+            self.fechaBtn.hide()
+        
 class ReportePanel(QWidget, CBackground):
     def __init__(self):
         super().__init__()

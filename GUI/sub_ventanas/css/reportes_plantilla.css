@@ -15,6 +15,16 @@ QWidget#queryHeader {
     background-color: #EBBCDC;
 }
 
+QWidget QTableWidget#tablaReportes {
+    border-top: none;
+    border-bottom: none;
+}
+
+QWidget QTableWidget#tablaReportes::item {
+    margin-top: 20px;
+    font-size: 12px;
+}
+
 #ventanaDeConsultas QPushButton#serviciosBtn, 
 #ventanaDeConsultas QPushButton#productosBtn {
     padding: 8px;

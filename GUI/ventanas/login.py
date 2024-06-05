@@ -1,3 +1,5 @@
+import time
+
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
@@ -7,7 +9,7 @@ from GUI.ventanas.soporte_admin import AdminSoporteManager
 from API.prueba import Cajero
 from API.DATA import GestionDatos
 from API.Validaciones import *
-import sys
+import subprocess
 
 
 class Login(QMainWindow):
@@ -22,7 +24,10 @@ class Login(QMainWindow):
         # BT CLOSE POPUP
         self.pushButton_close_pupup.clicked.connect(lambda: self.frame_error.hide())
         self.cajero = Cajero()
-
+        self.manual = (
+            r"DESIGN\Manual_de_Uso_del_Sistema_de_Gestión_de_Glam_Makeup_Store.pdf"
+        )
+        self.pushBoton_manual.clicked.connect(self.abrir_manual)
         # HIDE ERROR
         self.frame_error.hide()
 
@@ -54,6 +59,7 @@ class Login(QMainWindow):
                 self.frame_error.setStyleSheet(self.stylePopupError)
             else:
                 self.frame_error.setStyleSheet(self.stylePopupOk)
+            self.frame_error.hide()
 
         # CHECK USER
         if not username:
@@ -82,6 +88,7 @@ class Login(QMainWindow):
                     self.openCajaWindow()
                 else:
                     showMessage("Credenciales incorrectas")
+                    time.sleep(2)
             else:
                 showMessage("Usuario o contraseña incorrecta. ")
                 self.showErrorMessage("Credenciales Incorrectas")
@@ -94,7 +101,9 @@ class Login(QMainWindow):
         msg_box.exec_()
 
     def authenticate_user(self, username, password):
-        usuario_datos = self.gestion_datos.usuarios[self.gestion_datos.usuarios["usuario"] == username]
+        usuario_datos = self.gestion_datos.usuarios[
+            self.gestion_datos.usuarios["usuario"] == username
+        ]
         if not usuario_datos.empty:
             if password in usuario_datos["contraseña"].values:
                 rol = usuario_datos["Rol ID"].values
@@ -114,6 +123,10 @@ class Login(QMainWindow):
         self.close()
 
     def openCajaWindow(self):
-        caja = Aplicacion()
+        caja = Aplicacion(self)
         caja.show()
         self.close()
+
+    def abrir_manual(self):
+        file = self.manual
+        subprocess.call(["start", file], shell=True)
