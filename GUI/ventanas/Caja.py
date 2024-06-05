@@ -117,7 +117,6 @@ class Caja(QMainWindow):
         self.AggServicios.clicked.connect(self.total_servicios)
         self.ConfirmarPago.clicked.connect(self.saber_pago)
         self.YES.clicked.connect(self.mostrar_carrito_yes)
-        self.NO.clicked.connect(self.mostrar_carrito_yes)
         self.Factura.clicked.connect(self.crear_factura)
         self.TablaCedulas.hide()
         self.IngCedula.hide()
