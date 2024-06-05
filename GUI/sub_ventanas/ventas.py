@@ -24,6 +24,7 @@ class VentasAdmin(QMainWindow, CBackground):
         )
         self.gestion_datos = GestionDatos()
         self.cajero = Cajero()
+        self.limpiar_campos()
         self.pushButton_menu.clicked.connect(self.mover_menu)
         # Botones
         self.pushButton_actualizarPagos.clicked.connect(self.mostrar_pagos)
@@ -43,6 +44,7 @@ class VentasAdmin(QMainWindow, CBackground):
         self.frame_formularioEliminar.hide()
         self.frame_addPago.hide()
         self.frame_delPago.hide()
+        self.comboBox_pago.setCurrentIndex(-1)
         #self.df = pd.read_excel("registros.xlsx", sheet_name="productosServicios")
         #id_ventas = self.df["ID venta"].astype(str).tolist()
         #self.modelo_datos = QStringListModel(id_ventas)
@@ -73,12 +75,13 @@ class VentasAdmin(QMainWindow, CBackground):
     def limpiar_campos(self):
         self.lineEdit_addPago.clear()
         self.lineEdit.clear()
-        self.lineEdit_addPrecio.clear()
-        self.lineEdit_addServicio.clear()
-        self.lineEdit_buscarEliminar.clear()
-        self.lineEdit_nuevoServicio.clear()
-        self.lineEdit_nuevoPrecio.clear()
-        self.lineEdit_modificar.clear()
+        self.lineEdit_idVenta.clear()
+        self.lineEdit_cedula.clear()
+        self.lineEdit_cliente.clear()
+        self.lineEdit_producto.clear()
+        self.lineEdit_servicio.clear()
+        self.lineEdit_cantidad.clear()
+        self.lineEdit_subtotal.clear()
 
     def mover_menu(self):
         if True:
@@ -121,9 +124,12 @@ class VentasAdmin(QMainWindow, CBackground):
                 table.setItem(i, j, QTableWidgetItem(str(value)))
 
     def mostrar_ventas(self):
-        # Implement your logic to display the ventas page here
-        # Similar to mostrar_pagos, it likely returns None
-        return None
+        table: QTableWidget = self.tableWidget_modificar
+        table.setRowCount(0)
+        for i, row in self.gestion_datos.venta_productos.iterrows():
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
 
     def mostrar_formulario_addPago(self, servicio):
         self.frame_addPago.show()
@@ -139,6 +145,7 @@ class VentasAdmin(QMainWindow, CBackground):
                 self.gestion_datos.guardar_dataframes()
             self.show_success_dialog("Metodo de pago eliminado correctamente")
             self.aviso_pago.show("Metodo de pago eliminado correctamente")
+            self.limpiar_campos()
             self.frame_delPago.hide()
         elif int(pago) in self.gestion_datos.metodo_pago['ID'].values:
             pago = int(usuario)
@@ -146,6 +153,7 @@ class VentasAdmin(QMainWindow, CBackground):
             self.gestion_datos.guardar_dataframes()
             self.show_success_dialog("Metodo de pago eliminado correctamente")
             self.aviso_pago.show("Metodo de pago eliminado correctamente")
+            self.limpiar_campos()
             self.frame_delPago.hide()
         else:
             return False  
@@ -166,9 +174,7 @@ class VentasAdmin(QMainWindow, CBackground):
     def guardarInfo(self):  
         None
     def mostrar_calendario(self):
-        # Implement your logic to display the calendar here
-        # Similar to mostrar_pagos, it likely returns None
-        return None
+         None
     
 
     def add_metodoPago(self):
@@ -178,6 +184,6 @@ class VentasAdmin(QMainWindow, CBackground):
             nueva_fila = pd.DataFrame([[id_metodo, metodo]], columns=['ID', 'Metodo de pago'])
             self.gestion_datos.metodo_pago = pd.concat([self.gestion_datos.metodo_pago, nueva_fila], ignore_index=True)
             self.frame_addPago.hide()
-            
+            self.pago = []
             self.pagos = self.gestion_datos.metodo_pago["Metodo de pago"].tolist()
             self.comboBox_pago.addItems(self.pagos)

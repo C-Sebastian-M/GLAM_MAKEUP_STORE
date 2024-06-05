@@ -220,7 +220,7 @@ class GestionDatos:
         precio_venta,
         unidades_actuales,
     ):
-        fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
+        fecha = datetime.now().strftime("%Y-%m-%d") 
         disponible = int(unidades_actuales) > 0
         nuevo_producto = pd.DataFrame(
             [
@@ -295,7 +295,7 @@ class GestionDatos:
     def descontinuar_producto(self,codigo):
         if codigo in self.productos["Codigo de barras"].values:
             id = self.productos[self.productos["Codigo de barras"] == codigo].index
-            self.productos.drop(index=id,inplace=True)
+            self.productos.drop(index=id, inplace=True)
             return True
         else:
             return False
@@ -429,14 +429,13 @@ class GestionDatos:
             return None
 
     def eliminar_servicio(self, id_servicio):
-        servicio = self.servicios[self.servicios["ID servicio"] == int(id_servicio)]
+        servicio = self.servicios[self.servicios["ID servicio"] == id_servicio]
         if not servicio.empty:
             self.servicios = self.servicios[
                 self.servicios["ID servicio"] != id_servicio
             ]
             self.guardar_dataframes()
-            self.cargar_dataframes()
-            #print(f"Servicio con ID {id_servicio} eliminado.")
+            print(f"Servicio con ID {id_servicio} eliminado.")
         else:
             print(f"Servicio con ID {id_servicio} no encontrado.")
 

@@ -1,0 +1,4 @@
+-----------Factura---------
+Nombre Cliente = Hola
+Nombre Cedula cliente = 1034918141
+Total 428.4

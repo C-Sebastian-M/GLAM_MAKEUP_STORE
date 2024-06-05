@@ -417,10 +417,26 @@ class Caja(QMainWindow):
         self.changePro()
         self.changeServ()
         self.clickchange()
-
-    def crear_factura(self):
-        self.cajero.factura_con()
+        self.posibleCedula = None
+        self.posibleNombre = None
+        self.posibleTelefono = None
+        self.cajero.vaciar_carrito()
     
+    def crear_factura(self):
+        precio = self.cajero.factura_con()
+        archivo = open("mi_archivo.txt", "w")
+        archivo.write("-----------Factura---------\n")
+        archivo.write(f"Nombre Cliente = {self.posibleNombre}\n")
+        archivo.write(f"Nombre Cedula cliente = {self.posibleCedula}\n")
+        self.cajero.serviciosC.to_excel("comprasde servicios.xlsx")
+        self.cajero.df.to_excel("compras de productos..xlsx")
+        archivo.write(f"Total {precio}")
+        archivo.close()
+        if validar_Cedula(self.posible_cliente) and validacion_Telefono(self.posibleTelefono) and validar_NombreCom(self.posibleNombre):
+            self.gestion_datos.agregar_cliente(self.posibleCedula,self.posibleNombre,self.posibleTelefono)
+
+        
+
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
         super().__init__()

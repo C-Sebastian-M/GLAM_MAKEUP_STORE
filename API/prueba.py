@@ -164,14 +164,16 @@ class Cajero:
         return not self.df.empty and self.serviciosC.empty
 
     def factura_con(self):
-      x =self.serviciosC['Precio total'].sum() #+ {self.df['Precio total'].sum()}
-      #x = x*1.19
+      x =self.serviciosC['Precio total'].sum() + self.df['Precio total'].sum()
+      x = x.reset_index(drop=True)
+      x = float(x*1.19)
       print(x)
       return x
     
     def factura_sin(self):
       x ={self.serviciosC['Precio total'].sum()} + {self.df['Precio total'].sum()}
-      return x
+      x = x.reset_index(drop=True)
+      return float(x)
     
        
 

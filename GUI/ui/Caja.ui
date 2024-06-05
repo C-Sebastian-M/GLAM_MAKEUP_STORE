@@ -2718,32 +2718,6 @@ background-color: rgb(252, 202, 255);</string>
                     <item row="4" column="0">
                      <layout class="QHBoxLayout" name="horizontalLayout_11">
                       <item>
-                       <widget class="QLabel" name="IVA">
-                        <property name="minimumSize">
-                         <size>
-                          <width>100</width>
-                          <height>50</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>60</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">color: rgb(170, 0, 255);
-background-color: rgb(255, 85, 255);</string>
-                        </property>
-                        <property name="text">
-                         <string>¿IVA?</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
                        <widget class="QPushButton" name="YES">
                         <property name="minimumSize">
                          <size>
@@ -2775,35 +2749,6 @@ background-color: rgb(255, 85, 255);</string>
                         <property name="icon">
                          <iconset>
                           <normaloff>../Downloads/alpha-y-box-outline.png</normaloff>../Downloads/alpha-y-box-outline.png</iconset>
-                        </property>
-                        <property name="iconSize">
-                         <size>
-                          <width>50</width>
-                          <height>50</height>
-                         </size>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="NO">
-                        <property name="minimumSize">
-                         <size>
-                          <width>100</width>
-                          <height>100</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>100</width>
-                          <height>100</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
-                        <property name="icon">
-                         <iconset>
-                          <normaloff>../Downloads/alpha-n-box-outline.png</normaloff>../Downloads/alpha-n-box-outline.png</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
