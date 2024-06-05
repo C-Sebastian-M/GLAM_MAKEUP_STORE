@@ -67,6 +67,7 @@ class Menu(CBackground, QMainWindow):
         self.MenuButton.clicked.connect(self.CajaWin)
         self.ReportButton.clicked.connect(self.repWin)
         self.LogOut.clicked.connect(self.volver_login)
+        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
 
     def volver_login(self):
         self.ventana_login.show()
@@ -90,7 +91,7 @@ class Caja(QMainWindow):
         self.posibleCedula = None
         self.posibleTelefono = None
         self.posibleNombre = None
-        #self.setWindowFlag(QtCore.Qt.FramelessWindowHint) #borrar los botones externos de la pagina original
+        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
         self.BotonCliente.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Clientes_2))
         self.BotonProductos.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Productos_3))
         self.BotonServicios.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Servicios_4))
@@ -103,7 +104,8 @@ class Caja(QMainWindow):
         self.TablaTotalPro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.TablaServicios.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.TablaTotalSer.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.TablaCarro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TaCaro.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.TaSer.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
 ##////////FUNCIONES CLIENTES/////////##
         self.ChangeCli.clicked.connect(self.clickchange)
@@ -114,8 +116,9 @@ class Caja(QMainWindow):
         self.AggProducto.clicked.connect(self.total_productos)
         self.AggServicios.clicked.connect(self.total_servicios)
         self.ConfirmarPago.clicked.connect(self.saber_pago)
-        self.YES.clicked.connect(self.mostrar_carrito)
-        self.NO.clicked.connect(self.mostrar_carrito)
+        self.YES.clicked.connect(self.mostrar_carrito_yes)
+        self.NO.clicked.connect(self.mostrar_carrito_yes)
+        self.Factura.clicked.connect(self.crear_factura)
         self.TablaCedulas.hide()
         self.IngCedula.hide()
         self.Cedula_2.hide()
@@ -341,16 +344,26 @@ class Caja(QMainWindow):
                 self.mostrar_total_productos()
             else:
                 msg_box.setText("Codigo inexistente")
+                msg_box.exec_()
         else:
             msg_box.setText("campos vacios")
-        msg_box.exec_()
+            msg_box.exec_()
             
     def total_servicios(self):
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle("Validación")
+        msg_box.setStandardButtons(QMessageBox.Ok)
         id_servicio = self.EleServicios.text()
         cantidad = self.StockServicios.text()
         if cantidad != "" and id_servicio != "":
-            self.cajero.mostra_total_servicios(id_servicio, cantidad)
+            self.cajero.mostra_total_servicios(id_servicio, int(cantidad))
             self.mostrar_total_servicios()
+            msg_box.setText("Servicio añadido")
+            msg_box.exec_()
+        else:
+            msg_box.setText("Servicios invalido")
+            msg_box.exec_()
     
     def mostrar_productos(self):
         self.TablaProductos.setRowCount(0)
@@ -384,25 +397,29 @@ class Caja(QMainWindow):
         metodo_pago = self.MetodosPago.currentText()
         print(metodo_pago)
 
-    def mostrar_carrito(self):
-        #mostrar_productos
-        self.TablaCarro.setRowCount(0)
+    def mostrar_carrito_yes(self):
+        self.TaCaro.setRowCount(0)
+        precio = str(self.cajero.factura_con())
+        self.TotalGeneral.setText(precio)
         for i, row in self.cajero.df.iterrows():
-            self.TablaTotalPro.insertRow(i)
+            self.TaCaro.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
-                self.TablaTotalPro.setItem(i, j, QTableWidgetItem(str(value)))
-        #mostrar_servicios
-       # self.TablaCarro.setRowCount(0)
-       # for i, row in self.cajero.serviciosC.iterrows():
-       #     self.TablaCarro.insertRow(i)
-       #     for j, (colname, value) in enumerate(row.items()):
-       #         self.TablaCarro.setItem(i, j, QTableWidgetItem(str(value)))
-    def factura(self):
-     for i in range(len(self.df)):
-      print(f"Nombre del producto: {self.df.loc[i, 'Producto']}")
-      print(f"Subtotal de compra: {self.df.loc[i, 'Precio total']}")
-      print("------------------------------")
-     print(f"TOTAL: {self.df['Precio total'].sum()}")  
+                self.TaCaro.setItem(i, j, QTableWidgetItem(str(value)))
+        
+        self.TaSer.setRowCount(0)
+        for i, row in self.cajero.serviciosC.iterrows():
+            self.TaSer.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.TaSer.setItem(i, j, QTableWidgetItem(str(value)))
+        
+    def vaciar_carrito(self):
+        self.changePay()
+        self.changePro()
+        self.changeServ()
+        self.clickchange()
+
+    def crear_factura(self):
+        self.cajero.factura_con()
     
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
@@ -412,6 +429,7 @@ class Reporte(QMainWindow, CBackground):
         self.Reporte_2.clicked.connect(self.Backmenu)
         self.Reporte.clicked.connect(self.VistaPre)
         self.VistaPrevia.clicked.connect(self.envio)
+        self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
 
     def Backmenu(self):
         self.control_navegacion.mostrar_ventana("menu")

@@ -819,7 +819,7 @@ QComboBox::down-arrow:hover {
 }</string>
                   </property>
                   <property name="currentIndex">
-                   <number>1</number>
+                   <number>3</number>
                   </property>
                   <widget class="QWidget" name="Clientes_2">
                    <property name="styleSheet">
@@ -2054,7 +2054,7 @@ QComboBox::down-arrow:hover {
                      <widget class="QTableWidget" name="TablaProductos">
                       <property name="font">
                        <font>
-                        <pointsize>8</pointsize>
+                        <pointsize>-1</pointsize>
                        </font>
                       </property>
                       <property name="styleSheet">
@@ -2174,7 +2174,7 @@ QComboBox::down-arrow:hover {
                       </property>
                       <column>
                        <property name="text">
-                        <string>ID</string>
+                        <string>Producto</string>
                        </property>
                        <property name="font">
                         <font>
@@ -2185,7 +2185,7 @@ QComboBox::down-arrow:hover {
                       </column>
                       <column>
                        <property name="text">
-                        <string>Producto</string>
+                        <string>ID</string>
                        </property>
                        <property name="font">
                         <font>
@@ -2196,7 +2196,7 @@ QComboBox::down-arrow:hover {
                       </column>
                       <column>
                        <property name="text">
-                        <string>Cantidad</string>
+                        <string>Marca</string>
                        </property>
                        <property name="font">
                         <font>
@@ -2223,6 +2223,11 @@ QComboBox::down-arrow:hover {
                       <column>
                        <property name="text">
                         <string>Producto</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>Cantidad</string>
                        </property>
                       </column>
                       <column>
@@ -2476,17 +2481,6 @@ background-color: rgb(255, 85, 255);</string>
                       </column>
                       <column>
                        <property name="text">
-                        <string>Cantidad</string>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>MS Shell Dlg 2</family>
-                         <pointsize>8</pointsize>
-                        </font>
-                       </property>
-                      </column>
-                      <column>
-                       <property name="text">
                         <string>Precio</string>
                        </property>
                        <property name="font">
@@ -2552,6 +2546,11 @@ background-color: rgb(255, 85, 255);</string>
                       </column>
                       <column>
                        <property name="text">
+                        <string>Cantidad</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
                         <string>Precio Total</string>
                        </property>
                       </column>
@@ -2585,6 +2584,80 @@ background-color: rgb(255, 85, 255);</string>
                        <set>Qt::AlignCenter</set>
                       </property>
                      </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="LabelCompras">
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(170, 0, 255);
+background-color: rgb(255, 85, 255);</string>
+                      </property>
+                      <property name="text">
+                       <string>Compras</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout_12">
+                      <item>
+                       <widget class="QTableWidget" name="TaCaro">
+                        <column>
+                         <property name="text">
+                          <string>Referencia</string>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>MS Shell Dlg 2</family>
+                           <pointsize>8</pointsize>
+                          </font>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Cantidad</string>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>MS Shell Dlg 2</family>
+                           <pointsize>8</pointsize>
+                          </font>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Precio</string>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>MS Shell Dlg 2</family>
+                           <pointsize>8</pointsize>
+                          </font>
+                         </property>
+                        </column>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QTableWidget" name="TaSer">
+                        <column>
+                         <property name="text">
+                          <string>Servicios</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Cantidad</string>
+                         </property>
+                        </column>
+                        <column>
+                         <property name="text">
+                          <string>Total</string>
+                         </property>
+                        </column>
+                       </widget>
+                      </item>
+                     </layout>
                     </item>
                     <item row="3" column="0">
                      <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -2693,7 +2766,7 @@ background-color: rgb(255, 85, 255);</string>
                         <property name="font">
                          <font>
                           <family>Arial,sans-serif</family>
-                          <pointsize>8</pointsize>
+                          <pointsize>-1</pointsize>
                          </font>
                         </property>
                         <property name="text">
@@ -2742,57 +2815,6 @@ background-color: rgb(255, 85, 255);</string>
                       </item>
                      </layout>
                     </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="LabelCompras">
-                      <property name="styleSheet">
-                       <string notr="true">color: rgb(170, 0, 255);
-background-color: rgb(255, 85, 255);</string>
-                      </property>
-                      <property name="text">
-                       <string>Compras</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QTableWidget" name="TablaCarro">
-                      <column>
-                       <property name="text">
-                        <string>Elemento</string>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>MS Shell Dlg 2</family>
-                         <pointsize>8</pointsize>
-                        </font>
-                       </property>
-                      </column>
-                      <column>
-                       <property name="text">
-                        <string>Cantidad</string>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>MS Shell Dlg 2</family>
-                         <pointsize>8</pointsize>
-                        </font>
-                       </property>
-                      </column>
-                      <column>
-                       <property name="text">
-                        <string>Precio</string>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>MS Shell Dlg 2</family>
-                         <pointsize>8</pointsize>
-                        </font>
-                       </property>
-                      </column>
-                     </widget>
-                    </item>
                    </layout>
                   </widget>
                   <widget class="QWidget" name="Pago_4">
@@ -2837,7 +2859,7 @@ background-color: rgb(255, 85, 255);</string>
                       <property name="font">
                        <font>
                         <family>Arial,sans-serif</family>
-                        <pointsize>8</pointsize>
+                        <pointsize>-1</pointsize>
                        </font>
                       </property>
                       <item>

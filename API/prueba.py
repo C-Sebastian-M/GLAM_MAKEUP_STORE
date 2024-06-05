@@ -6,9 +6,9 @@ import datetime
 class Cajero:
     def __init__(self):
         self.gestion_datos = GestionDatos()
-        self.df = pd.DataFrame(columns=["Nombre","Precio total"])
-        self.serviciosC = pd.DataFrame(columns=["Nombre","Precio total"])
-        self.carrito = pd.DataFrame(columns=["Nombre","Precio total"])
+        self.df = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
+        self.serviciosC = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
+        self.carrito = pd.DataFrame(columns=["Nombre","Cantidad","Precio total"])
     
     def añadir_cliente(self, cedula, nombre, telefono):
         if (
@@ -134,34 +134,45 @@ class Cajero:
         return False
     
     def mostra_total_productos(self,codigo_barras,cantidad):
-       if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
+        if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == (codigo_barras)]
-       elif int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
-           datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == int(codigo_barras)]
-       precio = datos_producto["Precio venta"]
-       preciot = cantidad*precio
-       nuevo_producto = pd.DataFrame([[codigo_barras, preciot]], columns=["Producto","Precio total"])
-       self.df = pd.concat([self.df, nuevo_producto], ignore_index=True)
-       print(self.df)
+        elif int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values and cantidad <= 15:
+           datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == int(codigo_barras)]         
+        precio = datos_producto["Precio venta"]
+        preciot = cantidad*precio
+        nuevo_producto = pd.DataFrame([[datos_producto["Referencia"],cantidad,preciot]], columns=["Nombre","Cantidad","Precio total"])
+        self.df= pd.concat([self.df, nuevo_producto], ignore_index=True)
+        self.df = self.df.reset_index(drop=True)
+       
         
     def mostra_total_servicios(self, id, cantidad):
-        if id in self.gestion_datos.productos["ID servicio"].values:
-            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["ID servicio"] == (id)]
-        elif int(id) in self.gestion_datos.productos["ID servicio"].values:
-            datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["ID servicio"] == int(id)]
+        if id in self.gestion_datos.servicios["ID servicio"].values:
+            datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == (id)]
+        elif int(id) in self.gestion_datos.servicios["ID servicio"].values:
+            datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == int(id)]
+        else:
+            return False
         precio = datos_producto["Costo"]
         preciot = cantidad*precio
-        nombre_servicio = datos_producto["Nombre Servicio"]
-        nuevo_producto = pd.DataFrame([[nombre_servicio, preciot]], columns=["Servicio" , "Precio total"])
+        nuevo_producto = pd.DataFrame([[datos_producto["Nombre Servicio"],cantidad, preciot]], columns=["Nombre","Cantidad","Precio total"])
         self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
-
-    def df_carro(self):
-        df_unido = pd.merge(self.serviciosC,  on='ID', how='inner')
-        return not self.carrito.empty
+        self.serviciosC = self.serviciosC.reset_index(drop=True)
          
     def vaciar_carrito(self):
-        self.carrtio.drop(self.carrito.index, inplace = True)
+        self.df.drop(self.df.index, inplace = True)
+        self.serviciosC.drop(self.serviciosC.index, inplace = True)
+        return not self.df.empty and self.serviciosC.empty
 
+    def factura_con(self):
+      x =self.serviciosC['Precio total'].sum() #+ {self.df['Precio total'].sum()}
+      #x = x*1.19
+      print(x)
+      return x
+    
+    def factura_sin(self):
+      x ={self.serviciosC['Precio total'].sum()} + {self.df['Precio total'].sum()}
+      return x
+    
        
 
     
@@ -181,12 +192,12 @@ class Inventario:
         ):
             print(type(referencia))
             if not codigoB in self.gestion_datos.productos["Codigo de barras"].values:
-                self.gestion_datos.agregar_producto(
-                    referencia, codigoB, marca, precioA, precioV, stock
-                )
+                self.gestion_datos.agregar_producto(referencia, codigoB, marca, precioA, precioV, stock)
                 return True
+            else:
+                return False
+        else:   
             return False
-        return False
 
     def modificar_producto(
         self, marca, precio_a, precio_v, codigo_barras, datosP):
@@ -346,6 +357,9 @@ class Reportes:
         self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
         print(self.filtrado_servicios)
         return not self.filtrado_servicios.empty
+    
+    
+
 
 
 
