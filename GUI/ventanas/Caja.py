@@ -61,7 +61,7 @@ class ControlNavegacion:
 class Menu(CBackground, QMainWindow):
     def __init__(self, control_navegacion):
         super().__init__()
-        loadUi(r"GUI\ui\PruebaMenu.ui", self,)
+        loadUi(r"GUI\ui\PruebaMenu.ui", self)
         self.control_navegacion=control_navegacion
         self.MenuButton.clicked.connect(self.CajaWin)
         self.ReportButton.clicked.connect(self.repWin)
@@ -75,7 +75,7 @@ class Menu(CBackground, QMainWindow):
 class Caja(QMainWindow):
     def __init__(self, control_navegacion):
         super().__init__()
-        loadUi(r"GUI\ui\Caja.ui", self,)
+        loadUi(r"GUI\ui\Caja.ui", self)
         self.control_navegacion = control_navegacion
         self.Atras.clicked.connect(self.backMenu)
         self.cajero = Cajero()
@@ -321,7 +321,7 @@ class Caja(QMainWindow):
 class Reporte(QMainWindow, CBackground):
     def __init__(self, control_navegacion):
         super().__init__()
-        loadUi(r"GUI\ui\ReporteDiario.ui", self,)
+        loadUi(r"GUI\ui\ReporteDiario.ui", self)
         self.control_navegacion=control_navegacion
         self.Reporte_2.clicked.connect(self.Backmenu)
         self.Reporte.clicked.connect(self.VistaPre)
