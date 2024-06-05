@@ -25,7 +25,9 @@ class GestionServicios(QMainWindow, CBackground):
         )
         self.gestion_datos = GestionDatos()
         self.inventario = Inventario()
-
+        self.mostrar_servicios()
+        self.mostrar_servicioModificar()
+        self.mostrar_servicioEliminar()
         self.pushButton_menu.clicked.connect(self.mover_menu)
         # Botones
         self.pushButton_actualizar.clicked.connect(self.mostrar_servicios)
@@ -33,7 +35,7 @@ class GestionServicios(QMainWindow, CBackground):
         self.pushButton_mostrarEliminar.clicked.connect(self.mostrar_servicioEliminar)
         self.pushButton_add.clicked.connect(self.registrar_servicio)
         self.pushButton_guardarInfo.clicked.connect(self.modificar_servicio)
-        self.pushButton_eliminar.clicked.connect(self.eliminar_servicio)
+        self.pushButton_eliminar.clicked.connect(self.descontinuar_servicio)
         self.pushButton_modificar.clicked.connect(self.mostrar_formulario)
 
         self.gripSize = 10
@@ -223,9 +225,16 @@ class GestionServicios(QMainWindow, CBackground):
             self.mostrar_servicios()  # Actualizar la tabla de servicios
 
     def eliminar_servicio(self):
-        id_servicio = self.lineEdit_buscarEliminar.text()
-        self.gestion_datos.eliminar_servicio(id_servicio)
-        self.mostrar_servicios()  # Actualizar la tabla de clientes
+        if not self.lineEdit_buscarEliminar.text():
+            id_servicio = self.lineEdit_buscarEliminar.text()
+            self.gestion_datos.eliminar_servicio(id_servicio)
+            self.mostrar_servicios()  # Actualizar la tabla de Servicios
+        else:
+            self.aviso_eliminar.setText(
+                "Campos vacíos. Por favor, verifica la información."
+            )
+            self.showErrorMessage("Campos vacíos. Por favor, verifica la información.")
+
 
     def registrar_servicio(self):
         if (
@@ -255,14 +264,15 @@ class GestionServicios(QMainWindow, CBackground):
             self.showErrorMessage("Campos vacíos. Por favor, verifica la información.")
 
     def descontinuar_servicio(self):
-        if not self.lineEdit_buscarEliminar:
+        if self.lineEdit_buscarEliminar.text() != "":
             id_buscar = self.lineEdit_buscarEliminar.text()
-            if id_buscar in self.gestion_datos.servicios["ID servicios"].values:
+            if id_buscar in self.gestion_datos.servicios["ID servicio"].values:
                 self.inventario.eliminar_servicio(id_buscar)
-            elif int(id_buscar) in self.gestion_datos.servicios["ID servicios"].values:
+            elif int(id_buscar) in self.gestion_datos.servicios["ID servicio"].values:
                 id_buscar = int(id_buscar)
                 self.inventario.eliminar_servicio(id_buscar)
-                self.aviso_eliminar.setText("Cliente Eliminado.")
+            self.aviso_eliminar.setText("Servicio Eliminado.")
+            self.show_success_dialog("Servicio eliminado.")
         else:
             self.aviso_eliminar.setText(
                 "Campos vacíos. Por favor, verifica la información."

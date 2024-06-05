@@ -220,7 +220,7 @@ class GestionDatos:
         precio_venta,
         unidades_actuales,
     ):
-        fecha = datetime.now().strftime("%Y-%m-%d") 
+        fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
         disponible = int(unidades_actuales) > 0
         nuevo_producto = pd.DataFrame(
             [
@@ -429,13 +429,14 @@ class GestionDatos:
             return None
 
     def eliminar_servicio(self, id_servicio):
-        servicio = self.servicios[self.servicios["ID servicio"] == id_servicio]
+        servicio = self.servicios[self.servicios["ID servicio"] == int(id_servicio)]
         if not servicio.empty:
             self.servicios = self.servicios[
                 self.servicios["ID servicio"] != id_servicio
             ]
             self.guardar_dataframes()
-            print(f"Servicio con ID {id_servicio} eliminado.")
+            self.cargar_dataframes()
+            #print(f"Servicio con ID {id_servicio} eliminado.")
         else:
             print(f"Servicio con ID {id_servicio} no encontrado.")
 

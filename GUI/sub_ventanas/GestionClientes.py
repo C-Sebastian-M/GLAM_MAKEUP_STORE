@@ -229,7 +229,7 @@ class GestionClientes(QMainWindow, CBackground):
             datos_cliente = self.gestion_datos.clientes[
                 self.gestion_datos.clientes["Cedula"] == cedulaBuscarCliente
             ]
-        print(datos_cliente)
+        #print(datos_cliente)
         nuevaCedula = self.lineEdit_nuevaCedula.text()
         nuevoNombre = self.lineEdit_nuevoNombre.text()
         nuevoTelefono = self.lineEdit_nuevoTelefono.text()
