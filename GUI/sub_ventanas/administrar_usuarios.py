@@ -57,6 +57,7 @@ class AdministrarUsuarios(QMainWindow, CBackground):
             lambda: self.stackedWidget.setCurrentWidget(self.ver_usuarios_pagina)
         )
         self.ver_usuarios_boton.clicked.connect(self.mostrar_datos)
+        self.ver_actualizar_boton.clicked.connect(self.mostrar_datos)
         self.ver_usuarios_boton.clicked.connect(self.limpiar_campos)
         
         self.add_usuario_boton.clicked.connect(
@@ -74,6 +75,8 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         )
         self.del_guardar_boton.clicked.connect(self.eliminar_usuario)
         self.del_guardar_boton.clicked.connect(self.limpiar_campos)
+        self.modify_actualizar_boton.clicked.connect(self.mostrar_modificar)
+        self.del_actualizar_boton.clicked.connect(self.mostrar_eliminar)
         # Ancho columna adaptable
         self.tabla_ver_usuarios.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
@@ -184,5 +187,24 @@ class AdministrarUsuarios(QMainWindow, CBackground):
             return True  
         else:
             return False  
+    
     def mostrar_datos(self):
-        return self.gestion_datos
+        self.tabla_ver_usuarios.setRowCount(0)
+        for i, row in self.gestion_datos.usuarios.iterrows():
+            self.tabla_ver_usuarios.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.tabla_ver_usuarios.setItem(i, j, QTableWidgetItem(str(value)))
+    
+    def mostrar_modificar(self):
+        self.modify_tabla_usuarios.setRowCount(0)
+        for i, row in self.gestion_datos.usuarios.iterrows():
+            self.modify_tabla_usuarios.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.modify_tabla_usuarios.setItem(i, j, QTableWidgetItem(str(value)))
+    
+    def mostrar_eliminar(self):
+        self.del_tabla_usuarios.setRowCount(0)
+        for i, row in self.gestion_datos.usuarios.iterrows():
+            self.del_tabla_usuarios.insertRow(i)
+            for j, (colname, value) in enumerate(row.items()):
+                self.del_tabla_usuarios.setItem(i, j, QTableWidgetItem(str(value)))
