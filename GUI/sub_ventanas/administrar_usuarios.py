@@ -139,7 +139,7 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         usuario = self.add_nombre_usuario_lineEdit.text()
         contraseña = self.add_password_lineEdit.text()
         rol = self.add_rol_combobox.currentIndex()
-        id_usuario = int(self.add_id_usuario_lineEdit.text())
+        id_usuario = self.add_id_usuario_lineEdit.text()
 
         if usuario in self.gestion_datos.usuarios['usuario'].values:
             return False
@@ -172,13 +172,13 @@ class AdministrarUsuarios(QMainWindow, CBackground):
             return False 
 
     def eliminar_usuario(self):
-        usuario=self.del_buscar_usuario_lineEdit.text()
+        usuario=self.add_id_usuario_lineEdit.text()
         if usuario in self.gestion_datos.usuarios['ID usuario'].values:
             self.gestion_datos.usuarios = self.gestion_datos.usuarios[self.gestion_datos.usuarios['ID usuario'] != usuario]
             self.gestion_datos.guardar_dataframes()
             return True
-        elif int(usuario) in self.gestion_datos.usuarios['ID usuario'].values:
-            usuario = int(usuario)
+        elif usuario in self.gestion_datos.usuarios['ID usuario'].values:
+            usuario = usuario
             self.gestion_datos.usuarios = self.gestion_datos.usuarios[self.gestion_datos.usuarios['ID usuario'] != usuario]
             self.gestion_datos.guardar_dataframes()
             return True  
