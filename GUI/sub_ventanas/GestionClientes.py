@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem,
     QMessageBox,
     QCompleter,
-    QTableWidget
+    QTableWidget,
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
@@ -72,8 +72,7 @@ class GestionClientes(QMainWindow, CBackground):
         self.tableWidget_modificar.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
-        self.setupValidatorsCedula()
-        self.setupValidatorsTelefono()
+        self.setupValidators()
         self.frame_formulario.hide()
         df = pd.read_excel("registros.xlsx", sheet_name="Clientes")
         cedulas = df["Cedula"].astype(str).tolist()
@@ -89,20 +88,18 @@ class GestionClientes(QMainWindow, CBackground):
         self.lineEdit_modificar.setCompleter(self.completer)
         self.lineEdit_buscarEliminar.setCompleter(self.completer)
 
-    def setupValidatorsCedula(self):
-        validacion_numero = QtGui.QRegularExpressionValidator(
-            QtCore.QRegularExpression(r"\d{9,12}")
-        )
-        self.lineEdit_addCedula.setValidator(validacion_numero)
-        self.lineEdit_nuevaCedula.setValidator(validacion_numero)
-        self.lineEdit_buscarEliminar.setValidator(validacion_numero)
-        self.lineEdit_modificar.setValidator(validacion_numero)
+    def setupValidators(self):
+        self.setValidator(self.lineEdit_addCedula, r"\d{9,10}")
+        self.setValidator(self.lineEdit_nuevaCedula, r"\d{9,10}")
+        self.setValidator(self.lineEdit_buscarEliminar, r"\d{9,10}")
+        self.setValidator(self.lineEdit_modificar, r"\d{9,10}")
+        self.setValidator(self.lineEdit_addTelefono, r"\d{0,16}")
 
-    def setupValidatorsTelefono(self):
-        validacion_numero = QtGui.QRegularExpressionValidator(
-            QtCore.QRegularExpression(r"\d{0,16}")
+    def setValidator(self, lineEdit, pattern):
+        validator = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(pattern)
         )
-        self.lineEdit_addTelefono.setValidator(validacion_numero)
+        lineEdit.setValidator(validator)
 
     def limpiar_campos(self):
         self.lineEdit_addTelefono.clear()
@@ -145,7 +142,7 @@ class GestionClientes(QMainWindow, CBackground):
         msg_box.exec_()
 
     # Acá se configura la base de datos
-    def mostrar_clientes(self):        
+    def mostrar_clientes(self):
         table: QTableWidget = self.tabla_verClientes
         table.setRowCount(0)
         for i, row in self.gestion_datos.clientes.iterrows():
@@ -153,7 +150,7 @@ class GestionClientes(QMainWindow, CBackground):
             for j, (_, value) in enumerate(row.items()):
                 table.setItem(i, j, QTableWidgetItem(str(value)))
 
-    def mostrar_clientesModificar(self):        
+    def mostrar_clientesModificar(self):
         table: QTableWidget = self.tableWidget_modificar
         table.setRowCount(0)
         for i, row in self.gestion_datos.clientes.iterrows():
@@ -168,7 +165,6 @@ class GestionClientes(QMainWindow, CBackground):
             table.insertRow(i)
             for j, (_, value) in enumerate(row.items()):
                 table.setItem(i, j, QTableWidgetItem(str(value)))
-
 
     def registrar_cliente(self):
         cedula = self.lineEdit_addCedula.text()
@@ -234,7 +230,7 @@ class GestionClientes(QMainWindow, CBackground):
             datos_cliente = self.gestion_datos.clientes[
                 self.gestion_datos.clientes["Cedula"] == cedulaBuscarCliente
             ]
-        #print(datos_cliente)
+        # print(datos_cliente)
         nuevaCedula = self.lineEdit_nuevaCedula.text()
         nuevoNombre = self.lineEdit_nuevoNombre.text()
         nuevoTelefono = self.lineEdit_nuevoTelefono.text()
@@ -267,7 +263,9 @@ class GestionClientes(QMainWindow, CBackground):
 
     def eliminar_cliente(self):
         if not self.lineEdit_buscarEliminar.text():
-            self.aviso_eliminar.setText("Cédula Inexistente. Por favor, verifica la información.")
+            self.aviso_eliminar.setText(
+                "Cédula Inexistente. Por favor, verifica la información."
+            )
             return self.showErrorMessage(
                 "Cédula Inexistente. Por favor, verifica la información."
             )
