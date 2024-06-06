@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem,
     QMessageBox,
     QCompleter,
+    QTableWidget
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
@@ -144,26 +145,30 @@ class GestionClientes(QMainWindow, CBackground):
         msg_box.exec_()
 
     # Acá se configura la base de datos
-    def mostrar_clientes(self):
-        self.tabla_verClientes.setRowCount(0)
+    def mostrar_clientes(self):        
+        table: QTableWidget = self.tabla_verClientes
+        table.setRowCount(0)
         for i, row in self.gestion_datos.clientes.iterrows():
-            self.tabla_verClientes.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tabla_verClientes.setItem(i, j, QTableWidgetItem(str(value)))
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
 
-    def mostrar_clientesModificar(self):
-        self.tableWidget_modificar.setRowCount(0)
+    def mostrar_clientesModificar(self):        
+        table: QTableWidget = self.tableWidget_modificar
+        table.setRowCount(0)
         for i, row in self.gestion_datos.clientes.iterrows():
-            self.tableWidget_modificar.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tableWidget_modificar.setItem(i, j, QTableWidgetItem(str(value)))
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
 
     def mostrar_clientesEliminar(self):
-        self.tableWidget_Eliminar.setRowCount(0)
+        table: QTableWidget = self.tableWidget_Eliminar
+        table.setRowCount(0)
         for i, row in self.gestion_datos.clientes.iterrows():
-            self.tableWidget_Eliminar.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tableWidget_Eliminar.setItem(i, j, QTableWidgetItem(str(value)))
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
+
 
     def registrar_cliente(self):
         cedula = self.lineEdit_addCedula.text()
@@ -239,7 +244,6 @@ class GestionClientes(QMainWindow, CBackground):
                 nuevoNombre,
                 nuevoTelefono,
                 cedulaBuscarCliente,
-                datos_cliente,
             ):
                 self.mostrar_clientes()  # Actualizar la tabla de clientes
                 self.show_success_dialog("Cliente modificado correctamente")

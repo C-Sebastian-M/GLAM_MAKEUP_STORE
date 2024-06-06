@@ -6,12 +6,13 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem,
     QCompleter,
     QMessageBox,
+    QTableWidget
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtGui
 from API.DATA import GestionDatos
 from API.prueba import Inventario
-
+from API.Validaciones import *
 from GUI.sub_ventanas.custom.utils.css import CBackground
 
 
@@ -32,6 +33,7 @@ class InventarioProductos(QMainWindow, CBackground):
         self.modify_guardar_boton.clicked.connect(self.modificar_productos)
         self.buy_buscar_boton.clicked.connect(self.mostrar_formulario2)
         self.buy_add_boton.clicked.connect(self.comprar_stock)
+        self.del_guardar_boton.clicked.connect(self.descontinuar_producto)
         self.inventario = Inventario()
         self.gestion_datos = GestionDatos()
         # Conexión botones barra lateral con páginas
@@ -175,8 +177,6 @@ class InventarioProductos(QMainWindow, CBackground):
         msg_box.setWindowTitle("Éxito")
         msg_box.exec_()
 
-    # Método para definir base de datos ...
-    # self.tabla_ver_productos.setRowCount(0)
 
     def add_productos(self):
         referencia = self.add_referencia_lineEdit.text()
@@ -194,7 +194,6 @@ class InventarioProductos(QMainWindow, CBackground):
                 marca,
                 unidades_actuales,
             ):
-                self.ver_productos()
                 self.show_success_dialog("Producto agregado correctamente")
                 self.aviso_add_label.setText("Producto agregado correctamente")
                 self.limpiar_campos()
@@ -212,27 +211,34 @@ class InventarioProductos(QMainWindow, CBackground):
             self.aviso_add_label.setText(
                 "Algun campo esta vacío. Por favor, verifica la información."
             )
-
+        self.ver_productos()
+        self.ver_productosComprar()
+        self.ver_productosEliminar()
+        self.ver_productosModificar()
+        
     def ver_productos(self):
-        self.tabla_ver_productos.setRowCount(0)
-        for i, row in self.df.iterrows():
-            self.tabla_ver_productos.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tabla_ver_productos.setItem(i, j, QTableWidgetItem(str(value)))
-
+        table: QTableWidget = self.tabla_ver_productos
+        table.setRowCount(0)
+        for i, row in self.gestion_datos.productos.iterrows():
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
+                
     def ver_productosModificar(self):
-        self.tableWidget_modificar.setRowCount(0)
+        table: QTableWidget = self.tableWidget_modificar
+        table.setRowCount(0)
         for i, row in self.gestion_datos.productos.iterrows():
-            self.tableWidget_modificar.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tableWidget_modificar.setItem(i, j, QTableWidgetItem(str(value)))
-
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
+                     
     def ver_productosEliminar(self):
-        self.del_tabla_productos.setRowCount(0)
+        table: QTableWidget = self.del_tabla_productos
+        table.setRowCount(0)
         for i, row in self.gestion_datos.productos.iterrows():
-            self.del_tabla_productos.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.del_tabla_productos.setItem(i, j, QTableWidgetItem(str(value)))
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
 
     def ver_productosComprar(self):
         self.tableWidget_comprarStock.setRowCount(0)
@@ -267,52 +273,52 @@ class InventarioProductos(QMainWindow, CBackground):
             )
 
     def modificar_productos(self):
-        if (
-            self.modify_precio_adquisicion_lineEdit.text()
-            and self.modify_precio_venta_lineEdit.text() != ""
-        ):
-            codigo = int(self.modify_buscar_producto_lineEdit.text())
-            if codigo in self.gestion_datos.productos["Codigo de barras"].values:
-                datos_producto = self.gestion_datos.productos[
-                    self.gestion_datos.productos["Codigo de barras"] == codigo
-                ]
-            elif codigo in self.gestion_datos.productos["Codigo de barras"].values:
-                datos_producto = self.gestion_datos.productos[
-                    self.gestion_datos.productos["Codigo de barras"] == codigo
-                ]
-            marca = self.modify_marca_lineEdit.text()
-            precio_a = float(self.modify_precio_adquisicion_lineEdit.text())
-            precio_v = float(self.modify_precio_venta_lineEdit.text())
-            if not datos_producto.empty:
-                self.inventario.modificar_producto(
-                    marca, precio_a, precio_v, codigo, datos_producto
-                )
-                self.ver_productos()  # Actualizar la tabla de productos
-                self.show_success_dialog("Producto modificado correctamente")
-                self.aviso_modify_label.setText("Produdcto modificado correctamente")
-                self.limpiar_campos()
-                self.frame_formularioModificar.hide()
-                # print(datos_producto)
+        codigo = self.modify_buscar_producto_lineEdit.text()
+        marca = self.modify_marca_lineEdit.text()
+        precio_a = self.modify_precio_adquisicion_lineEdit.text()
+        precio_v = self.modify_precio_venta_lineEdit.text()
+        if self.inventario.modificar_producto(marca, precio_a, precio_v, codigo):
+            self.ver_productos()  # Actualizar la tabla de productos
+            self.show_success_dialog("Producto modificado correctamente")
+            self.aviso_modify_label.setText("Produdcto modificado correctamente")
+            self.limpiar_campos()
+            self.frame_formularioModificar.hide()
+            # print(datos_producto)
         else:
-            self.showErrorMessage("Campos vacíos. Porfavor, verifique la información")
+            self.showErrorMessage("Error en los campos, verifique la información")
             self.aviso_modify_label.setText(
-                "Campos vacíos. Porfavor, verifique la información"
+                "Error en los campos. Porfavor, verifique la información"
             )
-
-    def descontinuar_producto(self):  # Falta terminar
+        self.ver_productosComprar()
+        self.ver_productosEliminar()
+        self.ver_productosModificar()
+        self.ver_productos()
+    
+    def descontinuar_producto(self): 
         codigo = self.del_buscar_producto_lineEdit.text()
-        if codigo in self.gestion_datos.productos["Codigo de barras"].values:
-            self.inventario.descontinuar_producto(codigo)
+        if codigo == "":
+            self.showErrorMessage(
+                    "Campo Vacio."
+                )
+            self.aviso_modify_label.setText(
+                    "Campo Vacio."
+                )
+        elif codigo in self.gestion_datos.productos["Codigo de barras"].values:
+            self.gestion_datos.descontinuar_producto(codigo)
         elif int(codigo) in self.gestion_datos.productos["Codigo de barras"].values:
             codigo = int(codigo)
-            self.inventario.descontinuar_producto(codigo)
-
+            self.gestion_datos.descontinuar_producto(codigo)
+        self.ver_productosComprar()
+        self.ver_productosEliminar()
+        self.ver_productosModificar()
+        self.ver_productos()
+         
     def verificar_existencia_stock(self):
-        if not self.buy_buscar_producto_lineEdit.text():
+        if self.buy_buscar_producto_lineEdit.text() != "":
             codigo = self.buy_buscar_producto_lineEdit.text()
             if (
                 codigo in self.gestion_datos.productos["Codigo de barras"].values
-                or codigo in self.gestion_datos.productos["Codigo de barras"].values
+                or int(codigo) in self.gestion_datos.productos["Codigo de barras"].values
             ):
                 return True
             else:
@@ -321,7 +327,6 @@ class InventarioProductos(QMainWindow, CBackground):
             self.showErrorMessage("Campo vacío, por favor ingrese la información.")
 
     def mostrar_formulario2(self):
-        if not self.buy_cantidad_ingresar_lineEdit.text():
             codigo_barras = self.verificar_existencia_stock()
             if codigo_barras == True:
                 self.frame_formulario_comprar_stock.show()
@@ -332,17 +337,15 @@ class InventarioProductos(QMainWindow, CBackground):
                 self.aviso_modify_label.setText(
                     "Producto Inexistente. Por favor, verifica la información."
                 )
-        else:
-            self.showErrorMessage("Campo vacío. Por favor, verifica la información.")
-            self.buy_aviso_label.setText(
-                "Campo vacío. Por favor, verifica la información."
-            )
 
     def comprar_stock(self):
-        if self.verificar_existencia_stock():
-            codigo = self.buy_buscar_producto_lineEdit.text()
-            stock = self.buy_cantidad_ingresar_lineEdit.text()
-            if int(codigo) in self.gestion_datos.productos["Codigo de barras"].values:
-                codigo = int(codigo)
+        codigo = self.buy_buscar_producto_lineEdit.text()
+        stock = self.buy_cantidad_ingresar_lineEdit.text()
+        if int(codigo) in self.gestion_datos.productos["Codigo de barras"].values:
+            codigo = int(codigo)
+        if stock != "" and validacion_Stock(int(stock)):
             self.inventario.comprar_stock(codigo, int(stock))
             self.ver_productosComprar()
+            self.ver_productosEliminar()
+            self.ver_productosModificar()
+            self.ver_productos()

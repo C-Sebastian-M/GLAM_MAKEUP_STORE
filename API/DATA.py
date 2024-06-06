@@ -292,10 +292,12 @@ class GestionDatos:
         else:
             #print(f"Producto con codigoBarras {codigoBarras} no encontrado.")
             None    
+    
     def descontinuar_producto(self,codigo):
-        if codigo in self.productos["Codigo de barras"].values:
-            id = self.productos[self.productos["Codigo de barras"] == codigo].index
-            self.productos.drop(index=id, inplace=True)
+        producto = self.productos[self.productos["Codigo de barras"] == codigo]
+        if not producto.empty:
+            self.productos = self.productos[self.productos["Codigo de barras"] != codigo]
+            self.guardar_dataframes()
             return True
         else:
             return False

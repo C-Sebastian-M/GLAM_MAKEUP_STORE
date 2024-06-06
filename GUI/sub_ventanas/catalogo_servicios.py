@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem,
     QMessageBox,
     QCompleter,
+    QTableWidget
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
@@ -136,13 +137,14 @@ class GestionServicios(QMainWindow, CBackground):
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
 
-    # Acá se configura la base de datos
+
     def mostrar_servicios(self):
-        self.tabla_verServicios.setRowCount(0)
+        table: QTableWidget = self.tabla_verServicios
+        table.setRowCount(0)
         for i, row in self.gestion_datos.servicios.iterrows():
-            self.tabla_verServicios.insertRow(i)
-            for j, (colname, value) in enumerate(row.items()):
-                self.tabla_verServicios.setItem(i, j, QTableWidgetItem(str(value)))
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
 
     def mostrar_servicioModificar(self):
         self.tableWidget_modificar.setRowCount(0)
@@ -206,23 +208,10 @@ class GestionServicios(QMainWindow, CBackground):
     def modificar_servicio(self):
         id_servicio = self.lineEdit_nuevoId.text()
         nombre_servicio = self.lineEdit_nuevoServicio.text()
-        precio = int(self.lineEdit_nuevoPrecio.text())
+        precio = self.lineEdit_nuevoPrecio.text()
         id_original = self.lineEdit_modificar.text()
-
-        if int(id_original) in self.gestion_datos.servicios["ID servicio"].values:
-            datos_servicio = self.gestion_datos.servicios[
-                self.gestion_datos.servicios["ID servicio"] == int(id_original)
-            ]
-            id_original = int(id_original)
-        elif id_original in self.gestion_datos.servicios["ID servicio"].values:
-            datos_servicio = self.gestion_datos.servicios[
-                self.gestion_datos.servicios["ID servicio"] == id_original
-            ]
-        if not datos_servicio.empty:
-            self.inventario.modificar_servicio(
-                id_servicio, nombre_servicio, precio, id_original, datos_servicio
-            )
-            self.mostrar_servicios()  # Actualizar la tabla de servicios
+        self.inventario.modificar_servicio(id_servicio, nombre_servicio, precio, id_original)
+        self.mostrar_servicios()  # Actualizar la tabla de servicios
 
     def eliminar_servicio(self):
         if not self.lineEdit_buscarEliminar.text():

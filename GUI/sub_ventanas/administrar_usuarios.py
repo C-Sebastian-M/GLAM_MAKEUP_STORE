@@ -88,6 +88,8 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         self.del_tabla_usuarios.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
+        self.frame_formularioModificar.hide()
+        self.modify_buscar_boton.clicked.connect(self.mostrarf_modificar)
         
         # Llamada de método de validación en los LineEdit
         self.setupValidatorsIdUsuario()
@@ -143,7 +145,7 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         usuario = self.add_nombre_usuario_lineEdit.text()
         contraseña = self.add_password_lineEdit.text()
         rol = self.add_rol_combobox.currentIndex()
-        id_usuario = int(self.add_id_usuario_lineEdit.text())
+        id_usuario = self.add_id_usuario_lineEdit.text()
 
         if usuario  != "" and contraseña  != "" and id_usuario != "":
             if usuario in self.gestion_datos.usuarios['usuario'].values:
@@ -160,6 +162,8 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         nuevo_usuario=self.add_nombre_usuario_lineEdit.text()
         nueva_contraseña=self.add_password_lineEdit.text()
         nuevo_rol= self.add_rol_combobox.currentIndex()
+        if nuevo_usuario == "" and nueva_contraseña == "" and nuevo_rol =="":
+            return False
         if nuevo_usuario != "" and nueva_contraseña !="" and nuevo_rol != "":
             if usuario in self.gestion_datos.usuarios['ID usuario'].values:
                 self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
@@ -175,7 +179,7 @@ class AdministrarUsuarios(QMainWindow, CBackground):
                 self.gestion_datos.guardar_dataframes()
                 return True
             return False
-        elif nueva_contraseña !="" and nuevo_usuario == "" and nuevo_rol =="":
+        elif nueva_contraseña !="" and nuevo_usuario == "" and nuevo_rol == "":
             if usuario in self.gestion_datos.usuarios['ID usuario'].values:
                 self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
                 self.gestion_datos.guardar_dataframes()
@@ -184,9 +188,8 @@ class AdministrarUsuarios(QMainWindow, CBackground):
                 usuario = int(usuario)
                 self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'contraseña'] = nueva_contraseña
                 self.gestion_datos.guardar_dataframes()
-                return True
-        
-        elif nueva_contraseña =="" and nuevo_usuario != "" and nuevo_rol =="":
+                return True    
+        elif nueva_contraseña =="" and nuevo_usuario != "" and nuevo_rol == "":
             if usuario in self.gestion_datos.usuarios['ID usuario'].values:
                 self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
                 self.gestion_datos.guardar_dataframes()
@@ -195,8 +198,7 @@ class AdministrarUsuarios(QMainWindow, CBackground):
                 usuario = int(usuario)
                 self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'usuario'] = nuevo_usuario
                 self.gestion_datos.guardar_dataframes()
-                return True
-        
+                return True                  
         elif nuevo_rol !="" and nuevo_usuario  == "" and nueva_contraseña == "":
             if usuario in self.gestion_datos.usuarios['ID usuario'].values:
                 self.gestion_datos.usuarios.loc[self.gestion_datos.usuarios['usuario'] == usuario, 'Rol ID'] = nuevo_rol
@@ -255,7 +257,9 @@ class AdministrarUsuarios(QMainWindow, CBackground):
         
     def eliminar_usuario(self):
         usuario=self.del_buscar_usuario_lineEdit.text()
-        if usuario in self.gestion_datos.usuarios['ID usuario'].values:
+        if usuario == "":
+            return
+        elif usuario in self.gestion_datos.usuarios['ID usuario'].values:
             self.gestion_datos.usuarios = self.gestion_datos.usuarios[self.gestion_datos.usuarios['ID usuario'] != usuario]
             self.gestion_datos.guardar_dataframes()
             return True
@@ -287,5 +291,25 @@ class AdministrarUsuarios(QMainWindow, CBackground):
             self.del_tabla_usuarios.insertRow(i)
             for j, (colname, value) in enumerate(row.items()):
                 self.del_tabla_usuarios.setItem(i, j, QTableWidgetItem(str(value)))
+   
+    def verificar_existencia(self):
+       buscar = self.modify_buscar_usuario_lineEdit.text()
+       if buscar == "":
+           return
+       elif buscar in self.gestion_datos.usuarios["ID usuario"].values or int(buscar) in self.gestion_datos.usuarios["ID usuario"].values:
+            return True
+       else:
+           return False
+                
+    def mostrarf_modificar(self):
+        if self.verificar_existencia():
+            self.frame_formularioModificar.show()
+    
+
+    
+    
+            
+            
+        
 
     

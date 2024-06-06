@@ -114,7 +114,6 @@ class VentasAdmin(QMainWindow, CBackground):
         msg_box.setWindowTitle("Éxito")
         msg_box.exec_()
 
-
     def mostrar_pagos(self):
         table: QTableWidget = self.tableWidget_pagos
         table.setRowCount(0)
@@ -122,7 +121,7 @@ class VentasAdmin(QMainWindow, CBackground):
             table.insertRow(i)
             for j, (_, value) in enumerate(row.items()):
                 table.setItem(i, j, QTableWidgetItem(str(value)))
-
+                
     def mostrar_ventas(self):
         table: QTableWidget = self.tableWidget_modificar
         table.setRowCount(0)
@@ -130,7 +129,11 @@ class VentasAdmin(QMainWindow, CBackground):
             table.insertRow(i)
             for j, (_, value) in enumerate(row.items()):
                 table.setItem(i, j, QTableWidgetItem(str(value)))
-
+        for i, row in self.gestion_datos.venta_servicios.iterrows():
+            table.insertRow(i)
+            for j, (_, value) in enumerate(row.items()):
+                table.setItem(i, j, QTableWidgetItem(str(value)))
+        
     def mostrar_formulario_addPago(self, servicio):
         self.frame_addPago.show()
     
@@ -140,30 +143,37 @@ class VentasAdmin(QMainWindow, CBackground):
     def del_metodoPago(self):
         if self.comboBox_pago.currentIndex() != -1:
             pago = self.comboBox_pago.currenText()
+            if pago == "":
+                self.showErrorMessage("Campo vacio")
             if pago in self.gestion_datos.metodo_pago["Metodos de pago"].values:
                 self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[self.gestion_datos.metodo_pago['ID'] != pago]
                 self.gestion_datos.guardar_dataframes()
-            self.show_success_dialog("Metodo de pago eliminado correctamente")
-            self.aviso_pago.show("Metodo de pago eliminado correctamente")
-            self.limpiar_campos()
-            self.frame_delPago.hide()
-        elif int(pago) in self.gestion_datos.metodo_pago['ID'].values:
-            pago = int(usuario)
-            self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[self.gestion_datos.metodo_pago['ID'] != pago]
-            self.gestion_datos.guardar_dataframes()
-            self.show_success_dialog("Metodo de pago eliminado correctamente")
-            self.aviso_pago.show("Metodo de pago eliminado correctamente")
-            self.limpiar_campos()
-            self.frame_delPago.hide()
-        else:
-            return False  
-                
+                self.show_success_dialog("Metodo de pago eliminado correctamente")
+                self.aviso_pago.show("Metodo de pago eliminado correctamente")
+                self.limpiar_campos()
+                self.frame_delPago.hide()
+            elif int(pago) in self.gestion_datos.metodo_pago['ID'].values:
+                pago = int(usuario)
+                self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[self.gestion_datos.metodo_pago['ID'] != pago]
+                self.gestion_datos.guardar_dataframes()
+                self.show_success_dialog("Metodo de pago eliminado correctamente")
+                self.aviso_pago.show("Metodo de pago eliminado correctamente")
+                self.limpiar_campos()
+                self.frame_delPago.hide()
+
+     
 
     def mostrar_formulario(self):
-        None
-
+        id = self.lineEdit_idVenta.text()
+        if id == "":
+            self.showErrorMessage(
+                    "Producto Inexistente. Por favor, verifica la información."
+                )
+        elif id in self.gestion_datos.venta_productos["ID venta"].values or int(id) in self.gestion_datos.venta_productos["ID venta"].values or id in self.gestion_datos.venta_servicios["ID venta"].values or int(id) in self.gestion_datos.venta_servicios["ID venta"].values:
+            self.frame_contenedorF.show()
+        
     def mostrar_formularioEliminar(self):
-        None
+        self.frame_formularioEliminar.show()
 
     def ConfirmarEliminado(self):
         None
@@ -180,7 +190,11 @@ class VentasAdmin(QMainWindow, CBackground):
     def add_metodoPago(self):
         id_metodo = self.lineEdit_addPago.text()
         metodo = self.lineEdit.text()
-        if id_metodo not in self.gestion_datos.metodo_pago["ID"].values and int(id_metodo) not in self.gestion_datos.metodo_pago["ID"].values:
+        if metodo == "":
+            self.showErrorMessage(
+                    "Producto Inexistente. Por favor, verifica la información."
+                )
+        elif id_metodo not in self.gestion_datos.metodo_pago["ID"].values and int(id_metodo) not in self.gestion_datos.metodo_pago["ID"].values:
             nueva_fila = pd.DataFrame([[id_metodo, metodo]], columns=['ID', 'Metodo de pago'])
             self.gestion_datos.metodo_pago = pd.concat([self.gestion_datos.metodo_pago, nueva_fila], ignore_index=True)
             self.frame_addPago.hide()

@@ -26,105 +26,111 @@ class Cajero:
         else:
             return False
 
-    def modificar_cliente(self, cedulaN, nombreN, telefonoN, cedulaO, datosU):
-        if (
-            cedulaN not in self.gestion_datos.clientes["Cedula"].values
-            or str(cedulaN not in self.gestion_datos.clientes["Cedula"].values)
-            and validar_Cedula(cedulaN)
-            and validacion_Telefono(telefonoN)
-            and validar_NombreCli(nombreN)
-        ):  # Caso en el que se actualizan los 3 datos
-            nuevos_datos = {
-                "Nombre": nombreN,
-                "Telefono": telefonoN,
-                "Cedula": cedulaN,
-            }
-            self.gestion_datos.actualizar_cliente(cedulaO, nuevos_datos)
-            return True
-
-        elif (
-            cedulaN == ""
-            and validacion_Telefono(telefonoN)
-            and validar_NombreCli(nombreN)
-        ):  # Caso en el que se actualizan el telefono y el nombre
-            nuevos_datos = {
-                "Nombre": nombreN,
-                "Telefono": telefonoN,
-                "Cedula": cedulaO,
-            }
-            self.gestion_datos.actualizar_cliente(cedulaO, nuevos_datos)
-            return True
-
-        elif (
-            cedulaN == "" and telefonoN == "" and validar_NombreCli(nombreN)
-        ):  # Caso en el que solo se actualiza el nombre
-            nuevos_datos = {
-                "Nombre": nombreN,
-                "Telefono": datosU["Telefono"],
-                "Cedula": cedulaO,
-            }
-            self.gestion_datos.actualizar_cliente(cedulaO, nuevos_datos)
-            return True
-
-        elif (
-            cedulaN not in self.gestion_datos.clientes["Cedula"].values
-            or str(cedulaN not in self.gestion_datos.clientes["Cedula"].values)
-            and validar_Cedula(cedulaN)
-            and nombreN == ""
-            and telefonoN == ""
-        ):  # Caso en el que solo se actualiza la cedula
-            nuevos_datos = {
-                "Nombre": datosU["Nombre"],
-                "Telefono": datosU["Telefono"],
-                "Cedula": cedulaN,
-            }
-            self.gestion_datos.actualizar_cliente(cedulaO, nuevos_datos)
-            return True
-
-        elif (
-            validacion_Telefono(telefonoN) and cedulaN == "" and nombreN == ""
-        ):  # Caso en el que solo se actualiza el telefono
-            nuevos_datos = {
-                "Nombre": datosU["Nombre"],
-                "Telefono": telefonoN,
-                "Cedula": cedulaO,
-            }
-            self.gestion_datos.actualizar_cliente(cedulaO, nuevos_datos)
-            return True
-
-        elif (
-            cedulaN not in self.gestion_datos.clientes["Cedula"].values
-            or str(cedulaN not in self.gestion_datos.clientes["Cedula"].values)
-            and validacion_Telefono(telefonoN)
-            and validar_Cedula(cedulaN)
-            and nombreN == ""
-        ):  # Caso en el que se actualiza el telefono y cedula
-            nuevos_datos = {
-                "Nombre": datosU["Nombre"],
-                "Telefono": telefonoN,
-                "Cedula": cedulaN,
-            }
-            self.gestion_datos.actualizar_cliente(cedulaO, nuevos_datos)
-            return True
-
-        elif (
-            cedulaN not in self.gestion_datos.clientes["Cedula"].values
-            or str(cedulaN not in self.gestion_datos.clientes["Cedula"].values)
-            and validar_NombreCom(nombreN)
-            and validar_Cedula(cedulaN)
-            and telefonoN == ""
-        ):  # Cedula y nombre
-            nuevos_datos = {
-                "Nombre": nombreN,
-                "Telefono": datosU["Telefono"],
-                "Cedula": cedulaN,
-            }
-            self.gestion_datos.actualizar_cliente(cedulaO, nuevos_datos)
-            return True
-
-        else:
+    def modificar_cliente(self, cedulaN, nombreN, telefonoN,cedulaO):
+        if cedulaN != "" and nombreN !="" and telefonoN != "": #Caso donde se modifican los 3 datos
+            if cedulaO in self.gestion_datos.clientes['Cedula'].values:
+                if cedulaN not in self.gestion_datos.clientes['Cedula'].values:
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Cedula'] = cedulaN
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Nombre'] = nombreN
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Telefono'] = telefonoN
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+                return False
+            elif int(cedulaO) in self.gestion_datos.clientes['Cedula'].values:
+                cedulaO = int(cedulaO)
+                if cedulaN not in self.gestion_datos.clientes['Cedula'].values:
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Cedula'] = cedulaN
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Nombre'] = nombreN
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Telefono'] = telefonoN
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+                return False
             return False
-
+        elif cedulaN != "" and nombreN == "" and telefonoN == "": #Caso donde se modifica solo la cedula
+            if cedulaO in self.gestion_datos.clientes['Cedula'].values:
+                if cedulaN not in self.gestion_datos.clientes['Cedula'].values:
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Cedula'] = cedulaN
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+                return False
+            elif int(cedulaO) in self.gestion_datos.clientes['Cedula'].values:
+                cedulaO = int(cedulaO)
+                if cedulaN not in self.gestion_datos.clientes['Cedula'].values:
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Cedula'] = cedulaN
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+                return False
+            return False
+        elif cedulaN != "" and nombreN != "" and telefonoN == "": #Caso donde se modifica la cedula y el nombre
+            if cedulaO in self.gestion_datos.clientes['Cedula'].values:
+                if cedulaN not in self.gestion_datos.clientes['Cedula'].values:
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Cedula'] = cedulaN
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Nombre'] = nombreN
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+                return False
+            elif int(cedulaO) in self.gestion_datos.clientes['Cedula'].values:
+                cedulaO = int(cedulaO)
+                if cedulaN not in self.gestion_datos.clientes['Cedula'].values:
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Cedula'] = cedulaN
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Nombre'] = nombreN
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+                return False
+            return False
+        elif cedulaN != "" and nombreN =="" and telefonoN != "": #Caso donde se modifica la cedula y el telefono
+            if cedulaO in self.gestion_datos.clientes['Cedula'].values:
+                if cedulaN not in self.gestion_datos.clientes['Cedula'].values:
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Cedula'] = cedulaN
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Telefono'] = telefonoN
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+                return False
+            elif int(cedulaO) in self.gestion_datos.clientes['Cedula'].values:
+                cedulaO = int(cedulaO)
+                if cedulaN not in self.gestion_datos.clientes['Cedula'].values:
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Cedula'] = cedulaN
+                    self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Telefono'] = telefonoN
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+                return False
+            return False
+        elif cedulaN == "" and nombreN !="" and telefonoN != "": #Caso donde se modifica el nombre y el telefono
+            if cedulaO in self.gestion_datos.clientes['Cedula'].values:
+                self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Nombre'] = nombreN
+                self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Telefono'] = telefonoN
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(cedulaO) in self.gestion_datos.clientes['Cedula'].values:
+                cedulaO = int(cedulaO)
+                self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Nombre'] = nombreN
+                self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Telefono'] = telefonoN
+                self.gestion_datos.guardar_dataframes()
+                return True
+            return False
+        elif cedulaN == "" and nombreN =="" and telefonoN != "": #Caso donde se modifica solo el telefono
+            if cedulaO in self.gestion_datos.clientes['Cedula'].values:
+                self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Telefono'] = telefonoN
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(cedulaO) in self.gestion_datos.clientes['Cedula'].values:
+                cedulaO = int(cedulaO)
+                self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Telefono'] = telefonoN
+                self.gestion_datos.guardar_dataframes()
+                return True
+            return False  
+        elif cedulaN == "" and nombreN !="" and telefonoN == "": #Caso donde se modifica solo el nombre
+            if cedulaO in self.gestion_datos.clientes['Cedula'].values:
+                self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Nombre'] = nombreN
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(cedulaO) in self.gestion_datos.clientes['Cedula'].values:
+                cedulaO = int(cedulaO)
+                self.gestion_datos.clientes.loc[self.gestion_datos.clientes['Cedula'] == cedulaO, 'Nombre'] = nombreN
+                self.gestion_datos.guardar_dataframes()
+                return True
+            return False   
+    
     def reporte_diario(self):
         pass
 
@@ -201,32 +207,104 @@ class Inventario:
         else:   
             return False
 
-    def modificar_producto(
-        self, marca, precio_a, precio_v, codigo_barras, datosP):
-        if (
-            codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values
-            or str(codigo_barras not in self.gestion_datos.productos["Codigo de barras"].values)
-            and validacion_Marca(marca)
-            and validacion_Precio(precio_a)
-            and validacion_Precio(precio_v)
-        ):  # Caso en el que se actualizan Todos
-            
-            nuevos_datos = {
-                "Codigo de barras": codigo_barras,
-                "Referencia": datosP["Referencia"],
-                "Marca": marca,
-                "Precio venta": float(precio_v),
-                "Precio de adquisicion": float(precio_a),
-                "Unidades actuales": datosP["Unidades actuales"],
-            }
-            self.gestion_datos.actualizar_producto(codigo_barras, nuevos_datos)
-            return True
+    def modificar_producto(self,marca, precio_a, precio_v, codigo):
+        if marca != "" and precio_a !="" and precio_v != "" and validacion_Marca(marca) and validacion_Precio(precio_v) and validacion_Precio(precio_a): #Caso donde se modifican los 3 datos
+            precio_a = float(precio_a)
+            precio_v = float(precio_v)
+            if codigo in self.gestion_datos.productos['Codigo de barras'].values:
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Marca'] = marca
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio de adquisicion'] = precio_a
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio venta'] = precio_v
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(codigo) in self.gestion_datos.productos['Codigo de barras'].values:
+                    codigo = int(codigo)
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Marca'] = marca
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio de adquisicion'] = precio_a
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio venta'] = precio_v
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False  
+        elif marca != "" and precio_a !="" and precio_v == "" and validacion_Marca(marca) and validacion_Precio(precio_a): #Caso donde se modifica marca y precio_a
+            precio_a = float(precio_a)
+            if codigo in self.gestion_datos.productos['Codigo de barras'].values:
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Marca'] = marca
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio de adquisicion'] = precio_a
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(codigo) in self.gestion_datos.productos['Codigo de barras'].values:
+                    codigo = int(codigo)
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Marca'] = marca
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio de adquisicion'] = precio_a
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False 
+        elif marca != "" and precio_a =="" and precio_v != "" and validacion_Marca(marca) and validacion_Precio(precio_v): #Caso donde se modifica marca y precio_v
+            precio_v = float(precio_v)
+            if codigo in self.gestion_datos.productos['Codigo de barras'].values:
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Marca'] = marca
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio venta'] = precio_v
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(codigo) in self.gestion_datos.productos['Codigo de barras'].values:
+                    codigo = int(codigo)
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Marca'] = marca
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio venta'] = precio_v
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False 
+        elif marca == "" and precio_a !="" and precio_v != "" and validacion_Precio(precio_v) and validacion_Precio(precio_a): #Caso donde se modifican precio_v y precio_a
+            precio_a = float(precio_a)
+            precio_v = float(precio_v)
+            if codigo in self.gestion_datos.productos['Codigo de barras'].values:
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio de adquisicion'] = precio_a
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio venta'] = precio_v
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(codigo) in self.gestion_datos.productos['Codigo de barras'].values:
+                    codigo = int(codigo)
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio de adquisicion'] = precio_a
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio venta'] = precio_v
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False 
+        elif marca == "" and precio_a !="" and precio_v == ""  and validacion_Precio(precio_a): #Caso donde se modifica solo precio_a
+            precio_a = float(precio_a)
+            if codigo in self.gestion_datos.productos['Codigo de barras'].values:
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio de adquisicion'] = precio_a
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(codigo) in self.gestion_datos.productos['Codigo de barras'].values:
+                    codigo = int(codigo)
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio de adquisicion'] = precio_a
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False 
+        elif marca == "" and precio_a =="" and precio_v != "" and validacion_Precio(precio_v): #Caso donde se modifica solo precio_v
+            precio_v = float(precio_v)
+            if codigo in self.gestion_datos.productos['Codigo de barras'].values:
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio venta'] = precio_v
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(codigo) in self.gestion_datos.productos['Codigo de barras'].values:
+                    codigo = int(codigo)
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Precio venta'] = precio_v
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False 
+        elif marca != "" and precio_a =="" and precio_v == "" and validacion_Marca(marca): #Caso donde se modifica solo marca
+            if codigo in self.gestion_datos.productos['Codigo de barras'].values:
+                self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Marca'] = marca
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(codigo) in self.gestion_datos.productos['Codigo de barras'].values:
+                    codigo = int(codigo)
+                    self.gestion_datos.productos.loc[self.gestion_datos.productos['Codigo de barras'] == codigo, 'Marca'] = marca
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False 
         else:
             return False
-
-
-    def descontinuar_producto(self,codigo):
-        GestionDatos.descontinuar_producto(codigo)
 
     def comprar_stock(self, codigoB, cantidad):
         if codigoB in self.gestion_datos.productos["Codigo de barras"].values:
@@ -261,34 +339,107 @@ class Inventario:
     def eliminar_servicio(self,servicio):
         self.gestion_datos.eliminar_servicio(servicio)
     
-    def modificar_servicio(self, id, nombreN, precioN, idO,datosS):
-
-        if (idO not in self.gestion_datos.servicios["ID servicio"].values
-            or str(idO not in self.gestion_datos.servicios["ID servicio"].values)
-            and id  in self.gestion_datos.servicios["ID servicio"].values
-            or str(id  in self.gestion_datos.servicios["ID servicio"].values)
-            and validacion_Precio(id)
-            and validacion_Precio(idO)
-            and validar_NombreServ(nombreN)
-            and validacion_Precio(precioN)
-        ):  # Caso en el que se actualizan Todos
-            nuevos_datos = {
-                "ID servicio": id,
-                "Nombre Servicio": nombreN,
-                "Costo": precioN
-            }
-            self.gestion_datos.actualizar_servicio(idO, nuevos_datos)
-            return True
-        else:
-            return False
-    
-    
+    def modificar_servicio(self,id_servicio, nombre_servicio, precio, id_original,):
+        if id_servicio != "" and nombre_servicio !="" and precio != "" and validacion_Precio(id_servicio) and validar_NombreCom(nombre_servicio) and validacion_Precio(precio) and id_servicio not in self.gestion_datos.servicios["ID servicio"].values: #Caso donde se modifican los 3 datos
+            precio = float(precio)
+            if id_original in self.gestion_datos.servicios['ID servicio'].values:
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Nombre servicio'] = nombre_servicio
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Costo'] = precio
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(id_original) in self.gestion_datos.servicios['ID servicio'].values:
+                    id_original = int(id_original)
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Nombre servicio'] = nombre_servicio
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Costo'] = precio
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False  
+        elif id_servicio != "" and nombre_servicio =="" and precio == "" and validacion_Precio(id_servicio)  and id_servicio not in self.gestion_datos.servicios["ID servicio"].values: #Caso donde se modifca solo el ID
+            if id_original in self.gestion_datos.servicios['ID servicio'].values:
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(id_original) in self.gestion_datos.servicios['ID servicio'].values:
+                    id_original = int(id_original)
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False  
+        elif id_servicio != "" and nombre_servicio !="" and precio == "" and validacion_Precio(id_servicio) and validar_NombreCom(nombre_servicio) and id_servicio not in self.gestion_datos.servicios["ID servicio"].values: #Caso donde se modifican ID y nombre
+            if id_original in self.gestion_datos.servicios['ID servicio'].values:
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Nombre servicio'] = nombre_servicio
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(id_original) in self.gestion_datos.servicios['ID servicio'].values:
+                    id_original = int(id_original)
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Nombre servicio'] = nombre_servicio
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False      
+        elif id_servicio != "" and nombre_servicio =="" and precio != "" and validacion_Precio(id_servicio) and validacion_Precio(precio) and id_servicio not in self.gestion_datos.servicios["ID servicio"].values: #Caso donde se modifica ID y precio
+            precio = float(precio)
+            if id_original in self.gestion_datos.servicios['ID servicio'].values:
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Costo'] = precio
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(id_original) in self.gestion_datos.servicios['ID servicio'].values:
+                    id_original = int(id_original)
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Costo'] = precio
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False     
+        elif id_servicio == "" and nombre_servicio !="" and precio != "" and validacion_Precio(precio) and validar_NombreCom(nombre_servicio): #Caso donde se modifica Nombre y precio
+            precio = float(precio)
+            if id_original in self.gestion_datos.servicios['ID servicio'].values:
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Costo'] = precio
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(id_original) in self.gestion_datos.servicios['ID servicio'].values:
+                    id_original = int(id_original)
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'ID servicio'] = id_servicio
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Costo'] = precio
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False 
+        elif id_servicio == "" and nombre_servicio !="" and precio == "" and validar_NombreCom(nombre_servicio): #Caso donde se modifica solo el nombre
+            if id_original in self.gestion_datos.servicios['ID servicio'].values:
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Nombre servicio'] = nombre_servicio
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(id_original) in self.gestion_datos.servicios['ID servicio'].values:
+                    id_original = int(id_original)
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Nombre servicio'] = nombre_servicio
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False 
+        elif id_servicio == "" and nombre_servicio =="" and precio != "" and validacion_Precio(precio): #Caso donde se modifica solo el nombre
+            if id_original in self.gestion_datos.servicios['ID servicio'].values:
+                self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Costo'] = precio
+                self.gestion_datos.guardar_dataframes()
+                return True
+            elif int(id_original) in self.gestion_datos.servicios['ID servicio'].values:
+                    id_original = int(id_original)
+                    self.gestion_datos.servicios.loc[self.gestion_datos.servicios['ID servicio'] == id_original, 'Costo'] = precio
+                    self.gestion_datos.guardar_dataframes()
+                    return True
+            return False        
+        
+        
+        
+        
     def filtrar_fecha_actual(self):
         fecha_actual = datetime.datetime.now()
-        self.gestion_datos.productos['Fecha'] = pd.to_datetime(self.gestion_datos.productos['Fecha'])
-        self.filtrado_productos = self.gestion_datos.productos[self.gestion_datos.productos['Fecha'] == fecha_actual]
-        self.filtrado_productos = self.filtrado_productos.reset_index(drop=True)
-        return not self.filtrado_productos.empty
+        self.gestion_datos.servicios['Fecha'] = pd.to_datetime(self.gestion_datos.servicios['Fecha'])
+        self.filtrado_servicios = self.gestion_datos.servicios[self.gestion_datos.servicios['Fecha'] == fecha_actual]
+        self.filtrado_servicios = self.filtrado_servicios.reset_index(drop=True)
+        return not self.filtrado_servicios.empty
         
         
 class Reportes:

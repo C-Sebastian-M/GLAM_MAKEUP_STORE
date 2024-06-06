@@ -411,6 +411,7 @@ class Caja(QMainWindow):
             for j, (colname, value) in enumerate(row.items()):
                 self.TaSer.setItem(i, j, QTableWidgetItem(str(value)))
         
+        
     def vaciar_carrito(self):
         self.changePay()
         self.changePro()
