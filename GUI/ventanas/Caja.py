@@ -93,6 +93,7 @@ class Caja(QMainWindow):
         self.posibleTelefono = None
         self.posibleNombre = None
         self.nombreCliente = None
+        self.telefonoCliente = None
         self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
         self.BotonCliente.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Clientes_2))
         self.BotonProductos.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Productos_3))
@@ -279,6 +280,7 @@ class Caja(QMainWindow):
         self.posibleTelefono = self.Tel_2.text()
         self.cedulaCliente = self.Ced_2.text()
         self.nombreCliente = self.Nom_2.text()
+        self.telefonoCliente = self.Tel_2.text()
         
         
     def CheckNewClient(self):
@@ -286,7 +288,7 @@ class Caja(QMainWindow):
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle("Validación")
         msg_box.setStandardButtons(QMessageBox.Ok)
-        if self.cajero.añadir_cliente(self.posibleCedula, self.posibleNombre, self.posibleTelefono):
+        if self.cajero.añadir_cliente(self.posibleCedula, self.posibleNombre, self.telefonoCliente):
             msg_box.setText("Cliente ingresado con éxito")
             msg_box.exec_()
             self.LabelCedula.hide()
@@ -325,7 +327,7 @@ class Caja(QMainWindow):
         elif str(cedula) in str(self.gestion_datos.clientes["Cedula"].values): #Comprobar si dato ya existe
                 self.cedulaCliente = cedula
                 cliente = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] == int(cedula)]
-                self.nombreCliente = cliente.loc[:,"Nombre"]
+                self.nombreCliente = cliente["Nombre"]
                 msg_box.setText("Cliente encontrado en la lista")
         else:
             msg_box.setText("Cliente no encontrado")
@@ -370,10 +372,10 @@ class Caja(QMainWindow):
         cantidad = self.StockServicios.text()
         if cantidad != "" and id_servicio != "":
             codigo = 0
-            datos_servicio = self.gestion_datos.servicio[self.gestion_datos.servicios["ID servicio"] == (id_servicio)]
-            while codigo not in self.gestion_datos.venta_servicios["ID venta"].values:
+            datos_servicio = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == (id_servicio)]
+            while codigo in self.gestion_datos.venta_servicios["ID venta"].values:
                 codigo = random.randint(1,1000)
-            self.gestion_datos.agregar_venta_producto(codigo, self.cedulaCliente, self.nombreCliente,datos_servicio.loc[:,"Nombre servicio"], cantidad, self.cajero.mostra_total_servicios(id_servicio, int(cantidad)), 0)
+            self.gestion_datos.agregar_venta_producto(codigo, self.cedulaCliente, self.nombreCliente,datos_servicio.loc[:,"Nombre Servicio"], cantidad, self.cajero.mostra_total_servicios(id_servicio, int(cantidad)), 0)
             self.mostrar_total_servicios()
             msg_box.setText("Servicio añadido")
             msg_box.exec_()
@@ -444,14 +446,14 @@ class Caja(QMainWindow):
         precio = self.cajero.factura_con()
         archivo = open("mi_archivo.txt", "w")
         archivo.write("-----------Factura---------\n")
-        archivo.write(f"Nombre Cliente = {self.posibleNombre}\n")
-        archivo.write(f"Nombre Cedula cliente = {self.posibleCedula}\n")
+        archivo.write(f"Nombre Cliente = {self.nombreCliente}\n")
+        archivo.write(f"Nombre Cedula cliente = {self.cedulaCliente}\n")
         self.cajero.serviciosC.to_excel("comprasde servicios.xlsx")
         self.cajero.df.to_excel("compras de productos..xlsx")
         archivo.write(f"Total {precio}")
         archivo.close()
         if validar_Cedula(self.posible_cliente) and validacion_Telefono(self.posibleTelefono) and validar_NombreCom(self.posibleNombre):
-            self.gestion_datos.agregar_cliente(self.posibleCedula,self.posibleNombre,self.posibleTelefono)
+            self.gestion_datos.agregar_cliente(self.posibleCedula,self.posibleNombre, self.posibleTelefono)
 
         
 

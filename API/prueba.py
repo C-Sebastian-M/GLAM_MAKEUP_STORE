@@ -156,11 +156,11 @@ class Cajero:
         if id in self.gestion_datos.servicios["ID servicio"].values:
             datos_servicio = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == (id)]
         elif int(id) in self.gestion_datos.servicios["ID servicio"].values:
-            datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == int(id)]
+            datos_servicio = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == int(id)]
         else:
             return False
-        precio = datos_servicio["Costo"]
-        preciots = cantidad_s*precio
+        precios = datos_servicio["Costo"]
+        preciots = cantidad_s*precios
         nuevo_servicio = pd.DataFrame([[datos_servicio["Nombre Servicio"],cantidad_s, preciots]], columns=["Nombre","Cantidad","Precio total"])
         self.serviciosC = pd.concat([self.df, nuevo_servicio], ignore_index=True)
         self.serviciosC = self.serviciosC.reset_index(drop=True)
