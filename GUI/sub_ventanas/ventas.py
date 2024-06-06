@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem,
     QMessageBox,
     QCompleter,
-    QTableWidget
+    QTableWidget,
 )
 from PyQt5.QtCore import QPropertyAnimation, Qt, QStringListModel
 from PyQt5 import QtCore, QtWidgets, QtGui
@@ -14,6 +14,7 @@ from API.DATA import GestionDatos
 from API.Validaciones import *
 from API.prueba import Cajero
 from GUI.sub_ventanas.custom.utils.css import CBackground
+
 
 class VentasAdmin(QMainWindow, CBackground):
     def __init__(self):
@@ -44,18 +45,18 @@ class VentasAdmin(QMainWindow, CBackground):
         self.frame_formularioEliminar.hide()
         self.frame_addPago.hide()
         self.frame_delPago.hide()
-        self.comboBox_pago.setCurrentIndex(-1)
-        #self.df = pd.read_excel("registros.xlsx", sheet_name="productosServicios")
-        #id_ventas = self.df["ID venta"].astype(str).tolist()
-        #self.modelo_datos = QStringListModel(id_ventas)
-        #self.completer = QCompleter(self.modelo_datos, self)
-        #self.completer.setCaseSensitivity(False)  # Ignorar mayúsculas y minúsculas
-        #self.completer.setFilterMode(
+        self.comboBox_pago.setCurrentIndex(0)
+        # self.df = pd.read_excel("registros.xlsx", sheet_name="productosServicios")
+        # id_ventas = self.df["ID venta"].astype(str).tolist()
+        # self.modelo_datos = QStringListModel(id_ventas)
+        # self.completer = QCompleter(self.modelo_datos, self)
+        # self.completer.setCaseSensitivity(False)  # Ignorar mayúsculas y minúsculas
+        # self.completer.setFilterMode(
         #    Qt.MatchContains
-        #)  # Coincidir con cualquier parte del texto
-        #self.completer.setCompletionMode(QCompleter.PopupCompletion)
-        #self.completer.setPopup(self.listView_buscar)
-        #self.lineEdit_idVenta.setCompleter(self.completer)
+        # )  # Coincidir con cualquier parte del texto
+        # self.completer.setCompletionMode(QCompleter.PopupCompletion)
+        # self.completer.setPopup(self.listView_buscar)
+        # self.lineEdit_idVenta.setCompleter(self.completer)
 
         # Mas botones
         self.pushButton_pagos.clicked.connect(
@@ -71,7 +72,20 @@ class VentasAdmin(QMainWindow, CBackground):
         self.pagos = self.gestion_datos.metodo_pago["Metodo de pago"].tolist()
         self.comboBox_pago.addItems(self.pagos)
         self.pushButton_ventas.clicked.connect(self.limpiar_campos)
-       
+        self.setupValidators()
+        
+    def setupValidators(self):
+        self.setValidator(self.lineEdit_cedula, r"\d{9,10}")
+        self.setValidator(self.lineEdit_cantidad, r"\d{10}")
+        self.setValidator(self.lineEdit_cantidad, r"\d{0,16}")
+        self.setValidator(self.lineEdit_idVenta, r"\d{3}")
+
+    def setValidator(self, lineEdit, pattern):
+        validator = QtGui.QRegularExpressionValidator(
+            QtCore.QRegularExpression(pattern)
+        )
+        lineEdit.setValidator(validator)
+
     def limpiar_campos(self):
         self.lineEdit_addPago.clear()
         self.lineEdit.clear()
@@ -99,7 +113,7 @@ class VentasAdmin(QMainWindow, CBackground):
                 QtCore.QEasingCurve.InOutQuart
             )  # InQuad, InOutQuad, InCubic, InOutExpo
             self.animacion.start()
-    
+
     def showErrorMessage(self, message):
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Warning)
@@ -121,7 +135,7 @@ class VentasAdmin(QMainWindow, CBackground):
             table.insertRow(i)
             for j, (_, value) in enumerate(row.items()):
                 table.setItem(i, j, QTableWidgetItem(str(value)))
-                
+
     def mostrar_ventas(self):
         table: QTableWidget = self.tableWidget_modificar
         table.setRowCount(0)
@@ -133,70 +147,84 @@ class VentasAdmin(QMainWindow, CBackground):
             table.insertRow(i)
             for j, (_, value) in enumerate(row.items()):
                 table.setItem(i, j, QTableWidgetItem(str(value)))
-        
+
     def mostrar_formulario_addPago(self, servicio):
         self.frame_addPago.show()
-    
+
     def mostrar_formulario_delPago(self):
         self.frame_delPago.show()
-    
+
     def del_metodoPago(self):
         if self.comboBox_pago.currentIndex() != -1:
-            pago = self.comboBox_pago.currenText()
+            pago = self.comboBox_pago.currentText()
             if pago == "":
                 self.showErrorMessage("Campo vacio")
-            if pago in self.gestion_datos.metodo_pago["Metodos de pago"].values:
-                self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[self.gestion_datos.metodo_pago['ID'] != pago]
+            if pago in self.gestion_datos.metodo_pago["Metodo de pago"].values:
+                self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[
+                    self.gestion_datos.metodo_pago["ID"] != pago
+                ]
                 self.gestion_datos.guardar_dataframes()
                 self.show_success_dialog("Metodo de pago eliminado correctamente")
-                self.aviso_pago.show("Metodo de pago eliminado correctamente")
+                self.aviso_pago.setText("Metodo de pago eliminado correctamente")
                 self.limpiar_campos()
                 self.frame_delPago.hide()
-            elif int(pago) in self.gestion_datos.metodo_pago['ID'].values:
+            elif int(pago) in self.gestion_datos.metodo_pago["ID"].values:
                 pago = int(usuario)
-                self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[self.gestion_datos.metodo_pago['ID'] != pago]
+                self.gestion_datos.metodo_pago = self.gestion_datos.metodo_pago[
+                    self.gestion_datos.metodo_pago["ID"] != pago
+                ]
                 self.gestion_datos.guardar_dataframes()
                 self.show_success_dialog("Metodo de pago eliminado correctamente")
-                self.aviso_pago.show("Metodo de pago eliminado correctamente")
+                self.aviso_pago.setText("Metodo de pago eliminado correctamente")
                 self.limpiar_campos()
                 self.frame_delPago.hide()
-
-     
 
     def mostrar_formulario(self):
         id = self.lineEdit_idVenta.text()
         if id == "":
             self.showErrorMessage(
-                    "Producto Inexistente. Por favor, verifica la información."
-                )
-        elif id in self.gestion_datos.venta_productos["ID venta"].values or int(id) in self.gestion_datos.venta_productos["ID venta"].values or id in self.gestion_datos.venta_servicios["ID venta"].values or int(id) in self.gestion_datos.venta_servicios["ID venta"].values:
+                "Producto Inexistente. Por favor, verifica la información."
+            )
+        elif (
+            id in self.gestion_datos.venta_productos["ID venta"].values
+            or int(id) in self.gestion_datos.venta_productos["ID venta"].values
+            or id in self.gestion_datos.venta_servicios["ID venta"].values
+            or int(id) in self.gestion_datos.venta_servicios["ID venta"].values
+        ):
             self.frame_contenedorF.show()
-        
+
     def mostrar_formularioEliminar(self):
         self.frame_formularioEliminar.show()
 
     def ConfirmarEliminado(self):
         None
-    
+
     def CancelarEliminado(self):
         None
-    
-    def guardarInfo(self):  
+
+    def guardarInfo(self):
         None
+
     def mostrar_calendario(self):
-         None
-    
+        None
 
     def add_metodoPago(self):
         id_metodo = self.lineEdit_addPago.text()
         metodo = self.lineEdit.text()
         if metodo == "":
             self.showErrorMessage(
-                    "Producto Inexistente. Por favor, verifica la información."
-                )
-        elif id_metodo not in self.gestion_datos.metodo_pago["ID"].values and int(id_metodo) not in self.gestion_datos.metodo_pago["ID"].values:
-            nueva_fila = pd.DataFrame([[id_metodo, metodo]], columns=['ID', 'Metodo de pago'])
-            self.gestion_datos.metodo_pago = pd.concat([self.gestion_datos.metodo_pago, nueva_fila], ignore_index=True)
+                "Producto Inexistente. Por favor, verifica la información."
+            )
+        elif (
+            id_metodo not in self.gestion_datos.metodo_pago["ID"].values
+            and int(id_metodo) not in self.gestion_datos.metodo_pago["ID"].values
+        ):
+            nueva_fila = pd.DataFrame(
+                [[id_metodo, metodo]], columns=["ID", "Metodo de pago"]
+            )
+            self.gestion_datos.metodo_pago = pd.concat(
+                [self.gestion_datos.metodo_pago, nueva_fila], ignore_index=True
+            )
             self.frame_addPago.hide()
             self.pago = []
             self.pagos = self.gestion_datos.metodo_pago["Metodo de pago"].tolist()
