@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 from API.DATA import GestionDatos
 from API.Validaciones import *
 from API.prueba import Cajero
-
+from DATA.database import DatabaseManager
 from GUI.sub_ventanas.custom.utils.css import CBackground
 
 
@@ -25,6 +25,13 @@ class GestionClientes(QMainWindow, CBackground):
             self,
         )
         self.gestion_datos = GestionDatos()
+        self.db_manager = DatabaseManager(
+            host="localhost",
+            user="root",
+            password="3245619850",
+            database="glam_makeup_store",
+        )
+        self.db_manager.connect()
         self.cajero = Cajero()
         self.mostrar_clientes()
         self.mostrar_clientesModificar()
@@ -143,28 +150,18 @@ class GestionClientes(QMainWindow, CBackground):
 
     # Acá se configura la base de datos
     def mostrar_clientes(self):
-        table: QTableWidget = self.tabla_verClientes
-        table.setRowCount(0)
-        for i, row in self.gestion_datos.clientes.iterrows():
-            table.insertRow(i)
-            for j, (_, value) in enumerate(row.items()):
-                table.setItem(i, j, QTableWidgetItem(str(value)))
-
-    def mostrar_clientesModificar(self):
-        table: QTableWidget = self.tableWidget_modificar
-        table.setRowCount(0)
-        for i, row in self.gestion_datos.clientes.iterrows():
-            table.insertRow(i)
-            for j, (_, value) in enumerate(row.items()):
-                table.setItem(i, j, QTableWidgetItem(str(value)))
-
-    def mostrar_clientesEliminar(self):
-        table: QTableWidget = self.tableWidget_Eliminar
-        table.setRowCount(0)
-        for i, row in self.gestion_datos.clientes.iterrows():
-            table.insertRow(i)
-            for j, (_, value) in enumerate(row.items()):
-                table.setItem(i, j, QTableWidgetItem(str(value)))
+        tableR: QTableWidget = self.tabla_verClientes
+        tableM: QTableWidget = self.tableWidget_modificar
+        registros, columnas = self.db_manager.obtener_tablaCliente("cliente")
+        if registros:
+            tableR,tableM.setRowCount(len(registros))
+            tableR,tableM.setColumnCount(len(registros[0]))
+            tableR,tableM.setHorizontalHeaderLabels(columnas)
+            for i, row in enumerate(registros):
+                for j, datos in enumerate(row):
+                    tableR,tableM.setItem(i, j, QTableWidgetItem(str(datos)))
+        else:
+            tableR,tableM.clear()
 
     def registrar_cliente(self):
         cedula = self.lineEdit_addCedula.text()
@@ -174,9 +171,8 @@ class GestionClientes(QMainWindow, CBackground):
             validar_Cedula(cedula)
             and validacion_Telefono(telefono)
             and validar_NombreCom(nombre)
-            and cedula not in self.gestion_datos.clientes["Cedula"].values
         ):
-            self.gestion_datos.agregar_cliente(cedula, nombre, telefono)
+
             self.mostrar_clientes()
             self.show_success_dialog("Cliente registrado con éxito.")
             self.aviso_add.setText("Cliente registrado con éxito.")

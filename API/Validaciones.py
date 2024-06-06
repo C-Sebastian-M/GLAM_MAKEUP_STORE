@@ -9,7 +9,7 @@ def validar_NombreCom(nombre)->bool:
   #Validar cedula
 def validar_Cedula(cedula)->bool:
         cedula=str(cedula)
-        if len(str(cedula)) <7 or  len(str(cedula)) >=12:
+        if len(str(cedula)) <7 or  len(str(cedula)) >=10:
             return False
         elif not cedula.isdigit():
             return False

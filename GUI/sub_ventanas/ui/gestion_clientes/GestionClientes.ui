@@ -555,44 +555,6 @@ QComboBox::down-arrow:hover {
                    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                     <bool>false</bool>
                    </attribute>
-                   <column>
-                    <property name="text">
-                     <string>CÉDULA</string>
-                    </property>
-                    <property name="whatsThis">
-                     <string/>
-                    </property>
-                    <property name="textAlignment">
-                     <set>AlignCenter</set>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>NOMBRE</string>
-                    </property>
-                    <property name="textAlignment">
-                     <set>AlignCenter</set>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>TELÉFONO</string>
-                    </property>
-                    <property name="toolTip">
-                     <string/>
-                    </property>
-                    <property name="whatsThis">
-                     <string/>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <stylestrategy>PreferDefault</stylestrategy>
-                     </font>
-                    </property>
-                    <property name="textAlignment">
-                     <set>AlignCenter</set>
-                    </property>
-                   </column>
                   </widget>
                  </item>
                  <item>
@@ -824,21 +786,6 @@ QComboBox::down-arrow:hover {
                      <attribute name="horizontalHeaderDefaultSectionSize">
                       <number>200</number>
                      </attribute>
-                     <column>
-                      <property name="text">
-                       <string>CÉDULA</string>
-                      </property>
-                     </column>
-                     <column>
-                      <property name="text">
-                       <string>NOMBRE</string>
-                      </property>
-                     </column>
-                     <column>
-                      <property name="text">
-                       <string>TELÉFONO</string>
-                      </property>
-                     </column>
                     </widget>
                    </item>
                   </layout>
@@ -1046,21 +993,6 @@ QListView::item:selected {
                    <attribute name="horizontalHeaderDefaultSectionSize">
                     <number>200</number>
                    </attribute>
-                   <column>
-                    <property name="text">
-                     <string>CÉDULA</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>NOMBRE</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>TELÉFONO</string>
-                    </property>
-                   </column>
                   </widget>
                  </item>
                  <item>

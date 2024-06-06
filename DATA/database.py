@@ -47,6 +47,17 @@ class DatabaseManager:
         except Error as e:
             print(f"Error al modificar la tabla: {e}")
             
+    def obtener_tablaCliente(self, table):
+        try:
+            query = f"SELECT * FROM {table}"
+            self.cursor.execute(query)
+            registros = self.cursor.fetchall()
+            nombre_columnas = [i[0] for i in self.cursor.description]
+            return registros, nombre_columnas
+        except Error as e:
+            print(f"Error al obtener registros de la tabla {table}: {e}")
+            return []           
+            
     def check_cliente(self, cedula):
         check = f"SELECT COUNT(*) FROM cliente WHERE cedula = %s"
         self.cursor.execute(check, (cedula,))
@@ -69,7 +80,7 @@ class DatabaseManager:
     def modify_cliente(self, cedula, nueva_cedula ,nombre, telefono):
         try:
             value = self.check_cliente(cedula)
-            if value == 0:
+            if value > 0:
                 modify = f"UPDATE cliente SET cedula = %s, nombre = %s, telefono = %s WHERE cedula = %s" 
                 self.cursor.execute(modify, (nueva_cedula, nombre, telefono, cedula))
                 self.connection.commit()
@@ -77,7 +88,18 @@ class DatabaseManager:
             return False
         except Error as e:
             print(f"Error al modificar al ciente con cedula {cedula}: {e}")
-            
+    
+    def delete_cliente(self, cedula, estado):
+        try:
+            value = self.check_cliente(cedula)
+            if value > 0:
+                delete = f"UPDATE cliente SET estado = %s WHERE cedula = %s"
+                self.cursor.execute(delete, (estado, cedula))
+                return True
+            return False
+        except Error as e:
+            print(f"Error al eliminar el cliente: {e}")
+                
     def close_connection(self):
         """Cierra la conexión a la base de datos."""
         if self.connection.is_connected():
@@ -86,23 +108,8 @@ class DatabaseManager:
             print("Conexión a MySQL cerrada")
 
 
-if __name__ == "__main__":
-    db_manager = DatabaseManager(
-        host="localhost",
-        user="root",
-        password="3245619850",
-        database="glam_makeup_store",
-    )
-
-    db_manager.connect()
-
-    # Ejemplo de creación de una nueva tabla
-    """db_manager.create_table(
-        "NuevaTabla", "id INT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(50), edad INT"
-    )"""
-    #Modificar una tabla, agregarle nueva columna
-    """db_manager.alter_table("cliente", "estado", "BOOLEAN DEFAULT FALSE")"""
-    
-    #db_manager.create_table("", "")
-
-    db_manager.close_connection()
+    def close_connection(self):
+            if self.connection.is_connected():
+                self.cursor.close()
+                self.connection.close()
+                print("Conexión a MySQL cerrada")
