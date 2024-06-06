@@ -149,21 +149,23 @@ class Cajero:
         nuevo_producto = pd.DataFrame([[datos_producto["Referencia"],cantidad,preciot]], columns=["Nombre","Cantidad","Precio total"])
         self.df= pd.concat([self.df, nuevo_producto], ignore_index=True)
         self.df = self.df.reset_index(drop=True)
+        return preciot
        
         
-    def mostra_total_servicios(self, id, cantidad):
+    def mostra_total_servicios(self, id, cantidad_s):
         if id in self.gestion_datos.servicios["ID servicio"].values:
-            datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == (id)]
+            datos_servicio = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == (id)]
         elif int(id) in self.gestion_datos.servicios["ID servicio"].values:
             datos_producto = self.gestion_datos.servicios[self.gestion_datos.servicios["ID servicio"] == int(id)]
         else:
             return False
-        precio = datos_producto["Costo"]
-        preciot = cantidad*precio
-        nuevo_producto = pd.DataFrame([[datos_producto["Nombre Servicio"],cantidad, preciot]], columns=["Nombre","Cantidad","Precio total"])
-        self.serviciosC = pd.concat([self.df, nuevo_producto], ignore_index=True)
+        precio = datos_servicio["Costo"]
+        preciots = cantidad_s*precio
+        nuevo_servicio = pd.DataFrame([[datos_servicio["Nombre Servicio"],cantidad_s, preciots]], columns=["Nombre","Cantidad","Precio total"])
+        self.serviciosC = pd.concat([self.df, nuevo_servicio], ignore_index=True)
         self.serviciosC = self.serviciosC.reset_index(drop=True)
-         
+        return preciots
+    
     def vaciar_carrito(self):
         self.df.drop(self.df.index, inplace = True)
         self.serviciosC.drop(self.serviciosC.index, inplace = True)

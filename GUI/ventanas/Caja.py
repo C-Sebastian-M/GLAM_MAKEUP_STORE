@@ -11,6 +11,7 @@ import sys
 from API.prueba import Cajero
 from API.Validaciones import *
 from API.DATA import GestionDatos
+import random
 #from login import Login
 
 class CBackground:
@@ -91,6 +92,7 @@ class Caja(QMainWindow):
         self.posibleCedula = None
         self.posibleTelefono = None
         self.posibleNombre = None
+        self.nombreCliente = None
         self.setWindowFlags(Qt.Window | Qt.CustomizeWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
         self.BotonCliente.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Clientes_2))
         self.BotonProductos.clicked.connect(lambda: self.stackedWidget_3.setCurrentWidget(self.Productos_3))
@@ -275,6 +277,8 @@ class Caja(QMainWindow):
         self.posibleCedula = self.Ced_2.text()
         self.posibleNombre = self.Nom_2.text()
         self.posibleTelefono = self.Tel_2.text()
+        self.cedulaCliente = self.Ced_2.text()
+        self.nombreCliente = self.Nom_2.text()
         
         
     def CheckNewClient(self):
@@ -316,8 +320,12 @@ class Caja(QMainWindow):
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setWindowTitle("Validación")
         msg_box.setStandardButtons(QMessageBox.Ok)
-        if str(cedula) in str(self.gestion_datos.clientes["Cedula"].values): #Comprobar si dato ya existe
+        if cedula == "":
+            msg_box.setText("Cliente no encontrado")
+        elif str(cedula) in str(self.gestion_datos.clientes["Cedula"].values): #Comprobar si dato ya existe
                 self.cedulaCliente = cedula
+                cliente = self.gestion_datos.clientes[self.gestion_datos.clientes["Cedula"] == int(cedula)]
+                self.nombreCliente = cliente.loc[:,"Nombre"]
                 msg_box.setText("Cliente encontrado en la lista")
         else:
             msg_box.setText("Cliente no encontrado")
@@ -339,7 +347,12 @@ class Caja(QMainWindow):
         cantidad = self.StockProductos.text()
         if codigo_barras != "" and cantidad != "": 
             if codigo_barras in self.gestion_datos.productos["Codigo de barras"].values or int(codigo_barras) in self.gestion_datos.productos["Codigo de barras"].values:
-                self.cajero.mostra_total_productos(codigo_barras, int(cantidad))
+                codigo = 0
+                datos_producto = self.gestion_datos.productos[self.gestion_datos.productos["Codigo de barras"] == int(codigo_barras)]
+                while codigo in self.gestion_datos.venta_productos["ID venta"].values:
+                    codigo = random.randint(1,1000)
+
+                self.gestion_datos.agregar_venta_producto(codigo, self.cedulaCliente, self.nombreCliente,datos_producto.loc[:,"Referencia"], cantidad, self.cajero.mostra_total_productos(codigo_barras, int(cantidad)), 0)
                 self.mostrar_total_productos()
             else:
                 msg_box.setText("Codigo inexistente")
@@ -356,7 +369,11 @@ class Caja(QMainWindow):
         id_servicio = self.EleServicios.text()
         cantidad = self.StockServicios.text()
         if cantidad != "" and id_servicio != "":
-            self.cajero.mostra_total_servicios(id_servicio, int(cantidad))
+            codigo = 0
+            datos_servicio = self.gestion_datos.servicio[self.gestion_datos.servicios["ID servicio"] == (id_servicio)]
+            while codigo not in self.gestion_datos.venta_servicios["ID venta"].values:
+                codigo = random.randint(1,1000)
+            self.gestion_datos.agregar_venta_producto(codigo, self.cedulaCliente, self.nombreCliente,datos_servicio.loc[:,"Nombre servicio"], cantidad, self.cajero.mostra_total_servicios(id_servicio, int(cantidad)), 0)
             self.mostrar_total_servicios()
             msg_box.setText("Servicio añadido")
             msg_box.exec_()
@@ -421,6 +438,7 @@ class Caja(QMainWindow):
         self.posibleNombre = None
         self.posibleTelefono = None
         self.cajero.vaciar_carrito()
+        self.mostrar_carrito_yes()
     
     def crear_factura(self):
         precio = self.cajero.factura_con()
