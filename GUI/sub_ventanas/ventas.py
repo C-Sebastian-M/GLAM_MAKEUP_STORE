@@ -73,12 +73,11 @@ class VentasAdmin(QMainWindow, CBackground):
         self.comboBox_pago.addItems(self.pagos)
         self.pushButton_ventas.clicked.connect(self.limpiar_campos)
         self.setupValidators()
-        
+
     def setupValidators(self):
         self.setValidator(self.lineEdit_cedula, r"\d{9,10}")
         self.setValidator(self.lineEdit_cantidad, r"\d{10}")
-        self.setValidator(self.lineEdit_cantidad, r"\d{0,16}")
-        self.setValidator(self.lineEdit_idVenta, r"\d{3}")
+        self.setValidator(self.lineEdit_addPago, r"\d{3}")
 
     def setValidator(self, lineEdit, pattern):
         validator = QtGui.QRegularExpressionValidator(
@@ -155,7 +154,7 @@ class VentasAdmin(QMainWindow, CBackground):
         self.frame_delPago.show()
 
     def del_metodoPago(self):
-        if self.comboBox_pago.currentIndex() != -1:
+        if self.comboBox_pago.currentIndex() != 0:
             pago = self.comboBox_pago.currentText()
             if pago == "":
                 self.showErrorMessage("Campo vacio")
@@ -212,9 +211,7 @@ class VentasAdmin(QMainWindow, CBackground):
         id_metodo = self.lineEdit_addPago.text()
         metodo = self.lineEdit.text()
         if metodo == "":
-            self.showErrorMessage(
-                "Producto Inexistente. Por favor, verifica la información."
-            )
+            self.showErrorMessage("Campo Vacío. Por favor, verifica la información.")
         elif (
             id_metodo not in self.gestion_datos.metodo_pago["ID"].values
             and int(id_metodo) not in self.gestion_datos.metodo_pago["ID"].values
@@ -226,6 +223,7 @@ class VentasAdmin(QMainWindow, CBackground):
                 [self.gestion_datos.metodo_pago, nueva_fila], ignore_index=True
             )
             self.frame_addPago.hide()
-            self.pago = []
-            self.pagos = self.gestion_datos.metodo_pago["Metodo de pago"].tolist()
-            self.comboBox_pago.addItems(self.pagos)
+            pago = []
+            pago.append(metodo)
+            self.comboBox_pago.addItems(pago)
+            self.show_success_dialog("Metodo de pago añadido correctamente")

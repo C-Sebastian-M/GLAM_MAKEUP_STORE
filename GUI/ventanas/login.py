@@ -59,17 +59,18 @@ class Login(QMainWindow):
                 self.frame_error.setStyleSheet(self.stylePopupError)
             else:
                 self.frame_error.setStyleSheet(self.stylePopupOk)
-            self.frame_error.hide()
 
         # CHECK USER
         if not username:
             textUser = " Usuario Vacio. "
+            showMessage(textUser)
         else:
             textUser = ""
 
         # CHECK PASSWORD
         if not password:
             textPassword = " Contraseña Vacia. "
+            showMessage(textPassword)
         else:
             textPassword = ""
 
@@ -82,13 +83,15 @@ class Login(QMainWindow):
             if user_role:
                 if user_role == 1:
                     self.openAdminSupportWindow("soporte")
+                    self.frame_error.hide()
                 elif user_role == 2:
                     self.openAdminSupportWindow("admin")
+                    self.frame_error.hide()
                 elif user_role == 3:
                     self.openCajaWindow()
+                    self.frame_error.hide()
                 else:
                     showMessage("Credenciales incorrectas")
-                    time.sleep(2)
             else:
                 showMessage("Usuario o contraseña incorrecta. ")
                 self.showErrorMessage("Credenciales Incorrectas")
